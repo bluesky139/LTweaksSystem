@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.auto.service:auto-service:1.0-rc4'
+    implementation project(':lib')
+    implementation project(':api')
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

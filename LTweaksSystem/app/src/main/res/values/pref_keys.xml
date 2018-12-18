@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- The values below are used for pref keys, should never be changed. -->
+    <!--Google-->
+    <string name="key_google_dismiss_location_checker">key_google_dismiss_location_checker</string>
+    <string name="key_google_block_system_update_notification">key_google_block_system_update_notification</string>
+    <string name="key_google_remove_bottom_bar">key_google_remove_bottom_bar</string>
+    <string name="key_google_com_domain">key_google_com_domain</string>
+    <string name="key_google_keyboard_suggestion">key_google_keyboard_suggestion</string>
+    <string name="key_google_overlay_search_to_browser">key_google_overlay_search_to_browser</string>
+    <string name="key_google_plus_remove_bottom_bar">key_google_plus_remove_bottom_bar</string>
+    <string name="key_google_plus_top_right_refresh">key_google_plus_top_right_refresh</string>
+    <string name="key_google_plus_hide_comment_edit">key_google_plus_hide_comment_edit</string>
+    <string name="key_google_plus_no_redirect">key_google_plus_no_redirect</string>
+    <string name="key_google_photos_remove_bottom_bar">key_google_photos_remove_bottom_bar</string>
+    <string name="key_google_newsstand_remove_bottom_bar">key_google_newsstand_remove_bottom_bar</string>
+    <string name="key_google_books_remove_bottom_bar">key_google_books_remove_bottom_bar</string>
+    <string name="key_google_play_view_in_coolapk">key_google_play_view_in_coolapk</string>
+    <string name="key_google_messenger_disable_direct_share">key_google_messenger_disable_direct_share</string>
+    <string name="key_chrome_incognito_search">key_chrome_incognito_search</string>
+    <string name="key_chrome_google_cache">key_chrome_google_cache</string>
+    <string name="key_chrome_wayback">key_chrome_wayback</string>
+    <string name="key_chrome_go_top_or_bottom">key_chrome_go_top_or_bottom</string>
+    <string name="key_chrome_open_with">key_chrome_open_with</string>
+    <string name="key_chrome_ip_info">key_chrome_ip_info</string>
+    <string name="key_youtube_remove_bottom_bar">key_youtube_remove_bottom_bar</string>
+    <string name="key_youtube_set_quality">key_youtube_set_quality</string>
+
+    <!--Shopping-->
+    <string name="key_jd_open_link_in_app">key_jd_open_link_in_app</string>
+    <string name="key_jd_share_item">key_jd_share_item</string>
+    <string name="key_jd_history">key_jd_history</string>
+    <string name="key_jd_basic_share_activity">key_jd_basic_share_activity</string>
+    <string name="key_smzdm_open_link_in_jd_app">key_smzdm_open_link_in_jd_app</string>
+    <string name="key_suning_share_item">key_suning_share_item</string>
+    <string name="key_suning_history">key_suning_history</string>
+    <!-- Removed "key_taobao_share_item" -->
+
+    <!--Communication-->
+    <!-- Removed "key_wechat_system_share_in_inner_browser" -->
+    <string name="key_wechat_use_incoming_ringtone">key_wechat_use_incoming_ringtone</string>
+    <string name="key_wechat_set_incoming_ringtone">key_wechat_set_incoming_ringtone</string>
+    <string name="key_wechat_remove_bottom_bar">key_wechat_remove_bottom_bar</string>
+    <string name="key_wechat_no_drawer">key_wechat_no_drawer</string>
+    <string name="key_qq_dismiss_contacts_enabler">key_qq_dismiss_contacts_enabler</string>
+    <string name="key_qq_remove_ads">key_qq_remove_ads</string>
+    <string name="key_qq_outer_browser">key_qq_outer_browser</string>
+    <string name="key_qq_collapse_chat_buttons">key_qq_collapse_chat_buttons</string>
+    <string name="key_qq_clear_background">key_qq_clear_background</string>
+    <string name="key_qq_clear_background_path">key_qq_clear_background_path</string>
+    <string name="key_qq_exit_directly_by_sharing">key_qq_exit_directly_by_sharing</string>
+    <string name="key_qq_fix_image_sharing">key_qq_fix_image_sharing</string>
+    <string name="key_qq_disable_discussion_notification">key_qq_disable_discussion_notification</string>
+    <string name="key_qq_prevent_audio_panel">key_qq_prevent_audio_panel</string>
+    <string name="key_qq_hide_weak_net_toast">key_qq_hide_weak_net_toast</string>
+    <string name="key_push_bullet_share_to_all">key_push_bullet_share_to_all</string>
+    <string name="key_ttrss_disable_article_pager">key_ttrss_disable_article_pager</string>
+    <string name="key_ttrss_open_link_in_browser_menu">key_ttrss_open_link_in_browser_menu</string>
+    <string name="key_ttrss_refresh_menu">key_ttrss_refresh_menu</string>
+    <string name="key_ttrss_disable_show_hide_on_scroll">key_ttrss_disable_show_hide_on_scroll</string>
+    <string name="key_ttrss_darken">key_ttrss_darken</string>
+    <string name="key_ttrss_open_all_articles_at_startup">key_ttrss_open_all_articles_at_startup</string>
+
+    <!--Entertainment-->
+    <string name="key_douban_movie_url">key_douban_movie_url</string>
+    <!-- Removed "key_douban_movie_skip_splash" -->
+    <string name="key_douban_movie_search">key_douban_movie_search</string>
+    <string name="key_douban_movie_remove_bottom_bar">key_douban_movie_remove_bottom_bar</string>
+    <string name="key_douban_movie_remove_ads">key_douban_movie_remove_ads</string>
+    <!-- Removed "key_bilibili_subscriptions_goto_top" -->
+    <string name="key_bilibili_search">key_bilibili_search</string>
+    <string name="key_bilibili_open_link_in_app">key_bilibili_open_link_in_app</string>
+    <!-- Removed "key_bilibili_expand_following" -->
+    <string name="key_bilibili_remove_bottom_bar">key_bilibili_remove_bottom_bar</string>
+    <string name="key_bilibili_get_cover">key_bilibili_get_cover</string>
+    <!-- key_bilibili_light_desc_in_night -->
+    <string name="key_bilibili_expand_desc">key_bilibili_expand_desc</string>
+    <string name="key_bilibili_darken">key_bilibili_darken</string>
+    <string name="key_bilibili_hide_follow_at_full_screen">key_bilibili_hide_follow_at_full_screen</string>
+    <string name="key_bilibili_dismiss_update">key_bilibili_dismiss_update</string>
+    <string name="key_steam_share_url">key_steam_share_url</string>
+    <string name="key_steam_database">key_steam_database</string>
+    <string name="key_steam_go_top">key_steam_go_top</string>
+    <string name="key_steam_go_reviews">key_steam_go_reviews</string>
+    <string name="key_steam_chinese">key_steam_chinese</string>
+    <string name="key_comic_screen_better_sort">key_comic_screen_better_sort</string>
+
+    <!--System-->
+    <string name="key_text_aide_open_youdao">key_text_aide_open_youdao</string>
+    <string name="key_text_double_click_for_selectable">key_text_double_click_for_selectable</string>
+    <string name="key_text_selectable_text">key_text_selectable_text</string>
+    <string name="key_text_actions">key_text_actions</string>
+    <string name="key_text_actions_set">key_text_actions_set</string>
+    <string name="key_youdao_quick_query_shortcut">key_youdao_quick_query_shortcut</string>
+    <string name="key_system_share_qrcode_scan">key_system_share_qrcode_scan</string>
+    <string name="key_system_share_image_search">key_system_share_image_search</string>
+    <string name="key_system_share_filter">key_system_share_filter</string>
+    <string name="key_system_share_filter_activities">key_system_share_filter_activities</string>
+    <string name="key_system_share_copy_to_share">key_system_share_copy_to_share</string>
+    <string name="key_coolapk_remove_bottom_bar">key_coolapk_remove_bottom_bar</string>
+    <!-- Removed "key_prevent_running_prevent_foreground_service" -->
+    <!-- Removed "key_prevent_running_set_inactive" -->
+    <!-- Removed "key_prevent_running_prevent_exact_alarm" -->
+    <!-- Removed "key_prevent_running_prevent_wake_lock" -->
+    <!-- Removed "key_prevent_running_prevent_receiver" -->
+    <string name="key_prevent_running_set_list">key_prevent_running_set_list</string>
+    <string name="key_prevent_list_prevent_foreground_service">key_prevent_list_prevent_foreground_service</string>
+    <string name="key_prevent_list_set_inactive">key_prevent_list_set_inactive</string>
+    <string name="key_prevent_list_prevent_exact_alarm">key_prevent_list_prevent_exact_alarm</string>
+    <string name="key_prevent_list_prevent_wake_lock">key_prevent_list_prevent_wake_lock</string>
+    <string name="key_prevent_list_prevent_receiver">key_prevent_list_prevent_receiver</string>
+    <!-- Removed "key_shadowsocks_precise_route" -->
+    <string name="key_shadowsocks_primary_dns">key_shadowsocks_primary_dns</string>
+    <string name="key_shadowsocks_transproxy">key_shadowsocks_transproxy</string>
+    <string name="key_quick_settings_tile_adb_wireless">key_quick_settings_tile_adb_wireless</string>
+    <string name="key_quick_settings_tile_4g3g">key_quick_settings_tile_4g3g</string>
+    <string name="key_quick_settings_tile_4g">key_quick_settings_tile_4g</string>
+    <string name="key_quick_settings_tile_3g">key_quick_settings_tile_3g</string>
+    <string name="key_quick_settings_tile_set_preconfigured_brightness">key_quick_settings_tile_set_preconfigured_brightness</string>
+    <string name="key_quick_settings_tile_preconfigured_brightness">key_quick_settings_tile_preconfigured_brightness</string>
+    <string name="key_quick_settings_brightness_by_volume_buttons">key_quick_settings_brightness_by_volume_buttons</string>
+    <string name="key_nav_bar_input_cursor_control">key_nav_bar_input_cursor_control</string>
+    <string name="key_native_clipboard_fix_chrome">key_native_clipboard_fix_chrome</string>
+    <string name="key_trust_agent_wifi_aps">key_google_smart_lock_with_wifi_aps</string>
+    <string name="key_solid_explorer_url_replacers">key_solid_explorer_url_replacers</string>
+    <string name="key_selection_action_mode_original">key_selection_action_mode_original</string>
+    <string name="key_app_info_open_app_data_folder">key_app_info_open_app_data_folder</string>
+    <string name="key_app_info_go_market">key_app_info_go_market</string>
+    <string name="key_app_info_allow_disable">key_app_info_allow_disable</string>
+    <string name="key_app_info_app_ops">key_app_info_app_ops</string>
+    <string name="key_lineage_os_live_display_time">key_lineage_os_live_display_time</string>
+    <string name="key_lineage_os_live_display_time_sunrise">key_lineage_os_live_display_time_sunrise</string>
+    <string name="key_lineage_os_live_display_time_sunset">key_lineage_os_live_display_time_sunset</string>
+    <string name="key_lineage_os_gallery_remove_bottom_bar">key_lineage_os_gallery_remove_bottom_bar</string>
+    <string name="key_keys_long_press_back_to_kill">key_keys_long_press_back_to_kill</string>
+    <string name="key_recent_task_swipe_to_kill">key_recent_task_swipe_to_kill</string>
+    <string name="key_phone_deny_access_phone_number">key_phone_deny_access_phone_number</string>
+    <string name="key_display_light_amber_in_daylight">key_display_light_amber_in_daylight</string>
+    <string name="key_display_min_brightness">key_display_min_brightness</string>
+    <string name="key_display_dark_wallpaper_color">key_display_dark_wallpaper_color</string>
+    <string name="key_display_hspap_signal">key_display_hspap_signal</string>
+    <string name="key_web_search_to_browser">key_web_search_to_browser</string>
+    <string name="key_debug_app_crash_info">key_debug_app_crash_info</string>
+    <string name="key_debug_mtp_always">key_debug_mtp_always</string>
+
+    <!--Donate-->
+    <string name="key_donate_alipay">key_donate_alipay</string>
+    <string name="key_donate_wechat">key_donate_wechat</string>
+</resources>
