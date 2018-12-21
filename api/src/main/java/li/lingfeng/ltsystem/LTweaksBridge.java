@@ -1,15 +1,20 @@
 package li.lingfeng.ltsystem;
 
-import java.io.File;
-import dalvik.system.PathClassLoader;
-import android.os.SystemProperties;
 import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import dalvik.system.PathClassLoader;
 
 public final class LTweaksBridge {
 
     private static final String TAG = "LTweaksBridge";
     private static final String PACKAGE_NAME = LTweaksBridge.class.getPackage().getName();
-    private static final String KEY_APK_PATH = "persist.ltweaks.apk_path";
     private static final String LOADER_CLASS = PACKAGE_NAME + ".Loader";
 
     public static ILTweaks.Loader loader;
@@ -18,14 +23,32 @@ public final class LTweaksBridge {
         Log.i(TAG, "Init ltweaks in zygote.");
 
         try {
-            String apkPath = SystemProperties.get(KEY_APK_PATH);
-            if (apkPath.isEmpty()) {
-                Log.e(TAG, "Apk path not set.");
+            File file = new File("/data/system/packages.xml");
+            if (!file.exists() || !file.canRead()) {
+                Log.e(TAG, "Can't read packages.xml");
+                return;
+            }
+
+            // <package name="li\.lingfeng\.ltsystem" codePath="([^"]+)"
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            Pattern pattern = Pattern.compile("<package name=\"li\\.lingfeng\\.ltsystem\" codePath=\"([^\"]+)\" ");
+            String line;
+            String apkPath = null;
+            while ((line = reader.readLine()) != null) {
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    apkPath = matcher.group(1) + "/base.apk";
+                    break;
+                }
+            }
+            reader.close();
+            if (apkPath == null) {
+                Log.e(TAG, "Apk path is null.");
                 return;
             }
 
             Log.d(TAG, "Apk path " + apkPath);
-            File file = new File(apkPath);
+            file = new File(apkPath);
             if (!file.exists() || !file.canRead()) {
                 Log.e(TAG, "Apk not exist or can't be read.");
                 return;
