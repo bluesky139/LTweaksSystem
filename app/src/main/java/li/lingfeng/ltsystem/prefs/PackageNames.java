@@ -6,7 +6,7 @@ package li.lingfeng.ltsystem.prefs;
 
 public class PackageNames {
 
-    public static final String L_TWEAKS = "li.lingfeng.ltweaks";
+    public static final String L_TWEAKS = "li.lingfeng.ltsystem";
 
     // Google
     public static final String GMS = "com.google.android.gms";

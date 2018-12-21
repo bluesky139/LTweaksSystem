@@ -1,0 +1,154 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_category_google_play_services">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_dismiss_location_checker"
+            android:title="@string/pref_google_dismiss_location_checker"
+            android:summary="@string/pref_google_dismiss_location_checker_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_block_system_update_notification"
+            android:title="@string/pref_google_block_system_update_notification" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_google">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_remove_bottom_bar"
+            android:title="@string/pref_google_remove_bottom_bar"
+            android:summary="@string/pref_google_remove_bottom_bar_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_com_domain"
+            android:title="@string/pref_google_com_domain"
+            android:summary="@string/pref_google_com_domain_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_keyboard_suggestion"
+            android:title="@string/pref_google_keyboard_suggestion" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_overlay_search_to_browser"
+            android:title="@string/pref_google_overlay_search_to_browser"
+            android:summary="@string/pref_google_overlay_search_to_browser_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_google_plus">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_plus_remove_bottom_bar"
+            android:title="@string/pref_google_plus_remove_bottom_bar"
+            android:summary="@string/pref_google_plus_remove_bottom_bar_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_plus_top_right_refresh"
+            android:title="@string/pref_google_plus_top_right_refresh" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_plus_hide_comment_edit"
+            android:title="@string/pref_google_plus_hide_comment_edit"
+            android:summary="@string/pref_google_plus_hide_comment_edit_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_plus_no_redirect"
+            android:title="@string/pref_google_plus_no_redirect"
+            android:summary="@string/pref_google_plus_no_redirect_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_google_photos">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_photos_remove_bottom_bar"
+            android:title="@string/pref_google_photos_remove_bottom_bar"
+            android:summary="@string/pref_google_photos_remove_bottom_bar_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_google_newsstand">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_newsstand_remove_bottom_bar"
+            android:title="@string/pref_google_newsstand_remove_bottom_bar"
+            android:summary="@string/pref_google_newsstand_remove_bottom_bar_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_google_books">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_books_remove_bottom_bar"
+            android:title="@string/pref_google_books_remove_bottom_bar"
+            android:summary="@string/pref_google_books_remove_bottom_bar_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_google_play">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_play_view_in_coolapk"
+            android:title="@string/pref_google_play_view_in_coolapk"
+            android:summary="@string/pref_google_play_view_in_coolapk_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_google_messenger">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_messenger_disable_direct_share"
+            android:title="@string/pref_google_messenger_disable_direct_share"
+            android:summary="@string/pref_google_messenger_disable_direct_share_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_chrome">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_chrome_incognito_search"
+            android:title="@string/pref_chrome_incognito_search"
+            android:summary="@string/pref_chrome_incognito_search_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_chrome_google_cache"
+            android:title="@string/pref_chrome_google_cache"
+            android:summary="@string/pref_chrome_google_cache_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_chrome_wayback"
+            android:title="@string/pref_chrome_wayback"
+            android:summary="@string/pref_chrome_wayback_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_chrome_go_top_or_bottom"
+            android:title="@string/pref_chrome_go_top_or_bottom"
+            android:summary="@string/pref_chrome_go_top_or_bottom_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_chrome_open_with"
+            android:title="@string/pref_chrome_open_with"
+            android:summary="@string/pref_chrome_open_with_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_chrome_ip_info"
+            android:title="@string/pref_chrome_ip_info"
+            android:summary="@string/pref_chrome_ip_info_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_youtube">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_youtube_remove_bottom_bar"
+            android:title="@string/pref_youtube_remove_bottom_bar"
+            android:summary="@string/pref_youtube_remove_bottom_bar_summary" />
+        <ListPreference
+            android:defaultValue="0"
+            android:key="@string/key_youtube_set_quality"
+            android:title="@string/pref_youtube_set_quality"
+            android:entries="@array/youtube_quality_string"
+            android:entryValues="@array/youtube_quality_int" />
+    </PreferenceCategory>
+</PreferenceScreen>

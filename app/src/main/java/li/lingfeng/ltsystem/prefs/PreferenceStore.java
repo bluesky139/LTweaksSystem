@@ -2,10 +2,9 @@ package li.lingfeng.ltsystem.prefs;
 
 import android.os.SystemProperties;
 import android.preference.PreferenceDataStore;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,37 +17,61 @@ public class PreferenceStore implements PreferenceDataStore {
         mKeyPrefix = keyPrefix;
     }
 
+    public void putString(int key, String value) {
+        putString(getKeyById(key), value);
+    }
+
     @Override
     public void putString(String key, String value) {
+        SystemProperties.set(mKeyPrefix + key, value);
+    }
 
+    public void putStringSet(int key, Set<String> values) {
+        putStringSet(getKeyById(key), values);
     }
 
     @Override
     public void putStringSet(String key, Set<String> values) {
+        SystemProperties.set(mKeyPrefix + key, StringUtils.join(values, '\n'));
+    }
 
+    public void putInt(int key, int value) {
+        putInt(getKeyById(key), value);
     }
 
     @Override
     public void putInt(String key, int value) {
+        SystemProperties.set(mKeyPrefix + key, String.valueOf(value));
+    }
 
+    public void putLong(int key, long value) {
+        putLong(getKeyById(key), value);
     }
 
     @Override
     public void putLong(String key, long value) {
+        SystemProperties.set(mKeyPrefix + key, String.valueOf(value));
+    }
 
+    public void putFloat(int key, float value) {
+        putFloat(getKeyById(key), value);
     }
 
     @Override
     public void putFloat(String key, float value) {
+        SystemProperties.set(mKeyPrefix + key, String.valueOf(value));
+    }
 
+    public void putBoolean(int key, boolean value) {
+        putBoolean(getKeyById(key), value);
     }
 
     @Override
     public void putBoolean(String key, boolean value) {
-
+        SystemProperties.set(mKeyPrefix + key, String.valueOf(value));
     }
 
-    public String getString(@StringRes int key, String defValue) {
+    public String getString(int key, String defValue) {
         return getString(getKeyById(key), defValue);
     }
 
@@ -57,7 +80,7 @@ public class PreferenceStore implements PreferenceDataStore {
         return SystemProperties.get(mKeyPrefix + key, defValue);
     }
 
-    public Set<String> getStringSet(@StringRes int key, Set<String> defValues) {
+    public Set<String> getStringSet(int key, Set<String> defValues) {
         return getStringSet(getKeyById(key), defValues);
     }
 
@@ -73,7 +96,7 @@ public class PreferenceStore implements PreferenceDataStore {
         return set;
     }
 
-    public int getInt(@StringRes int key, int defValue) {
+    public int getInt(int key, int defValue) {
         return getInt(getKeyById(key), defValue);
     }
 
@@ -82,7 +105,7 @@ public class PreferenceStore implements PreferenceDataStore {
         return SystemProperties.getInt(mKeyPrefix + key, defValue);
     }
 
-    public long getLong(@StringRes int key, long defValue) {
+    public long getLong(int key, long defValue) {
         return getLong(getKeyById(key), defValue);
     }
 
@@ -91,7 +114,7 @@ public class PreferenceStore implements PreferenceDataStore {
         return SystemProperties.getLong(mKeyPrefix + key, defValue);
     }
 
-    public float getFloat(@StringRes int key, float defValue) {
+    public float getFloat(int key, float defValue) {
         return getFloat(getKeyById(key), defValue);
     }
 
@@ -100,7 +123,7 @@ public class PreferenceStore implements PreferenceDataStore {
         return Float.parseFloat(SystemProperties.get(mKeyPrefix + key, String.valueOf(defValue)));
     }
 
-    public boolean getBoolean(@StringRes int key, boolean defValue) {
+    public boolean getBoolean(int key, boolean defValue) {
         return getBoolean(getKeyById(key), defValue);
     }
 

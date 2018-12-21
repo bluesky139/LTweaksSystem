@@ -1,23 +1,33 @@
 package li.lingfeng.ltsystem;
 
-import android.os.SystemProperties;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceActivity;
 
-import java.io.File;
+import java.util.List;
 
-import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.prefs.PackageNames;
+import li.lingfeng.ltsystem.utils.ContextUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        if (BuildConfig.FLAVOR.equals("selfUse")) {
+            setTitle(getTitle() + " - Self Use");
+        }
+    }
 
-        File file = new File("/data/ltweaks/aa");
-        Log.d("LTweaks", "read " + file.canRead() + ", write " + file.canWrite());
-        Logger.d("test SystemProperty " + SystemProperties.get("persist.ltweaks.apk_path"));
+    @Override
+    public void onBuildHeaders(List<Header> target) {
+        loadHeadersFromResource(R.xml.pref_headers, target);
+        if (BuildConfig.FLAVOR.equals("selfUse")) {
+            loadHeadersFromResource(ContextUtils.getXmlId("pref_headers_self_use"), target);
+        }
+    }
+
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return fragmentName.startsWith(PackageNames.L_TWEAKS + ".fragments.");
     }
 }

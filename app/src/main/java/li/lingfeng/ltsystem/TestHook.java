@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem;
 
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.util.Log;
 
 import li.lingfeng.ltsystem.lib.MethodsLoad;
@@ -15,6 +16,7 @@ public class TestHook extends ILTweaksMethods {
             public void before() {
                 Log.d("LTweaks", "test before.");
                 Log.d("LTweaks", "param.args.length " + param.args.length);
+                Log.d("LTweaks", "test prop get " + SystemProperties.get("persist.sys.lttest.lt_test2"));
             }
 
             @Override

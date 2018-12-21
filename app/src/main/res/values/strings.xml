@@ -1,3 +1,455 @@
 <resources>
-    <string name="app_name">LTweaksSystem</string>
+    <string name="app_name">L Tweaks System</string>
+    <string name="app_about">About</string>
+    <string name="app_about_summary">
+\"L Tweaks System\" is my little tweaks for some Android apps, build with Android Source is necessary.\n
+\n
+You need restart app / system to let it work, after changing settings.\n
+\n
+Open source on github: \n
+<a href="https://github.com/bluesky139/LTweaksSystem">https://github.com/bluesky139/LTweaksSystem</a>
+    </string>
+    <string name="app_send_log">Send Log</string>
+    <string name="app_send_log_error">Send log error.</string>
+    <string name="app_retry_after_permission_granted">Retry after permission granted.</string>
+    <string name="app_save_log">Save Log</string>
+    <string name="app_save_log_ok">Log is saved to %s</string>
+    <string name="app_save_log_error">Save log error.</string>
+    <string name="app_open_log">Open Log</string>
+    <string name="app_send_mail">Send Mail</string>
+    <string name="app_send_mail_description">Please describe what you did, and what happened.\nAlso attach some screenshot if possible.</string>
+    <string name="app_send_to">Send To...</string>
+    <string name="app_ok">OK</string>
+    <string name="app_cancel">Cancel</string>
+    <string name="app_close">Close</string>
+    <string name="app_delete">Delete</string>
+    <string name="app_shortcut_is_created">Shortcut is created.</string>
+    <string name="app_submit_issue">Submit Issue</string>
+    <string name="app_error_check_mode_world_readable">Starting from Android 7.0, store mode of preferences is changed, you need enable this module in Xposed Installer and reboot once first</string>
+    <string name="app_kill_hint">%s is killed.</string>
+
+    <!--Common-->
+    <string name="uninstall_message">Detected \"%s\" is installed, it has become part of \"L Tweaks\", better to uninstall it.</string>
+    <string name="uninstall_confirm">Uninstall</string>
+    <string name="not_supported">Not supported.</string>
+    <string name="cant_read_file">Can\'t read file.</string>
+    <string name="request_failed">Request failed.</string>
+    <string name="upload_failed">Upload failed.</string>
+    <string name="error">Error.</string>
+    <string name="all">All</string>
+    <string name="disabled">Disabled</string>
+    <string name="enabled">Enabled</string>
+    <string name="list">List</string>
+    <string name="current">Current</string>
+    <string name="secure_lock_screen_not_setup">Secure lock screen hasn\'t set up.</string>
+
+    <!-- Google -->
+    <string name="pref_header_google">Google</string>
+    <string name="pref_category_google_play_services">Google Play Services</string>
+    <string name="pref_google_dismiss_location_checker">Dismiss location settings checker</string>
+    <string name="pref_google_dismiss_location_checker_summary">Dismiss dialog \"To continue, let your device turn on location using Google\'s location service.\"</string>
+    <string name="pref_google_block_system_update_notification">Block system update notificaton</string>
+    <string name="pref_category_google">Google Search App</string>
+    <string name="pref_google_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_google_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_google_com_domain">Use google.com to search</string>
+    <string name="pref_google_com_domain_summary">Not local domain, eg: google.com.hk</string>
+    <string name="pref_google_keyboard_suggestion">Allow keyboard suggestions in search box</string>
+    <string name="pref_google_overlay_search_to_browser">Overlay search go to browser</string>
+    <string name="pref_google_overlay_search_to_browser_summary">In nova launcher or some other launcher, there\'s an option \"Search as overlay\", use browser to open search result with this option</string>
+    <string name="pref_category_google_plus">Google+</string>
+    <string name="pref_google_plus_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_google_plus_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_google_plus_top_right_refresh">Put \"New posts\" to top right menu</string>
+    <string name="pref_google_plus_hide_comment_edit">Hide comment edit box</string>
+    <string name="pref_google_plus_hide_comment_edit_summary">Replace by floating button</string>
+    <string name="pref_google_plus_no_redirect">Url no redirect</string>
+    <string name="pref_google_plus_no_redirect_summary">Remove \"http://plus.url.google.com/url?q=\"</string>
+    <string name="pref_category_google_photos">Google Photos</string>
+    <string name="pref_google_photos_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_google_photos_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_category_google_newsstand">Google Newsstand</string>
+    <string name="pref_google_newsstand_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_google_newsstand_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_category_google_books">Google Play Books</string>
+    <string name="pref_google_books_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_google_books_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_category_google_play">Google Play</string>
+    <string name="pref_google_play_view_in_coolapk">Add menu \"View in CoolApk / ApkPure / Mobilism / App Info\"</string>
+    <string name="pref_google_play_view_in_coolapk_summary">Jump to CoolApk / ApkPure, just like jump to Google Play from CoolApk, search in Mobilism, jump to App Info page of system</string>
+    <string name="pref_category_google_messenger">Google Messenger</string>
+    <string name="pref_google_messenger_disable_direct_share">Disable direct share</string>
+    <string name="pref_google_messenger_disable_direct_share_summary">For Android 6.0+</string>
+    <string name="pref_category_chrome">Chrome</string>
+    <string name="pref_chrome_incognito_search">Search / Open in incognito</string>
+    <string name="pref_chrome_incognito_search_summary">Search in incognito with selected text, use floating menu with text selection, for Android 6.0+\nMenu \"Open in incognito\" in Chrome and Custom Tab\nLong click link menu \"Open in incognito\" in Custom Tab</string>
+    <string name="pref_chrome_google_cache">View Google cached webpage</string>
+    <string name="pref_chrome_google_cache_summary">Menu \"View Google cached\" in Chrome and Custom Tab</string>
+    <string name="pref_chrome_wayback">Wayback Machine</string>
+    <string name="pref_chrome_wayback_summary">Menu \"Wayback Machine\" in Chrome and Custom Tab</string>
+    <string name="pref_chrome_go_top_or_bottom">Go top or bottom</string>
+    <string name="pref_chrome_go_top_or_bottom_summary">Menu \"Go Top\" and \"Go Bottom\" in Chrome and Custom Tab</string>
+    <string name="pref_chrome_open_with">Open with...</string>
+    <string name="pref_chrome_open_with_summary">Open url by other supported apps</string>
+    <string name="pref_chrome_ip_info">IP info</string>
+    <string name="pref_chrome_ip_info_summary">Menu to lookup ip info of current website</string>
+    <string name="pref_category_youtube">Youtube</string>
+    <string name="pref_youtube_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_youtube_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_youtube_set_quality">Automatically set quality</string>
+
+    <!-- Youtube -->
+    <string-array name="youtube_quality_string">
+        <item>Auto</item>
+        <item>144p</item>
+        <item>240p</item>
+        <item>360p</item>
+        <item>480p</item>
+        <item>720p</item>
+        <item>1080p</item>
+        <item>1440p</item>
+        <item>2160p</item>
+        <item>4320p</item>
+    </string-array>
+    <string-array name="youtube_quality_int" translatable="false">
+        <item>0</item>
+        <item>144</item>
+        <item>240</item>
+        <item>360</item>
+        <item>480</item>
+        <item>720</item>
+        <item>1080</item>
+        <item>1440</item>
+        <item>2160</item>
+        <item>4320</item>
+    </string-array>
+
+    <!-- Google Play -->
+    <string name="google_play_view_in_coolapk">View in CoolApk</string>
+    <string name="google_play_view_in_apkpure">View in ApkPure</string>
+    <string name="google_play_search_in_mobilism">Search in Mobilism</string>
+    <string name="google_play_search_in_apkmirror">Search in ApkMirror</string>
+    <string name="google_play_view_in_app_info">View in App Info</string>
+
+    <!-- Chrome -->
+    <string name="chrome_open_in_incognito">Open in Incognito</string>
+    <string name="chrome_google_cache">View Google Cache</string>
+    <string name="chrome_wayback_machine">Wayback Machine</string>
+    <string name="chrome_go_top">Go Top</string>
+    <string name="chrome_go_bottom">Go Bottom</string>
+    <string name="chrome_open_with">Open With...</string>
+    <string name="chrome_ip_info">IP Info</string>
+    <string name="chrome_ip_domain">Domain</string>
+    <string name="chrome_ip_ip">IP</string>
+    <string name="chrome_ip_geo">GeoLocation</string>
+    <string name="chrome_ip_isp">ISP</string>
+    <string name="chrome_ip_asn">ASN</string>
+
+    <!--Shopping-->
+    <string name="pref_header_shopping">Shopping</string>
+    <string name="pref_category_jd">JD</string>
+    <string name="pref_jd_open_link_in_app">Open link in app</string>
+    <string name="pref_jd_open_link_in_app_summary">eg. http://item.jd.com/123.html</string>
+    <string name="pref_jd_share_item">Share product by \"System Share\"</string>
+    <string name="pref_jd_share_item_summary">Use \"Copy To Clipboard\" in app share menu, a button will appear for you</string>
+    <string name="pref_jd_history">Price history in share menu</string>
+    <string name="pref_jd_history_summary">Use with above share function</string>
+    <string name="pref_jd_basic_share_activity">Original share activity</string>
+    <string name="pref_jd_basic_share_activity_summary">Not something like \"Share Reward\", in case no \"Copy Link\" button</string>
+    <string name="pref_category_suning">Suning</string>
+    <string name="pref_suning_share_item">Share product by \"System Share\"</string>
+    <string name="pref_suning_share_item_summary">Use \"Copy To Clipboard\" in app share menu, a button will appear for you</string>
+    <string name="pref_suning_history">Price history in share menu</string>
+    <string name="pref_suning_history_summary">Use with above share function</string>
+    <string name="pref_category_taobao">Taobao</string>
+    <string name="pref_category_smzdm">SMZDM</string>
+    <string name="pref_smzdm_open_link_in_jd_app">Open link in JD app</string>
+    <string name="pref_smzdm_open_link_in_jd_app_summary">Of course only for JD link</string>
+
+    <!-- JD -->
+    <string name="jd_app">JD App</string>
+    <string name="jd_history">Price History</string>
+    <string name="jd_history_can_not_find_item_id">Can\'t find product id.</string>
+    <string name="jd_history_can_not_get_prices">Can\'t get history prices.</string>
+    <string name="jd_history_highest">Highest</string>
+    <string name="jd_history_lowest">Lowest</string>
+    
+    <!--Communication-->
+    <string name="pref_header_communication">Communication</string>
+    <string name="pref_category_wechat">WeChat</string>
+    <string name="pref_wechat_use_incoming_ringtone">Customize incoming ringtone</string>
+    <string name="pref_wechat_use_incoming_ringtone_summary">Set ringtone below</string>
+    <string name="pref_wechat_set_incoming_ringtone">Set incoming ringtone</string>
+    <string name="pref_wechat_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_wechat_remove_bottom_bar_summary">Put them into drawer menu\nNote: If WeChat can\'t be launched, try delete /data/data/com.tencent.mm/tinker folder, and create a same one with 000 permission.</string>
+    <string name="pref_wechat_no_drawer">No drawer menu after bottom bar removed</string>
+    <string name="pref_wechat_no_drawer_summary">You can also swipe left or right to switch pages</string>
+    <string name="pref_category_qq">QQ (Only tested on lite version)</string>
+    <string name="pref_qq_dismiss_contacts_enabler">Dismiss contacts enabler</string>
+    <string name="pref_qq_dismiss_contacts_enabler_summary">Don\'t enable this if you are using contacts</string>
+    <string name="pref_qq_remove_ads">Remove banner ads</string>
+    <string name="pref_qq_outer_browser">Use outer browser</string>
+    <string name="pref_qq_collapse_chat_buttons">Hide bottom buttons first in chat activity</string>
+    <string name="pref_qq_collapse_chat_buttons_summary">Until you press an \"Add\" button</string>
+    <string name="pref_qq_clear_background">Set a clear and undistorted chat background</string>
+    <string name="pref_qq_clear_background_summary">May not work on very high definition device, no problem on 1080x1920 (Nexus 5)\nSet path below</string>
+    <string name="pref_qq_clear_background_path">Set chat background path</string>
+    <string name="pref_qq_clear_background_path_summary">File is copied to %s</string>
+    <string name="pref_qq_exit_directly_by_sharing">Exit directly by sharing</string>
+    <string name="pref_qq_exit_directly_by_sharing_summary">After sharing something to someone, do not back to main activity by pressing back button</string>
+    <string name="pref_qq_fix_image_sharing">Fix image sharing in some situation</string>
+    <string name="pref_qq_fix_image_sharing_summary">eg. Sharing from Google+</string>
+    <string name="pref_qq_disable_discussion_notification">Disable notification of discussion group</string>
+    <string name="pref_qq_disable_discussion_notification_summary">No matter \"Notification\" is checked or not in discussion group settings</string>
+    <string name="pref_qq_prevent_audio_panel">Prevent \"Press To Talk\" panel popup automatically</string>
+    <string name="pref_qq_hide_weak_net_toast">Hide weak network hint</string>
+    <string name="pref_category_push_bullet">Pushbullet</string>
+    <string name="pref_push_bullet_share_to_all">Share to all devices by default</string>
+    <string name="pref_push_bullet_share_to_all_summary">Then you can disable direct share in Pushbullet settings if you only want to push everything to all devices with one tap</string>
+    <string name="pref_category_ttrss">Tiny Tiny RSS</string>
+    <string name="pref_ttrss_disable_article_pager">Disable article pager</string>
+    <string name="pref_ttrss_open_link_in_browser_menu">More menu in article page</string>
+    <string name="pref_ttrss_open_link_in_browser_menu_summary">Open in browser, Share, Go top, Go bottom</string>
+    <string name="pref_ttrss_refresh_menu">Put refresh button to top right menu</string>
+    <string name="pref_ttrss_disable_show_hide_on_scroll">Disable top app bar show hide on scroll</string>
+    <string name="pref_ttrss_darken">A more better night mode</string>
+    <string name="pref_ttrss_darken_summary">For switching back after low memory kill</string>
+    <string name="pref_ttrss_open_all_articles_at_startup">Open all articles at startup</string>
+    <string name="pref_ttrss_open_all_articles_at_startup_summary">\"Open fresh articles at startup\" must be checked in TT RSS settings</string>
+
+    <!-- TTRss -->
+    <string name="ttrss_open_in_browser">Open In Browser</string>
+    <string name="ttrss_refresh">Refresh</string>
+    <string name="ttrss_go_top">Go Top</string>
+    <string name="ttrss_go_bottom">Go Bottom</string>
+
+    <!--Entertainment-->
+    <string name="pref_header_entertainment">Entertainment</string>
+    <string name="pref_category_douban_movie">Douban Movie</string>
+    <string name="pref_douban_movie_url">Open link in app</string>
+    <string name="pref_douban_movie_search">Search in Douban Movie with selected text</string>
+    <string name="pref_douban_movie_search_summary">Use floating menu with text selection\nFor Android 6.0+</string>
+    <string name="pref_douban_movie_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_douban_movie_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_douban_movie_remove_ads">Remove fullscreen ads</string>
+    <string name="pref_category_bilibili">Bilibili</string>
+    <string name="pref_bilibili_search">Search in Bilibili with selected text</string>
+    <string name="pref_bilibili_search_summary">Use floating menu with text selection\nFor Android 6.0+</string>
+    <string name="pref_bilibili_open_link_in_app">Open link in app</string>
+    <string name="pref_bilibili_open_link_in_app_summary">eg. http://m.bilibili.com/video/av123.html</string>
+    <string name="pref_bilibili_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_bilibili_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_bilibili_get_cover">Get cover</string>
+    <string name="pref_bilibili_get_cover_summary">Add a menu item to get cover</string>
+    <string name="pref_bilibili_expand_desc">Expand description by default</string>
+    <string name="pref_bilibili_darken">A more better night mode</string>
+    <string name="pref_bilibili_darken_summary">1.When entering reading page in night mode, it will switch to daytime mode first, then suddenly back to night mode. Try fix this\n2.When entering this app, the whole screen will become white before app loading finish, change it to dark</string>
+    <string name="pref_bilibili_hide_follow_at_full_screen">Hide follow button at full screen</string>
+    <string name="pref_bilibili_dismiss_update">Never check for new version</string>
+    <string name="pref_category_steam">Steam</string>
+    <string name="pref_steam_share_url">Share url</string>
+    <string name="pref_steam_share_url_summary">Add a top right menu to use system share</string>
+    <string name="pref_steam_database">View in Steam Database</string>
+    <string name="pref_steam_database_summary">Add a top right menu</string>
+    <string name="pref_steam_go_top">Go top in store item page</string>
+    <string name="pref_steam_go_top_summary">Add a top right menu</string>
+    <string name="pref_steam_go_reviews">Go reviews in store item page</string>
+    <string name="pref_steam_go_reviews_summary">Add a top right menu</string>
+    <string name="pref_steam_chinese">Chinese store page</string>
+    <string name="pref_steam_chinese_summary">Check this if your system language is English but you want Chinese store page</string>
+    <string name="pref_category_comic_screen">Comic Screen</string>
+    <string name="pref_comic_screen_better_sort">Better sort</string>
+    <string name="pref_comic_screen_better_sort_summary">If you have folder name like \"01.5\", try this method to get right sort.\neg. \"01 -> 01.5 -> 02 -> 03\"</string>
+
+    <!-- Bilibili -->
+    <string name="bilibili_get_cover">Get Cover</string>
+
+    <!-- Douban Movie -->
+    <string name="douban_movie_app">Douban Movie</string>
+
+    <!--System-->
+    <string name="pref_header_system">System / Tools</string>
+    <string name="pref_category_text_aide">Text Aide</string>
+    <string name="pref_text_aide_open_youdao">Use Youdao dict</string>
+    <string name="pref_category_text">Text</string>
+    <string name="pref_text_double_click_for_selectable">Double click for selectable</string>
+    <string name="pref_text_double_click_for_selectable_summary">Double click to let text become selectable, then long press text to do something as usual.\n
+May not work on all places</string>
+    <string name="pref_text_selectable_text">Selectable Text</string>
+    <string name="pref_text_selectable_text_summary">Add a item in share menu, to display or reprocess shared text</string>
+    <string name="pref_text_actions">Manage floating menus</string>
+    <string name="pref_text_actions_summary">Block and sort\nFor Android 6.0+</string>
+    <string name="pref_text_actions_original">Show all floating menus</string>
+    <string name="pref_text_actions_original_summary">Some menus may be hidden by app itself\nFor Android 6.0+</string>
+    <string name="pref_category_youdao">Youdao Dict</string>
+    <string name="pref_youdao_quick_query_shortcut">Create shortcut for quick query</string>
+    <string name="pref_youdao_quick_query_shortcut_summary">Activity for word query, nothing more</string>
+    <string name="pref_category_system_share">System Share</string>
+    <string name="pref_system_share_qrcode_scan">Add menu \"Scan QR Code\"</string>
+    <string name="pref_system_share_qrcode_scan_summary">You can share QR image from browser, local file or screenshot</string>
+    <string name="pref_system_share_image_search">Add menu \"Search by image\"</string>
+    <string name="pref_system_share_image_search_summary">You can share image from other app or local file, search engines include: Google, TinEye, IQDB</string>
+    <string name="pref_system_share_filter">Hide share menu items</string>
+    <string name="pref_system_share_copy_to_share">Copy to share</string>
+    <string name="pref_system_share_copy_to_share_summary">When you copy text, a button will appear for you to trigger share action.\nMay not work in some app</string>
+    <string name="pref_category_coolapk">Coolapk</string>
+    <string name="pref_coolapk_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_coolapk_remove_bottom_bar_summary">Put them into drawer menu.\nYou need disable \"Disable Xposed modules\" in settings</string>
+    <string name="pref_category_prevent_running">Prevent Running</string>
+    <string name="pref_prevent_running_prevent_foreground_service">Prevent foreground service</string>
+    <string name="pref_prevent_running_prevent_foreground_service_summary">Prevent service becomes foreground service, some app will create invisible foreground service to avoid low memory kill.\n
+Note, this is a simple and crude way, visible \"Running Notification\" will also disappear.</string>
+    <string name="pref_prevent_running_set_inactive">App standby</string>
+    <string name="pref_prevent_running_set_inactive_summary">Try set app to standby, rather than kill it.\nFor Android 6.0+\n
+Note, somehow, some app will disconnect from internet, those apps didn\'t have a long time test on 6.0</string>
+    <string name="pref_prevent_running_prevent_exact_alarm">Delay wakeup of exact alarm</string>
+    <string name="pref_prevent_running_prevent_exact_alarm_summary">Some task will be delayed due to optimize battery use by system\nFor Android 6.0+</string>
+    <string name="pref_prevent_running_prevent_wake_lock">Prevent wake lock</string>
+    <string name="pref_prevent_running_prevent_wake_lock_summary">Without wake lock, app may hard to keep running at screen off</string>
+    <string name="pref_prevent_running_prevent_receiver">Prevent some broadcast</string>
+    <string name="pref_prevent_running_set_list">Set prevent list</string>
+    <string name="pref_prevent_running_set_list_summary">You can set each prevent method for individual app.\n
+Note, you\'d better know what these methods for, in case of unexpected error</string>
+    <string name="pref_category_shadowsocks">Shadowsocks</string>
+    <string name="pref_shadowsocks_primary_dns">Primary DNS</string>
+    <string name="pref_shadowsocks_primary_dns_summary">Comma seperated ip:port</string>
+    <string name="pref_shadowsocks_transproxy">Transproxy</string>
+    <string name="pref_shadowsocks_transproxy_summary">Use it with Shadowsocks transproxy mode, set route to \"bypass LAN &amp; mainland China\".\nss-local acl will be disabled, IP list will be added by iptables.\nIt will take several minutes at Shadowsocks enabled.\nRoot is required</string>
+    <string name="pref_category_quick_settings">Quick Settings in status bar</string>
+    <string name="pref_quick_settings_tile_adb_wireless">Add tile \"Adb Wireless\"</string>
+    <string name="pref_quick_settings_tile_adb_wireless_summary">Use \"adb connect x:x:x:x:5555\" to connect\nFor Android 5.0+, root is required</string>
+    <string name="pref_quick_settings_tile_4g3g">Add tile \"4G/3G Switch\"</string>
+    <string name="pref_quick_settings_tile_4g3g_summary">This is equivalent to set preferred network type from *#*#4636#*#*\nSet 4G/3G network types below</string>
+    <string name="pref_quick_settings_tile_4g">4G</string>
+    <string name="pref_quick_settings_tile_3g">3G</string>
+    <string name="pref_quick_settings_tile_set_preconfigured_brightness">Add tile \"Set xxx brightness\"</string>
+    <string name="pref_quick_settings_tile_set_preconfigured_brightness_summary">Tap to set preconfigured brightness, long press to set auto brightness.\nConfigure brightness below</string>
+    <string name="pref_quick_settings_tile_preconfigured_brightness">Configure brightness</string>
+    <string name="pref_quick_settings_tile_preconfigured_brightness_dialog_title">Valid range 1-254</string>
+    <string name="pref_quick_settings_brightness_by_volume_buttons">Adjust brightness by volume buttons</string>
+    <string name="pref_quick_settings_brightness_by_volume_buttons_summary">At quick settings is fully expanded.\nThis is useful for precise adjustment</string>
+    <string name="pref_category_nav_bar">Navigation Bar</string>
+    <string name="pref_nav_bar_input_cursor_control">Input cursor control</string>
+    <string name="pref_nav_bar_input_cursor_control_summary">Add left / right buttons on navigation bar to control cursor at inputting\nFor Android 7.0+</string>
+    <string name="pref_category_native_clipboard">Native Clipboard (A Xposed module)</string>
+    <string name="pref_native_clipboard_fix_chrome">Fix in Chrome</string>
+    <string name="pref_native_clipboard_fix_chrome_summary">Try this if \"Native Clipboard\" doesn\'t work in Chrome</string>
+    <string name="pref_category_trust_agent">Trust Agents</string>
+    <string name="pref_trust_agent_wifi">Smart Lock with WiFi</string>
+    <string name="pref_trust_agent_wifi_summary">Unlock device by certain Wifi connected, just like Smart Lock which provided by Google.\nUse both SSID and BSSID to match.\nYou need go \"Settings -> Security -> Trust agents\" to enable this agent.\nClick to set WiFi list, only connected WiFi can be added.\nFor Android 5.0+\nPlease manually give location permission on Android 8.1+, or SSID and BSSID can\'t be got.</string>
+    <string name="pref_category_solid_explorer">Solid Explorer (Not Classic)</string>
+    <string name="pref_solid_explorer_replace_url">Replace Streaming Url</string>
+    <string name="pref_solid_explorer_replace_url_summary">When playing video from network, Solid Explorer will streaming video to local url (eg: \"http://127.0.0.1:12345/public/a.mp4\"), it has performance loss.\nReplace \"127.0.0.1:12345\" to server url for accessing video directly (If server supports it).\nSupport smb, dav, ftp, sftp.</string>
+    <string name="pref_category_app_info">App Info</string>
+    <string name="pref_app_info_open_app_data_folder">Open App Data/APK Folder</string>
+    <string name="pref_app_info_open_app_data_folder_summary">Generally, it will open \"/data/data/[package_name]\", \"/sdcard/Android/data/[package_name]\", \"/data/user_de/0/[package_name]\" or \"/data/app/[package_name]\", you need a file explorer which supports root access, tested with Solid Explorer\nAdd as menu</string>
+    <string name="pref_app_info_go_market">Go to market</string>
+    <string name="pref_app_info_go_market_summary">Go to Google Play, CoolApk, ApkPure, Mobilism\nAdd as menu</string>
+    <string name="pref_app_info_allow_disable">Allow core system apps to be disabled</string>
+    <string name="pref_app_info_allow_disable_summary">This will allow you to click \"DISABLE\" button on core system apps, be careful, you might brick your phone\n
+\"DISABLE\" button will become red to warn you</string>
+    <string name="pref_app_info_app_ops">Go to App Ops</string>
+    <string name="pref_app_info_app_ops_summary">For Lineage OS</string>
+    <string name="pref_category_lineage_os">Lineage OS (Android 7.0+)</string>
+    <string name="pref_lineage_os_live_display_time">Customize Live Display time</string>
+    <string name="pref_lineage_os_live_display_time_summary">Manually set Live Display time, not calculate sunrise/sunset from location</string>
+    <string name="pref_lineage_os_live_display_time_sunrise">Set Live Display sunrise</string>
+    <string name="pref_lineage_os_live_display_time_sunset">Set Live Display sunset</string>
+    <string name="pref_lineage_os_gallery_remove_bottom_bar">Remove Gallery bottom bar</string>
+    <string name="pref_lineage_os_gallery_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_category_keys">Keys</string>
+    <string name="pref_keys_long_press_back_to_kill">Long press back key to kill current app</string>
+    <string name="pref_keys_long_press_back_to_kill_summary">Exclude system apps</string>
+    <string name="pref_category_recent_task">Recent Tasks</string>
+    <string name="pref_recent_task_swipe_to_kill">Right swipe to kill app</string>
+    <string name="pref_recent_task_swipe_to_kill_summary">Exclude system apps</string>
+    <string name="pref_category_phone">Phone</string>
+    <string name="pref_phone_deny_access_phone_number">Deny access phone number</string>
+    <string name="pref_phone_deny_access_phone_number_summary">Your phone number may be stored in SIM card, deny access it for non-system apps</string>
+    <string name="pref_category_display">Display</string>
+    <string name="pref_display_light_amber_in_daylight">Light amber in daylight</string>
+    <string name="pref_display_light_amber_in_daylight_summary">Color temperature is about 5500K\nFor Android 7.1+</string>
+    <string name="pref_display_min_brightness">Set minimum brightness</string>
+    <string name="pref_display_min_brightness_dialog_title">Default is %d, valid range 1-254</string>
+    <string name="pref_display_dark_wallpaper_color">Dark wallpaper color</string>
+    <string name="pref_display_dark_wallpaper_color_summary">Trick the system that we are using a dark wallpaper, then system theme color will change to dark.\neg. Quick Settings will use dark background.\nFor Android 8.1+</string>
+    <string name="pref_display_hspap_signal">H+ signal</string>
+    <string name="pref_display_hspap_signal_summary">Display H+ instead of H for HSPA+ signal\nFor Android 6.0+</string>
+    <string name="pref_category_web">Web</string>
+    <string name="pref_web_search_to_browser">Go to browser on web search</string>
+    <string name="pref_web_search_to_browser_summary">Instead of Google Search App</string>
+    <string name="pref_category_debug">Debug / Misc</string>
+    <string name="pref_debug_app_crash_info">Show app crash info</string>
+    <string name="pref_debug_app_crash_info_summary">Show crash info in app crash dialog.\nAll exception handlers from user installed apps will be disabled.\nFor Android 7.0+</string>
+    <string name="pref_debug_mtp_always">MTP always</string>
+    <string name="pref_debug_mtp_always_summary">Always enable MTP when device is connected to PC.\nMTP will also be enabled if you choose charge only.\nFor Android 8.0+</string>
+
+    <!-- Text -->
+    <string name="text_selectable">Selectable Text</string>
+    <string name="text_actions_all">All</string>
+    <string name="text_action_cut">Cut</string>
+    <string name="text_action_copy">Copy</string>
+    <string name="text_action_paste">Paste</string>
+    <string name="text_action_share">Share</string>
+    <string name="text_action_select_all">Select all</string>
+    <string name="text_action_replace">Replace\u2026</string>
+    <string name="text_actions_system">System action</string>
+    <string name="text_actions_custom">Custom</string>
+    <string name="text_actions_menu_add_custom">Add Custom</string>
+    <string name="text_actions_custom_title">Menu item name</string>
+    <string name="text_actions_menu_usage">Usage</string>
+    <string name="text_actions_usage">Usage:\n
+        ⋅ Toggle on to block.\n
+        ⋅ Long click and drag to sort, swipe left or right to remove.\n
+        ⋅ App can add additional menu items by itself, those are not listed here, you can add it manually.\n
+        ⋅ Comparison is based on name, you need reconfigure this list if system language changed.\n
+        ⋅ Name duplicated menu items will be removed after sorting and renaming.\n
+    </string>
+    <string name="text_actions_rename">Rename</string>
+    <string name="text_actions_remove_custom_only">Only custom items can be removed.</string>
+
+    <!--Share-->
+    <string name="share_qrcode_scan">Scan QR Code in image</string>
+    <string name="share_qrcode_cant_decode">Can\'t decode image.</string>
+    <string name="share_qrcode_wechat_scan">Scan with WeChat</string>
+    <string name="share_image_search">Search by image</string>
+    <string name="share_image_google_search">Google</string>
+    <string name="share_image_tineye_search">TinEye</string>
+    <string name="share_image_iqdb_search">IQDB</string>
+
+    <!-- Prevent Running -->
+    <string name="prevent_running_list_all">All</string>
+    <string name="prevent_running_list_prevented">Prevented</string>
+    <string name="prevent_running_list_not_prevented">Not prevented</string>
+
+    <!-- Process Text -->
+    <string name="process_text_douban_movie">Douban Movie</string>
+    <string name="process_text_bilibili">Bilibili</string>
+    <string name="process_text_incognito_search">Incognito Search</string>
+
+    <!-- Url Replacer -->
+    <string name="solid_explorer_db_query_error">Can\'t connect to Solid Explorer.</string>
+    <string name="solid_explorer_db_empty">No supported network storage in Solid Explorer.</string>
+    <string name="solid_explorer_url_replacer_dialog_title">Edit Url Replacer</string>
+    <string name="solid_explorer_url_replacer_dialog_instruction"></string>
+    <string name="solid_explorer_url_replacer_dialog_instruction_from">Server:</string>
+    <string name="solid_explorer_url_replacer_dialog_instruction_to">Replace To (eg: http://10.0.0.4/download):</string>
+    
+    <!-- Adb Wireless -->
+    <string name="adb_wireless_notification_title">ADB over network enabled</string>
+    <string name="adb_wireless_notification_text">Touch to disable debugging</string>
+
+    <!-- Donate -->
+    <string name="pref_header_doate">Donate</string>
+    <string name="pref_header_doate_summary">Please donate if this module is really useful for you</string>
+    <string name="pref_donate_alipay">Alipay</string>
+    <string name="pref_donate_alipay_summary">Recommended\nSimply click this menu, Alipay will be opened</string>
+    <string name="pref_donate_wechat">WeChat</string>
+    <string name="pref_donate_wechat_summary">Click this menu, WeChat scanner will be opened, QrCode of donate will be scanned automatically.\nIf nothing happened in scanner, choose QrCode from gallery, the QrCode should at the first place, you can see my app name in that QrCode image</string>
+
+    <!-- Alipay -->
+    <string name="alipay_not_installed">Alipay is not installed.</string>
+
+    <!-- WeChat -->
+    <string name="wechat_not_installed">WeChat is not installed.</string>
 </resources>

@@ -1,0 +1,36 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="li.lingfeng.ltsystem.fragments.GooglePrefFragment"
+        android:icon="@drawable/ic_google"
+        android:title="@string/pref_header_google" />
+
+    <!--<header
+        android:fragment="li.lingfeng.ltweaks.fragments.ShoppingPrefFragment"
+        android:icon="@drawable/ic_shopping"
+        android:title="@string/pref_header_shopping" />
+
+    <header
+        android:fragment="li.lingfeng.ltweaks.fragments.CommunicationPrefFragment"
+        android:icon="@drawable/ic_communication"
+        android:title="@string/pref_header_communication" />
+
+    <header
+        android:fragment="li.lingfeng.ltweaks.fragments.EntertainmentPrefFragment"
+        android:icon="@drawable/ic_entertainment"
+        android:title="@string/pref_header_entertainment" />
+
+    <header
+        android:fragment="li.lingfeng.ltweaks.fragments.SystemPrefFragment"
+        android:icon="@drawable/ic_tools"
+        android:title="@string/pref_header_system" />
+
+    <header
+        android:fragment="li.lingfeng.ltweaks.fragments.DonateFragment"
+        android:icon="@drawable/ic_coin"
+        android:title="@string/pref_header_doate"
+        android:summary="@string/pref_header_doate_summary" />-->
+
+</preference-headers>

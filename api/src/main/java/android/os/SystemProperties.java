@@ -21,4 +21,7 @@ public class SystemProperties {
     public static boolean getBoolean(String key, boolean def) {
         return false;
     }
+
+    public static void set(String key, String val) {
+    }
 }
