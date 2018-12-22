@@ -139,7 +139,7 @@ public class Patcher {
         String returnKeyword = isVoidReturn ? "" : "return ";
         String callOriginal = info.methodName + "_Original(" + commaParams + ");\n";
         String callOriginalWithReturn = returnKeyword + callOriginal;
-        String returnHookedResult = "return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResult()") + ";\n";
+        String returnHookedResult = "return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResult" + (method.getThrownExceptions().size() == 0 ? "" : "OrThrowable") + "()") + ";\n";
 
         builder.append("        if (li.lingfeng.ltsystem.LTweaksBridge.loader != null) {\n");
         builder.append("            li.lingfeng.ltsystem.ILTweaks.MethodParam param = new li.lingfeng.ltsystem.ILTweaks.MethodParam(" + (method.isStatic() ? "null": "this") + (info.getParamTypes().length != 0 ? ", ": "") + commaParams + ");\n");

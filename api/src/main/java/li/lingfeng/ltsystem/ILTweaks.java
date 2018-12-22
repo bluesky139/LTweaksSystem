@@ -70,7 +70,11 @@ public class ILTweaks {
             return _hasResult;
         }
 
-        public Object getResult() throws Throwable {
+        public Object getResult() {
+            return result;
+        }
+
+        public Object getResultOrThrowable() throws Throwable {
             if (throwable != null) {
                 throw throwable;
             } else {

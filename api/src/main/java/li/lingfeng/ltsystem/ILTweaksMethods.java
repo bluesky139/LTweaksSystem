@@ -12,4 +12,10 @@ public abstract class ILTweaksMethods {
 
     public void android_app_Activity__startActivityForResult__Intent_int_Bundle(final MethodParam param) {
     }
+
+    public void android_app_Activity__onCreatePanelMenu__int_Menu(final MethodParam param) {
+    }
+
+    public void android_app_Activity__onMenuItemSelected__int_MenuItem(final MethodParam param) {
+    }
 }
