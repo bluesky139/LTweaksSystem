@@ -9,4 +9,7 @@ public abstract class ILTweaksMethods {
 
     public void android_app_Activity__onDestroy__(final MethodParam param) {
     }
+
+    public void android_app_Activity__startActivityForResult__Intent_int_Bundle(final MethodParam param) {
+    }
 }
