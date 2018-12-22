@@ -3,7 +3,6 @@ package li.lingfeng.ltsystem.fragments;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.SwitchPreference;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -24,17 +23,6 @@ public class GooglePrefFragment extends BasePrefFragment {
         addPreferencesFromResource(R.xml.pref_google);
 
         uncheckPreferenceByDisabledComponent(R.string.key_chrome_incognito_search, ChromeIncognitoActivity.class);
-    }
-
-    @PreferenceChange(prefs = R.string.key_google_plus_remove_bottom_bar, refreshAtStart = true)
-    private void setGooglePlusNewPostsPosition(Preference preference, boolean enabled) {
-        SwitchPreference newPostsPreference = findSwitchPreference(R.string.key_google_plus_top_right_refresh);
-        if (!enabled) {
-            newPostsPreference.setChecked(false);
-            newPostsPreference.setEnabled(false);
-        } else {
-            newPostsPreference.setEnabled(true);
-        }
     }
 
     @PreferenceChange(prefs = R.string.key_chrome_incognito_search)

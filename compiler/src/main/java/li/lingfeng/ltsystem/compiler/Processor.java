@@ -53,6 +53,7 @@ public class Processor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
+        mMessager.printMessage(Diagnostic.Kind.NOTE, "Processor got annotations size " + annotations.size());
         if (annotations.size() != 1) {
             return false;
         }

@@ -3,8 +3,6 @@ package li.lingfeng.ltsystem.patcher;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.JavaToken;
 import com.github.javaparser.Position;
-import com.github.javaparser.Token;
-import com.github.javaparser.TokenRange;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -23,6 +21,8 @@ import java.util.List;
 import li.lingfeng.ltsystem.ILTweaksMethods;
 
 public class Patcher {
+
+    private static final boolean SIMULATE = false;
 
     static class MethodInfo {
         String fullClass;
@@ -45,6 +45,9 @@ public class Patcher {
         }
 
         public String[] getParamTypes() {
+            if (paramTypes.length() == 0) {
+                return new String[0];
+            }
             return paramTypes.split("_");
         }
     }
@@ -68,8 +71,8 @@ public class Patcher {
         for (int i = 0; i < methods.length; ++i) {
             Method method = methods[i];
             String[] strings = method.getName().split("__");
-            assert strings.length == 3 : "ILTweaksMethods format error, " + method.getName();
-            infos[i] = new MethodInfo(strings[0], strings[1], strings[2]);
+            assert strings.length == 3 || strings.length == 2 : "ILTweaksMethods format error, " + method.getName();
+            infos[i] = new MethodInfo(strings[0], strings[1], strings.length == 3 ? strings[2] : "");
         }
         return infos;
     }
@@ -110,7 +113,9 @@ public class Patcher {
                     String generatedMethod = generateHookMethod(method, info);
                     Logger.v(generatedMethod);
                     content = content.substring(0, pos) + generatedMethod + content.substring(pos + token.getText().length());
-                    FileUtils.writeStringToFile(file, content);
+                    if (!SIMULATE) {
+                        FileUtils.writeStringToFile(file, content);
+                    }
                     return;
                 }
             } else if (token.getCategory() == JavaToken.Category.SEPARATOR) {
@@ -137,7 +142,7 @@ public class Patcher {
         String returnHookedResult = "return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResult()") + ";\n";
 
         builder.append("        if (li.lingfeng.ltsystem.LTweaksBridge.loader != null) {\n");
-        builder.append("            li.lingfeng.ltsystem.ILTweaks.MethodParam param = new li.lingfeng.ltsystem.ILTweaks.MethodParam(" + (method.isStatic() ? "null": "this") + ", " + commaParams + ");\n");
+        builder.append("            li.lingfeng.ltsystem.ILTweaks.MethodParam param = new li.lingfeng.ltsystem.ILTweaks.MethodParam(" + (method.isStatic() ? "null": "this") + (info.getParamTypes().length != 0 ? ", ": "") + commaParams + ");\n");
         builder.append("            li.lingfeng.ltsystem.LTweaksBridge.loader.methods." + info.fullClass + "__" + info.methodName + "__" + info.paramTypes + "(param);\n");
         builder.append("            if (param.hasHook()) {\n");
         builder.append("                param.hookBefore();\n");
@@ -201,7 +206,9 @@ public class Patcher {
                     content = content.substring(0, pos + 1) + "\n"
                             + "        li.lingfeng.ltsystem.LTweaksBridge.initInZygote();\n"
                             + content.substring(pos + 1);
-                    FileUtils.writeStringToFile(file, content);
+                    if (!SIMULATE) {
+                        FileUtils.writeStringToFile(file, content);
+                    }
                     return;
                 }
             }
@@ -210,6 +217,9 @@ public class Patcher {
     }
 
     private void copyFiles() throws Throwable {
+        if (SIMULATE) {
+            return;
+        }
         File dstDir = new File(Config.ANDROID_SOURCE_DIR + "/frameworks/base/core/java/li");
         if (dstDir.exists()) {
             FileUtils.deleteDirectory(dstDir);
