@@ -11,6 +11,10 @@ public class TweakBase extends ILTweaksMethods {
         return ILTweaks.currentApplication().getClassLoader();
     }
 
+    protected Class findClass(String className) throws ClassNotFoundException {
+        return Class.forName(className, false, getClassLoader());
+    }
+
     protected void addHookOnActivity(String className, ILTweaks.MethodParam param, ILTweaks.MethodHook hook) {
         final Activity activity = (Activity) param.thisObject;
         if (activity.getClass().getName().equals(className)) {

@@ -29,7 +29,7 @@ public class Utils {
     }
 
     public interface JoinTProcessor<T> {
-        String process(T object);
+        String process(T object, int index);
     }
 
     public static <T> String joinT(Iterable<T> objects, String c, JoinTProcessor processor) {
@@ -40,7 +40,7 @@ public class Utils {
             if (i > 0) {
                 builder.append(c);
             }
-            builder.append(processor.process(it.next()));
+            builder.append(processor.process(it.next(), i));
             ++i;
         }
         return builder.toString();

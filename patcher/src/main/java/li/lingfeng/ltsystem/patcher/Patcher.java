@@ -130,14 +130,16 @@ public class Patcher {
     private String generateHookMethod(MethodDeclaration method, MethodInfo info) {
         StringBuilder builder = new StringBuilder();
         String commaParamsWithType = Utils.joinT(method.getParameters(), ", ",
-                (param -> ((Parameter) param).getTypeAsString() + ' ' + ((Parameter) param).getNameAsString()));
-        String commaThrows = Utils.joinT(method.getThrownExceptions(), ", ", (type -> ((ReferenceType) type).getElementType().asString()));
+                ((param, i) -> ((Parameter) param).getTypeAsString() + ' ' + ((Parameter) param).getNameAsString()));
+        String commaThrows = Utils.joinT(method.getThrownExceptions(), ", ", ((type, i) -> ((ReferenceType) type).getElementType().asString()));
         builder.append(info.methodName + "(" + commaParamsWithType + ") " + (method.getThrownExceptions().size() > 0 ? "throws " + commaThrows : "") + " {\n");
 
-        String commaParams = Utils.joinT(method.getParameters(), ", ", (param -> ((Parameter) param).getNameAsString()));
+        String commaParams = Utils.joinT(method.getParameters(), ", ", ((param, i) -> ((Parameter) param).getNameAsString()));
+        String commaModifiedParams = Utils.joinT(method.getParameters(), ", ", ((param, i) -> "(" + ((Parameter) param).getTypeAsString() + ") param.args[" + i + "]"));
         boolean isVoidReturn = method.getType().getClass() == VoidType.class;
         String returnKeyword = isVoidReturn ? "" : "return ";
-        String callOriginal = info.methodName + "_Original(" + commaParams + ");\n";
+        String callOriginal = info.methodName + "_Original(" + commaParams + ")";
+        String callOriginalWithModifiedParams = info.methodName + "_Original(" + commaModifiedParams + ")";
         String callOriginalWithReturn = returnKeyword + callOriginal;
         String returnHookedResult = "return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResult" + (method.getThrownExceptions().size() == 0 ? "" : "OrThrowable") + "()") + ";\n";
 
@@ -149,7 +151,13 @@ public class Patcher {
         builder.append("                if (param.hasResult()) {\n");
         builder.append("                    " + returnHookedResult);
         builder.append("                }\n");
-        builder.append("                " + (isVoidReturn ? "" : method.getTypeAsString() + " originalResult = ") + callOriginal);
+
+        if (isVoidReturn) {
+            builder.append("                if (param.isArgsModified()) " + callOriginalWithModifiedParams + "; else " + callOriginal + ";\n");
+        } else {
+            builder.append("                " + method.getTypeAsString() + " originalResult = " + "param.hasResult() ? " + callOriginalWithModifiedParams + " : " + callOriginal + ";\n");
+        }
+
         builder.append("                param.hookAfter();\n");
 
         if (!isVoidReturn) {
@@ -161,10 +169,10 @@ public class Patcher {
         }
 
         builder.append("            } else {\n");
-        builder.append("                " + callOriginalWithReturn);
+        builder.append("                " + callOriginalWithReturn + ";\n");
         builder.append("            }\n");
         builder.append("        } else {\n");
-        builder.append("            " + callOriginalWithReturn);
+        builder.append("            " + callOriginalWithReturn + ";\n");
         builder.append("        }\n");
         builder.append("    }\n");
         builder.append("    private " + (method.isStatic() ? "static " : "") + method.getTypeAsString() + " " + info.methodName + "_Original");

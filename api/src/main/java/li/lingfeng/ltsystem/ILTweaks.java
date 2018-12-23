@@ -21,6 +21,7 @@ public class ILTweaks {
     public static class MethodParam {
         public Object thisObject;
         public Object[] args;
+        private boolean _isArgsModified = false;
         private Object result;
         private Throwable throwable;
         private boolean _hasResult = false;
@@ -54,6 +55,15 @@ public class ILTweaks {
             try {
                 hookWrapper.after();
             } catch (Throwable throwable) {}
+        }
+
+        public void setArg(int i, Object arg) {
+            args[i] = arg;
+            _isArgsModified = true;
+        }
+
+        public boolean isArgsModified() {
+            return _isArgsModified;
         }
 
         public void setResult(Object result) {

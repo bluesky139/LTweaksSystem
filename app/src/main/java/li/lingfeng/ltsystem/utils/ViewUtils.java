@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -111,12 +112,16 @@ public class ViewUtils {
     }
 
     public static <T extends View> T findViewByType(ViewGroup rootView, final Class<? extends View> type) {
+        return findViewByType(rootView, type, -1);
+    }
+
+    public static <T extends View> T findViewByType(ViewGroup rootView, final Class<? extends View> type, int maxDeep) {
         List<View> views = traverseViews(rootView, true, new ViewTraverseCallback() {
             @Override
             public boolean onAddResult(View view, int deep) {
                 return type.isAssignableFrom(view.getClass());
             }
-        });
+        }, maxDeep);
         if (views.size() > 0) {
             return (T) views.get(0);
         }
@@ -157,7 +162,13 @@ public class ViewUtils {
         });
     }
 
-    public static <T extends View> List<T> traverseViews(ViewGroup rootView, final boolean onlyOne, final ViewTraverseCallback callback) {
+    public static <T extends View> List<T> traverseViews(ViewGroup rootView, final boolean onlyOne,
+                                                         final ViewTraverseCallback callback) {
+        return traverseViews(rootView, onlyOne, callback, -1);
+    }
+
+    public static <T extends View> List<T> traverseViews(ViewGroup rootView, final boolean onlyOne,
+                                                         final ViewTraverseCallback callback, int maxDeep) {
         final List<T> results = new ArrayList<>();
         traverseViews(rootView, new ViewTraverseCallback2() {
             @Override
@@ -170,7 +181,7 @@ public class ViewUtils {
                 }
                 return false;
             }
-        });
+        }, maxDeep);
         return results;
     }
 
@@ -362,4 +373,21 @@ public class ViewUtils {
         Object listenerInfo = XposedHelpers.callMethod(view, "getListenerInfo");
         return (View.OnClickListener) XposedHelpers.getObjectField(listenerInfo, "mOnClickListener");
     }*/
+
+    public static void dispatchBackKeyEventOnRoot(View view) {
+        View rootView = view.getRootView();
+        rootView.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+        rootView.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+    }
+
+    public static Activity getActivityFromView(View view) {
+        Context context = view.getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
+    }
 }

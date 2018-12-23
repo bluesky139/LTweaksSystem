@@ -4,10 +4,7 @@
     <!--Google-->
     <string name="key_google_overlay_search_to_browser">key_google_overlay_search_to_browser</string>
     <string name="key_google_photos_remove_bottom_bar">key_google_photos_remove_bottom_bar</string>
-    <string name="key_google_newsstand_remove_bottom_bar">key_google_newsstand_remove_bottom_bar</string>
-    <string name="key_google_books_remove_bottom_bar">key_google_books_remove_bottom_bar</string>
     <string name="key_google_play_view_in_coolapk">key_google_play_view_in_coolapk</string>
-    <string name="key_google_messenger_disable_direct_share">key_google_messenger_disable_direct_share</string>
     <string name="key_chrome_incognito_search">key_chrome_incognito_search</string>
     <string name="key_chrome_google_cache">key_chrome_google_cache</string>
     <string name="key_chrome_wayback">key_chrome_wayback</string>

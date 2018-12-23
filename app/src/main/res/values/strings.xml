@@ -45,41 +45,15 @@ Open source on github: \n
 
     <!-- Google -->
     <string name="pref_header_google">Google</string>
-    <string name="pref_category_google_play_services">Google Play Services</string>
-    <string name="pref_google_dismiss_location_checker">Dismiss location settings checker</string>
-    <string name="pref_google_dismiss_location_checker_summary">Dismiss dialog \"To continue, let your device turn on location using Google\'s location service.\"</string>
-    <string name="pref_google_block_system_update_notification">Block system update notificaton</string>
     <string name="pref_category_google">Google Search App</string>
-    <string name="pref_google_remove_bottom_bar">Remove bottom bar</string>
-    <string name="pref_google_remove_bottom_bar_summary">Put them into drawer menu</string>
-    <string name="pref_google_com_domain">Use google.com to search</string>
-    <string name="pref_google_com_domain_summary">Not local domain, eg: google.com.hk</string>
-    <string name="pref_google_keyboard_suggestion">Allow keyboard suggestions in search box</string>
     <string name="pref_google_overlay_search_to_browser">Overlay search go to browser</string>
     <string name="pref_google_overlay_search_to_browser_summary">In nova launcher or some other launcher, there\'s an option \"Search as overlay\", use browser to open search result with this option</string>
-    <string name="pref_category_google_plus">Google+</string>
-    <string name="pref_google_plus_remove_bottom_bar">Remove bottom bar</string>
-    <string name="pref_google_plus_remove_bottom_bar_summary">Put them into drawer menu</string>
-    <string name="pref_google_plus_top_right_refresh">Put \"New posts\" to top right menu</string>
-    <string name="pref_google_plus_hide_comment_edit">Hide comment edit box</string>
-    <string name="pref_google_plus_hide_comment_edit_summary">Replace by floating button</string>
-    <string name="pref_google_plus_no_redirect">Url no redirect</string>
-    <string name="pref_google_plus_no_redirect_summary">Remove \"http://plus.url.google.com/url?q=\"</string>
     <string name="pref_category_google_photos">Google Photos</string>
     <string name="pref_google_photos_remove_bottom_bar">Remove bottom bar</string>
     <string name="pref_google_photos_remove_bottom_bar_summary">Put them into drawer menu</string>
-    <string name="pref_category_google_newsstand">Google Newsstand</string>
-    <string name="pref_google_newsstand_remove_bottom_bar">Remove bottom bar</string>
-    <string name="pref_google_newsstand_remove_bottom_bar_summary">Put them into drawer menu</string>
-    <string name="pref_category_google_books">Google Play Books</string>
-    <string name="pref_google_books_remove_bottom_bar">Remove bottom bar</string>
-    <string name="pref_google_books_remove_bottom_bar_summary">Put them into drawer menu</string>
     <string name="pref_category_google_play">Google Play</string>
     <string name="pref_google_play_view_in_coolapk">Add menu \"View in CoolApk / ApkPure / Mobilism / App Info\"</string>
     <string name="pref_google_play_view_in_coolapk_summary">Jump to CoolApk / ApkPure, just like jump to Google Play from CoolApk, search in Mobilism, jump to App Info page of system</string>
-    <string name="pref_category_google_messenger">Google Messenger</string>
-    <string name="pref_google_messenger_disable_direct_share">Disable direct share</string>
-    <string name="pref_google_messenger_disable_direct_share_summary">For Android 6.0+</string>
     <string name="pref_category_chrome">Chrome</string>
     <string name="pref_chrome_incognito_search">Search / Open in incognito</string>
     <string name="pref_chrome_incognito_search_summary">Search in incognito with selected text, use floating menu with text selection, for Android 6.0+\nMenu \"Open in incognito\" in Chrome and Custom Tab\nLong click link menu \"Open in incognito\" in Custom Tab</string>
