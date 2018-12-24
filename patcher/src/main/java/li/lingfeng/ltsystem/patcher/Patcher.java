@@ -15,14 +15,22 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import li.lingfeng.ltsystem.ILTweaksMethods;
 
 public class Patcher {
 
     private static final boolean SIMULATE = false;
+
+    private static final Map<String, String> PACKAGE_PATH_MAP = new HashMap<String, String>() {{
+        put("com.android.server", "/frameworks/base/services/core/java/");
+    }};
+    private static final String PACKAGE_CORE_PATH = "/frameworks/base/core/java/";
 
     static class MethodInfo {
         String fullClass;
@@ -35,13 +43,33 @@ public class Patcher {
             this.paramTypes = paramTypes;
         }
 
+        public String getClassFullName() {
+            return fullClass.replace('_', '.');
+        }
+
         public String getClassSimpleName() {
             String[] strings = fullClass.split("_");
             return strings[strings.length - 1];
         }
 
+        public String getClassPackageName() {
+            return Utils.removeEndWithRIndexOf(getClassFullName(), '.');
+        }
+
         public String getFilePath() {
-            return Config.ANDROID_SOURCE_DIR + "/frameworks/base/core/java/" + fullClass.replace('_', '/') + ".java";
+            String name = getClassFullName();
+            String path = null;
+            while (name.contains(".")) {
+                name = Utils.removeEndWithRIndexOf(name, '.');
+                path = PACKAGE_PATH_MAP.get(name);
+                if (path != null) {
+                    break;
+                }
+            }
+            if (path == null) {
+                path = PACKAGE_CORE_PATH;
+            }
+            return Config.ANDROID_SOURCE_DIR + path + fullClass.replace('_', '/') + ".java";
         }
 
         public String[] getParamTypes() {
@@ -91,9 +119,11 @@ public class Patcher {
             throw new RuntimeException(info.methodName + "_Original method is already in it, you should revert changes first.");
         }
 
-        methods = cls.getMethodsBySignature(info.methodName, info.getParamTypes());
+        String[] paramTypes = Arrays.stream(info.getParamTypes()).map(type -> Utils.replace$ToAngleBrackets(type)).toArray(String[]::new);
+        methods = cls.getMethodsBySignature(info.methodName, paramTypes);
         if (methods.size() != 1) {
-            throw new RuntimeException("getMethodsBySignature return " + methods.size() + " methods.");
+            throw new RuntimeException("getMethodsBySignature return " + methods.size() + " methods, "
+                    + info.methodName + "(" + StringUtils.join(paramTypes, ", ") + ")");
         }
         MethodDeclaration method = methods.get(0);
 
@@ -111,7 +141,9 @@ public class Patcher {
                     }
 
                     String generatedMethod = generateHookMethod(method, info);
-                    Logger.v(generatedMethod);
+                    if (SIMULATE) {
+                        Logger.v(generatedMethod);
+                    }
                     content = content.substring(0, pos) + generatedMethod + content.substring(pos + token.getText().length());
                     if (!SIMULATE) {
                         FileUtils.writeStringToFile(file, content);

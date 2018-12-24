@@ -1,5 +1,7 @@
 package li.lingfeng.ltsystem.patcher;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Iterator;
 
 public class Utils {
@@ -26,6 +28,19 @@ public class Utils {
             }
         }
         return -1;
+    }
+
+    public static String removeEndWithRIndexOf(String str, char c) {
+        int i = str.lastIndexOf(c);
+        return i >= 0 ? str.substring(0, i) : str;
+    }
+
+    public static String replace$ToAngleBrackets(String str) {
+        if (!str.contains("$")) {
+            return str;
+        }
+        str = StringUtils.replaceFirst(str, "\\$", "<");
+        return StringUtils.replaceFirst(str, "\\$", ">");
     }
 
     public interface JoinTProcessor<T> {

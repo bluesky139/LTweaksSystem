@@ -7,6 +7,10 @@ import li.lingfeng.ltsystem.ILTweaksMethods;
 
 public class TweakBase extends ILTweaksMethods {
 
+    protected String getPackageName() {
+        return ILTweaks.currentApplication().getPackageName();
+    }
+
     protected ClassLoader getClassLoader() {
         return ILTweaks.currentApplication().getClassLoader();
     }

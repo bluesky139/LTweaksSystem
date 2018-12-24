@@ -27,4 +27,10 @@ public abstract class ILTweaksMethods {
 
     public void android_view_View__setOnClickListener__OnClickListener(final MethodParam param) {
     }
+
+    public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(final MethodParam param) {
+    }
+
+    public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(final MethodParam param) {
+    }
 }
