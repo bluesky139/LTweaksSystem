@@ -36,6 +36,10 @@ public class Logger {
         Log.e(TAG, msg);
     }
 
+    public static void e(String msg, Throwable e) {
+        Log.e(TAG, msg, e);
+    }
+
     public static void stackTrace() {
         stackTrace("");
     }

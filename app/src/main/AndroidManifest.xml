@@ -15,6 +15,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activities.ChromeIncognitoActivity"
+            android:taskAffinity="li.lingfeng.ltweaks.activities.ChromeIncognitoActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/process_text_incognito_search"
+            android:theme="@android:style/Theme.Dialog"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="li.lingfeng.ltweaks.ACTION_CHROME_INCOGNITO" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

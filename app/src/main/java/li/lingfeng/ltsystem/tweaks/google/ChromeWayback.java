@@ -19,7 +19,8 @@ public class ChromeWayback extends ChromeBase {
     @Override
     protected Map<String, MenuInfo> newMenus() {
         Map<String, MenuInfo> infos = new HashMap<>(1);
-        infos.put(ContextUtils.getLString(R.string.chrome_wayback_machine), new MenuInfo(1003, (activity, url, isCustomTab) -> {
+        String title = ContextUtils.getLString(R.string.chrome_wayback_machine);
+        infos.put(title, new MenuInfo(title, 1003, (activity, url, isCustomTab) -> {
             loadUrl(activity, "https://web.archive.org/web/*/" + url);
         }));
         return infos;

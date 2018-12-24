@@ -18,6 +18,8 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -373,6 +375,11 @@ public class ViewUtils {
         Object listenerInfo = XposedHelpers.callMethod(view, "getListenerInfo");
         return (View.OnClickListener) XposedHelpers.getObjectField(listenerInfo, "mOnClickListener");
     }*/
+
+    public static View.OnCreateContextMenuListener getViewCreateContextMenuListener(View view) throws IllegalAccessException {
+        Object info = FieldUtils.readField(view, "mListenerInfo", true);
+        return info != null ? (View.OnCreateContextMenuListener) FieldUtils.readDeclaredField(info, "mOnCreateContextMenuListener", true) : null;
+    }
 
     public static void dispatchBackKeyEventOnRoot(View view) {
         View rootView = view.getRootView();

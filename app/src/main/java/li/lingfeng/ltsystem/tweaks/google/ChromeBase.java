@@ -16,6 +16,8 @@ import org.apache.commons.lang3.reflect.MethodUtils;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
@@ -37,10 +39,12 @@ public class ChromeBase extends TweakBase {
     }
 
     protected class MenuInfo {
+        public String title;
         public int order;
         public NewMenuCallback selectedCallback;
 
-        public MenuInfo(int order, NewMenuCallback selectedCallback) {
+        public MenuInfo(String title, int order, NewMenuCallback selectedCallback) {
+            this.title = title;
             this.order = order;
             this.selectedCallback = selectedCallback;
         }
@@ -109,20 +113,20 @@ public class ChromeBase extends TweakBase {
             @Override
             public void before() throws Throwable {
                 View view = (View) param.thisObject;
-                if (view instanceof LinearLayout) {
-                    TextView textView = ViewUtils.findViewByType((ViewGroup) view, TextView.class, 0);
-                    if (textView != null) {
-                        MenuInfo info = mMenuInfos.get(textView.getText().toString());
-                        if (info != null) {
+                Optional.of(view)
+                        .filter(LinearLayout.class::isInstance)
+                        .map(v -> ViewUtils.findViewByType((ViewGroup) view, TextView.class, 0))
+                        .filter(Objects::nonNull)
+                        .map(textView -> mMenuInfos.get(((TextView) textView).getText().toString()))
+                        .ifPresent(info -> {
                             param.setArg(0, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     ViewUtils.dispatchBackKeyEventOnRoot(view);
                                     Activity activity = ViewUtils.getActivityFromView(view);
                                     try {
-                                        Object activityTab = getCurrentTab(activity);
-                                        String url = (String) MethodUtils.invokeMethod(activityTab, "getUrl");
-                                        Logger.i("Menu \"" + textView.getText() + "\" is clicked, url " + url);
+                                        String url = getCurrentUrl(activity);
+                                        Logger.i("Menu \"" + info.title + "\" is clicked, url " + url);
                                         info.selectedCallback.onOptionsItemSelected(activity, url, isCustomTab(activity));
                                     } catch (Throwable e) {
                                         Toast.makeText(activity, "Error.", Toast.LENGTH_SHORT).show();
@@ -130,9 +134,7 @@ public class ChromeBase extends TweakBase {
                                     }
                                 }
                             });
-                        }
-                    }
-                }
+                        });
             }
         });
     }
@@ -190,7 +192,7 @@ public class ChromeBase extends TweakBase {
         Logger.d("loadUrl return " + ret);
     }
 
-    private Object getCurrentTab(Activity activity) throws Throwable {
+    protected Object getCurrentTab(Activity activity) throws Throwable {
         Method[] methods = activity.getClass().getMethods();
         Method method = Utils.findMethodFromList(methods, new Utils.FindMethodCallback() {
             @Override
@@ -204,7 +206,12 @@ public class ChromeBase extends TweakBase {
         return method.invoke(activity);
     }
 
-    private boolean isCustomTab(Activity activity) {
+    protected String getCurrentUrl(Activity activity) throws Throwable {
+        Object activityTab = getCurrentTab(activity);
+        return (String) MethodUtils.invokeMethod(activityTab, "getUrl");
+    }
+
+    protected boolean isCustomTab(Activity activity) {
         return activity.getClass().getName().equals(CUSTOM_ACTIVITY);
     }
 }

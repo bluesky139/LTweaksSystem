@@ -21,7 +21,8 @@ public class ChromeCache extends ChromeBase {
     @Override
     protected Map<String, MenuInfo> newMenus() {
         Map<String, MenuInfo> infos = new HashMap<>(1);
-        infos.put(ContextUtils.getLString(R.string.chrome_google_cache), new MenuInfo(1002, (activity, url, isCustomTab) -> {
+        String title = ContextUtils.getLString(R.string.chrome_google_cache);
+        infos.put(title, new MenuInfo(title, 1002, (activity, url, isCustomTab) -> {
             String cachedUrl = (url.startsWith("https") ? "https" : "http") + "://webcache.googleusercontent.com/search?q=cache:"
                     + Uri.encode(url);
             loadUrl(activity, cachedUrl);

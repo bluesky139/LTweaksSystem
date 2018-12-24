@@ -4,11 +4,16 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.JavaToken;
 import com.github.javaparser.Position;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.ReferenceType;
+import com.github.javaparser.ast.type.Type;
+import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.VoidType;
+import com.github.javaparser.ast.type.WildcardType;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +25,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import li.lingfeng.ltsystem.ILTweaksMethods;
 
@@ -187,7 +193,7 @@ public class Patcher {
         if (isVoidReturn) {
             builder.append("                if (param.isArgsModified()) " + callOriginalWithModifiedParams + "; else " + callOriginal + ";\n");
         } else {
-            builder.append("                " + method.getTypeAsString() + " originalResult = " + "param.hasResult() ? " + callOriginalWithModifiedParams + " : " + callOriginal + ";\n");
+            builder.append("                " + method.getTypeAsString() + " originalResult = " + "param.isArgsModified() ? " + callOriginalWithModifiedParams + " : " + callOriginal + ";\n");
         }
 
         builder.append("                param.hookAfter();\n");
@@ -207,7 +213,7 @@ public class Patcher {
         builder.append("            " + callOriginalWithReturn + ";\n");
         builder.append("        }\n");
         builder.append("    }\n");
-        builder.append("    private " + (method.isStatic() ? "static " : "") + method.getTypeAsString() + " " + info.methodName + "_Original");
+        builder.append("    private " + (method.isStatic() ? "static " : "") + (method.isGeneric() ? "<" + method.getTypeParameter(0).asString() + "> " : "") + method.getTypeAsString() + " " + info.methodName + "_Original");
 
         return builder.toString();
     }

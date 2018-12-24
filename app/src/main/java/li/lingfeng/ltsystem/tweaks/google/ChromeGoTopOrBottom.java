@@ -19,10 +19,12 @@ public class ChromeGoTopOrBottom extends ChromeBase {
     @Override
     protected Map<String, MenuInfo> newMenus() {
         Map<String, MenuInfo> infos = new HashMap<>(2);
-        infos.put(ContextUtils.getLString(R.string.chrome_go_top), new MenuInfo(1004, (activity, url, isCustomTab) -> {
+        String title = ContextUtils.getLString(R.string.chrome_go_top);
+        infos.put(title, new MenuInfo(title, 1004, (activity, url, isCustomTab) -> {
             loadUrl(activity, "javascript:window.scrollTo(0, 0);");
         }));
-        infos.put(ContextUtils.getLString(R.string.chrome_go_bottom), new MenuInfo(1005, (activity, url, isCustomTab) -> {
+        title = ContextUtils.getLString(R.string.chrome_go_bottom);
+        infos.put(title, new MenuInfo(title, 1005, (activity, url, isCustomTab) -> {
             loadUrl(activity, "javascript:window.scrollTo(0, document.body.scrollHeight);");
         }));
         return infos;

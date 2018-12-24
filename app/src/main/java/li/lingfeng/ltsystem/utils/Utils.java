@@ -109,6 +109,19 @@ public class Utils {
         boolean onMenuItem(MenuItem item);
     }
 
+    public static Field findFirstFieldByExactType(Class<?> clazz, Class<?> type) {
+        Class<?> clz = clazz;
+        do {
+            for (Field field : clz.getDeclaredFields()) {
+                if (field.getType() == type) {
+                    field.setAccessible(true);
+                    return field;
+                }
+            }
+        } while ((clz = clz.getSuperclass()) != null);
+        throw new NoSuchFieldError("Field of type " + type.getName() + " in class " + clazz.getName());
+    }
+
     public static Method findMethodFromList(Method[] methods, FindMethodCallback callback) {
         for (Method method : methods) {
             if (callback.onMethodCheck(method)) {
