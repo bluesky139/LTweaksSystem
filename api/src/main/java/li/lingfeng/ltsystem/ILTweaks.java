@@ -71,6 +71,10 @@ public class ILTweaks {
             _hasResult = true;
         }
 
+        public void setResultSilently(Object result) {
+            this.result = result;
+        }
+
         public void setThrowable(Throwable throwable) {
             this.throwable = throwable;
             _hasResult = true;

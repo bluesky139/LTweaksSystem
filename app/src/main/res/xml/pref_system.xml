@@ -1,0 +1,284 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_category_text_aide">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_text_aide_open_youdao"
+            android:title="@string/pref_text_aide_open_youdao" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_text">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_text_double_click_for_selectable"
+            android:title="@string/pref_text_double_click_for_selectable"
+            android:summary="@string/pref_text_double_click_for_selectable_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_text_selectable_text"
+            android:title="@string/pref_text_selectable_text"
+            android:summary="@string/pref_text_selectable_text_summary" />
+        <Preference
+            android:key="@string/key_text_actions"
+            android:title="@string/pref_text_actions"
+            android:summary="@string/pref_text_actions_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_selection_action_mode_original"
+            android:title="@string/pref_text_actions_original"
+            android:summary="@string/pref_text_actions_original_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_youdao">
+        <Preference
+            android:key="@string/key_youdao_quick_query_shortcut"
+            android:title="@string/pref_youdao_quick_query_shortcut"
+            android:summary="@string/pref_youdao_quick_query_shortcut_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_system_share">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_system_share_qrcode_scan"
+            android:title="@string/pref_system_share_qrcode_scan"
+            android:summary="@string/pref_system_share_qrcode_scan_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_system_share_image_search"
+            android:title="@string/pref_system_share_image_search"
+            android:summary="@string/pref_system_share_image_search_summary" />
+        <Preference
+            android:key="@string/key_system_share_filter"
+            android:title="@string/pref_system_share_filter" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_system_share_copy_to_share"
+            android:title="@string/pref_system_share_copy_to_share"
+            android:summary="@string/pref_system_share_copy_to_share_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_coolapk">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_coolapk_remove_bottom_bar"
+            android:title="@string/pref_coolapk_remove_bottom_bar"
+            android:summary="@string/pref_coolapk_remove_bottom_bar_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_prevent_running">
+        <Preference
+            android:key="@string/key_prevent_running_set_list"
+            android:title="@string/pref_prevent_running_set_list"
+            android:summary="@string/pref_prevent_running_set_list_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_shadowsocks">
+        <EditTextPreference
+            android:key="@string/key_shadowsocks_primary_dns"
+            android:title="@string/pref_shadowsocks_primary_dns"
+            android:summary="@string/pref_shadowsocks_primary_dns_summary" />
+        <SwitchPreference
+            android:key="@string/key_shadowsocks_transproxy"
+            android:title="@string/pref_shadowsocks_transproxy"
+            android:summary="@string/pref_shadowsocks_transproxy_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_quick_settings">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_quick_settings_tile_adb_wireless"
+            android:title="@string/pref_quick_settings_tile_adb_wireless"
+            android:summary="@string/pref_quick_settings_tile_adb_wireless_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_quick_settings_tile_4g3g"
+            android:title="@string/pref_quick_settings_tile_4g3g"
+            android:summary="@string/pref_quick_settings_tile_4g3g_summary" />
+        <ListPreference
+            android:key="@string/key_quick_settings_tile_4g"
+            android:title="@string/pref_quick_settings_tile_4g" />
+        <ListPreference
+            android:key="@string/key_quick_settings_tile_3g"
+            android:title="@string/pref_quick_settings_tile_3g" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_quick_settings_tile_set_preconfigured_brightness"
+            android:title="@string/pref_quick_settings_tile_set_preconfigured_brightness"
+            android:summary="@string/pref_quick_settings_tile_set_preconfigured_brightness_summary" />
+        <EditTextPreference
+            android:inputType="number"
+            android:key="@string/key_quick_settings_tile_preconfigured_brightness"
+            android:title="@string/pref_quick_settings_tile_preconfigured_brightness"
+            android:dialogTitle="@string/pref_quick_settings_tile_preconfigured_brightness_dialog_title" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_quick_settings_brightness_by_volume_buttons"
+            android:title="@string/pref_quick_settings_brightness_by_volume_buttons"
+            android:summary="@string/pref_quick_settings_brightness_by_volume_buttons_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_nav_bar">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_nav_bar_input_cursor_control"
+            android:title="@string/pref_nav_bar_input_cursor_control"
+            android:summary="@string/pref_nav_bar_input_cursor_control_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_native_clipboard">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_native_clipboard_fix_chrome"
+            android:title="@string/pref_native_clipboard_fix_chrome"
+            android:summary="@string/pref_native_clipboard_fix_chrome_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_trust_agent">
+        <Preference
+            android:key="@string/key_trust_agent_wifi_aps"
+            android:title="@string/pref_trust_agent_wifi"
+            android:summary="@string/pref_trust_agent_wifi_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_solid_explorer">
+        <Preference
+            android:key="@string/key_solid_explorer_url_replacers"
+            android:title="@string/pref_solid_explorer_replace_url"
+            android:summary="@string/pref_solid_explorer_replace_url_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_app_info">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_app_info_open_app_data_folder"
+            android:title="@string/pref_app_info_open_app_data_folder"
+            android:summary="@string/pref_app_info_open_app_data_folder_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_app_info_go_market"
+            android:title="@string/pref_app_info_go_market"
+            android:summary="@string/pref_app_info_go_market_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_app_info_allow_disable"
+            android:title="@string/pref_app_info_allow_disable"
+            android:summary="@string/pref_app_info_allow_disable_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_app_info_app_ops"
+            android:title="@string/pref_app_info_app_ops"
+            android:summary="@string/pref_app_info_app_ops_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_lineage_os">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_lineage_os_live_display_time"
+            android:title="@string/pref_lineage_os_live_display_time"
+            android:summary="@string/pref_lineage_os_live_display_time_summary" />
+        <li.lingfeng.ltsystem.fragments.base.TimePickerPreference
+            android:defaultValue="08:00"
+            android:key="@string/key_lineage_os_live_display_time_sunrise"
+            android:title="@string/pref_lineage_os_live_display_time_sunrise" />
+        <li.lingfeng.ltsystem.fragments.base.TimePickerPreference
+            android:defaultValue="19:00"
+            android:key="@string/key_lineage_os_live_display_time_sunset"
+            android:title="@string/pref_lineage_os_live_display_time_sunset" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_lineage_os_gallery_remove_bottom_bar"
+            android:title="@string/pref_lineage_os_gallery_remove_bottom_bar"
+            android:summary="@string/pref_lineage_os_gallery_remove_bottom_bar_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_keys">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_keys_long_press_back_to_kill"
+            android:title="@string/pref_keys_long_press_back_to_kill"
+            android:summary="@string/pref_keys_long_press_back_to_kill_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_recent_task">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_recent_task_swipe_to_kill"
+            android:title="@string/pref_recent_task_swipe_to_kill"
+            android:summary="@string/pref_recent_task_swipe_to_kill_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_phone">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_phone_deny_access_phone_number"
+            android:title="@string/pref_phone_deny_access_phone_number"
+            android:summary="@string/pref_phone_deny_access_phone_number_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_display">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_display_light_amber_in_daylight"
+            android:title="@string/pref_display_light_amber_in_daylight"
+            android:summary="@string/pref_display_light_amber_in_daylight_summary" />
+        <EditTextPreference
+            android:inputType="number"
+            android:key="@string/key_display_min_brightness"
+            android:title="@string/pref_display_min_brightness" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_display_dark_wallpaper_color"
+            android:title="@string/pref_display_dark_wallpaper_color"
+            android:summary="@string/pref_display_dark_wallpaper_color_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_display_hspap_signal"
+            android:title="@string/pref_display_hspap_signal"
+            android:summary="@string/pref_display_hspap_signal_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_web">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_web_search_to_browser"
+            android:title="@string/pref_web_search_to_browser"
+            android:summary="@string/pref_web_search_to_browser_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_debug">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_debug_app_crash_info"
+            android:title="@string/pref_debug_app_crash_info"
+            android:summary="@string/pref_debug_app_crash_info_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_debug_mtp_always"
+            android:title="@string/pref_debug_mtp_always"
+            android:summary="@string/pref_debug_mtp_always_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_debug_debuggable"
+            android:title="@string/pref_debug_debuggable"
+            android:summary="@string/pref_debug_debuggable_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

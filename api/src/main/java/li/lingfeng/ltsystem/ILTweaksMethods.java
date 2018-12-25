@@ -28,6 +28,9 @@ public abstract class ILTweaksMethods {
     public void android_content_Intent__getParcelableExtra__String(final MethodParam param) {
     }
 
+    public void android_content_pm_PackageParser__parsePackage__File_int_boolean(final MethodParam param) {
+    }
+
     public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(final MethodParam param) {
     }
 

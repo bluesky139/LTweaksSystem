@@ -179,7 +179,16 @@ public class Patcher {
         String callOriginal = info.methodName + "_Original(" + commaParams + ")";
         String callOriginalWithModifiedParams = info.methodName + "_Original(" + commaModifiedParams + ")";
         String callOriginalWithReturn = returnKeyword + callOriginal;
-        String returnHookedResult = "return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResult" + (method.getThrownExceptions().size() == 0 ? "" : "OrThrowable") + "()") + ";\n";
+        String returnHookedResult = method.getThrownExceptions().size() == 0
+                ?
+                "return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResult()") + ";\n"
+                :
+                "try {\n" +
+                "   return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResultOrThrowable()") + ";\n" +
+                "} catch (Throwable e) {\n" +
+                "   throw (" + method.getThrownException(0).asString() + ") e;\n" +
+                "}\n"
+                ;
 
         builder.append("        if (li.lingfeng.ltsystem.LTweaksBridge.loader != null) {\n");
         builder.append("            li.lingfeng.ltsystem.ILTweaks.MethodParam param = new li.lingfeng.ltsystem.ILTweaks.MethodParam(" + (method.isStatic() ? "null": "this") + (info.getParamTypes().length != 0 ? ", ": "") + commaParams + ");\n");
@@ -196,6 +205,9 @@ public class Patcher {
             builder.append("                " + method.getTypeAsString() + " originalResult = " + "param.isArgsModified() ? " + callOriginalWithModifiedParams + " : " + callOriginal + ";\n");
         }
 
+        if (!isVoidReturn) {
+            builder.append("                param.setResultSilently(originalResult);\n");
+        }
         builder.append("                param.hookAfter();\n");
 
         if (!isVoidReturn) {
