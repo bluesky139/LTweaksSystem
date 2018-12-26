@@ -1,8 +1,12 @@
 package li.lingfeng.ltsystem.fragments;
 
 import android.os.Bundle;
+import android.preference.Preference;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.activities.SelectableTextActivity;
+import li.lingfeng.ltsystem.lib.PreferenceChange;
+import li.lingfeng.ltsystem.utils.ComponentUtils;
 
 /**
  * Created by smallville on 2017/1/4.
@@ -15,16 +19,9 @@ public class SystemPrefFragment extends BasePrefFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_system);
 
-        /*uncheckPreferenceByDisabledComponent(R.string.key_text_selectable_text, SelectableTextActivity.class);
-        uncheckPreferenceByDisabledComponent(R.string.key_system_share_qrcode_scan, QrCodeActivity.class);
+        uncheckPreferenceByDisabledComponent(R.string.key_text_selectable_text, SelectableTextActivity.class);
+        /*uncheckPreferenceByDisabledComponent(R.string.key_system_share_qrcode_scan, QrCodeActivity.class);
         uncheckPreferenceByDisabledComponent(R.string.key_system_share_image_search, ImageSearchActivity.class);*/
-    }
-
-    /*@PreferenceChange(prefs = R.string.key_text_aide_open_youdao)
-    private void uninstallOldApp(Preference preference, boolean enabled) {
-        if (enabled) {
-            PackageUtils.tryUninstallPackage("li.lingfeng.textaide.youdao", "Text Aide with Youdao", getActivity());
-        }
     }
 
     @PreferenceChange(prefs = R.string.key_text_selectable_text)
@@ -32,7 +29,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         ComponentUtils.enableComponent(SelectableTextActivity.class, enabled);
     }
 
-    @PreferenceClick(prefs = R.string.key_text_actions)
+/*    @PreferenceClick(prefs = R.string.key_text_actions)
     private void manageTextActions(Preference preference) {
         ListCheckActivity.create(getActivity(), TextActionDataProvider.class);
     }

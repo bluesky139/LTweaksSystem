@@ -30,9 +30,9 @@ public class GooglePrefFragment extends BasePrefFragment {
         ComponentUtils.enableComponent(ChromeIncognitoActivity.class, enabled);
     }
 
-    @PreferenceChange(prefs = R.string.key_youtube_set_quality, refreshAtStart = true)
+    /*@PreferenceChange(prefs = R.string.key_youtube_set_quality, refreshAtStart = true)
     private void setYoutubeQuality(ListPreference preference, String intValue) {
         int index = ArrayUtils.indexOf(getResources().getStringArray(R.array.youtube_quality_int), intValue);
         preference.setSummary(getResources().getStringArray(R.array.youtube_quality_string)[index]);
-    }
+    }*/
 }

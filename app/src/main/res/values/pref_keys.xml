@@ -22,10 +22,8 @@
     <string name="key_smzdm_open_link_in_jd_app">key_smzdm_open_link_in_jd_app</string>
     <string name="key_suning_share_item">key_suning_share_item</string>
     <string name="key_suning_history">key_suning_history</string>
-    <!-- Removed "key_taobao_share_item" -->
 
     <!--Communication-->
-    <!-- Removed "key_wechat_system_share_in_inner_browser" -->
     <string name="key_wechat_use_incoming_ringtone">key_wechat_use_incoming_ringtone</string>
     <string name="key_wechat_set_incoming_ringtone">key_wechat_set_incoming_ringtone</string>
     <string name="key_wechat_remove_bottom_bar">key_wechat_remove_bottom_bar</string>
@@ -51,17 +49,13 @@
 
     <!--Entertainment-->
     <string name="key_douban_movie_url">key_douban_movie_url</string>
-    <!-- Removed "key_douban_movie_skip_splash" -->
     <string name="key_douban_movie_search">key_douban_movie_search</string>
     <string name="key_douban_movie_remove_bottom_bar">key_douban_movie_remove_bottom_bar</string>
     <string name="key_douban_movie_remove_ads">key_douban_movie_remove_ads</string>
-    <!-- Removed "key_bilibili_subscriptions_goto_top" -->
     <string name="key_bilibili_search">key_bilibili_search</string>
     <string name="key_bilibili_open_link_in_app">key_bilibili_open_link_in_app</string>
-    <!-- Removed "key_bilibili_expand_following" -->
     <string name="key_bilibili_remove_bottom_bar">key_bilibili_remove_bottom_bar</string>
     <string name="key_bilibili_get_cover">key_bilibili_get_cover</string>
-    <!-- key_bilibili_light_desc_in_night -->
     <string name="key_bilibili_expand_desc">key_bilibili_expand_desc</string>
     <string name="key_bilibili_darken">key_bilibili_darken</string>
     <string name="key_bilibili_hide_follow_at_full_screen">key_bilibili_hide_follow_at_full_screen</string>
@@ -74,7 +68,6 @@
     <string name="key_comic_screen_better_sort">key_comic_screen_better_sort</string>
 
     <!--System-->
-    <string name="key_text_aide_open_youdao">key_text_aide_open_youdao</string>
     <string name="key_text_double_click_for_selectable">key_text_double_click_for_selectable</string>
     <string name="key_text_selectable_text">key_text_selectable_text</string>
     <string name="key_text_actions">key_text_actions</string>
@@ -86,18 +79,12 @@
     <string name="key_system_share_filter_activities">key_system_share_filter_activities</string>
     <string name="key_system_share_copy_to_share">key_system_share_copy_to_share</string>
     <string name="key_coolapk_remove_bottom_bar">key_coolapk_remove_bottom_bar</string>
-    <!-- Removed "key_prevent_running_prevent_foreground_service" -->
-    <!-- Removed "key_prevent_running_set_inactive" -->
-    <!-- Removed "key_prevent_running_prevent_exact_alarm" -->
-    <!-- Removed "key_prevent_running_prevent_wake_lock" -->
-    <!-- Removed "key_prevent_running_prevent_receiver" -->
     <string name="key_prevent_running_set_list">key_prevent_running_set_list</string>
     <string name="key_prevent_list_prevent_foreground_service">key_prevent_list_prevent_foreground_service</string>
     <string name="key_prevent_list_set_inactive">key_prevent_list_set_inactive</string>
     <string name="key_prevent_list_prevent_exact_alarm">key_prevent_list_prevent_exact_alarm</string>
     <string name="key_prevent_list_prevent_wake_lock">key_prevent_list_prevent_wake_lock</string>
     <string name="key_prevent_list_prevent_receiver">key_prevent_list_prevent_receiver</string>
-    <!-- Removed "key_shadowsocks_precise_route" -->
     <string name="key_shadowsocks_primary_dns">key_shadowsocks_primary_dns</string>
     <string name="key_shadowsocks_transproxy">key_shadowsocks_transproxy</string>
     <string name="key_quick_settings_tile_adb_wireless">key_quick_settings_tile_adb_wireless</string>

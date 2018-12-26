@@ -17,7 +17,7 @@
         </activity>
 
         <activity android:name=".activities.ChromeIncognitoActivity"
-            android:taskAffinity="li.lingfeng.ltweaks.activities.ChromeIncognitoActivity"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.ChromeIncognitoActivity"
             android:excludeFromRecents="true"
             android:label="@string/process_text_incognito_search"
             android:theme="@android:style/Theme.Dialog"
@@ -28,10 +28,23 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
             <intent-filter>
-                <action android:name="li.lingfeng.ltweaks.ACTION_CHROME_INCOGNITO" />
+                <action android:name="li.lingfeng.ltsystem.ACTION_CHROME_INCOGNITO" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activities.SelectableTextActivity" android:excludeFromRecents="true"
+            android:label="@string/text_selectable"
+            android:icon="@mipmap/ic_selectable_text"
+            android:theme="@style/Theme.Dialog"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.SelectableTextActivity"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
     </application>
