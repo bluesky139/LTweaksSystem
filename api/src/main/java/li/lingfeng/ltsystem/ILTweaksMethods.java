@@ -19,6 +19,9 @@ public abstract class ILTweaksMethods {
     public void android_app_Activity__onMenuItemSelected__int_MenuItem(final MethodParam param) {
     }
 
+    public void android_app_Activity__onKeyUp__int_KeyEvent(final MethodParam param) {
+    }
+
     public void android_widget_PopupMenu__inflate__int(final MethodParam param) {
     }
 

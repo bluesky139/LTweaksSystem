@@ -51,4 +51,5 @@ dependencies {
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.alibaba:fastjson:1.2.54'
+    implementation 'com.android.support:support-core-ui:27.1.1'
 }
