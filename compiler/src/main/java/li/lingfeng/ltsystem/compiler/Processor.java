@@ -89,9 +89,23 @@ public class Processor extends AbstractProcessor {
         for (Element element_ : env.getElementsAnnotatedWith(methodsTypeElement)) {
             TypeElement element = (TypeElement) element_;
             MethodsLoad load = element.getAnnotation(MethodsLoad.class);
-            mMessager.printMessage(Diagnostic.Kind.NOTE, "Processor " + element.getSimpleName());
-            for (String packageName : load.packages()) {
-                writer.write("        addModule(\"" + packageName + "\", " + element.getQualifiedName() + ".class);\n");
+            if (load.packages().length > 0) {
+                mMessager.printMessage(Diagnostic.Kind.NOTE, "Processor " + element.getSimpleName());
+                for (String packageName : load.packages()) {
+                    writer.write("        addModule(\"" + packageName + "\", " + element.getQualifiedName() + ".class);\n");
+                }
+            }
+        }
+        writer.write("    }\n\n");
+
+        writer.write("    @Override\n");
+        writer.write("    protected void addModulesForAll() {\n");
+        for (Element element_ : env.getElementsAnnotatedWith(methodsTypeElement)) {
+            TypeElement element = (TypeElement) element_;
+            MethodsLoad load = element.getAnnotation(MethodsLoad.class);
+            if (load.packages().length == 0) {
+                mMessager.printMessage(Diagnostic.Kind.NOTE, "Processor for all " + element.getSimpleName());
+                writer.write("        addModuleForAll(" + element.getQualifiedName() + ".class);\n");
             }
         }
         writer.write("    }\n\n");

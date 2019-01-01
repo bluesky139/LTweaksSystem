@@ -1,6 +1,6 @@
 package li.lingfeng.ltsystem;
 
-import android.util.Log;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,18 +10,21 @@ import java.util.Map;
 import java.util.Set;
 
 import li.lingfeng.ltsystem.lib.MethodsLoad;
+import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.prefs.Prefs;
 import li.lingfeng.ltsystem.utils.Logger;
 
 public abstract class LoaderBase extends ILTweaks.Loader {
 
     private Map<String, Set<Class<? extends ILTweaksMethods>>> mModules = new HashMap<>();
+    private Set<Class<? extends ILTweaksMethods>> mModulesForAll = new HashSet<>();
     private List<ILTweaksMethods> mModuleInstances;
 
     @Override
     public void initInZygote() throws Throwable {
         Logger.i("LoaderBase initInZygote.");
         addModules();
+        addModulesForAll();
     }
 
     protected void addModule(String packageName, Class<? extends ILTweaksMethods> cls) {
@@ -31,11 +34,21 @@ public abstract class LoaderBase extends ILTweaks.Loader {
         mModules.get(packageName).add(cls);
     }
 
+    protected void addModuleForAll(Class<? extends ILTweaksMethods> cls) {
+        mModulesForAll.add(cls);
+    }
+
     private Set<Class<? extends ILTweaksMethods>> getModules(String packageName) {
-        return mModules.get(packageName);
+        Set<Class<? extends ILTweaksMethods>> modules = new HashSet<>(mModulesForAll);
+        Set<Class<? extends ILTweaksMethods>> packageModules = mModules.get(packageName);
+        if (packageModules != null) {
+            modules.addAll(packageModules);
+        }
+        return modules;
     }
 
     protected abstract void addModules();
+    protected abstract void addModulesForAll();
 
     protected List<ILTweaksMethods> getModuleInstances() {
         if (mModuleInstances == null) {
@@ -44,7 +57,8 @@ public abstract class LoaderBase extends ILTweaks.Loader {
                 mModuleInstances = new ArrayList<>(modules.size());
                 for (Class<? extends ILTweaksMethods> cls : modules) {
                     boolean enabled = false;
-                    int[] prefs = cls.getAnnotation(MethodsLoad.class).prefs();
+                    MethodsLoad methodsLoad = cls.getAnnotation(MethodsLoad.class);
+                    int[] prefs = methodsLoad.prefs();
                     if (prefs.length > 0) {
                         for (int key : prefs) {
                             if (Prefs.instance().getBoolean(key, false)) {
@@ -55,7 +69,16 @@ public abstract class LoaderBase extends ILTweaks.Loader {
                     }
 
                     if (enabled || prefs.length == 0) {
-                        Logger.d("Load " + cls.getName() + " for " + getPackageName());
+                        if (mModulesForAll.contains(cls)) {
+                            if (getPackageName().equals(PackageNames.ANDROID)) {
+                                Logger.i("Load " + cls.getName() + " for all packages");
+                            }
+                        } else {
+                            Logger.d("Load " + cls.getName() + " for " + getPackageName());
+                        }
+                        if (ArrayUtils.contains(methodsLoad.excludedPackages(), getPackageName())) {
+                            continue;
+                        }
                         try {
                             mModuleInstances.add(cls.newInstance());
                         } catch (Throwable e) {

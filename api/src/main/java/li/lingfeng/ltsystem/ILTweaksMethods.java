@@ -22,7 +22,13 @@ public abstract class ILTweaksMethods {
     public void android_app_Activity__onKeyUp__int_KeyEvent(final MethodParam param) {
     }
 
+    public void android_widget_TextView__onTouchEvent__MotionEvent(final MethodParam param) {
+    }
+
     public void android_widget_PopupMenu__inflate__int(final MethodParam param) {
+    }
+
+    public void android_view_View__dispatchPointerEvent__MotionEvent(final MethodParam param) {
     }
 
     public void android_view_View__setOnClickListener__OnClickListener(final MethodParam param) {
