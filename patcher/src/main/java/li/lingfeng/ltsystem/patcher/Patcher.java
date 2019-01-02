@@ -8,6 +8,7 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.ReferenceType;
 import com.github.javaparser.ast.type.Type;
@@ -75,7 +76,7 @@ public class Patcher {
             if (path == null) {
                 path = PACKAGE_CORE_PATH;
             }
-            return Config.ANDROID_SOURCE_DIR + path + fullClass.replace('_', '/') + ".java";
+            return Config.ANDROID_SOURCE_DIR + path + Utils.removeEndWithRIndexOf(fullClass, '$').replace('_', '/') + ".java";
         }
 
         public String[] getParamTypes() {
@@ -118,7 +119,21 @@ public class Patcher {
         File file = new File(info.getFilePath());
         String content = FileUtils.readFileToString(file);
         CompilationUnit unit = JavaParser.parse(content);
-        ClassOrInterfaceDeclaration cls = unit.getClassByName(info.getClassSimpleName()).get();
+
+        ClassOrInterfaceDeclaration cls;
+        if (!info.getClassSimpleName().contains("$")) {
+            cls = unit.getClassByName(info.getClassSimpleName()).get();
+        } else {
+            String[] names = StringUtils.split(info.getClassSimpleName(), '$');
+            assert names.length == 2 : "Multi layers of nested class is not implemented.";
+            ClassOrInterfaceDeclaration cls0 = unit.getClassByName(names[0]).get();
+            cls = (ClassOrInterfaceDeclaration) cls0.getMembers()
+                    .stream()
+                    .filter(member -> member instanceof ClassOrInterfaceDeclaration
+                            && ((ClassOrInterfaceDeclaration) member).getNameAsString().equals(names[1]))
+                    .findFirst()
+                    .get();
+        }
 
         List<MethodDeclaration> methods = cls.getMethodsBySignature(info.methodName + "_Original", info.getParamTypes());
         if (methods.size() > 0) {

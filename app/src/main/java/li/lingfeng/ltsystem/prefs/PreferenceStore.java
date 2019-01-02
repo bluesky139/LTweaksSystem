@@ -132,7 +132,7 @@ public class PreferenceStore implements PreferenceDataStore {
         return SystemProperties.getBoolean(mKeyPrefix + key, defValue);
     }
 
-    private String getKeyById(int id) {
+    protected String getKeyById(int id) {
         return PrefKeys.getById(id);
     }
 }

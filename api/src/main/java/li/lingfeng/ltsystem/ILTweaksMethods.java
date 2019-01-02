@@ -25,6 +25,9 @@ public abstract class ILTweaksMethods {
     public void android_widget_TextView__onTouchEvent__MotionEvent(final MethodParam param) {
     }
 
+    public void android_widget_Editor$ProcessTextIntentActionsHandler__onInitializeMenu__Menu(final MethodParam param) {
+    }
+
     public void android_widget_PopupMenu__inflate__int(final MethodParam param) {
     }
 
@@ -47,6 +50,9 @@ public abstract class ILTweaksMethods {
     }
 
     public void com_android_internal_view_menu_ContextMenuBuilder__showDialog__View_IBinder(final MethodParam param) {
+    }
+
+    public void com_android_internal_widget_FloatingToolbar__getVisibleAndEnabledMenuItems__Menu(final MethodParam param) {
     }
 
     public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(final MethodParam param) {

@@ -9,12 +9,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
+
+        <provider
+            android:name=".services.MainPreferenceProvider"
+            android:authorities="li.lingfeng.ltsystem.mainpreferences"
+            android:exported="true" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.ListCheckActivity" />
 
         <activity android:name=".activities.ChromeIncognitoActivity"
             android:taskAffinity="li.lingfeng.ltsystem.activities.ChromeIncognitoActivity"

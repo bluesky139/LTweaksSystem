@@ -1,5 +1,7 @@
 package li.lingfeng.ltsystem;
 
+import android.app.Application;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -94,6 +96,7 @@ public abstract class LoaderBase extends ILTweaks.Loader {
     }
 
     private String getPackageName() {
-        return ILTweaks.currentApplication().getPackageName();
+        Application application = ILTweaks.currentApplication();
+        return application != null ? application.getPackageName() : "_unknown_package";
     }
 }

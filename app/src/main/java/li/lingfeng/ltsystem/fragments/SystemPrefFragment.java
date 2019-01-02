@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.preference.Preference;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.activities.ListCheckActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
+import li.lingfeng.ltsystem.fragments.sub.system.TextActionDataProvider;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
+import li.lingfeng.ltsystem.lib.PreferenceClick;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
 
 /**
@@ -29,12 +32,12 @@ public class SystemPrefFragment extends BasePrefFragment {
         ComponentUtils.enableComponent(SelectableTextActivity.class, enabled);
     }
 
-/*    @PreferenceClick(prefs = R.string.key_text_actions)
+    @PreferenceClick(prefs = R.string.key_text_actions)
     private void manageTextActions(Preference preference) {
         ListCheckActivity.create(getActivity(), TextActionDataProvider.class);
     }
 
-    @PreferenceClick(prefs = R.string.key_youdao_quick_query_shortcut)
+/*    @PreferenceClick(prefs = R.string.key_youdao_quick_query_shortcut)
     private void youdaoQuckQueryShortcut(Preference preference) {
         Context context = ContextUtils.createPackageContext(PackageNames.YOUDAO_DICT);
         Intent intent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");

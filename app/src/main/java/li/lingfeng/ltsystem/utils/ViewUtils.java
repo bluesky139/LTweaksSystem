@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Display;
@@ -244,7 +248,7 @@ public class ViewUtils {
         boolean onView(View view, int deep); // Return true to abort.
     }
 
-    /*public static Fragment findFragmentByPosition(FragmentManager fragmentManager, ViewPager viewPager, int position) {
+    public static Fragment findFragmentByPosition(FragmentManager fragmentManager, ViewPager viewPager, int position) {
         try {
             Method method = FragmentPagerAdapter.class.getDeclaredMethod("makeFragmentName", int.class, long.class);
             method.setAccessible(true);
@@ -254,7 +258,7 @@ public class ViewUtils {
             Logger.e("findFragmentByPosition error, " + e);
             return null;
         }
-    }*/
+    }
 
     // Views will be detached from activity.
     public static FrameLayout rootChildsIntoOneLayout(Activity activity) {
