@@ -7,6 +7,7 @@ import java.util.List;
 
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.utils.ContextUtils;
+import li.lingfeng.ltsystem.utils.PermissionUtils;
 
 public class MainActivity extends PreferenceActivity {
 
@@ -29,5 +30,10 @@ public class MainActivity extends PreferenceActivity {
     @Override
     protected boolean isValidFragment(String fragmentName) {
         return fragmentName.startsWith(PackageNames.L_TWEAKS + ".fragments.");
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        PermissionUtils.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 }

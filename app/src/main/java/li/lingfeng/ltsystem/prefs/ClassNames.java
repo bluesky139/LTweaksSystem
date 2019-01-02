@@ -42,4 +42,6 @@ public class ClassNames {
     public static final String DEVELOPMENT_SETTINGS = "com.android.settings.DevelopmentSettings";
 
     public static final String TEXT_ACTION_MODE_CALLBACK = "android.widget.Editor.TextActionModeCallback";
+
+    public static final String WE_CHAT_LAUNCHER_UI = "com.tencent.mm.ui.LauncherUI";
 }

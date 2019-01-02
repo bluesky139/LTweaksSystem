@@ -1,5 +1,6 @@
 package li.lingfeng.ltsystem.fragments;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
@@ -7,9 +8,11 @@ import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.SwitchPreference;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
+import li.lingfeng.ltsystem.activities.QrCodeActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
 import li.lingfeng.ltsystem.fragments.sub.system.TextActionDataProvider;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
@@ -17,6 +20,7 @@ import li.lingfeng.ltsystem.lib.PreferenceClick;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
 import li.lingfeng.ltsystem.utils.ContextUtils;
+import li.lingfeng.ltsystem.utils.PermissionUtils;
 
 /**
  * Created by smallville on 2017/1/4.
@@ -62,7 +66,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         shortcutManager.requestPinShortcut(info, null);
     }
 
-/*    @PreferenceChange(prefs = R.string.key_system_share_qrcode_scan)
+    @PreferenceChange(prefs = R.string.key_system_share_qrcode_scan)
     private void systemShareQrcodeScan(final SwitchPreference preference, boolean enabled) {
         if (enabled) {
             PermissionUtils.requestPermissions(getActivity(), new PermissionUtils.ResultCallback() {
@@ -80,7 +84,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         }
     }
 
-    @PreferenceChange(prefs = R.string.key_system_share_image_search)
+/*    @PreferenceChange(prefs = R.string.key_system_share_image_search)
     private void systemShareImageSearch(final SwitchPreference preference, boolean enabled) {
         if (enabled) {
             PermissionUtils.requestPermissions(getActivity(), new PermissionUtils.ResultCallback() {

@@ -3,6 +3,8 @@
     package="li.lingfeng.ltsystem"
     android:sharedUserId="android.uid.system">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -52,6 +54,19 @@
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activities.QrCodeActivity" android:excludeFromRecents="true"
+            android:label="@string/share_qrcode_scan"
+            android:icon="@mipmap/ic_qrcode_scan"
+            android:theme="@style/Theme.Dialog"
+            android:taskAffinity="li.lingfeng.ltweaks.activities.QrCodeActivity"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
     </application>
