@@ -1,5 +1,10 @@
 package li.lingfeng.ltsystem.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.preference.Preference;
 
@@ -9,7 +14,9 @@ import li.lingfeng.ltsystem.activities.SelectableTextActivity;
 import li.lingfeng.ltsystem.fragments.sub.system.TextActionDataProvider;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.lib.PreferenceClick;
+import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
+import li.lingfeng.ltsystem.utils.ContextUtils;
 
 /**
  * Created by smallville on 2017/1/4.
@@ -37,26 +44,25 @@ public class SystemPrefFragment extends BasePrefFragment {
         ListCheckActivity.create(getActivity(), TextActionDataProvider.class);
     }
 
-/*    @PreferenceClick(prefs = R.string.key_youdao_quick_query_shortcut)
+    @PreferenceClick(prefs = R.string.key_youdao_quick_query_shortcut)
     private void youdaoQuckQueryShortcut(Preference preference) {
-        Context context = ContextUtils.createPackageContext(PackageNames.YOUDAO_DICT);
-        Intent intent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
-        intent.putExtra("duplicate", false);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, ContextUtils.getString("app_name", context));
-        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(context,
-                ContextUtils.getDrawableId("logo_dict_large", context)));
-
-        Intent pending = new Intent();
+        Intent pending = new Intent(Intent.ACTION_QUICK_VIEW);
         pending.setClassName(PackageNames.YOUDAO_DICT, "com.youdao.dict.activity.QuickDictQueryActivity");
         pending.putExtra("isEditable", true);
         pending.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, pending);
-        getActivity().sendBroadcast(intent);
 
-        Toast.makeText(getActivity(), R.string.app_shortcut_is_created, Toast.LENGTH_SHORT).show();
+        Context context = ContextUtils.createPackageContext(PackageNames.YOUDAO_DICT);
+        ShortcutInfo info = new ShortcutInfo.Builder(getActivity(), "Youdao Dict Quick Query")
+                .setIcon(Icon.createWithResource(getActivity(), R.drawable.youdao_dict))
+                .setShortLabel(ContextUtils.getString("app_name", context))
+                .setIntent(pending)
+                .build();
+
+        ShortcutManager shortcutManager = (ShortcutManager) getActivity().getSystemService(Context.SHORTCUT_SERVICE);
+        shortcutManager.requestPinShortcut(info, null);
     }
 
-    @PreferenceChange(prefs = R.string.key_system_share_qrcode_scan)
+/*    @PreferenceChange(prefs = R.string.key_system_share_qrcode_scan)
     private void systemShareQrcodeScan(final SwitchPreference preference, boolean enabled) {
         if (enabled) {
             PermissionUtils.requestPermissions(getActivity(), new PermissionUtils.ResultCallback() {

@@ -24,7 +24,7 @@
                 android:layout_width="20.0dp"
                 android:layout_height="20.0dp"
                 android:tint="#ff606060"
-                android:src="@drawable/ic_copy" />
+                android:src="@drawable/abc_ic_menu_copy_mtrl_am_alpha" />
             <ImageView
                 android:id="@+id/share"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -34,7 +34,7 @@
                 android:layout_marginLeft="10.0dp"
                 android:layout_marginRight="5.0dp"
                 android:tint="#ff606060"
-                android:src="@drawable/ic_share" />
+                android:src="@drawable/abc_ic_menu_share_mtrl_alpha" />
             <ImageView
                 android:id="@+id/edit"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
