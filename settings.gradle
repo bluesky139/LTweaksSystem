@@ -1,1 +1,1 @@
-include ':app', ':api', ':lib', ':compiler', ':patcher'
+include ':app', ':api', ':lib', ':compiler', ':patcher', ':magisk', ':common'

@@ -1,4 +1,4 @@
-package li.lingfeng.ltsystem.patcher;
+package li.lingfeng.ltsystem.common;
 
 import org.apache.commons.lang3.StringUtils;
 

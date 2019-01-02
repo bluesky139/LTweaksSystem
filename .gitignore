@@ -10,3 +10,5 @@
 /captures
 .externalNativeBuild
 system_keystore/
+magisk-module/
+common/src/main/java/li/lingfeng/ltsystem/common/Config.java

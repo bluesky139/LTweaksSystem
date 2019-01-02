@@ -4,17 +4,11 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.JavaToken;
 import com.github.javaparser.Position;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
-import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.ReferenceType;
-import com.github.javaparser.ast.type.Type;
-import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.VoidType;
-import com.github.javaparser.ast.type.WildcardType;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,11 +20,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import li.lingfeng.ltsystem.ILTweaksMethods;
+import li.lingfeng.ltsystem.common.Config;
+import li.lingfeng.ltsystem.common.Logger;
+import li.lingfeng.ltsystem.common.Utils;
 
 public class Patcher {
+
+    static {
+        Logger.TAG = "Patcher";
+    }
 
     private static final boolean SIMULATE = false;
 
