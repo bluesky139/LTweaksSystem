@@ -36,7 +36,7 @@ public class Utils {
     }
 
     public static String replace$ToAngleBrackets(String str) {
-        if (!str.contains("$")) {
+        if (StringUtils.countMatches(str, '$') != 2) {
             return str;
         }
         str = StringUtils.replaceFirst(str, "\\$", "<");

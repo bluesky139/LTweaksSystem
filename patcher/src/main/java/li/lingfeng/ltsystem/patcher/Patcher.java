@@ -140,7 +140,10 @@ public class Patcher {
             throw new RuntimeException(info.methodName + "_Original method is already in it, you should revert changes first.");
         }
 
-        String[] paramTypes = Arrays.stream(info.getParamTypes()).map(type -> Utils.replace$ToAngleBrackets(type)).toArray(String[]::new);
+        String[] paramTypes = Arrays.stream(info.getParamTypes())
+                .map(type -> Utils.replace$ToAngleBrackets(type))
+                .map(type -> type.replace('$', '.'))
+                .toArray(String[]::new);
         methods = cls.getMethodsBySignature(info.methodName, paramTypes);
         if (methods.size() != 1) {
             throw new RuntimeException("getMethodsBySignature return " + methods.size() + " methods, "

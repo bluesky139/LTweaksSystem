@@ -25,6 +25,12 @@ public abstract class ILTweaksMethods {
     public void android_widget_TextView__onTouchEvent__MotionEvent(final MethodParam param) {
     }
 
+    public void android_widget_TextView__setCustomSelectionActionModeCallback__ActionMode$Callback(final MethodParam param) {
+    }
+
+    public void android_widget_TextView__canProcessText__(final MethodParam param) {
+    }
+
     public void android_widget_Editor$ProcessTextIntentActionsHandler__onInitializeMenu__Menu(final MethodParam param) {
     }
 
