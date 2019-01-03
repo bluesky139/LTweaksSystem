@@ -10,7 +10,8 @@ import li.lingfeng.ltsystem.R;
 
 public class Prefs {
 
-    private static PreferenceStore _instance = new Store("persist.sys.ltweaks.");
+    // System properties read from other apps.
+    private static PreferenceStore _instance = new PreferenceStore("persist.sys.ltweaks.");
     public static PreferenceStore instance() {
         return _instance;
     }
@@ -25,14 +26,23 @@ public class Prefs {
         return _remote;
     }
 
-    static class Store extends PreferenceStore {
+    // Read write from ltweaks itself.
+    private static PreferenceStore _edit;
+    public static PreferenceStore edit() {
+        if (_edit == null) {
+            _edit = new StoreEditor("persist.sys.ltweaks.");
+        }
+        return _edit;
+    }
+
+    static class StoreEditor extends PreferenceStore {
 
         static int[] LARGE_STORE_KEYS = {
                 R.string.key_text_actions_set,
                 R.string.key_system_share_filter_activities
         };
 
-        public Store(String keyPrefix) {
+        public StoreEditor(String keyPrefix) {
             super(keyPrefix);
         }
 

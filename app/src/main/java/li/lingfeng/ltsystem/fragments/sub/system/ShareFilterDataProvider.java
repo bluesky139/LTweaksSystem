@@ -44,7 +44,7 @@ public class ShareFilterDataProvider extends ListCheckActivity.DataProvider {
     public ShareFilterDataProvider(ListCheckActivity activity) {
         super(activity);
         mDisabledActivities = new HashSet<>(
-                Prefs.instance().getStringSet(R.string.key_system_share_filter_activities, new HashSet<String>())
+                Prefs.edit().getStringSet(R.string.key_system_share_filter_activities, new HashSet<String>())
         );
         for (String action : IntentActions.sSendActions) {
             Intent intent = new Intent(action);
@@ -147,6 +147,6 @@ public class ShareFilterDataProvider extends ListCheckActivity.DataProvider {
         }
         mNeedReload = true;
 
-        Prefs.instance().putStringSet(R.string.key_system_share_filter_activities, mDisabledActivities);
+        Prefs.edit().putStringSet(R.string.key_system_share_filter_activities, mDisabledActivities);
     }
 }

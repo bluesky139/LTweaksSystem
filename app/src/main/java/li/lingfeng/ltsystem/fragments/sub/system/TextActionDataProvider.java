@@ -109,7 +109,7 @@ public class TextActionDataProvider extends ListCheckActivity.DataProvider {
 
     public TextActionDataProvider(ListCheckActivity activity) {
         super(activity);
-        final Set<String> savedSet = Prefs.instance().getStringSet(R.string.key_text_actions_set, new HashSet<String>());
+        final Set<String> savedSet = Prefs.edit().getStringSet(R.string.key_text_actions_set, new HashSet<String>());
         mActions = new ArrayList<>(savedSet.size());
 
         final Map<String, Triple<Integer, Boolean, String>> itemMap = new HashMap<>(savedSet.size());
@@ -346,6 +346,6 @@ public class TextActionDataProvider extends ListCheckActivity.DataProvider {
             Action action = mActions.get(i);
             toSaveSet.add(action.toSaveString(i, action.block));
         }
-        Prefs.instance().putStringSet(R.string.key_text_actions_set, toSaveSet);
+        Prefs.edit().putStringSet(R.string.key_text_actions_set, toSaveSet);
     }
 }
