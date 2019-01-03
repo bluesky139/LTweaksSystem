@@ -10,6 +10,12 @@ public abstract class ILTweaksMethods {
     public void android_app_Activity__performNewIntent__Intent(final MethodParam param) {
     }
 
+    public void android_app_Activity__onResume__(final MethodParam param) {
+    }
+
+    public void android_app_Activity__onPause__(final MethodParam param) {
+    }
+
     public void android_app_Activity__onDestroy__(final MethodParam param) {
     }
 
