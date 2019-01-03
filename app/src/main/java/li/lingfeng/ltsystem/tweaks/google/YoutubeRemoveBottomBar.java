@@ -31,31 +31,25 @@ public class YoutubeRemoveBottomBar extends TweakBase {
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
-        addHookOnActivity(MAIN_ACTIVITY, param, new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                final Activity activity = (Activity) param.thisObject;
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            hookBottomBar(activity);
-                        } catch (Throwable e) {
-                            Logger.e("hookBottomBar error.", e);
-                        }
+        afterOnActivity(MAIN_ACTIVITY, param, () -> {
+            final Activity activity = (Activity) param.thisObject;
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        hookBottomBar(activity);
+                    } catch (Throwable e) {
+                        Logger.e("hookBottomBar error.", e);
                     }
-                });
-            }
+                }
+            });
         });
     }
 
     @Override
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
-        addHookOnActivity(MAIN_ACTIVITY, param, new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                mDrawerLayout = null;
-            }
+        afterOnActivity(MAIN_ACTIVITY, param, () -> {
+            mDrawerLayout = null;
         });
     }
 
@@ -64,14 +58,11 @@ public class YoutubeRemoveBottomBar extends TweakBase {
         int keyCode = (int) param.args[0];
         KeyEvent event = (KeyEvent) param.args[1];
         if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
-            param.addHook(new ILTweaks.MethodHook() {
-                @Override
-                public void before() throws Throwable {
-                    if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                        Logger.i("Back is pressed for closing drawer.");
-                        mDrawerLayout.closeDrawers();
-                        param.setResult(true);
-                    }
+            param.before(() -> {
+                if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    Logger.i("Back is pressed for closing drawer.");
+                    mDrawerLayout.closeDrawers();
+                    param.setResult(true);
                 }
             });
         }

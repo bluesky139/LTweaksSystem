@@ -19,10 +19,17 @@ public class TweakBase extends ILTweaksMethods {
         return Class.forName(className, false, getClassLoader());
     }
 
-    protected void addHookOnActivity(String className, ILTweaks.MethodParam param, ILTweaks.MethodHook hook) {
+    protected void beforeOnActivity(String className, ILTweaks.MethodParam param, ILTweaks.Before before) {
         final Activity activity = (Activity) param.thisObject;
         if (activity.getClass().getName().equals(className)) {
-            param.addHook(hook);
+            param.before(before);
+        }
+    }
+
+    protected void afterOnActivity(String className, ILTweaks.MethodParam param, ILTweaks.After after) {
+        final Activity activity = (Activity) param.thisObject;
+        if (activity.getClass().getName().equals(className)) {
+            param.after(after);
         }
     }
 }

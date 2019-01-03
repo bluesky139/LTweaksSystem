@@ -27,42 +27,36 @@ public class TextLongPressToCopy extends TweakBase {
 
     @Override
     public void android_widget_TextView__onTouchEvent__MotionEvent(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                final TextView textView = (TextView) param.thisObject;
-                if (textView instanceof EditText || textView instanceof Button || textView.isTextSelectable()) {
-                    return;
-                }
-                MotionEvent event = (MotionEvent) param.args[0];
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        mDownX = event.getRawX();
-                        mDownY = event.getRawY();
-                        pendingLongPress(textView);
-                        break;
-                }
+        param.before(() -> {
+            final TextView textView = (TextView) param.thisObject;
+            if (textView instanceof EditText || textView instanceof Button || textView.isTextSelectable()) {
+                return;
+            }
+            MotionEvent event = (MotionEvent) param.args[0];
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    mDownX = event.getRawX();
+                    mDownY = event.getRawY();
+                    pendingLongPress(textView);
+                    break;
             }
         });
     }
 
     @Override
     public void android_view_View__dispatchPointerEvent__MotionEvent(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                MotionEvent event = (MotionEvent) param.args[0];
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
+        param.before(() -> {
+            MotionEvent event = (MotionEvent) param.args[0];
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    cancelLongPress();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (Math.abs(mDownX - event.getRawX()) > MAX_DOWN_OFFSET || Math.abs(mDownY - event.getRawY()) > MAX_DOWN_OFFSET) {
                         cancelLongPress();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        if (Math.abs(mDownX - event.getRawX()) > MAX_DOWN_OFFSET || Math.abs(mDownY - event.getRawY()) > MAX_DOWN_OFFSET) {
-                            cancelLongPress();
-                        }
-                        break;
-                }
+                    }
+                    break;
             }
         });
     }

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.os.Handler;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
+import java.util.Optional;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
@@ -29,25 +31,16 @@ public class CopyToShare extends TweakBase {
         if (mListenerAdded) {
             return;
         }
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                ClipboardManager clipboardManager = (ClipboardManager) ((Activity) param.thisObject).getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboardManager.addPrimaryClipChangedListener(() -> {
-                    mListenerAdded = true;
-                    if (mActivityRef == null) {
-                        return;
-                    }
-                    Activity activity = mActivityRef.get();
-                    if (activity == null) {
-                        return;
-                    }
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
+        param.after(() -> {
+            ClipboardManager clipboardManager = (ClipboardManager) ((Activity) param.thisObject).getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboardManager.addPrimaryClipChangedListener(() -> {
+                Optional.ofNullable(mActivityRef)
+                        .filter(Objects::nonNull)
+                        .map(WeakReference::get)
+                        .filter(Objects::nonNull)
+                        .ifPresent((a) -> {
+                            a.runOnUiThread(() -> {
+                                new Handler().postDelayed(() -> {
                                     if (mActivityRef == null) {
                                         return;
                                     }
@@ -57,38 +50,31 @@ public class CopyToShare extends TweakBase {
                                         Logger.i("ClipboardManager onPrimaryClipChanged " + clipData);
                                         ShareUtils.shareClipWithSnackbar(activity, clipData);
                                     }
-                                }
-                            }, 500);
-                        }
-                    });
-                });
-            }
+                                }, 500);
+                            });
+                        });
+            });
+            mListenerAdded = true;
         });
     }
 
     @Override
     public void android_app_Activity__onResume__(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                Activity activity = (Activity) param.thisObject;
-                mActivityRef = new WeakReference<>(activity);
-            }
+        param.after(() -> {
+            Activity activity = (Activity) param.thisObject;
+            mActivityRef = new WeakReference<>(activity);
         });
     }
 
     @Override
     public void android_app_Activity__onPause__(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                if (mActivityRef == null) {
-                    return;
-                }
-                Activity activity = (Activity) param.thisObject;
-                if (mActivityRef.get() == activity) {
-                    mActivityRef = null;
-                }
+        param.before(() -> {
+            if (mActivityRef == null) {
+                return;
+            }
+            Activity activity = (Activity) param.thisObject;
+            if (mActivityRef.get() == activity) {
+                mActivityRef = null;
             }
         });
     }

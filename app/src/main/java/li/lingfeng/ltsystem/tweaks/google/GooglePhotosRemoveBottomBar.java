@@ -57,60 +57,53 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(final ILTweaks.MethodParam param) {
-        addHookOnActivity(HOME_ACTIVITY, param, new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                activity = (Activity) param.thisObject;
-                rootView = (ViewGroup) activity.findViewById(android.R.id.content);
-                rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        if (tabSharing != null && barListAdapter != null)
+        afterOnActivity(HOME_ACTIVITY, param, () -> {
+            activity = (Activity) param.thisObject;
+            rootView = (ViewGroup) activity.findViewById(android.R.id.content);
+            rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (tabSharing != null && barListAdapter != null)
+                    {
+                        if (tabSharing.getVisibility() == View.VISIBLE && tabButtons[3] == null)
                         {
-                            if (tabSharing.getVisibility() == View.VISIBLE && tabButtons[3] == null)
-                            {
-                                Logger.i("tabSharing visible");
-                                tabButtons[3] = tabSharing;
-                                barListAdapter.notifyDataSetChanged();
-                            }
+                            Logger.i("tabSharing visible");
+                            tabButtons[3] = tabSharing;
+                            barListAdapter.notifyDataSetChanged();
                         }
-
-                        if (done)
-                            return;
-                        //Log.w(TAG, "layout changed.");
-                        traverseViewChilds(rootView, 0);
-                        if (!done && isReady())
-                            createBarList();
                     }
-                });
 
-                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            }
+                    if (done)
+                        return;
+                    //Log.w(TAG, "layout changed.");
+                    traverseViewChilds(rootView, 0);
+                    if (!done && isReady())
+                        createBarList();
+                }
+            });
+            activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         });
     }
 
     @Override
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
-        addHookOnActivity(HOME_ACTIVITY, param, new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                activity = null;
-                rootView = null;
-                tabBar = null;
-                tabAssistant = null;
-                tabPhotos = null;
-                tabAlbums = null;
-                tabSharing = null;
-                Arrays.fill(tabButtons, null);
-                drawerFragment = null;
-                navList = null;
-                barList = null;
-                barListAdapter = null;
-                navLayout = null;
-                scrollView = null;
-                scrollLayout = null;
-                done = false;
-            }
+        afterOnActivity(HOME_ACTIVITY, param, () -> {
+            activity = null;
+            rootView = null;
+            tabBar = null;
+            tabAssistant = null;
+            tabPhotos = null;
+            tabAlbums = null;
+            tabSharing = null;
+            Arrays.fill(tabButtons, null);
+            drawerFragment = null;
+            navList = null;
+            barList = null;
+            barListAdapter = null;
+            navLayout = null;
+            scrollView = null;
+            scrollLayout = null;
+            done = false;
         });
     }
 

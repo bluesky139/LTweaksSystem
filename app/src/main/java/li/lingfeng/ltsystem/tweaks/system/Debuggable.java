@@ -15,21 +15,18 @@ public class Debuggable extends TweakBase {
 
     @Override
     public void android_content_pm_PackageParser__parsePackage__File_int_boolean(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                PackageParser.Package pkg = (PackageParser.Package) param.getResult();
-                if (pkg == null) {
-                    return;
-                }
-                if (pkg.packageName.equals(PackageNames.ANDROID)) {
-                    Logger.i("Set debuggable for all apps.");
-                    return;
-                }
-
-                ApplicationInfo appInfo = pkg.applicationInfo;
-                appInfo.flags |= ApplicationInfo.FLAG_DEBUGGABLE;
+        param.after(() -> {
+            PackageParser.Package pkg = (PackageParser.Package) param.getResult();
+            if (pkg == null) {
+                return;
             }
+            if (pkg.packageName.equals(PackageNames.ANDROID)) {
+                Logger.i("Set debuggable for all apps.");
+                return;
+            }
+
+            ApplicationInfo appInfo = pkg.applicationInfo;
+            appInfo.flags |= ApplicationInfo.FLAG_DEBUGGABLE;
         });
     }
 }

@@ -30,27 +30,21 @@ public class OriginalSelectionActionMode extends ILTweaksMethods {
 
     @Override
     public void android_widget_TextView__setCustomSelectionActionModeCallback__ActionMode$Callback(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                ActionMode.Callback original = (ActionMode.Callback) param.args[0];
-                Logger.i("setCustomSelectionActionModeCallback middle callback for " + original);
-                param.setArg(0, new MiddleCallback(original));
-            }
+        param.before(() -> {
+            ActionMode.Callback original = (ActionMode.Callback) param.args[0];
+            Logger.i("setCustomSelectionActionModeCallback middle callback for " + original);
+            param.setArg(0, new MiddleCallback(original));
         });
     }
 
     @Override
     public void android_widget_TextView__canProcessText__(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                if (ReflectUtils.getObjectField(param.thisObject, "mEditor") != null) {
-                    Logger.i("canProcessText return true");
-                    param.setResult(true);
-                } else {
-                    Logger.d("No mEditor for canProcessText.");
-                }
+        param.before(() -> {
+            if (ReflectUtils.getObjectField(param.thisObject, "mEditor") != null) {
+                Logger.i("canProcessText return true");
+                param.setResult(true);
+            } else {
+                Logger.d("No mEditor for canProcessText.");
             }
         });
     }

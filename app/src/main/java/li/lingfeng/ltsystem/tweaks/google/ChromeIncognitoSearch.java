@@ -52,18 +52,15 @@ public class ChromeIncognitoSearch extends ChromeBase {
     // Fake trusted app code to allow open incognito tab from outside.
     @Override
     public void android_content_Intent__getParcelableExtra__String(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                String key = (String) param.args[0];
-                Intent intent = (Intent) param.thisObject;
-                if (key.equals("trusted_application_code_extra") && intent.getBooleanExtra("from_ltweaks", false)) {
-                    Logger.d("Return fake trusted_application_code_extra.");
-                    Intent intent2 = new Intent();
-                    intent2.setComponent(new ComponentName(ILTweaks.currentApplication(), "FakeClass"));
-                    PendingIntent pendingIntent = PendingIntent.getActivity(ILTweaks.currentApplication(), 0, intent2, 0);
-                    param.setResult(pendingIntent);
-                }
+        param.before(() -> {
+            String key = (String) param.args[0];
+            Intent intent = (Intent) param.thisObject;
+            if (key.equals("trusted_application_code_extra") && intent.getBooleanExtra("from_ltweaks", false)) {
+                Logger.d("Return fake trusted_application_code_extra.");
+                Intent intent2 = new Intent();
+                intent2.setComponent(new ComponentName(ILTweaks.currentApplication(), "FakeClass"));
+                PendingIntent pendingIntent = PendingIntent.getActivity(ILTweaks.currentApplication(), 0, intent2, 0);
+                param.setResult(pendingIntent);
             }
         });
     }
@@ -71,37 +68,33 @@ public class ChromeIncognitoSearch extends ChromeBase {
     // Context menu "Open in incognito" in CustomTab.
     @Override
     public void com_android_internal_view_menu_ContextMenuBuilder__showDialog__View_IBinder(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                ContextMenu menu = (ContextMenu) param.thisObject;
-                if (IntStream.range(0, menu.size())
-                        .mapToObj(i -> menu.getItem(i))
-                        .filter(item -> "Copy link address".equals(item.getTitle()))
-                        .count() > 0) {
-                    View view = (View) param.args[0];
-                    View.OnCreateContextMenuListener listener = ViewUtils.getViewCreateContextMenuListener(view);
-                    Activity activity = (Activity) Utils.findFirstFieldByExactType(listener.getClass(), Activity.class).get(listener);
-                    if (!isCustomTab(activity)) {
-                        return;
-                    }
+        param.after(() -> {
+            ContextMenu menu = (ContextMenu) param.thisObject;
+            if (IntStream.range(0, menu.size())
+                    .mapToObj(i -> menu.getItem(i))
+                    .filter(item -> "Copy link address".equals(item.getTitle()))
+                    .count() > 0) {
+                View view = (View) param.args[0];
+                View.OnCreateContextMenuListener listener = ViewUtils.getViewCreateContextMenuListener(view);
+                Activity activity = (Activity) Utils.findFirstFieldByExactType(listener.getClass(), Activity.class).get(listener);
+                if (!isCustomTab(activity)) {
+                    return;
+                }
 
-                    MenuItem item = addMenu(menu, ContextUtils.getLString(R.string.chrome_open_in_incognito), 1001, true);
-                    if (item != null) {
-                        item.setOnMenuItemClickListener((_item) -> {
-                            try {
-                                String url = getCurrentUrl(activity);
-                                onMenuItemClick(url);
-                            } catch (Throwable e) {
-                                Logger.e("Context menu incognito search click exception.", e);;
-                            }
-                            return true;
-                        });
-                    }
+                MenuItem item = addMenu(menu, ContextUtils.getLString(R.string.chrome_open_in_incognito), 1001, true);
+                if (item != null) {
+                    item.setOnMenuItemClickListener((_item) -> {
+                        try {
+                            String url = getCurrentUrl(activity);
+                            onMenuItemClick(url);
+                        } catch (Throwable e) {
+                            Logger.e("Context menu incognito search click exception.", e);;
+                        }
+                        return true;
+                    });
                 }
             }
         });
-
     }
 
     private void onMenuItemClick(String linkUrl) {

@@ -26,49 +26,40 @@ public class WeChatScanQr extends TweakBase {
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
-        addHookOnActivity(ClassNames.WE_CHAT_LAUNCHER_UI, param, new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                final Activity activity = (Activity) param.thisObject;
-                mScannableImage = activity.getIntent().getStringExtra("ltweaks_scannable_image");
-                Logger.i("ltweaks_scannable_image " + mScannableImage);
-            }
+        beforeOnActivity(ClassNames.WE_CHAT_LAUNCHER_UI, param, () -> {
+            final Activity activity = (Activity) param.thisObject;
+            mScannableImage = activity.getIntent().getStringExtra("ltweaks_scannable_image");
+            Logger.i("ltweaks_scannable_image " + mScannableImage);
         });
 
-        addHookOnActivity(BASE_SCAN_UI, param, new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                if (StringUtils.isEmpty(mScannableImage)) {
-                    return;
-                }
-
-                final Activity activity = (Activity) param.thisObject;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            scanImage(activity, mScannableImage);
-                        } catch (Throwable e) {
-                            Logger.e("scanImage error, " + e);
-                            Logger.stackTrace(e);
-                        } finally {
-                            mScannableImage = null;
-                        }
-                    }
-                }, 1000);
+        afterOnActivity(BASE_SCAN_UI, param, () -> {
+            if (StringUtils.isEmpty(mScannableImage)) {
+                return;
             }
+
+            final Activity activity = (Activity) param.thisObject;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        scanImage(activity, mScannableImage);
+                    } catch (Throwable e) {
+                        Logger.e("scanImage error, " + e);
+                        Logger.stackTrace(e);
+                    } finally {
+                        mScannableImage = null;
+                    }
+                }
+            }, 1000);
         });
     }
 
     @Override
     public void android_app_Activity__performNewIntent__Intent(ILTweaks.MethodParam param) {
-        addHookOnActivity(ClassNames.WE_CHAT_LAUNCHER_UI, param, new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                Intent intent = (Intent) param.args[0];
-                mScannableImage = intent.getStringExtra("ltweaks_scannable_image");
-                Logger.i("ltweaks_scannable_image " + mScannableImage);
-            }
+        beforeOnActivity(ClassNames.WE_CHAT_LAUNCHER_UI, param, () -> {
+            Intent intent = (Intent) param.args[0];
+            mScannableImage = intent.getStringExtra("ltweaks_scannable_image");
+            Logger.i("ltweaks_scannable_image " + mScannableImage);
         });
     }
 

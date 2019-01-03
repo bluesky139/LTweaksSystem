@@ -68,19 +68,16 @@ public class ChromeBase extends TweakBase {
         if (mMenuInfos == null) {
             return;
         }
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                int menuId = (int) param.args[0];
-                int idPageMenu = ContextUtils.getIdId("PAGE_MENU");
-                if (menuId == idPageMenu) {
-                    boolean visible = (boolean) param.args[1];
-                    Logger.i("PAGE_MENU visible " + visible);
-                    Menu menu = (Menu) param.thisObject;
-                    mMenuInfos.forEach((title, info) -> {
-                        addMenu(menu, title, info.order, visible);
-                    });
-                }
+        param.after(() -> {
+            int menuId = (int) param.args[0];
+            int idPageMenu = ContextUtils.getIdId("PAGE_MENU");
+            if (menuId == idPageMenu) {
+                boolean visible = (boolean) param.args[1];
+                Logger.i("PAGE_MENU visible " + visible);
+                Menu menu = (Menu) param.thisObject;
+                mMenuInfos.forEach((title, info) -> {
+                    addMenu(menu, title, info.order, visible);
+                });
             }
         });
     }
@@ -90,52 +87,46 @@ public class ChromeBase extends TweakBase {
         if (mMenuInfos == null) {
             return;
         }
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void after() throws Throwable {
-                int id = (int) param.args[0];
-                int idCustomTabMenu = ContextUtils.getMenuId("custom_tabs_menu");
-                Logger.i("Inflate custom_tabs_menu.");
-                PopupMenu popupMenu = (PopupMenu) param.thisObject;
-                Menu menu = popupMenu.getMenu();
-                if (id == idCustomTabMenu) {
-                    mMenuInfos.forEach((title, info) -> {
-                        addMenu(menu, title, info.order, true);
-                    });
-                }
+        param.after(() -> {
+            int id = (int) param.args[0];
+            int idCustomTabMenu = ContextUtils.getMenuId("custom_tabs_menu");
+            Logger.i("Inflate custom_tabs_menu.");
+            PopupMenu popupMenu = (PopupMenu) param.thisObject;
+            Menu menu = popupMenu.getMenu();
+            if (id == idCustomTabMenu) {
+                mMenuInfos.forEach((title, info) -> {
+                    addMenu(menu, title, info.order, true);
+                });
             }
         });
     }
 
     @Override
     public void android_view_View__setOnClickListener__OnClickListener(ILTweaks.MethodParam param) {
-        param.addHook(new ILTweaks.MethodHook() {
-            @Override
-            public void before() throws Throwable {
-                View view = (View) param.thisObject;
-                Optional.of(view)
-                        .filter(LinearLayout.class::isInstance)
-                        .map(v -> ViewUtils.findViewByType((ViewGroup) view, TextView.class, 0))
-                        .filter(Objects::nonNull)
-                        .map(textView -> mMenuInfos.get(((TextView) textView).getText().toString()))
-                        .ifPresent(info -> {
-                            param.setArg(0, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    ViewUtils.dispatchBackKeyEventOnRoot(view);
-                                    Activity activity = ViewUtils.getActivityFromView(view);
-                                    try {
-                                        String url = getCurrentUrl(activity);
-                                        Logger.i("Menu \"" + info.title + "\" is clicked, url " + url);
-                                        info.selectedCallback.onOptionsItemSelected(activity, url, isCustomTab(activity));
-                                    } catch (Throwable e) {
-                                        Toast.makeText(activity, "Error.", Toast.LENGTH_SHORT).show();
-                                        Logger.stackTrace(e);
-                                    }
+        param.before(() -> {
+            View view = (View) param.thisObject;
+            Optional.of(view)
+                    .filter(LinearLayout.class::isInstance)
+                    .map(v -> ViewUtils.findViewByType((ViewGroup) view, TextView.class, 0))
+                    .filter(Objects::nonNull)
+                    .map(textView -> mMenuInfos.get(((TextView) textView).getText().toString()))
+                    .ifPresent(info -> {
+                        param.setArg(0, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ViewUtils.dispatchBackKeyEventOnRoot(view);
+                                Activity activity = ViewUtils.getActivityFromView(view);
+                                try {
+                                    String url = getCurrentUrl(activity);
+                                    Logger.i("Menu \"" + info.title + "\" is clicked, url " + url);
+                                    info.selectedCallback.onOptionsItemSelected(activity, url, isCustomTab(activity));
+                                } catch (Throwable e) {
+                                    Toast.makeText(activity, "Error.", Toast.LENGTH_SHORT).show();
+                                    Logger.stackTrace(e);
                                 }
-                            });
+                            }
                         });
-            }
+                    });
         });
     }
 

@@ -1,12 +1,11 @@
 package li.lingfeng.ltsystem;
 
-import android.util.Log;
+import android.app.ActivityThread;
 import android.app.Application;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import android.app.ActivityThread;
 
 public class ILTweaks {
 
@@ -25,36 +24,66 @@ public class ILTweaks {
         private Object result;
         private Throwable throwable;
         private boolean _hasResult = false;
-        private MethodHookWrapper hookWrapper;
-        private List<MethodHook> hooks;
+        private List<Before> befores;
+        private List<After> afters;
 
         public MethodParam(Object thisObject, Object... args) {
             this.thisObject = thisObject;
             this.args = args;
         }
 
-        public void addHook(MethodHook hook) {
-            if (hooks == null) {
-                hooks = new ArrayList();
-                hookWrapper = new MethodHookWrapper();
+        public void before(Before before) {
+            if (befores == null) {
+                befores = new ArrayList<>();
             }
-            hooks.add(hook);
+            befores.add(before);
+        }
+
+        public void after(After after) {
+            if (afters == null) {
+                afters = new ArrayList<>();
+            }
+            afters.add(after);
         }
 
         public boolean hasHook() {
-            return hooks != null;
+            return befores != null || afters != null;
         }
 
         public void hookBefore() {
-            try {
-                hookWrapper.before();
-            } catch (Throwable throwable) {}
+            if (befores == null) {
+                return;
+            }
+            for (Before hook : befores) {
+                try {
+                    hook.before();
+                } catch (Throwable throwable) {
+                    Log.e(TAG, "Hook before exception.", throwable);
+                }
+                if (hasResult()) {
+                    return;
+                }
+            }
         }
 
         public void hookAfter() {
-            try {
-                hookWrapper.after();
-            } catch (Throwable throwable) {}
+            if (afters == null) {
+                return;
+            }
+            if (hasResult()) {
+                Log.e(TAG, "Already has result, why execute after?");
+                return;
+            }
+            for (After hook : afters) {
+                try {
+                    hook.after();
+                } catch (Throwable throwable) {
+                    Log.e(TAG, "Hook after execute exception.", throwable);
+                }
+                if (hasResult()) {
+                    return;
+                }
+            }
         }
 
         public void setArg(int i, Object arg) {
@@ -95,44 +124,14 @@ public class ILTweaks {
                 return result;
             }
         }
-
-        class MethodHookWrapper extends MethodHook {
-            public void before() throws Throwable {
-                for (MethodHook hook : hooks) {
-                    try {
-                        hook.before();
-                    } catch (Throwable throwable) {
-                        Log.e(TAG, "Hook before execute exception.", throwable);
-                    }
-                    if (hasResult()) {
-                        return;
-                    }
-                }
-            }
-            public void after() throws Throwable {
-                if (hasResult()) {
-                    Log.e(TAG, "Already has result, why execute after?");
-                    return;
-                }
-                for (MethodHook hook : hooks) {
-                    try {
-                        hook.after();
-                    } catch (Throwable throwable) {
-                        Log.e(TAG, "Hook after execute exception.", throwable);
-                    }
-                    if (hasResult()) {
-                        return;
-                    }
-                }
-            }
-        }
     }
 
-    public static abstract class MethodHook {
-        public void before() throws Throwable {
-        }
-        public void after() throws Throwable {
-        }
+    public interface Before {
+        void before() throws Throwable;
+    }
+
+    public interface After {
+        void after() throws Throwable;
     }
 
     public static Application currentApplication() {
