@@ -11,6 +11,7 @@ import android.preference.Preference;
 import android.preference.SwitchPreference;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.activities.ImageSearchActivity;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
 import li.lingfeng.ltsystem.activities.QrCodeActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
@@ -34,8 +35,8 @@ public class SystemPrefFragment extends BasePrefFragment {
         addPreferencesFromResource(R.xml.pref_system);
 
         uncheckPreferenceByDisabledComponent(R.string.key_text_selectable_text, SelectableTextActivity.class);
-        /*uncheckPreferenceByDisabledComponent(R.string.key_system_share_qrcode_scan, QrCodeActivity.class);
-        uncheckPreferenceByDisabledComponent(R.string.key_system_share_image_search, ImageSearchActivity.class);*/
+        uncheckPreferenceByDisabledComponent(R.string.key_system_share_qrcode_scan, QrCodeActivity.class);
+        uncheckPreferenceByDisabledComponent(R.string.key_system_share_image_search, ImageSearchActivity.class);
     }
 
     @PreferenceChange(prefs = R.string.key_text_selectable_text)
@@ -84,7 +85,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         }
     }
 
-/*    @PreferenceChange(prefs = R.string.key_system_share_image_search)
+    @PreferenceChange(prefs = R.string.key_system_share_image_search)
     private void systemShareImageSearch(final SwitchPreference preference, boolean enabled) {
         if (enabled) {
             PermissionUtils.requestPermissions(getActivity(), new PermissionUtils.ResultCallback() {
@@ -102,7 +103,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         }
     }
 
-    @PreferenceClick(prefs = R.string.key_system_share_filter)
+/*    @PreferenceClick(prefs = R.string.key_system_share_filter)
     private void systemShareFilter(Preference preference) {
         ListCheckActivity.create(getActivity(), ShareFilterDataProvider.class);
     }

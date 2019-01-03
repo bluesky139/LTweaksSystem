@@ -3,6 +3,7 @@
     package="li.lingfeng.ltsystem"
     android:sharedUserId="android.uid.system">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -61,7 +62,7 @@
             android:label="@string/share_qrcode_scan"
             android:icon="@mipmap/ic_qrcode_scan"
             android:theme="@style/Theme.Dialog"
-            android:taskAffinity="li.lingfeng.ltweaks.activities.QrCodeActivity"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.QrCodeActivity"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -69,6 +70,49 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activities.ImageSearchActivity" android:excludeFromRecents="true"
+            android:label="@string/share_image_search"
+            android:icon="@mipmap/ic_image_search"
+            android:theme="@style/Theme.Dialog"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.ImageSearchActivity"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        <activity-alias
+            android:name=".activities.GoogleImageSearchActivity"
+            android:label="@string/share_image_google_search"
+            android:targetActivity=".activities.ImageSearchActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_IMAGE_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.TinEyeImageSearchActivity"
+            android:label="@string/share_image_tineye_search"
+            android:targetActivity=".activities.ImageSearchActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_IMAGE_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.IQDBImageSearchActivity"
+            android:label="@string/share_image_iqdb_search"
+            android:targetActivity=".activities.ImageSearchActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_IMAGE_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
     </application>
 
 </manifest>
