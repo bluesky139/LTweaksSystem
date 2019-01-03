@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.pm.PackageManager;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 
 /**
  * Created by smallville on 2017/2/1.
@@ -13,8 +14,8 @@ import li.lingfeng.ltsystem.ILTweaks;
 public class ComponentUtils {
 
     public static void enableComponent(String componentCls, boolean enabled) {
-        ComponentName componentName = new ComponentName(ILTweaks.currentApplication(), componentCls);
-        ILTweaks.currentApplication().getPackageManager().setComponentEnabledSetting(componentName,
+        ComponentName componentName = new ComponentName(LTHelper.currentApplication(), componentCls);
+        LTHelper.currentApplication().getPackageManager().setComponentEnabledSetting(componentName,
                 enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }
@@ -24,8 +25,8 @@ public class ComponentUtils {
     }
 
     public static boolean isComponentEnabled(String componentCls) {
-        ComponentName componentName = new ComponentName(ILTweaks.currentApplication(), componentCls);
-        return ILTweaks.currentApplication().getPackageManager().getComponentEnabledSetting(componentName)
+        ComponentName componentName = new ComponentName(LTHelper.currentApplication(), componentCls);
+        return LTHelper.currentApplication().getPackageManager().getComponentEnabledSetting(componentName)
                 == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
     }
 

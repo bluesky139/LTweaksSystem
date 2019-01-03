@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.ILTweaksMethods;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;

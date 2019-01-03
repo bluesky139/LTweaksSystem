@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 
 /**
  * Created by smallville on 2017/2/2.
@@ -26,7 +27,7 @@ public class IOUtils {
         byte[] bytes = null;
         InputStream stream = null;
         try {
-            stream = ILTweaks.currentApplication().getContentResolver().openInputStream(uri);
+            stream = LTHelper.currentApplication().getContentResolver().openInputStream(uri);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             byte[] buffer = new byte[524288];
             int read;

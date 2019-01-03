@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 
 /**
@@ -25,11 +26,11 @@ public class PackageUtils {
     public static final int SORT_BY_DATE = 1;
 
     public static List<PackageInfo> getInstalledPackages() {
-        return ILTweaks.currentApplication().getPackageManager().getInstalledPackages(0);
+        return LTHelper.currentApplication().getPackageManager().getInstalledPackages(0);
     }
 
     public static void sortPackages(List<PackageInfo> packages, final int sort) {
-        final PackageManager packageManager = ILTweaks.currentApplication().getPackageManager();
+        final PackageManager packageManager = LTHelper.currentApplication().getPackageManager();
         Collections.sort(packages, new Comparator<PackageInfo>() {
             @Override
             public int compare(PackageInfo o1, PackageInfo o2) {
@@ -47,7 +48,7 @@ public class PackageUtils {
 
     public static boolean isPackageInstalled(String packageName) {
         try {
-            ILTweaks.currentApplication().getPackageManager().getPackageInfo(packageName, 0);
+            LTHelper.currentApplication().getPackageManager().getPackageInfo(packageName, 0);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
         }
@@ -58,7 +59,7 @@ public class PackageUtils {
         Uri uri = Uri.parse("package:" + packageName);
         Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE, uri);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        ILTweaks.currentApplication().startActivity(intent);
+        LTHelper.currentApplication().startActivity(intent);
     }
 
     public static void tryUninstallPackage(final String packageName, String appName, Activity activity) {
@@ -96,8 +97,8 @@ public class PackageUtils {
 
     public static int getUid() {
         try {
-            return ILTweaks.currentApplication().getPackageManager().getApplicationInfo(
-                    ILTweaks.currentApplication().getPackageName(), 0).uid;
+            return LTHelper.currentApplication().getPackageManager().getApplicationInfo(
+                    LTHelper.currentApplication().getPackageName(), 0).uid;
         } catch (PackageManager.NameNotFoundException e) {
             return -1;
         }

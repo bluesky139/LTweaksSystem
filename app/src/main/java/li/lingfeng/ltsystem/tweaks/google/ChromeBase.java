@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
@@ -164,7 +165,7 @@ public class ChromeBase extends TweakBase {
         try {
             _loadUrl(tab, url);
         } catch (Throwable e) {
-            Toast.makeText(ILTweaks.currentApplication(), "Error.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LTHelper.currentApplication(), "Error.", Toast.LENGTH_SHORT).show();
             Logger.stackTrace(e);
         }
     }

@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.IntentActions;
@@ -58,8 +59,8 @@ public class ChromeIncognitoSearch extends ChromeBase {
             if (key.equals("trusted_application_code_extra") && intent.getBooleanExtra("from_ltweaks", false)) {
                 Logger.d("Return fake trusted_application_code_extra.");
                 Intent intent2 = new Intent();
-                intent2.setComponent(new ComponentName(ILTweaks.currentApplication(), "FakeClass"));
-                PendingIntent pendingIntent = PendingIntent.getActivity(ILTweaks.currentApplication(), 0, intent2, 0);
+                intent2.setComponent(new ComponentName(LTHelper.currentApplication(), "FakeClass"));
+                PendingIntent pendingIntent = PendingIntent.getActivity(LTHelper.currentApplication(), 0, intent2, 0);
                 param.setResult(pendingIntent);
             }
         });
@@ -104,6 +105,6 @@ public class ChromeIncognitoSearch extends ChromeBase {
         intent.putExtra("chrome_package_for_ltweaks", getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        ILTweaks.currentApplication().startActivity(intent);
+        LTHelper.currentApplication().startActivity(intent);
     }
 }

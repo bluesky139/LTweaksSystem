@@ -7,14 +7,18 @@ import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
+
+import org.apache.commons.lang3.StringUtils;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ImageSearchActivity;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
 import li.lingfeng.ltsystem.activities.QrCodeActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
+import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.fragments.sub.system.ShareFilterDataProvider;
 import li.lingfeng.ltsystem.fragments.sub.system.TextActionDataProvider;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
@@ -113,7 +117,7 @@ public class SystemPrefFragment extends BasePrefFragment {
     private void setPreventList(Preference preference) {
         ListCheckActivity.create(getActivity(), PreventListDataProvider.class);
     }
-
+*/
     @PreferenceChange(prefs = R.string.key_shadowsocks_primary_dns, refreshAtStart = true)
     private void setShadowsocksPrimaryDns(EditTextPreference preference, String value, Extra extra) {
         String[] dnsArray = StringUtils.split(value, ',');
@@ -126,7 +130,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         preference.setSummary(summary);
     }
 
-    @PreferenceChange(prefs = R.string.key_quick_settings_tile_4g3g, refreshAtStart = true)
+  /*  @PreferenceChange(prefs = R.string.key_quick_settings_tile_4g3g, refreshAtStart = true)
     private void tile4G3G(SwitchPreference preference, boolean enabled, Extra extra) {
         ListPreference pref4g = findListPreference(R.string.key_quick_settings_tile_4g);
         ListPreference pref3g = findListPreference(R.string.key_quick_settings_tile_3g);

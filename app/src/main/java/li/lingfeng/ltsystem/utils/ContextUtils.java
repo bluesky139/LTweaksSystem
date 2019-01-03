@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.activities.LoadingDialog;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import okhttp3.Call;
@@ -34,12 +35,12 @@ import okhttp3.Response;
 public class ContextUtils {
 
     public static Context createPackageContext(String packageName) {
-        if (ILTweaks.currentApplication().getPackageName().equals(PackageNames.L_TWEAKS)
+        if (LTHelper.currentApplication().getPackageName().equals(PackageNames.L_TWEAKS)
                 && packageName.equals(PackageNames.L_TWEAKS)) {
-            return ILTweaks.currentApplication();
+            return LTHelper.currentApplication();
         }
         try {
-            return ILTweaks.currentApplication().createPackageContext(packageName, Context.CONTEXT_IGNORE_SECURITY);
+            return LTHelper.currentApplication().createPackageContext(packageName, Context.CONTEXT_IGNORE_SECURITY);
         } catch (PackageManager.NameNotFoundException e) {
             Logger.e("Can't create context for package " + packageName + ", " + e.getMessage());
             Logger.stackTrace(e);
@@ -56,7 +57,7 @@ public class ContextUtils {
     }
 
     public static String getResNameById(int id) {
-        return getResNameById(id, ILTweaks.currentApplication());
+        return getResNameById(id, LTHelper.currentApplication());
     }
 
     public static String getResNameById(int id, Context context) {
@@ -70,7 +71,7 @@ public class ContextUtils {
     }
 
     public static int getResId(String name, String type) {
-        return getResId(name, type, ILTweaks.currentApplication());
+        return getResId(name, type, LTHelper.currentApplication());
     }
 
     public static int getResId(String name, String type, Context context) {
@@ -78,11 +79,11 @@ public class ContextUtils {
     }
 
     public static int getResId(String name, String type, String packageName) {
-        return ILTweaks.currentApplication().getResources().getIdentifier(name, type, packageName);
+        return LTHelper.currentApplication().getResources().getIdentifier(name, type, packageName);
     }
 
     public static int getIdId(String name) {
-        return getIdId(name, ILTweaks.currentApplication());
+        return getIdId(name, LTHelper.currentApplication());
     }
 
     public static int getIdId(String name, Context context) {
@@ -90,7 +91,7 @@ public class ContextUtils {
     }
 
     public static int getStringId(String name) {
-        return getStringId(name, ILTweaks.currentApplication());
+        return getStringId(name, LTHelper.currentApplication());
     }
 
     public static int getStringId(String name, Context context) {
@@ -98,7 +99,7 @@ public class ContextUtils {
     }
 
     public static int getArrayId(String name) {
-        return getArrayId(name, ILTweaks.currentApplication());
+        return getArrayId(name, LTHelper.currentApplication());
     }
 
     public static int getArrayId(String name, Context context) {
@@ -106,7 +107,7 @@ public class ContextUtils {
     }
 
     public static int getDrawableId(String name) {
-        return getDrawableId(name, ILTweaks.currentApplication());
+        return getDrawableId(name, LTHelper.currentApplication());
     }
 
     public static int getDrawableId(String name, Context context) {
@@ -118,7 +119,7 @@ public class ContextUtils {
     }
 
     public static int getMipmapId(String name) {
-        return getMipmapId(name, ILTweaks.currentApplication());
+        return getMipmapId(name, LTHelper.currentApplication());
     }
 
     public static int getMipmapId(String name, Context context) {
@@ -126,7 +127,7 @@ public class ContextUtils {
     }
 
     public static int getRawId(String name) {
-        return getRawId(name, ILTweaks.currentApplication());
+        return getRawId(name, LTHelper.currentApplication());
     }
 
     public static int getRawId(String name, Context context) {
@@ -134,7 +135,7 @@ public class ContextUtils {
     }
 
     public static String getString(String name) {
-        return getString(name, ILTweaks.currentApplication());
+        return getString(name, LTHelper.currentApplication());
     }
 
     public static String getString(String name, Context context) {
@@ -146,7 +147,7 @@ public class ContextUtils {
     }
 
     public static String[] getStringArray(String name) {
-        return getStringArray(name, ILTweaks.currentApplication());
+        return getStringArray(name, LTHelper.currentApplication());
     }
 
     public static String[] getStringArray(String name, Context context) {
@@ -158,7 +159,7 @@ public class ContextUtils {
     }
 
     public static int[] getIntArrayFromStringArray(String name) {
-        return getIntArrayFromStringArray(name, ILTweaks.currentApplication());
+        return getIntArrayFromStringArray(name, LTHelper.currentApplication());
     }
 
     public static int[] getIntArrayFromStringArray(String name, Context context) {
@@ -171,7 +172,7 @@ public class ContextUtils {
     }
 
     public static Drawable getDrawable(String name) {
-        return getDrawable(name, ILTweaks.currentApplication());
+        return getDrawable(name, LTHelper.currentApplication());
     }
 
     public static Drawable getDrawable(String name, Context context) {
@@ -187,7 +188,7 @@ public class ContextUtils {
     }
 
     public static Drawable getColorDrawable(String name) {
-        return getColorDrawable(name, ILTweaks.currentApplication());
+        return getColorDrawable(name, LTHelper.currentApplication());
     }
 
     public static Drawable getColorDrawable(String name, Context context) {
@@ -199,7 +200,7 @@ public class ContextUtils {
     }
 
     public static Drawable getMipmap(String name) {
-        return getMipmap(name, ILTweaks.currentApplication());
+        return getMipmap(name, LTHelper.currentApplication());
     }
 
     public static Drawable getMipmap(String name, Context context) {
@@ -207,7 +208,7 @@ public class ContextUtils {
     }
 
     public static float getDimen(String name) {
-        return getDimen(name, ILTweaks.currentApplication());
+        return getDimen(name, LTHelper.currentApplication());
     }
 
     public static float getDimen(String name, Context context) {
@@ -215,7 +216,7 @@ public class ContextUtils {
     }
 
     public static int getDimenId(String name) {
-        return getDimenId(name, ILTweaks.currentApplication());
+        return getDimenId(name, LTHelper.currentApplication());
     }
 
     public static int getDimenId(String name, Context context) {
@@ -223,7 +224,7 @@ public class ContextUtils {
     }
 
     public static int getLayoutId(String name) {
-        return getLayoutId(name, ILTweaks.currentApplication());
+        return getLayoutId(name, LTHelper.currentApplication());
     }
 
     public static int getLayoutId(String name, Context context) {
@@ -231,7 +232,7 @@ public class ContextUtils {
     }
 
     public static int getXmlId(String name) {
-        return getXmlId(name, ILTweaks.currentApplication());
+        return getXmlId(name, LTHelper.currentApplication());
     }
 
     public static int getXmlId(String name, Context context) {
@@ -239,7 +240,7 @@ public class ContextUtils {
     }
 
     public static int getMenuId(String name) {
-        return getMenuId(name, ILTweaks.currentApplication());
+        return getMenuId(name, LTHelper.currentApplication());
     }
 
     public static int getMenuId(String name, Context context) {
@@ -247,7 +248,7 @@ public class ContextUtils {
     }
 
     public static int getAttrId(String name) {
-        return getAttrId(name, ILTweaks.currentApplication());
+        return getAttrId(name, LTHelper.currentApplication());
     }
 
     public static int getAttrId(String name, Context context) {
@@ -255,7 +256,7 @@ public class ContextUtils {
     }
 
     public static XmlResourceParser getLayout(String name) {
-        return getLayout(name, ILTweaks.currentApplication());
+        return getLayout(name, LTHelper.currentApplication());
     }
 
     public static XmlResourceParser getLayout(String name, Context context) {
@@ -267,7 +268,7 @@ public class ContextUtils {
     }
 
     public static int getThemeId(String name) {
-        return getThemeId(name, ILTweaks.currentApplication());
+        return getThemeId(name, LTHelper.currentApplication());
     }
 
     public static int getThemeId(String name, Context context) {
@@ -279,7 +280,7 @@ public class ContextUtils {
     }
 
     public static int getColor(String name) {
-        return getColor(name, ILTweaks.currentApplication());
+        return getColor(name, LTHelper.currentApplication());
     }
 
     public static int getColor(String name, Context context) {
@@ -287,7 +288,7 @@ public class ContextUtils {
     }
 
     public static int getColorId(String name) {
-        return getColorId(name, ILTweaks.currentApplication());
+        return getColorId(name, LTHelper.currentApplication());
     }
 
     public static int getColorId(String name, Context context) {
@@ -319,7 +320,7 @@ public class ContextUtils {
     }
 
     public static int getResIdFromTheme(String name) {
-        return getResIdFromTheme(ILTweaks.currentApplication().getTheme(), name);
+        return getResIdFromTheme(LTHelper.currentApplication().getTheme(), name);
     }
 
     public static int getResIdFromTheme(Resources.Theme theme, String name) {
@@ -331,7 +332,7 @@ public class ContextUtils {
     }
 
     public static int getResIdFromTheme(int id) {
-        return getResIdFromTheme(ILTweaks.currentApplication().getTheme(), id);
+        return getResIdFromTheme(LTHelper.currentApplication().getTheme(), id);
     }
 
     public static int getResIdFromTheme(Resources.Theme theme, int id) {
@@ -342,7 +343,7 @@ public class ContextUtils {
 
     public static int dp2px(float dpValue) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue,
-                ILTweaks.currentApplication().getResources().getDisplayMetrics());
+                LTHelper.currentApplication().getResources().getDisplayMetrics());
     }
 
     public static int px2dp(int px) {
@@ -350,12 +351,12 @@ public class ContextUtils {
     }
 
     public static Drawable getAppIcon() {
-        return getAppIcon(ILTweaks.currentApplication().getPackageName());
+        return getAppIcon(LTHelper.currentApplication().getPackageName());
     }
 
     public static Drawable getAppIcon(String packageName) {
         try {
-            return ILTweaks.currentApplication().getPackageManager().getApplicationIcon(packageName);
+            return LTHelper.currentApplication().getPackageManager().getApplicationIcon(packageName);
         } catch (PackageManager.NameNotFoundException e) {
             Logger.e("Can't get icon from app " + packageName);
             Logger.stackTrace(e);
@@ -364,13 +365,13 @@ public class ContextUtils {
     }
 
     public static String getAppName() {
-        return getAppName(ILTweaks.currentApplication().getPackageName());
+        return getAppName(LTHelper.currentApplication().getPackageName());
     }
 
     public static String getAppName(String packageName) {
         try {
-            ApplicationInfo appInfo = ILTweaks.currentApplication().getPackageManager().getApplicationInfo(packageName, 0);
-            return ILTweaks.currentApplication().getPackageManager().getApplicationLabel(appInfo).toString();
+            ApplicationInfo appInfo = LTHelper.currentApplication().getPackageManager().getApplicationInfo(packageName, 0);
+            return LTHelper.currentApplication().getPackageManager().getApplicationLabel(appInfo).toString();
         } catch (PackageManager.NameNotFoundException e) {
             Logger.stackTrace(e);
             return "";
@@ -380,7 +381,7 @@ public class ContextUtils {
     public static boolean isCallingFromLTweaks() {
         try {
             int uid = Binder.getCallingUid();
-            ApplicationInfo appInfo = ILTweaks.currentApplication().getPackageManager().getApplicationInfo(PackageNames.L_TWEAKS, 0);
+            ApplicationInfo appInfo = LTHelper.currentApplication().getPackageManager().getApplicationInfo(PackageNames.L_TWEAKS, 0);
             if (uid != appInfo.uid) {
                 return true;
             }
@@ -391,7 +392,7 @@ public class ContextUtils {
     public static String getCallingPackage() {
         try {
             int uid = Binder.getCallingUid();
-            return ILTweaks.currentApplication().getPackageManager().getNameForUid(uid);
+            return LTHelper.currentApplication().getPackageManager().getNameForUid(uid);
         } catch (Exception e) {}
         return null;
     }

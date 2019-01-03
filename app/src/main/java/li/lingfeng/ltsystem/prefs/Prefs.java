@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Set;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 
 public class Prefs {
@@ -20,7 +21,7 @@ public class Prefs {
     private static RemotePreference _remote;
     public static RemotePreference remote() {
         if (_remote == null) {
-            _remote = new RemotePreference(ILTweaks.currentApplication(),
+            _remote = new RemotePreference(LTHelper.currentApplication(),
                     "li.lingfeng.ltsystem.mainpreferences", "large_store");
         }
         return _remote;
@@ -87,7 +88,7 @@ public class Prefs {
         }
 
         private SharedPreferences getSharedPreferences() {
-            return ILTweaks.currentApplication().getSharedPreferences("large_store", 0);
+            return LTHelper.currentApplication().getSharedPreferences("large_store", 0);
         }
     }
 }

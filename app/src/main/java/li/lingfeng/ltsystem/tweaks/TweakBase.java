@@ -3,16 +3,17 @@ package li.lingfeng.ltsystem.tweaks;
 import android.app.Activity;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.ILTweaksMethods;
 
 public class TweakBase extends ILTweaksMethods {
 
     protected String getPackageName() {
-        return ILTweaks.currentApplication().getPackageName();
+        return LTHelper.currentApplication().getPackageName();
     }
 
     protected ClassLoader getClassLoader() {
-        return ILTweaks.currentApplication().getClassLoader();
+        return LTHelper.currentApplication().getClassLoader();
     }
 
     protected Class findClass(String className) throws ClassNotFoundException {

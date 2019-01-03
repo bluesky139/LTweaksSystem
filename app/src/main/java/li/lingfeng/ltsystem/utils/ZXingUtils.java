@@ -20,6 +20,7 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 
 import li.lingfeng.ltsystem.ILTweaks;
+import li.lingfeng.ltsystem.LTHelper;
 
 /**
  * Created by smallville on 2017/2/1.
@@ -45,7 +46,7 @@ public class ZXingUtils {
         Result result = null;
         try {
             Logger.i("Decoding qrcode " + uri.toString());
-            stream = ILTweaks.currentApplication().getContentResolver().openInputStream(uri);
+            stream = LTHelper.currentApplication().getContentResolver().openInputStream(uri);
             Bitmap originalBitmap = BitmapFactory.decodeStream(stream);
 
             for (int scale : new int[] { 1, 2, 4 }) {

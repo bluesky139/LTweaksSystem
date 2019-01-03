@@ -96,7 +96,7 @@ public abstract class LoaderBase extends ILTweaks.Loader {
     }
 
     private String getPackageName() {
-        Application application = ILTweaks.currentApplication();
+        Application application = LTHelper.currentApplication();
         return application != null ? application.getPackageName() : "_unknown_package";
     }
 }

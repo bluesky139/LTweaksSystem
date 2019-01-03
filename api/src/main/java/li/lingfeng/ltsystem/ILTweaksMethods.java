@@ -4,6 +4,9 @@ import li.lingfeng.ltsystem.ILTweaks.MethodParam;
 
 public abstract class ILTweaksMethods {
 
+    public void java_lang_ProcessBuilder__start__(final MethodParam param) {
+    }
+
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(final MethodParam param) {
     }
 

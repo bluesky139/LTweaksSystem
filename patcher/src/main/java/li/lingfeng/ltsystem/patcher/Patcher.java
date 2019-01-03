@@ -36,6 +36,7 @@ public class Patcher {
 
     private static final Map<String, String> PACKAGE_PATH_MAP = new HashMap<String, String>() {{
         put("com.android.server", "/frameworks/base/services/core/java/");
+        put("java.lang", "/libcore/ojluni/src/main/java/");
     }};
     private static final String PACKAGE_CORE_PATH = "/frameworks/base/core/java/";
 
@@ -208,9 +209,9 @@ public class Patcher {
                 "}\n"
                 ;
 
-        builder.append("        if (li.lingfeng.ltsystem.LTweaksBridge.loader != null) {\n");
-        builder.append("            li.lingfeng.ltsystem.ILTweaks.MethodParam param = new li.lingfeng.ltsystem.ILTweaks.MethodParam(" + (method.isStatic() ? "null": "this") + (info.getParamTypes().length != 0 ? ", ": "") + commaParams + ");\n");
-        builder.append("            li.lingfeng.ltsystem.LTweaksBridge.loader.methods." + info.fullClass + "__" + info.methodName + "__" + info.paramTypes + "(param);\n");
+        builder.append("        if (li.lingfeng.ltsystem.ILTweaksBridge.loader != null) {\n");
+        builder.append("            li.lingfeng.ltsystem.ILTweaks.MethodParam param = li.lingfeng.ltsystem.ILTweaksBridge.paramCreator.create(" + (method.isStatic() ? "null": "this") + (info.getParamTypes().length != 0 ? ", ": "") + commaParams + ");\n");
+        builder.append("            li.lingfeng.ltsystem.ILTweaksBridge.loader.methods." + info.fullClass + "__" + info.methodName + "__" + info.paramTypes + "(param);\n");
         builder.append("            if (param.hasHook()) {\n");
         builder.append("                param.hookBefore();\n");
         builder.append("                if (param.hasResult()) {\n");
@@ -296,13 +297,36 @@ public class Patcher {
         if (SIMULATE) {
             return;
         }
-        File dstDir = new File(Config.ANDROID_SOURCE_DIR + "/frameworks/base/core/java/li");
-        if (dstDir.exists()) {
-            FileUtils.deleteDirectory(dstDir);
+        File dstFrameworkDir = new File(Config.ANDROID_SOURCE_DIR + "/frameworks/base/core/java/li/lingfeng/ltsystem");
+        File dstLibcoreDir = new File(Config.ANDROID_SOURCE_DIR + "/libcore/ojluni/src/main/java/li/lingfeng/ltsystem");
+        if (dstFrameworkDir.exists()) {
+            FileUtils.deleteDirectory(dstFrameworkDir);
         }
-        File srcDir = new File("./api/src/main/java/li");
-        Logger.i("Copy " + srcDir.getAbsolutePath() + " -> " + dstDir.getAbsolutePath());
-        FileUtils.copyDirectory(srcDir, dstDir);
+        if (dstLibcoreDir.exists()) {
+            FileUtils.deleteDirectory(dstLibcoreDir);
+        }
+        File srcDir = new File("./api/src/main/java/li/lingfeng/ltsystem");
+
+        File[] srcFiles = srcDir.listFiles();
+        File mkFile = new File(Config.ANDROID_SOURCE_DIR + "/libcore/openjdk_java_files.mk");
+        String mkContent = FileUtils.readFileToString(mkFile, "UTF-8");
+
+        for (File srcFile : srcFiles) {
+            File dstDir = srcFile.getName().startsWith("ILTweaks") ? dstLibcoreDir : dstFrameworkDir;
+            File dstFile = new File(dstDir.getAbsolutePath() + "/" + srcFile.getName());
+            if (!dstDir.exists()) {
+                FileUtils.forceMkdir(dstDir);
+            }
+            Logger.v("Copy " + srcFile.getAbsolutePath() + " -> " + dstFile.getAbsolutePath());
+            FileUtils.copyFile(srcFile, dstFile);
+
+            if (dstDir == dstLibcoreDir) {
+                int i = mkContent.indexOf('\n') + 1;
+                mkContent = mkContent.substring(0, i) + "    ojluni/src/main/java/li/lingfeng/ltsystem/"
+                        + dstFile.getName() + " \\\n" + mkContent.substring(i);
+            }
+        }
+        FileUtils.writeStringToFile(mkFile, mkContent, "UTF-8");
     }
 
     private int getPositionFromLineCol(String content, int line, int col) {

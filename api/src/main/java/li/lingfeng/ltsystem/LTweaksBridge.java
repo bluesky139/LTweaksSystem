@@ -11,13 +11,11 @@ import java.util.regex.Pattern;
 
 import dalvik.system.PathClassLoader;
 
-public final class LTweaksBridge {
+public final class LTweaksBridge extends ILTweaksBridge {
 
     private static final String TAG = "LTweaksBridge";
     private static final String PACKAGE_NAME = LTweaksBridge.class.getPackage().getName();
     private static final String LOADER_CLASS = PACKAGE_NAME + ".Loader";
-
-    public static ILTweaks.Loader loader;
 
     public static void initInZygote() {
         Log.i(TAG, "Init ltweaks in zygote.");
@@ -61,6 +59,7 @@ public final class LTweaksBridge {
                 return;
             }
 
+            paramCreator = new LTweaksImpl.ParamCreatorImpl();
             loader = (ILTweaks.Loader) cls.newInstance();
             try {
                 loader.initInZygote();
