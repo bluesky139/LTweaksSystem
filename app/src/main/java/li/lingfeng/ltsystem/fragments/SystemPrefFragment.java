@@ -15,6 +15,7 @@ import li.lingfeng.ltsystem.activities.ImageSearchActivity;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
 import li.lingfeng.ltsystem.activities.QrCodeActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
+import li.lingfeng.ltsystem.fragments.sub.system.ShareFilterDataProvider;
 import li.lingfeng.ltsystem.fragments.sub.system.TextActionDataProvider;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.lib.PreferenceClick;
@@ -103,12 +104,12 @@ public class SystemPrefFragment extends BasePrefFragment {
         }
     }
 
-/*    @PreferenceClick(prefs = R.string.key_system_share_filter)
+    @PreferenceClick(prefs = R.string.key_system_share_filter)
     private void systemShareFilter(Preference preference) {
         ListCheckActivity.create(getActivity(), ShareFilterDataProvider.class);
     }
 
-    @PreferenceClick(prefs = R.string.key_prevent_running_set_list)
+/*    @PreferenceClick(prefs = R.string.key_prevent_running_set_list)
     private void setPreventList(Preference preference) {
         ListCheckActivity.create(getActivity(), PreventListDataProvider.class);
     }

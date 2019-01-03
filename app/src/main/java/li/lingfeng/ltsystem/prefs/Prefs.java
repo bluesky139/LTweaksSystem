@@ -28,7 +28,8 @@ public class Prefs {
     static class Store extends PreferenceStore {
 
         static int[] LARGE_STORE_KEYS = {
-                R.string.key_text_actions_set
+                R.string.key_text_actions_set,
+                R.string.key_system_share_filter_activities
         };
 
         public Store(String keyPrefix) {
@@ -50,6 +51,24 @@ public class Prefs {
                 getSharedPreferences().edit().putStringSet(key, values).commit();
             } else {
                 super.putStringSet(key, values);
+            }
+        }
+
+        @Override
+        public String getString(String key, String defValue) {
+            if (isLargeKey(key)) {
+                return getSharedPreferences().getString(key, defValue);
+            } else {
+                return super.getString(key, defValue);
+            }
+        }
+
+        @Override
+        public Set<String> getStringSet(String key, Set<String> defValues) {
+            if (isLargeKey(key)) {
+                return getSharedPreferences().getStringSet(key, defValues);
+            } else {
+                return super.getStringSet(key, defValues);
             }
         }
 

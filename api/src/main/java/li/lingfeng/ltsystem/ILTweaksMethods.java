@@ -66,4 +66,7 @@ public abstract class ILTweaksMethods {
 
     public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(final MethodParam param) {
     }
+
+    public void com_android_server_pm_PackageManagerService__queryIntentActivitiesInternal__Intent_String_int_int_int_boolean_boolean(final MethodParam param) {
+    }
 }
