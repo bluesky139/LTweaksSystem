@@ -34,6 +34,12 @@ public abstract class ILTweaksMethods {
     public void android_app_Activity__onKeyUp__int_KeyEvent(final MethodParam param) {
     }
 
+    public void android_app_Service__startForeground__int_Notification(final MethodParam param) {
+    }
+
+    public void android_app_Service__stopForeground__int(final MethodParam param) {
+    }
+
     public void android_widget_TextView__onTouchEvent__MotionEvent(final MethodParam param) {
     }
 

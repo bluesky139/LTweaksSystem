@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.tweaks;
 
 import android.app.Activity;
+import android.app.Service;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.LTHelper;
@@ -30,6 +31,20 @@ public class TweakBase extends ILTweaksMethods {
     protected void afterOnActivity(String className, ILTweaks.MethodParam param, ILTweaks.After after) {
         final Activity activity = (Activity) param.thisObject;
         if (activity.getClass().getName().equals(className)) {
+            param.after(after);
+        }
+    }
+
+    protected void beforeOnService(String className, ILTweaks.MethodParam param, ILTweaks.Before before) {
+        final Service service = (Service) param.thisObject;
+        if (service.getClass().getName().equals(className)) {
+            param.before(before);
+        }
+    }
+
+    protected void afterOnService(String className, ILTweaks.MethodParam param, ILTweaks.After after) {
+        final Service service = (Service) param.thisObject;
+        if (service.getClass().getName().equals(className)) {
             param.after(after);
         }
     }
