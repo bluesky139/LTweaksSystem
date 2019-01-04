@@ -52,6 +52,7 @@ public class Shell extends AsyncTask<Void, Void, Boolean> {
             mStdoutGobbler.start();
             for (String cmd : mCmds) {
                 outputStream.writeBytes(cmd + "\n");
+                outputStream.flush();
             }
             outputStream.writeBytes("exit\n");
             outputStream.flush();

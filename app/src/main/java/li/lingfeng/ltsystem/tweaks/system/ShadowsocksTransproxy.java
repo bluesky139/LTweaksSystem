@@ -29,6 +29,7 @@ public class ShadowsocksTransproxy extends TweakBase {
 
     private static final String TRANSPROXY_SERVICE = "com.github.shadowsocks.bg.TransproxyService";
     private Shell mShellAdding;
+    private boolean mStarted = false;
 
     @Override
     public void java_lang_ProcessBuilder__start__(ILTweaks.MethodParam param) {
@@ -50,7 +51,11 @@ public class ShadowsocksTransproxy extends TweakBase {
 
     @Override
     public void android_app_Service__startForeground__int_Notification(ILTweaks.MethodParam param) {
+        if (mStarted) {
+            return;
+        }
         afterOnService(TRANSPROXY_SERVICE, param, () -> {
+            mStarted = true;
             final long startTime = System.currentTimeMillis();
             String[] ipList = ContextUtils.getLStringArray(R.array.shadowsocks_bypass_ip_list);
             String[] preCmds = new String[] {
@@ -110,6 +115,8 @@ public class ShadowsocksTransproxy extends TweakBase {
                 Logger.d("XposedShadowsocksTransproxy stop result " + isOk);
                 toast("iptables unset " + isOk);
             }).execute();
+
+            mStarted = false;
         });
     }
 
