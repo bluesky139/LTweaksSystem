@@ -3,17 +3,18 @@ package li.lingfeng.ltsystem.tweaks.system;
 import android.os.Build;
 import android.view.MenuItem;
 
+import com.alibaba.fastjson.JSONArray;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import li.lingfeng.ltsystem.ILTweaks;
-import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.ILTweaksMethods;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
@@ -31,14 +32,15 @@ public class TextActions extends ILTweaksMethods {
 
     @Override
     public void com_android_internal_widget_FloatingToolbar__getVisibleAndEnabledMenuItems__Menu(ILTweaks.MethodParam param) {
-        Set<String> savedItems = Prefs.remote().getStringSet(R.string.key_text_actions_set, null);
+        JSONArray savedItems = Prefs.large().getArray(R.string.key_text_actions_set, null);
         if (savedItems == null || savedItems.size() == 0) {
             return;
         }
 
         param.after(() -> {
             final Map<String, Triple<Integer, Boolean, String>> savedItemMap = new HashMap<>(savedItems.size());
-            for (String savedItem : savedItems) {
+            for (Iterator it = savedItems.iterator(); it.hasNext(); ) {
+                String savedItem = (String) it.next();
                 String[] strs = Utils.splitReach(savedItem, ':', 5);
                 String name = strs[3];
                 String rename = strs[4];

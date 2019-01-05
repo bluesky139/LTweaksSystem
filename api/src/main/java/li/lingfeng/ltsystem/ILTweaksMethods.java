@@ -82,6 +82,12 @@ public abstract class ILTweaksMethods {
     public void com_android_internal_widget_FloatingToolbar__getVisibleAndEnabledMenuItems__Menu(final MethodParam param) {
     }
 
+    public void com_android_server_am_ActivityManagerService__finishBooting__(final MethodParam param) {
+    }
+
+    public void com_android_server_am_ActivityManagerService__checkBroadcastFromSystem__Intent_ProcessRecord_String_int_boolean_List(final MethodParam param) {
+    }
+
     public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(final MethodParam param) {
     }
 

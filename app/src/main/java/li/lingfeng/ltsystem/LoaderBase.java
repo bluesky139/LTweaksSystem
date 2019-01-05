@@ -27,6 +27,7 @@ public abstract class LoaderBase extends ILTweaks.Loader {
         Logger.i("LoaderBase initInZygote.");
         addModules();
         addModulesForAll();
+        Prefs.large().load();
     }
 
     protected void addModule(String packageName, Class<? extends ILTweaksMethods> cls) {

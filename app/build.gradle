@@ -51,7 +51,6 @@ dependencies {
     api 'org.apache.commons:commons-collections4:4.1'
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.alibaba:fastjson:1.2.54'
-    implementation 'com.crossbowffs.remotepreferences:remotepreferences:0.7'
     implementation 'com.google.zxing:core:3.3.3'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-annotations:27.1.1'

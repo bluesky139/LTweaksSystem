@@ -10,16 +10,17 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
@@ -109,11 +110,12 @@ public class TextActionDataProvider extends ListCheckActivity.DataProvider {
 
     public TextActionDataProvider(ListCheckActivity activity) {
         super(activity);
-        final Set<String> savedSet = Prefs.edit().getStringSet(R.string.key_text_actions_set, new HashSet<String>());
+        final JSONArray savedSet = Prefs.largeEditor().getArray(R.string.key_text_actions_set, new JSONArray());
         mActions = new ArrayList<>(savedSet.size());
 
         final Map<String, Triple<Integer, Boolean, String>> itemMap = new HashMap<>(savedSet.size());
-        for (String savedItem : savedSet) {
+        for (Iterator it = savedSet.iterator(); it.hasNext(); ) {
+            String savedItem = (String) it.next();
             String[] strs = Utils.splitReach(savedItem, ':', 5);
             int order = Integer.parseInt(strs[0]);
             boolean block = Boolean.parseBoolean(strs[1]);
@@ -341,11 +343,11 @@ public class TextActionDataProvider extends ListCheckActivity.DataProvider {
 
     private void save() {
         Logger.i("Save text actions.");
-        Set<String> toSaveSet = new HashSet<>(mActions.size());
+        JSONArray toSaveSet = new JSONArray(mActions.size());
         for (int i = 0; i < mActions.size(); ++i) {
             Action action = mActions.get(i);
             toSaveSet.add(action.toSaveString(i, action.block));
         }
-        Prefs.edit().putStringSet(R.string.key_text_actions_set, toSaveSet);
+        Prefs.largeEditor().putArray(R.string.key_text_actions_set, toSaveSet);
     }
 }

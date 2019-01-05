@@ -13,11 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
 
-        <provider
-            android:name=".services.MainPreferenceProvider"
-            android:authorities="li.lingfeng.ltsystem.mainpreferences"
-            android:exported="true" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

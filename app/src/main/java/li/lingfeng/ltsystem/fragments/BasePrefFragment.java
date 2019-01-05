@@ -42,7 +42,7 @@ public class BasePrefFragment extends PreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPreferenceManager().setPreferenceDataStore(Prefs.edit());
+        getPreferenceManager().setPreferenceDataStore(Prefs.instance());
         setHasOptionsMenu(true);
     }
 
@@ -86,7 +86,7 @@ public class BasePrefFragment extends PreferenceFragment
                             if (secondType == boolean.class) {
                                 InvokeMethod(method, this, extra, preference, ((SwitchPreference) preference).isChecked());
                             } else if (secondType == String.class) {
-                                String path = Prefs.edit().getString(pref, "");
+                                String path = Prefs.instance().getString(pref, "");
                                 InvokeMethod(method, this, extra, preference, path);
                             } else {
                                 throw new Exception("Not implemented.");
@@ -264,7 +264,7 @@ public class BasePrefFragment extends PreferenceFragment
     }
 
     protected void uncheckPreferenceByDisabledComponent(int key, String componentCls) {
-        if (!ComponentUtils.isComponentEnabled(componentCls) && Prefs.edit().getBoolean(key, false)) {
+        if (!ComponentUtils.isComponentEnabled(componentCls) && Prefs.instance().getBoolean(key, false)) {
             findSwitchPreference(key).setChecked(false);
         }
     }

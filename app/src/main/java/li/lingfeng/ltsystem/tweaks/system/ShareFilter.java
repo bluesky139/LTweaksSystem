@@ -3,13 +3,13 @@ package li.lingfeng.ltsystem.tweaks.system;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 
+import com.alibaba.fastjson.JSONArray;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.List;
-import java.util.Set;
 
 import li.lingfeng.ltsystem.ILTweaks;
-import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.IntentActions;
@@ -30,7 +30,7 @@ public class ShareFilter extends TweakBase {
                 return;
             }
 
-            Set<String> activities = Prefs.remote().getStringSet(R.string.key_system_share_filter_activities, null);
+            JSONArray activities = Prefs.large().getArray(R.string.key_system_share_filter_activities, null);
             if (activities == null || activities.isEmpty()) {
                 return;
             }

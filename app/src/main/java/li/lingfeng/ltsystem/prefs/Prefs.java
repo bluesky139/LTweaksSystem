@@ -1,94 +1,101 @@
 package li.lingfeng.ltsystem.prefs;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 
-import java.util.Arrays;
-import java.util.Set;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
-import li.lingfeng.ltsystem.ILTweaks;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+
 import li.lingfeng.ltsystem.LTHelper;
-import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.utils.Logger;
 
 public class Prefs {
 
-    // System properties read from other apps.
+    // System properties read write.
     private static PreferenceStore _instance = new PreferenceStore("persist.sys.ltweaks.");
     public static PreferenceStore instance() {
         return _instance;
     }
 
-    // Remote preference is for large store, due to limitation of SystemProperties value size, read only.
-    private static RemotePreference _remote;
-    public static RemotePreference remote() {
-        if (_remote == null) {
-            _remote = new RemotePreference(LTHelper.currentApplication(),
-                    "li.lingfeng.ltsystem.mainpreferences", "large_store");
-        }
-        return _remote;
+    public static final String LARGE_STORE_GET = Prefs.class.getName() + ".LARGE_STORE_GET";
+    public static final String LARGE_STORE_ALL = Prefs.class.getName() + ".LARGE_STORE_ALL";
+    public static final String LARGE_STORE_UPDATE = Prefs.class.getName() + ".LARGE_STORE_UPDATE";
+    public static final String LARGE_STORE_PATH = "/data/system/ltweaks_large_store";
+
+    // Large store read from tweaks.
+    private static LargeStore _large = new LargeStore();
+    public static LargeStore large() {
+        return _large;
     }
 
-    // Read write from ltweaks itself.
-    private static PreferenceStore _edit;
-    public static PreferenceStore edit() {
-        if (_edit == null) {
-            _edit = new StoreEditor("persist.sys.ltweaks.");
+    // Large store read write in preference activity.
+    private static LargeStoreEditor _largeEditor;
+    public static LargeStoreEditor largeEditor() {
+        if (_largeEditor == null) {
+            _largeEditor = new LargeStoreEditor();
         }
-        return _edit;
+        return _largeEditor;
     }
 
-    static class StoreEditor extends PreferenceStore {
+    public static class LargeStore {
 
-        static int[] LARGE_STORE_KEYS = {
-                R.string.key_text_actions_set,
-                R.string.key_system_share_filter_activities
-        };
+        protected JSONObject jLargeStore;
 
-        public StoreEditor(String keyPrefix) {
-            super(keyPrefix);
-        }
-
-        @Override
-        public void putString(String key, String value) {
-            if (isLargeKey(key)) {
-                getSharedPreferences().edit().putString(key, value).commit();
+        // Load in zygote, so any modification should take effect after reboot.
+        public void load() {
+            File file = new File(LARGE_STORE_PATH);
+            if (file.exists()) {
+                try {
+                    String content = FileUtils.readFileToString(file, "UTF-8");
+                    jLargeStore = JSON.parseObject(content);
+                } catch (Throwable e) {
+                    Logger.e("Load large store " + LARGE_STORE_PATH + " exception.", e);
+                    jLargeStore = new JSONObject();
+                }
             } else {
-                super.putString(key, value);
+                jLargeStore = new JSONObject();
             }
         }
 
-        @Override
-        public void putStringSet(String key, Set<String> values) {
-            if (isLargeKey(key)) {
-                getSharedPreferences().edit().putStringSet(key, values).commit();
-            } else {
-                super.putStringSet(key, values);
-            }
+        // Only set in preference activity, to receive newest large store values.
+        public void setLargeStore(JSONObject jLargeStore) {
+            this.jLargeStore = jLargeStore;
         }
 
-        @Override
-        public String getString(String key, String defValue) {
-            if (isLargeKey(key)) {
-                return getSharedPreferences().getString(key, defValue);
-            } else {
-                return super.getString(key, defValue);
-            }
+        public JSONArray getArray(int key, JSONArray jDefArray) {
+            return getArray(getKeyById(key), jDefArray);
         }
 
-        @Override
-        public Set<String> getStringSet(String key, Set<String> defValues) {
-            if (isLargeKey(key)) {
-                return getSharedPreferences().getStringSet(key, defValues);
-            } else {
-                return super.getStringSet(key, defValues);
-            }
+        public JSONArray getArray(String key, JSONArray jDefArray) {
+            JSONArray jArray = jLargeStore.getJSONArray(key);
+            return jArray != null ? jArray : jDefArray;
         }
 
-        private boolean isLargeKey(String key) {
-            return Arrays.stream(LARGE_STORE_KEYS).filter(k -> getKeyById(k).equals(key)).count() > 0;
+        protected String getKeyById(int id) {
+            return PrefKeys.getById(id);
+        }
+    }
+
+    public static class LargeStoreEditor extends LargeStore {
+
+        public void putArray(int key, JSONArray jArray) {
+            putArray(getKeyById(key), jArray);
         }
 
-        private SharedPreferences getSharedPreferences() {
-            return LTHelper.currentApplication().getSharedPreferences("large_store", 0);
+        public void putArray(String key, JSONArray jArray) {
+            sendLargeStoreUpdate(key, jArray.toString());
+            jLargeStore.put(key, jArray);
+        }
+
+        private void sendLargeStoreUpdate(String key, String value) {
+            Intent intent = new Intent(LARGE_STORE_UPDATE);
+            intent.putExtra("key", key);
+            intent.putExtra("value", value);
+            LTHelper.currentApplication().sendBroadcast(intent);
         }
     }
 }

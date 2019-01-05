@@ -3,11 +3,11 @@ package li.lingfeng.ltsystem.fragments.sub.system;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 
+import com.alibaba.fastjson.JSONArray;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import li.lingfeng.ltsystem.R;
@@ -38,14 +38,12 @@ public class ShareFilterDataProvider extends ListCheckActivity.DataProvider {
     private List<ActivityInfo> mAllInfos;
     private List<ActivityInfo> mDisabledInfos;
     private List<ActivityInfo> mEnabledInfos;
-    private Set<String> mDisabledActivities;
+    private JSONArray mDisabledActivities;
     private boolean mNeedReload = true;
 
     public ShareFilterDataProvider(ListCheckActivity activity) {
         super(activity);
-        mDisabledActivities = new HashSet<>(
-                Prefs.edit().getStringSet(R.string.key_system_share_filter_activities, new HashSet<String>())
-        );
+        mDisabledActivities = Prefs.largeEditor().getArray(R.string.key_system_share_filter_activities, new JSONArray());
         for (String action : IntentActions.sSendActions) {
             Intent intent = new Intent(action);
             intent.setType("*/*");
@@ -147,6 +145,6 @@ public class ShareFilterDataProvider extends ListCheckActivity.DataProvider {
         }
         mNeedReload = true;
 
-        Prefs.edit().putStringSet(R.string.key_system_share_filter_activities, mDisabledActivities);
+        Prefs.largeEditor().putArray(R.string.key_system_share_filter_activities, mDisabledActivities);
     }
 }
