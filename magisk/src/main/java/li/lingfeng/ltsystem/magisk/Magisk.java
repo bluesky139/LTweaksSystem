@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.magisk;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,6 +24,7 @@ public class Magisk {
     }
 
     private static final String OUT_SYSTEM_PATH = Config.ANDROID_SOURCE_DIR + "/out/target/product/" + Config.DEVICE_CODE_NAME + "/system";
+    private static final String OUT_SYSTEM_OTHER_PATH = OUT_SYSTEM_PATH + "_other";
     private static final String WORKING_DIR = System.getProperty("user.dir").replace('\\', '/');
     private static final String MODULE_TEMPLATE_PATH = WORKING_DIR + "/magisk-module-template";
     private static final String MODULE_PATH = WORKING_DIR + "/magisk-module";
@@ -54,22 +56,27 @@ public class Magisk {
         List<String> list = new ArrayList<>();
         list.add("framework/arm");
         list.add("framework/oat");
+        if (new File(OUT_SYSTEM_OTHER_PATH).exists()) {
+            list.add("framework/arm64");
+        }
 
-        Function<String, List<String>> collectOatList = (folder) -> {
-            File dir = new File(OUT_SYSTEM_PATH + "/" + folder);
+        Function<Pair<String, String>, List<String>> collectOatList = (folder) -> {
+            File dir = new File(folder.getLeft() + "/" + folder.getRight());
             List<String> oatList = new ArrayList<>();
             for (String name : dir.list()) {
                 String s = name + "/oat";
                 if (new File(dir.getPath() + "/" + s).exists()) {
-                    String s1 = folder + "/" + s;
+                    String s1 = folder.getRight() + "/" + s;
                     oatList.add(s1);
                 }
             }
             return oatList;
         };
 
-        list.addAll(collectOatList.apply("priv-app"));
-        list.addAll(collectOatList.apply("app"));
+        list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_PATH, "priv-app")));
+        list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_PATH, "app")));
+        list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_OTHER_PATH, "priv-app")));
+        list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_OTHER_PATH, "app")));
         return list;
     }
 
@@ -77,8 +84,10 @@ public class Magisk {
         for (String path : list) {
             Logger.v("Copy " + path);
             File srcFile = new File(OUT_SYSTEM_PATH + "/" + path);
+            File srcOtherFile = new File(OUT_SYSTEM_OTHER_PATH + "/" + path);
             File dstFile = new File(MODULE_PATH + "/system/" + path);
-            FileUtils.copyDirectory(srcFile, dstFile, true);
+            assert !(srcFile.exists() && srcOtherFile.exists()) : "oat exists in both system and system_other.";
+            FileUtils.copyDirectory(srcFile.exists() ? srcFile : srcOtherFile, dstFile, true);
         }
     }
 

@@ -12,3 +12,5 @@
 system_keystore/
 magisk-module/
 common/src/main/java/li/lingfeng/ltsystem/common/Config.java
+app/release/
+magisk-ltsystem-*.zip

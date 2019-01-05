@@ -2,6 +2,9 @@ package li.lingfeng.ltsystem;
 
 import li.lingfeng.ltsystem.ILTweaks.MethodParam;
 
+/**
+ * {@hide}
+ */
 public abstract class ILTweaksMethods {
 
     public void java_lang_ProcessBuilder__start__(final MethodParam param) {

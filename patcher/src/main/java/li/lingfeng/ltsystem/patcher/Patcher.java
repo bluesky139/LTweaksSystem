@@ -327,6 +327,14 @@ public class Patcher {
             }
         }
         FileUtils.writeStringToFile(mkFile, mkContent, "UTF-8");
+
+        File pkgListFile = new File(Config.ANDROID_SOURCE_DIR + "/build/core/tasks/check_boot_jars/package_whitelist.txt");
+        String pkgListContent = FileUtils.readFileToString(pkgListFile, "UTF-8");
+        if (!pkgListContent.contains("li\\.lingfeng\\.ltsystem")) {
+            Logger.i("Append li.lingfeng.ltsystem into package_whitelist.txt");
+            pkgListContent += "\nli\\.lingfeng\\.ltsystem\n";
+            FileUtils.writeStringToFile(pkgListFile, pkgListContent);
+        }
     }
 
     private int getPositionFromLineCol(String content, int line, int col) {

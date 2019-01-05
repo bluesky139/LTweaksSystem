@@ -49,6 +49,7 @@ public class ShadowsocksTransproxy extends TweakBase {
         });
     }
 
+    // TODO: Create tmp chain while adding, use "iptables -w -t nat -L Shadowsocks -n" to check chain exist.
     @Override
     public void android_app_Service__startForeground__int_Notification(ILTweaks.MethodParam param) {
         if (mStarted) {
