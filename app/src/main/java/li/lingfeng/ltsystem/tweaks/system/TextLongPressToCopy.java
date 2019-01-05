@@ -65,7 +65,7 @@ public class TextLongPressToCopy extends TweakBase {
     private void pendingLongPress(TextView textView) {
         cancelLongPress();
         mLongPressRunnable = new LongPressRunnable(textView);
-        textView.postDelayed(mLongPressRunnable, 400);
+        textView.postDelayed(mLongPressRunnable, 1000);
     }
 
     private void cancelLongPress() {
