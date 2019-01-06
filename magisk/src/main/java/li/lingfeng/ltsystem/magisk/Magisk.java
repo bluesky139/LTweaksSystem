@@ -75,8 +75,10 @@ public class Magisk {
 
         list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_PATH, "priv-app")));
         list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_PATH, "app")));
-        list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_OTHER_PATH, "priv-app")));
-        list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_OTHER_PATH, "app")));
+        if (new File(OUT_SYSTEM_OTHER_PATH).exists()) {
+            list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_OTHER_PATH, "priv-app")));
+            list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_OTHER_PATH, "app")));
+        }
         return list;
     }
 
@@ -103,7 +105,7 @@ public class Magisk {
 
     private void zipModule() throws Throwable {
         Logger.i("Zip module.");
-        File zipFile = new File(WORKING_DIR + "/magisk-ltsystem-" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + ".zip");
+        File zipFile = new File(WORKING_DIR + "/magisk-ltsystem-" + Config.DEVICE_CODE_NAME + "-" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + ".zip");
         if (zipFile.exists()) {
             FileUtils.forceDelete(zipFile);
         }
