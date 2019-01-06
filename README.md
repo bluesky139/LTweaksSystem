@@ -21,3 +21,11 @@ This is an advanced implementation on [L Tweaks](https://github.com/bluesky139/L
 * Reboot into recovery, clear dalvik cache.
 
 * Everything is ready, boot into system, find `L Tweaks System` app, set each preferences that what you want, reboot system/apps, enjoy.
+
+## My working environment
+
+* Android Studio 3.2.1
+
+* Official AOSP, Android 8.1
+
+* Device: Pixel
