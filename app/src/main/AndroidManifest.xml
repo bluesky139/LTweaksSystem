@@ -3,6 +3,7 @@
     package="li.lingfeng.ltsystem"
     android:sharedUserId="android.uid.system">
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -108,6 +109,22 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity-alias>
+
+        <activity android:name=".activities.TileActivity" android:excludeFromRecents="true"
+            android:theme="@style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+        </activity>
+        <service android:name=".services.AdbWireless"
+            android:label="Adb Wireless"
+            android:icon="@drawable/ic_quick_settings_adb_wireless_off"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE" android:value="true" />
+        </service>
     </application>
 
 </manifest>
