@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Icon;
 import android.net.wifi.WifiManager;
+import android.os.IBinder;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import android.support.v4.app.NotificationCompat;
@@ -24,14 +25,10 @@ import li.lingfeng.ltsystem.utils.Shell;
 public class AdbWireless extends TileService {
 
     private static final String ADB_WIRELESS_OFF = AdbWireless.class + ".ADB_WIRELESS_OFF";
-    private boolean mSetToInactiveFirst = false;
 
     @Override
-    public void onStartListening() {
-        if (mSetToInactiveFirst) {
-            return;
-        }
-        mSetToInactiveFirst = true;
+    public IBinder onBind(Intent intent) {
+        IBinder binder = super.onBind(intent);
         Tile tile = getQsTile();
         tile.setState(Tile.STATE_INACTIVE);
         tile.updateTile();
@@ -42,6 +39,7 @@ public class AdbWireless extends TileService {
                 onClick();
             }
         }, new IntentFilter(ADB_WIRELESS_OFF));
+        return binder;
     }
 
     @Override
