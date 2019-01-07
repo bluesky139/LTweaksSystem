@@ -4,7 +4,9 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.JavaToken;
 import com.github.javaparser.Position;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.type.ReferenceType;
@@ -15,7 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -138,7 +142,7 @@ public class Patcher {
                     .get();
         }
 
-        List<MethodDeclaration> methods = cls.getMethodsBySignature(info.methodName + "_Original", info.getParamTypes());
+        List<CallableDeclaration> methods = (List) cls.getMethodsBySignature(info.methodName + "_Original", info.getParamTypes());
         if (methods.size() > 0) {
             throw new RuntimeException(info.methodName + "_Original method is already in it, you should revert changes first.");
         }
@@ -147,12 +151,19 @@ public class Patcher {
                 .map(type -> Utils.replace$ToAngleBrackets(type))
                 .map(type -> type.replace('$', '.'))
                 .toArray(String[]::new);
-        methods = cls.getMethodsBySignature(info.methodName, paramTypes);
+        if (info.getClassSimpleName().equals(info.methodName)) {
+            CallableDeclaration constructor = cls.getConstructorByParameterTypes(paramTypes).get();
+            methods = new ArrayList<>(1);
+            methods.add(constructor);
+        } else {
+            methods = (List) cls.getMethodsBySignature(info.methodName, paramTypes);
+        }
+
         if (methods.size() != 1) {
             throw new RuntimeException("getMethodsBySignature return " + methods.size() + " methods, "
                     + info.methodName + "(" + StringUtils.join(paramTypes, ", ") + ")");
         }
-        MethodDeclaration method = methods.get(0);
+        CallableDeclaration method = methods.get(0);
 
         Iterator<JavaToken> it = method.getTokenRange().get().iterator();
         while (it.hasNext()) {
@@ -172,6 +183,9 @@ public class Patcher {
                         Logger.v(generatedMethod);
                     }
                     content = content.substring(0, pos) + generatedMethod + content.substring(pos + token.getText().length());
+                    if (method instanceof ConstructorDeclaration) {
+                        content = removeFieldsFinalWord(content);
+                    }
                     if (!SIMULATE) {
                         FileUtils.writeStringToFile(file, content);
                     }
@@ -186,7 +200,7 @@ public class Patcher {
         throw new RuntimeException("Can't find method name after method walk.");
     }
 
-    private String generateHookMethod(MethodDeclaration method, MethodInfo info) {
+    private String generateHookMethod(CallableDeclaration method, MethodInfo info) {
         StringBuilder builder = new StringBuilder();
         String commaParamsWithType = Utils.joinT(method.getParameters(), ", ",
                 ((param, i) -> ((Parameter) param).getTypeAsString() + ' ' + ((Parameter) param).getNameAsString()));
@@ -195,17 +209,17 @@ public class Patcher {
 
         String commaParams = Utils.joinT(method.getParameters(), ", ", ((param, i) -> ((Parameter) param).getNameAsString()));
         String commaModifiedParams = Utils.joinT(method.getParameters(), ", ", ((param, i) -> "(" + ((Parameter) param).getTypeAsString() + ") param.args[" + i + "]"));
-        boolean isVoidReturn = method.getType().getClass() == VoidType.class;
+        boolean isVoidReturn = method instanceof ConstructorDeclaration || ((MethodDeclaration) method).getType().getClass() == VoidType.class;
         String returnKeyword = isVoidReturn ? "" : "return ";
         String callOriginal = info.methodName + "_Original(" + commaParams + ")";
         String callOriginalWithModifiedParams = info.methodName + "_Original(" + commaModifiedParams + ")";
         String callOriginalWithReturn = returnKeyword + callOriginal;
         String returnHookedResult = method.getThrownExceptions().size() == 0
                 ?
-                "return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResult()") + ";\n"
+                "return " + (isVoidReturn ? "" : "(" + ((MethodDeclaration) method).getTypeAsString() + ") param.getResult()") + ";\n"
                 :
                 "try {\n" +
-                "   return " + (isVoidReturn ? "" : "(" + method.getTypeAsString() + ") param.getResultOrThrowable()") + ";\n" +
+                "   return " + (isVoidReturn ? "" : "(" + ((MethodDeclaration) method).getTypeAsString() + ") param.getResultOrThrowable()") + ";\n" +
                 "} catch (Throwable e) {\n" +
                 "   throw (" + method.getThrownException(0).asString() + ") e;\n" +
                 "}\n"
@@ -223,7 +237,7 @@ public class Patcher {
         if (isVoidReturn) {
             builder.append("                if (param.isArgsModified()) " + callOriginalWithModifiedParams + "; else " + callOriginal + ";\n");
         } else {
-            builder.append("                " + method.getTypeAsString() + " originalResult = " + "param.isArgsModified() ? " + callOriginalWithModifiedParams + " : " + callOriginal + ";\n");
+            builder.append("                " + ((MethodDeclaration) method).getTypeAsString() + " originalResult = " + "param.isArgsModified() ? " + callOriginalWithModifiedParams + " : " + callOriginal + ";\n");
         }
 
         if (!isVoidReturn) {
@@ -246,9 +260,40 @@ public class Patcher {
         builder.append("            " + callOriginalWithReturn + ";\n");
         builder.append("        }\n");
         builder.append("    }\n");
-        builder.append("    private " + (method.isStatic() ? "static " : "") + (method.isGeneric() ? "<" + method.getTypeParameter(0).asString() + "> " : "") + method.getTypeAsString() + " " + info.methodName + "_Original");
+        builder.append("    private " + (method.isStatic() ? "static " : "") + (method.isGeneric() ? "<" + method.getTypeParameter(0).asString() + "> " : "") + (method instanceof MethodDeclaration ? ((MethodDeclaration) method).getTypeAsString() : "void") + " " + info.methodName + "_Original");
 
         return builder.toString();
+    }
+
+    private String removeFieldsFinalWord(final String content) {
+        List<Integer> positions = new ArrayList<>();
+        CompilationUnit unit = JavaParser.parse(content);
+        unit.getTypes().forEach((type) -> {
+            type.getFields().forEach((field) -> {
+                if (field.isFinal() && !field.getVariable(0).getInitializer().isPresent()) {
+                    Iterator<JavaToken> it = field.getTokenRange().get().iterator();
+                    while (it.hasNext()) {
+                        JavaToken token = it.next();
+                        if (token.getCategory() == JavaToken.Category.KEYWORD && token.getText().equals("final")) {
+                            Position lineCol = token.getRange().get().begin;
+                            int pos = getPositionFromLineCol(content, lineCol.line, lineCol.column);
+                            positions.add(pos);
+                            break;
+                        }
+                    }
+                }
+            });
+        });
+        positions.sort(Comparator.<Integer>naturalOrder().reversed());
+
+        String result = content;
+        for (Integer pos : positions) {
+            if (SIMULATE) {
+                Logger.v("Remove fields final word at pos " + pos);
+            }
+            result = result.substring(0, pos) + result.substring(pos + 5);
+        }
+        return result;
     }
 
     private void patchZygote() throws Throwable {
