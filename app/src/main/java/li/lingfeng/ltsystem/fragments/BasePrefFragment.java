@@ -22,6 +22,7 @@ import java.util.Map;
 import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.lib.PreferenceClick;
+import li.lingfeng.ltsystem.lib.PreferenceLoad;
 import li.lingfeng.ltsystem.lib.PreferenceLongClick;
 import li.lingfeng.ltsystem.prefs.Prefs;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
@@ -52,6 +53,7 @@ public class BasePrefFragment extends PreferenceFragment
         listenPreferenceChanges();
         listenPreferenceClicks();
         listenPreferenceLongClicks();
+        callPreferenceLoads();
     }
 
     private void listenPreferenceChanges() {
@@ -145,6 +147,22 @@ public class BasePrefFragment extends PreferenceFragment
 
         ListView listView = (ListView) getView().findViewById(android.R.id.list);
         listView.setOnItemLongClickListener(this);
+    }
+
+    private void callPreferenceLoads() {
+        Method[] methods = getClass().getDeclaredMethods();
+        for (Method method : methods) {
+            PreferenceLoad preferenceLoad = method.getAnnotation(PreferenceLoad.class);
+            if (preferenceLoad == null) {
+                continue;
+            }
+            try {
+                method.setAccessible(true);
+                method.invoke(this);
+            } catch (Throwable e) {
+                Logger.e("Call PreferenceLoad exception on " + method, e);
+            }
+        }
     }
 
     @Override

@@ -82,6 +82,9 @@ public abstract class ILTweaksMethods {
     public void com_android_internal_widget_FloatingToolbar__getVisibleAndEnabledMenuItems__Menu(final MethodParam param) {
     }
 
+    public void com_android_internal_telephony_PhoneFactory__makeDefaultPhone__Context(final MethodParam param) {
+    }
+
     public void com_android_server_am_ActivityManagerService__finishBooting__(final MethodParam param) {
     }
 

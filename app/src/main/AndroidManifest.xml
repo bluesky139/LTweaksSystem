@@ -125,6 +125,14 @@
             </intent-filter>
             <meta-data android:name="android.service.quicksettings.ACTIVE_TILE" android:value="true" />
         </service>
+        <service android:name=".services.Switch4G3G"
+            android:label="4G/3G"
+            android:icon="@drawable/ic_4g"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

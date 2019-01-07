@@ -1,13 +1,11 @@
 package li.lingfeng.ltsystem.fragments;
 
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ChromeIncognitoActivity;
+import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
 
@@ -21,13 +19,15 @@ public class GooglePrefFragment extends BasePrefFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_google);
-
-        uncheckPreferenceByDisabledComponent(R.string.key_chrome_incognito_search, ChromeIncognitoActivity.class);
     }
 
-    @PreferenceChange(prefs = R.string.key_chrome_incognito_search)
-    private void enableChromeIncognitoSearch(Preference preference, boolean enabled) {
-        ComponentUtils.enableComponent(ChromeIncognitoActivity.class, enabled);
+    @PreferenceChange(prefs = R.string.key_chrome_incognito_search, refreshAtStart = true)
+    private void enableChromeIncognitoSearch(Preference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_chrome_incognito_search, ChromeIncognitoActivity.class);
+        } else {
+            ComponentUtils.enableComponent(ChromeIncognitoActivity.class, enabled);
+        }
     }
 
     /*@PreferenceChange(prefs = R.string.key_youtube_set_quality, refreshAtStart = true)

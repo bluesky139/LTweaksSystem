@@ -10,7 +10,7 @@ This is an advanced implementation on [L Tweaks](https://github.com/bluesky139/L
 
 * Open this project in Android Studio, copy and rename [Config.java.template](https://github.com/bluesky139/LTweaksSystem/blob/master/common/src/main/java/li/lingfeng/ltsystem/common/Config.java.template) to `Config.java`, configure Android system source path and device code name in it.
 
-* Run `Patcher` project, it will patch AOSP. (You need revert all changes if you have run this patcher before, just revert `/framework/base` and `/libcore`)
+* Run `Patcher` project, it will patch AOSP. (You need revert all changes if you have run this patcher before, just revert `/framework/base`, `/libcore`, `/frameworks/opt/telephony`)
 
 * Build AOSP again.
 

@@ -8,10 +8,14 @@ import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ImageSearchActivity;
@@ -23,9 +27,12 @@ import li.lingfeng.ltsystem.fragments.sub.system.ShareFilterDataProvider;
 import li.lingfeng.ltsystem.fragments.sub.system.TextActionDataProvider;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.lib.PreferenceClick;
+import li.lingfeng.ltsystem.lib.PreferenceLoad;
+import li.lingfeng.ltsystem.prefs.ClassNames;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
 import li.lingfeng.ltsystem.utils.ContextUtils;
+import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.PermissionUtils;
 
 /**
@@ -38,15 +45,15 @@ public class SystemPrefFragment extends BasePrefFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_system);
-
-        uncheckPreferenceByDisabledComponent(R.string.key_text_selectable_text, SelectableTextActivity.class);
-        uncheckPreferenceByDisabledComponent(R.string.key_system_share_qrcode_scan, QrCodeActivity.class);
-        uncheckPreferenceByDisabledComponent(R.string.key_system_share_image_search, ImageSearchActivity.class);
     }
 
-    @PreferenceChange(prefs = R.string.key_text_selectable_text)
-    private void enableSelectableText(Preference preference, boolean enabled) {
-        ComponentUtils.enableComponent(SelectableTextActivity.class, enabled);
+    @PreferenceChange(prefs = R.string.key_text_selectable_text, refreshAtStart = true)
+    private void enableSelectableText(Preference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_text_selectable_text, SelectableTextActivity.class);
+        } else {
+            ComponentUtils.enableComponent(SelectableTextActivity.class, enabled);
+        }
     }
 
     @PreferenceClick(prefs = R.string.key_text_actions)
@@ -72,39 +79,41 @@ public class SystemPrefFragment extends BasePrefFragment {
         shortcutManager.requestPinShortcut(info, null);
     }
 
-    @PreferenceChange(prefs = R.string.key_system_share_qrcode_scan)
-    private void systemShareQrcodeScan(final SwitchPreference preference, boolean enabled) {
-        if (enabled) {
-            PermissionUtils.requestPermissions(getActivity(), new PermissionUtils.ResultCallback() {
-                @Override
-                public void onResult(boolean ok) {
+    @PreferenceChange(prefs = R.string.key_system_share_qrcode_scan, refreshAtStart = true)
+    private void systemShareQrcodeScan(final SwitchPreference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_system_share_qrcode_scan, QrCodeActivity.class);
+        } else {
+            if (enabled) {
+                PermissionUtils.requestPermissions(getActivity(), (ok) -> {
                     if (ok) {
                         ComponentUtils.enableComponent(QrCodeActivity.class, true);
                     } else {
                         preference.setChecked(false);
                     }
-                }
-            }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        } else {
-            ComponentUtils.enableComponent(QrCodeActivity.class, false);
+                }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            } else {
+                ComponentUtils.enableComponent(QrCodeActivity.class, false);
+            }
         }
     }
 
-    @PreferenceChange(prefs = R.string.key_system_share_image_search)
-    private void systemShareImageSearch(final SwitchPreference preference, boolean enabled) {
-        if (enabled) {
-            PermissionUtils.requestPermissions(getActivity(), new PermissionUtils.ResultCallback() {
-                @Override
-                public void onResult(boolean ok) {
+    @PreferenceChange(prefs = R.string.key_system_share_image_search, refreshAtStart = true)
+    private void systemShareImageSearch(final SwitchPreference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_system_share_image_search, ImageSearchActivity.class);
+        } else {
+            if (enabled) {
+                PermissionUtils.requestPermissions(getActivity(), (ok) -> {
                     if (ok) {
                         ComponentUtils.enableComponent(ImageSearchActivity.class, true);
                     } else {
                         preference.setChecked(false);
                     }
-                }
-            }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        } else {
-            ComponentUtils.enableComponent(ImageSearchActivity.class, false);
+                }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            } else {
+                ComponentUtils.enableComponent(ImageSearchActivity.class, false);
+            }
         }
     }
 
@@ -130,32 +139,24 @@ public class SystemPrefFragment extends BasePrefFragment {
         preference.setSummary(summary);
     }
 
-  /*  @PreferenceChange(prefs = R.string.key_quick_settings_tile_4g3g, refreshAtStart = true)
-    private void tile4G3G(SwitchPreference preference, boolean enabled, Extra extra) {
+    @PreferenceLoad
+    private void tile4G3G() {
         ListPreference pref4g = findListPreference(R.string.key_quick_settings_tile_4g);
         ListPreference pref3g = findListPreference(R.string.key_quick_settings_tile_3g);
-        pref4g.setEnabled(enabled);
-        pref3g.setEnabled(enabled);
-
-        if (extra.refreshAtStart) {
-            Logger.d("Try get network types.");
-            try {
-                Context context = getActivity().createPackageContext(PackageNames.ANDROID_SETTINGS, Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE);
-                Class cls = Class.forName(ClassNames.RADIO_INFO, true, context.getClassLoader());
-                Field field = cls.getDeclaredField("mPreferredNetworkLabels");
-                field.setAccessible(true);
-                String[] types = (String[]) field.get(Modifier.isStatic(field.getModifiers()) ? null : cls.newInstance());
-                setTypesForListPreference(types, pref4g);
-                setTypesForListPreference(types, pref3g);
-            } catch (Throwable e) {
-                Logger.e("Failed to get network types, " + e);
-                Logger.stackTrace(e);
-                pref4g.setEnabled(false);
-                pref3g.setEnabled(false);
-                preference.setEnabled(false);
-                preference.setChecked(false);
-                preference.setSummary(R.string.not_supported);
-            }
+        Logger.d("Try get network types.");
+        try {
+            Context context = getActivity().createPackageContext(PackageNames.ANDROID_SETTINGS, Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE);
+            Class cls = Class.forName(ClassNames.RADIO_INFO, true, context.getClassLoader());
+            Field field = cls.getDeclaredField("mPreferredNetworkLabels");
+            field.setAccessible(true);
+            String[] types = (String[]) field.get(Modifier.isStatic(field.getModifiers()) ? null : cls.newInstance());
+            setTypesForListPreference(types, pref4g);
+            setTypesForListPreference(types, pref3g);
+        } catch (Throwable e) {
+            Logger.e("Failed to get network types, " + e);
+            Logger.stackTrace(e);
+            pref4g.setEnabled(false);
+            pref3g.setEnabled(false);
         }
     }
 
@@ -169,7 +170,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         listPreference.setSummary("%s");
     }
 
-    @PreferenceChange(prefs = R.string.key_quick_settings_tile_set_preconfigured_brightness, refreshAtStart = true)
+  /*  @PreferenceChange(prefs = R.string.key_quick_settings_tile_set_preconfigured_brightness, refreshAtStart = true)
     private void tileSetPreconfiguredBrightness(SwitchPreference preference, boolean enabled, Extra extra) {
         findPreference(R.string.key_quick_settings_tile_preconfigured_brightness).setEnabled(enabled);
     }
