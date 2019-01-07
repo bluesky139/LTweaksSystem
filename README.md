@@ -16,7 +16,7 @@ This is an advanced implementation on [L Tweaks](https://github.com/bluesky139/L
 
 * Run `Magisk` project, it will build out magisk module for modified system frameworks, install it on your device.
 
-* Run `app` project, it will build out `L Tweaks System` apk, install it.
+* Use [keytool-importkeypair](https://github.com/getfatday/keytool-importkeypair) to convert your system signature to Android keystore format, create `system_keystore` folder in this project and put keystore into it, run `app` project, it will build out `L Tweaks System` apk, install it.
 
 * Reboot into recovery, clear dalvik cache.
 
