@@ -28,6 +28,10 @@ public class ReflectUtils {
         return findField(obj.getClass(), fieldName).get(obj);
     }
 
+    public static boolean getBooleanField(Object obj, String fieldname) throws Throwable {
+        return (boolean) getObjectField(obj, fieldname);
+    }
+
     public static Field findField(Class cls, String fieldName) throws Throwable {
         Field field = _findField(cls, fieldName);
         field.setAccessible(true);

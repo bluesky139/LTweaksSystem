@@ -38,6 +38,7 @@ public class Patcher {
         put("com.android.server", "/frameworks/base/services/core/java/");
         put("java.lang", "/libcore/ojluni/src/main/java/");
         put("com.android.internal.telephony", "/frameworks/opt/telephony/src/java/");
+        put("com.android.systemui", "/frameworks/base/packages/SystemUI/src/");
     }};
     private static final String PACKAGE_CORE_PATH = "/frameworks/base/core/java/";
 

@@ -85,6 +85,15 @@ public abstract class ILTweaksMethods {
     public void com_android_internal_telephony_PhoneFactory__makeDefaultPhone__Context(final MethodParam param) {
     }
 
+    public void com_android_systemui_statusbar_phone_StatusBar__makeStatusBarView__(final MethodParam param) {
+    }
+
+    public void com_android_systemui_statusbar_phone_StatusBarWindowView__dispatchKeyEvent__KeyEvent(final MethodParam param) {
+    }
+
+    public void com_android_systemui_statusbar_phone_NotificationPanelView__setQsExpansion__float(final MethodParam param) {
+    }
+
     public void com_android_server_am_ActivityManagerService__finishBooting__(final MethodParam param) {
     }
 
