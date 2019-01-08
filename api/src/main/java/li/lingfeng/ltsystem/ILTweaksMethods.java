@@ -94,6 +94,12 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_statusbar_phone_NotificationPanelView__setQsExpansion__float(MethodParam param) {
     }
 
+    public void com_android_systemui_statusbar_phone_NavigationBarView__setDisabledFlags__int_boolean(MethodParam param) {
+    }
+
+    public void com_android_systemui_statusbar_phone_NavigationBarView__setNavigationIconHints__int_boolean(MethodParam param) {
+    }
+
     public void com_android_server_am_ActivityManagerService__finishBooting__(MethodParam param) {
     }
 
