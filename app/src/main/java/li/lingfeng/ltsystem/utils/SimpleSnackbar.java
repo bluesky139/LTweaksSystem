@@ -107,7 +107,12 @@ public class SimpleSnackbar extends LinearLayout {
 
     public void show() {
         Logger.i("SimpleSnackbar show.");
-        ViewGroup rootView = (ViewGroup) mActivity.findViewById(android.R.id.content).getRootView();
+        View view = mActivity.findViewById(android.R.id.content);
+        if (view == null) {
+            Logger.w("android.R.id.content is null.");
+            return;
+        }
+        ViewGroup rootView = (ViewGroup) view.getRootView();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.BOTTOM;
 

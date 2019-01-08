@@ -58,7 +58,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(final ILTweaks.MethodParam param) {
-        afterOnActivity(HOME_ACTIVITY, param, () -> {
+        afterOnClass(HOME_ACTIVITY, param, () -> {
             activity = (Activity) param.thisObject;
             rootView = (ViewGroup) activity.findViewById(android.R.id.content);
             rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -88,7 +88,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
 
     @Override
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
-        afterOnActivity(HOME_ACTIVITY, param, () -> {
+        afterOnClass(HOME_ACTIVITY, param, () -> {
             activity = null;
             rootView = null;
             tabBar = null;

@@ -44,7 +44,7 @@ public class GooglePlayGoMarkets extends TweakBase {
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(final ILTweaks.MethodParam param) {
-        afterOnActivity(MAIN_ACTIVITY, param, () -> {
+        afterOnClass(MAIN_ACTIVITY, param, () -> {
             Class clsMainActivity = param.thisObject.getClass();
             Method[] methods = clsMainActivity.getDeclaredMethods();
             for (Method m : methods) {
@@ -100,7 +100,7 @@ public class GooglePlayGoMarkets extends TweakBase {
 
     @Override
     public void android_app_Activity__onCreatePanelMenu__int_Menu(final ILTweaks.MethodParam param) {
-        afterOnActivity(MAIN_ACTIVITY, param, () -> {
+        afterOnCreateOptionsMenu(MAIN_ACTIVITY, param, () -> {
             if (MENU_COOLAPK == null) {
                 MENU_COOLAPK = ContextUtils.getLString(R.string.google_play_view_in_coolapk);
                 MENU_APKPURE = ContextUtils.getLString(R.string.google_play_view_in_apkpure);
@@ -125,12 +125,7 @@ public class GooglePlayGoMarkets extends TweakBase {
 
     @Override
     public void android_app_Activity__onMenuItemSelected__int_MenuItem(final ILTweaks.MethodParam param) {
-        beforeOnActivity(MAIN_ACTIVITY, param, () -> {
-            int featureId = (int) param.args[0];
-            if (featureId != Window.FEATURE_OPTIONS_PANEL) {
-                return;
-            }
-
+        beforeOnOptionsItemSelected(MAIN_ACTIVITY, param, () -> {
             MenuItem item = (MenuItem) param.args[1];
             CharSequence menuName = item.getTitle();
             if (!MENU_COOLAPK.equals(menuName) && !MENU_APKPURE.equals(menuName)

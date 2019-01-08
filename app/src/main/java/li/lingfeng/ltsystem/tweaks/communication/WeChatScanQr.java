@@ -27,13 +27,13 @@ public class WeChatScanQr extends TweakBase {
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
-        beforeOnActivity(ClassNames.WE_CHAT_LAUNCHER_UI, param, () -> {
+        beforeOnClass(ClassNames.WE_CHAT_LAUNCHER_UI, param, () -> {
             final Activity activity = (Activity) param.thisObject;
             mScannableImage = activity.getIntent().getStringExtra("ltweaks_scannable_image");
             Logger.i("ltweaks_scannable_image " + mScannableImage);
         });
 
-        afterOnActivity(BASE_SCAN_UI, param, () -> {
+        afterOnClass(BASE_SCAN_UI, param, () -> {
             if (StringUtils.isEmpty(mScannableImage)) {
                 return;
             }
@@ -57,7 +57,7 @@ public class WeChatScanQr extends TweakBase {
 
     @Override
     public void android_app_Activity__performNewIntent__Intent(ILTweaks.MethodParam param) {
-        beforeOnActivity(ClassNames.WE_CHAT_LAUNCHER_UI, param, () -> {
+        beforeOnClass(ClassNames.WE_CHAT_LAUNCHER_UI, param, () -> {
             Intent intent = (Intent) param.args[0];
             mScannableImage = intent.getStringExtra("ltweaks_scannable_image");
             Logger.i("ltweaks_scannable_image " + mScannableImage);

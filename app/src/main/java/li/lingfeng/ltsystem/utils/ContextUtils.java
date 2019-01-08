@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.StrictMode;
 import android.util.TypedValue;
 import android.widget.Toast;
 
@@ -19,7 +20,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.activities.LoadingDialog;
 import li.lingfeng.ltsystem.prefs.PackageNames;
@@ -416,6 +416,10 @@ public class ContextUtils {
 
     public static void openFolder(Context context, String path) {
         Logger.v("openFolder " + path);
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
+
         Uri uri = Uri.parse("file://" + path);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(uri, "resource/folder");

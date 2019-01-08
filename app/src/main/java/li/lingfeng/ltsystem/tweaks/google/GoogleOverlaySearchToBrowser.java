@@ -24,7 +24,7 @@ public class GoogleOverlaySearchToBrowser extends TweakBase {
 
     @Override
     public void android_app_Activity__startActivityForResult__Intent_int_Bundle(final ILTweaks.MethodParam param) {
-        beforeOnActivity(QUERY_ENTRY_ACTIVITY, param, () -> {
+        beforeOnClass(QUERY_ENTRY_ACTIVITY, param, () -> {
             Intent intent = (Intent) param.args[0];
             if (intent.getComponent() != null && intent.getComponent().getClassName().equals(DYNAMIC_HOST_ACTIVITY)) {
                 Object query = intent.getExtras().get("velvet-query");

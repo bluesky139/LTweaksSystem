@@ -32,7 +32,7 @@ public class YoutubeRemoveBottomBar extends TweakBase {
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
-        afterOnActivity(MAIN_ACTIVITY, param, () -> {
+        afterOnClass(MAIN_ACTIVITY, param, () -> {
             final Activity activity = (Activity) param.thisObject;
             new Handler().post(new Runnable() {
                 @Override
@@ -49,7 +49,7 @@ public class YoutubeRemoveBottomBar extends TweakBase {
 
     @Override
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
-        afterOnActivity(MAIN_ACTIVITY, param, () -> {
+        afterOnClass(MAIN_ACTIVITY, param, () -> {
             mDrawerLayout = null;
         });
     }

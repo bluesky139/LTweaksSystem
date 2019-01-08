@@ -55,7 +55,7 @@ public class ShadowsocksTransproxy extends TweakBase {
         if (mStarted) {
             return;
         }
-        afterOnService(TRANSPROXY_SERVICE, param, () -> {
+        afterOnClass(TRANSPROXY_SERVICE, param, () -> {
             mStarted = true;
             final long startTime = System.currentTimeMillis();
             String[] ipList = ContextUtils.getLStringArray(R.array.shadowsocks_bypass_ip_list);
@@ -98,7 +98,7 @@ public class ShadowsocksTransproxy extends TweakBase {
 
     @Override
     public void android_app_Service__stopForeground__int(ILTweaks.MethodParam param) {
-        beforeOnService(TRANSPROXY_SERVICE, param, () -> {
+        beforeOnClass(TRANSPROXY_SERVICE, param, () -> {
             synchronized (ShadowsocksTransproxy.this) {
                 if (mShellAdding != null) {
                     mShellAdding.forceClean();

@@ -37,6 +37,12 @@ public abstract class ILTweaksMethods {
     public void android_app_Activity__onKeyUp__int_KeyEvent(MethodParam param) {
     }
 
+    public void android_app_Fragment__performCreateOptionsMenu__Menu_MenuInflater(MethodParam param) {
+    }
+
+    public void android_app_Fragment__performOptionsItemSelected__MenuItem(MethodParam param) {
+    }
+
     public void android_app_Service__startForeground__int_Notification(MethodParam param) {
     }
 
