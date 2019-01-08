@@ -36,6 +36,10 @@ public class ReflectUtils {
         findField(obj.getClass(), fieldName).set(obj, value);
     }
 
+    public static void setStaticObjectField(Class cls, String fieldName, Object value) throws Throwable {
+        findField(cls, fieldName).set(null, value);
+    }
+
     public static Field findField(Class cls, String fieldName) throws Throwable {
         Field field = _findField(cls, fieldName);
         field.setAccessible(true);

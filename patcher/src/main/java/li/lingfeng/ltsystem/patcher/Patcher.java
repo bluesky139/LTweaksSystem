@@ -4,9 +4,11 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.JavaToken;
 import com.github.javaparser.Position;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.body.InitializerDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.type.ReferenceType;
@@ -147,28 +149,38 @@ public class Patcher {
             throw new RuntimeException(info.methodName + "_Original method is already in it, you should revert changes first.");
         }
 
-        String[] paramTypes = Arrays.stream(info.getParamTypes())
-                .map(type -> Utils.replace$ToAngleBrackets(type))
-                .map(type -> type.replace('$', '.'))
-                .toArray(String[]::new);
-        if (info.getClassSimpleName().equals(info.methodName)) {
-            CallableDeclaration constructor = cls.getConstructorByParameterTypes(paramTypes).get();
-            methods = new ArrayList<>(1);
-            methods.add(constructor);
-        } else {
-            methods = (List) cls.getMethodsBySignature(info.methodName, paramTypes);
-        }
+        BodyDeclaration method;
+        if (!info.methodName.equals("static")) {
+            String[] paramTypes = Arrays.stream(info.getParamTypes())
+                    .map(type -> Utils.replace$ToAngleBrackets(type))
+                    .map(type -> type.replace('$', '.'))
+                    .toArray(String[]::new);
+            if (info.getClassSimpleName().equals(info.methodName)) {
+                CallableDeclaration constructor = cls.getConstructorByParameterTypes(paramTypes).get();
+                methods = new ArrayList<>(1);
+                methods.add(constructor);
+            } else {
+                methods = (List) cls.getMethodsBySignature(info.methodName, paramTypes);
+            }
 
-        if (methods.size() != 1) {
-            throw new RuntimeException("getMethodsBySignature return " + methods.size() + " methods, "
-                    + info.methodName + "(" + StringUtils.join(paramTypes, ", ") + ")");
+            if (methods.size() != 1) {
+                throw new RuntimeException("getMethodsBySignature return " + methods.size() + " methods, "
+                        + info.methodName + "(" + StringUtils.join(paramTypes, ", ") + ")");
+            }
+            method = methods.get(0);
+        } else {
+            method = (InitializerDeclaration) cls.getMembers().stream()
+                    .filter(InitializerDeclaration.class::isInstance)
+                    .filter(member -> ((InitializerDeclaration) member).isStatic())
+                    .findFirst()
+                    .get();
         }
-        CallableDeclaration method = methods.get(0);
 
         Iterator<JavaToken> it = method.getTokenRange().get().iterator();
         while (it.hasNext()) {
             JavaToken token = it.next();
-            if (token.getCategory() == JavaToken.Category.IDENTIFIER) {
+            if ((token.getCategory() == JavaToken.Category.IDENTIFIER && method instanceof CallableDeclaration)
+                    || (token.getCategory() == JavaToken.Category.KEYWORD && method instanceof InitializerDeclaration)) {
                 if (token.getText().equals(info.methodName)) {
                     Position lineCol = token.getRange().get().begin;
                     int pos = getPositionFromLineCol(content, lineCol.line, lineCol.column);
@@ -178,11 +190,12 @@ public class Patcher {
                                 ", but " + substring + ", at line " + lineCol.line + ", col " + lineCol.column + ", pos " + pos);
                     }
 
-                    String generatedMethod = generateHookMethod(method, info);
+                    String generatedMethod = method instanceof InitializerDeclaration ?
+                            generateClassStaticInitializer(info) : generateHookMethod((CallableDeclaration) method, info);
                     if (SIMULATE) {
                         Logger.v(generatedMethod);
                     }
-                    content = content.substring(0, pos) + generatedMethod + content.substring(pos + token.getText().length());
+                    content = content.substring(0, pos + token.getText().length()) + generatedMethod + content.substring(pos + token.getText().length());
                     if (method instanceof ConstructorDeclaration) {
                         content = removeFieldsFinalWord(content);
                     }
@@ -200,12 +213,37 @@ public class Patcher {
         throw new RuntimeException("Can't find method name after method walk.");
     }
 
+    private String generateClassStaticInitializer(MethodInfo info) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(" {\n");
+        builder.append("        if (li.lingfeng.ltsystem.ILTweaksBridge.loader != null) {\n");
+        builder.append("            li.lingfeng.ltsystem.ILTweaks.MethodParam param = li.lingfeng.ltsystem.ILTweaksBridge.paramCreator.create(null);\n");
+        builder.append("            li.lingfeng.ltsystem.ILTweaksBridge.loader.methods." + info.fullClass + "__static__(param);\n");
+        builder.append("            if (param.hasHook()) {\n");
+        builder.append("                param.hookBefore();\n");
+        builder.append("                if (!param.hasResult()) {\n");
+        builder.append("                    static_Original();\n");
+        builder.append("                    param.hookAfter();\n");
+        builder.append("                }\n");
+        builder.append("            } else {\n");
+        builder.append("                static_Original();\n");
+        builder.append("            }\n");
+        builder.append("        } else {\n");
+        builder.append("            static_Original();\n");
+        builder.append("        }\n");
+        builder.append("    }\n");
+        builder.append("    private static void static_Original()");
+
+        return builder.toString();
+    }
+
     private String generateHookMethod(CallableDeclaration method, MethodInfo info) {
         StringBuilder builder = new StringBuilder();
         String commaParamsWithType = Utils.joinT(method.getParameters(), ", ",
                 ((param, i) -> ((Parameter) param).getTypeAsString() + ' ' + ((Parameter) param).getNameAsString()));
         String commaThrows = Utils.joinT(method.getThrownExceptions(), ", ", ((type, i) -> ((ReferenceType) type).getElementType().asString()));
-        builder.append(info.methodName + "(" + commaParamsWithType + ") " + (method.getThrownExceptions().size() > 0 ? "throws " + commaThrows : "") + " {\n");
+        builder.append("(" + commaParamsWithType + ") " + (method.getThrownExceptions().size() > 0 ? "throws " + commaThrows : "") + " {\n");
 
         String commaParams = Utils.joinT(method.getParameters(), ", ", ((param, i) -> ((Parameter) param).getNameAsString()));
         String commaModifiedParams = Utils.joinT(method.getParameters(), ", ", ((param, i) -> "(" + ((Parameter) param).getTypeAsString() + ") param.args[" + i + "]"));

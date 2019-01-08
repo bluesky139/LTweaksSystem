@@ -7,105 +7,108 @@ import li.lingfeng.ltsystem.ILTweaks.MethodParam;
  */
 public abstract class ILTweaksMethods {
 
-    public void java_lang_ProcessBuilder__start__(final MethodParam param) {
+    public void java_lang_ProcessBuilder__start__(MethodParam param) {
     }
 
-    public void android_app_Activity__performCreate__Bundle_PersistableBundle(final MethodParam param) {
+    public void android_app_Activity__performCreate__Bundle_PersistableBundle(MethodParam param) {
     }
 
-    public void android_app_Activity__performNewIntent__Intent(final MethodParam param) {
+    public void android_app_Activity__performNewIntent__Intent(MethodParam param) {
     }
 
-    public void android_app_Activity__onResume__(final MethodParam param) {
+    public void android_app_Activity__onResume__(MethodParam param) {
     }
 
-    public void android_app_Activity__onPause__(final MethodParam param) {
+    public void android_app_Activity__onPause__(MethodParam param) {
     }
 
-    public void android_app_Activity__onDestroy__(final MethodParam param) {
+    public void android_app_Activity__onDestroy__(MethodParam param) {
     }
 
-    public void android_app_Activity__startActivityForResult__Intent_int_Bundle(final MethodParam param) {
+    public void android_app_Activity__startActivityForResult__Intent_int_Bundle(MethodParam param) {
     }
 
-    public void android_app_Activity__onCreatePanelMenu__int_Menu(final MethodParam param) {
+    public void android_app_Activity__onCreatePanelMenu__int_Menu(MethodParam param) {
     }
 
-    public void android_app_Activity__onMenuItemSelected__int_MenuItem(final MethodParam param) {
+    public void android_app_Activity__onMenuItemSelected__int_MenuItem(MethodParam param) {
     }
 
-    public void android_app_Activity__onKeyUp__int_KeyEvent(final MethodParam param) {
+    public void android_app_Activity__onKeyUp__int_KeyEvent(MethodParam param) {
     }
 
-    public void android_app_Service__startForeground__int_Notification(final MethodParam param) {
+    public void android_app_Service__startForeground__int_Notification(MethodParam param) {
     }
 
-    public void android_app_Service__stopForeground__int(final MethodParam param) {
+    public void android_app_Service__stopForeground__int(MethodParam param) {
     }
 
-    public void android_widget_TextView__onTouchEvent__MotionEvent(final MethodParam param) {
+    public void android_widget_TextView__onTouchEvent__MotionEvent(MethodParam param) {
     }
 
-    public void android_widget_TextView__setCustomSelectionActionModeCallback__ActionMode$Callback(final MethodParam param) {
+    public void android_widget_TextView__setCustomSelectionActionModeCallback__ActionMode$Callback(MethodParam param) {
     }
 
-    public void android_widget_TextView__canProcessText__(final MethodParam param) {
+    public void android_widget_TextView__canProcessText__(MethodParam param) {
     }
 
-    public void android_widget_Editor$ProcessTextIntentActionsHandler__onInitializeMenu__Menu(final MethodParam param) {
+    public void android_widget_Editor$ProcessTextIntentActionsHandler__onInitializeMenu__Menu(MethodParam param) {
     }
 
-    public void android_widget_PopupMenu__inflate__int(final MethodParam param) {
+    public void android_widget_PopupMenu__inflate__int(MethodParam param) {
     }
 
-    public void android_view_View__dispatchPointerEvent__MotionEvent(final MethodParam param) {
+    public void android_view_View__dispatchPointerEvent__MotionEvent(MethodParam param) {
     }
 
-    public void android_view_View__setOnClickListener__OnClickListener(final MethodParam param) {
+    public void android_view_View__setOnClickListener__OnClickListener(MethodParam param) {
     }
 
-    public void android_content_Intent__getParcelableExtra__String(final MethodParam param) {
+    public void android_content_Intent__getParcelableExtra__String(MethodParam param) {
     }
 
-    public void android_content_pm_PackageParser__parsePackage__File_int_boolean(final MethodParam param) {
+    public void android_content_pm_PackageParser__parsePackage__File_int_boolean(MethodParam param) {
     }
 
-    public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(final MethodParam param) {
+    public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(MethodParam param) {
     }
 
-    public void com_android_internal_view_menu_MenuBuilder__setGroupVisible__int_boolean(final MethodParam param) {
+    public void com_android_internal_view_menu_MenuBuilder__setGroupVisible__int_boolean(MethodParam param) {
     }
 
-    public void com_android_internal_view_menu_ContextMenuBuilder__showDialog__View_IBinder(final MethodParam param) {
+    public void com_android_internal_view_menu_ContextMenuBuilder__showDialog__View_IBinder(MethodParam param) {
     }
 
-    public void com_android_internal_widget_FloatingToolbar__getVisibleAndEnabledMenuItems__Menu(final MethodParam param) {
+    public void com_android_internal_widget_FloatingToolbar__getVisibleAndEnabledMenuItems__Menu(MethodParam param) {
     }
 
-    public void com_android_internal_telephony_PhoneFactory__makeDefaultPhone__Context(final MethodParam param) {
+    public void com_android_internal_telephony_PhoneFactory__makeDefaultPhone__Context(MethodParam param) {
     }
 
-    public void com_android_systemui_statusbar_phone_StatusBar__makeStatusBarView__(final MethodParam param) {
+    public void com_android_systemui_statusbar_phone_StatusBar__makeStatusBarView__(MethodParam param) {
     }
 
-    public void com_android_systemui_statusbar_phone_StatusBarWindowView__dispatchKeyEvent__KeyEvent(final MethodParam param) {
+    public void com_android_systemui_statusbar_phone_StatusBarWindowView__dispatchKeyEvent__KeyEvent(MethodParam param) {
     }
 
-    public void com_android_systemui_statusbar_phone_NotificationPanelView__setQsExpansion__float(final MethodParam param) {
+    public void com_android_systemui_statusbar_phone_NotificationPanelView__setQsExpansion__float(MethodParam param) {
     }
 
-    public void com_android_server_am_ActivityManagerService__finishBooting__(final MethodParam param) {
+    public void com_android_server_am_ActivityManagerService__finishBooting__(MethodParam param) {
     }
 
-    public void com_android_server_am_ActivityManagerService__checkBroadcastFromSystem__Intent_ProcessRecord_String_int_boolean_List(final MethodParam param) {
+    public void com_android_server_am_ActivityManagerService__checkBroadcastFromSystem__Intent_ProcessRecord_String_int_boolean_List(MethodParam param) {
     }
 
-    public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(final MethodParam param) {
+    public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(MethodParam param) {
     }
 
-    public void com_android_server_pm_PackageManagerService__queryIntentActivitiesInternal__Intent_String_int_int_int_boolean_boolean(final MethodParam param) {
+    public void com_android_server_pm_PackageManagerService__queryIntentActivitiesInternal__Intent_String_int_int_int_boolean_boolean(MethodParam param) {
     }
 
-    public void com_android_server_webkit_SystemImpl__SystemImpl__(final MethodParam param) {
+    public void com_android_server_webkit_SystemImpl__SystemImpl__(MethodParam param) {
+    }
+
+    public void com_android_server_display_NightDisplayService__static__(MethodParam param) {
     }
 }
