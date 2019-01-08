@@ -59,6 +59,7 @@ public class Magisk {
         if (new File(OUT_SYSTEM_OTHER_PATH).exists()) {
             list.add("framework/arm64");
         }
+        list.add("priv-app/SystemUI/SystemUI.apk");
 
         Function<Pair<String, String>, List<String>> collectOatList = (folder) -> {
             File dir = new File(folder.getLeft() + "/" + folder.getRight());
