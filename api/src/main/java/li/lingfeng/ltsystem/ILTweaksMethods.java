@@ -49,6 +49,9 @@ public abstract class ILTweaksMethods {
     public void android_app_Service__stopForeground__int(MethodParam param) {
     }
 
+    public void android_app_WallpaperColors__WallpaperColors__Color_Color_Color_int(MethodParam param) {
+    }
+
     public void android_widget_TextView__onTouchEvent__MotionEvent(MethodParam param) {
     }
 
