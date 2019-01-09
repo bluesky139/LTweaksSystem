@@ -64,6 +64,24 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.ProcessTextActivity"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.ProcessTextActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Dialog">
+        </activity>
+        <activity-alias
+            android:name=".activities.DoubanMovieProcessTextActivity"
+            android:targetActivity=".activities.ProcessTextActivity"
+            android:label="@string/process_text_douban_movie"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+
         <activity android:name=".activities.SelectableTextActivity" android:excludeFromRecents="true"
             android:label="@string/text_selectable"
             android:icon="@mipmap/ic_selectable_text"

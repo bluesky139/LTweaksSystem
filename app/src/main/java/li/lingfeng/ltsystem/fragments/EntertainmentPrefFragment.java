@@ -5,6 +5,7 @@ import android.preference.Preference;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.DoubanMovieActivity;
+import li.lingfeng.ltsystem.activities.ProcessTextActivity;
 import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
@@ -21,13 +22,12 @@ public class EntertainmentPrefFragment extends BasePrefFragment {
         addPreferencesFromResource(R.xml.pref_entertainment);
 
         /*
-        uncheckPreferenceByDisabledComponent(R.string.key_douban_movie_search,
-                ComponentUtils.getFullAliasName(ProcessTextActivity.class, "DoubanMovie"));
+
         uncheckPreferenceByDisabledComponent(R.string.key_bilibili_search,
                 ComponentUtils.getFullAliasName(ProcessTextActivity.class, "Bilibili"));*/
     }
 
-    @PreferenceChange(prefs = R.string.key_douban_movie_url)
+    @PreferenceChange(prefs = R.string.key_douban_movie_url, refreshAtStart = true)
     private void enableDoubanMovieUrl(Preference preference, boolean enabled, Extra extra) {
         if (extra.refreshAtStart) {
             uncheckPreferenceByDisabledComponent(R.string.key_douban_movie_url, DoubanMovieActivity.class);
@@ -36,12 +36,17 @@ public class EntertainmentPrefFragment extends BasePrefFragment {
         }
     }
 
-    /*@PreferenceChange(prefs = R.string.key_douban_movie_search)
-    private void enableDoubanMovieSearch(Preference preference, boolean enabled) {
-        ComponentUtils.enableComponent(ComponentUtils.getFullAliasName(ProcessTextActivity.class, "DoubanMovie"), enabled);
+    @PreferenceChange(prefs = R.string.key_douban_movie_search, refreshAtStart = true)
+    private void enableDoubanMovieSearch(Preference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_douban_movie_search,
+                    ComponentUtils.getFullAliasName(ProcessTextActivity.class, "DoubanMovie"));
+        } else {
+            ComponentUtils.enableComponent(ComponentUtils.getFullAliasName(ProcessTextActivity.class, "DoubanMovie"), enabled);
+        }
     }
 
-    @PreferenceChange(prefs = R.string.key_bilibili_search)
+    /*@PreferenceChange(prefs = R.string.key_bilibili_search)
     private void enableBilibiliSearch(Preference preference, boolean enabled) {
         ComponentUtils.enableComponent(ComponentUtils.getFullAliasName(ProcessTextActivity.class, "Bilibili"), enabled);
     }
