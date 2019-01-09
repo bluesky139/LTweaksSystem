@@ -2,6 +2,7 @@ package li.lingfeng.ltsystem.tweaks;
 
 import android.app.Activity;
 import android.app.Service;
+import android.view.KeyEvent;
 import android.view.Window;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -31,6 +32,26 @@ public class TweakBase extends ILTweaksMethods {
     protected void afterOnClass(String className, ILTweaks.MethodParam param, ILTweaks.After after) {
         if (param.thisObject.getClass().getName().equals(className)) {
             param.after(after);
+        }
+    }
+
+    protected void beforeOnBackPressed(String className, ILTweaks.MethodParam param, ILTweaks.Before before) {
+        if (param.thisObject.getClass().getName().equals(className)) {
+            int keyCode = (int) param.args[0];
+            KeyEvent event = (KeyEvent) param.args[1];
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
+                param.before(before);
+            }
+        }
+    }
+
+    protected void afterOnBackPressed(String className, ILTweaks.MethodParam param, ILTweaks.After after) {
+        if (param.thisObject.getClass().getName().equals(className)) {
+            int keyCode = (int) param.args[0];
+            KeyEvent event = (KeyEvent) param.args[1];
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
+                param.after(after);
+            }
         }
     }
 

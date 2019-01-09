@@ -3,7 +3,6 @@ package li.lingfeng.ltsystem.tweaks.google;
 import android.app.Activity;
 import android.os.Handler;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import li.lingfeng.ltsystem.ILTweaks;
-import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.ClassNames;
@@ -56,17 +54,13 @@ public class YoutubeRemoveBottomBar extends TweakBase {
 
     @Override
     public void android_app_Activity__onKeyUp__int_KeyEvent(ILTweaks.MethodParam param) {
-        int keyCode = (int) param.args[0];
-        KeyEvent event = (KeyEvent) param.args[1];
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
-            param.before(() -> {
-                if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                    Logger.i("Back is pressed for closing drawer.");
-                    mDrawerLayout.closeDrawers();
-                    param.setResult(true);
-                }
-            });
-        }
+        beforeOnBackPressed(MAIN_ACTIVITY, param, () -> {
+            if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                Logger.i("Back is pressed for closing drawer.");
+                mDrawerLayout.closeDrawers();
+                param.setResult(true);
+            }
+        });
     }
 
     private void hookBottomBar(final Activity activity) throws Throwable {
