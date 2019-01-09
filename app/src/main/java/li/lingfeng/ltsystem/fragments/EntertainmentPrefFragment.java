@@ -20,11 +20,6 @@ public class EntertainmentPrefFragment extends BasePrefFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_entertainment);
-
-        /*
-
-        uncheckPreferenceByDisabledComponent(R.string.key_bilibili_search,
-                ComponentUtils.getFullAliasName(ProcessTextActivity.class, "Bilibili"));*/
     }
 
     @PreferenceChange(prefs = R.string.key_douban_movie_url, refreshAtStart = true)
@@ -46,12 +41,17 @@ public class EntertainmentPrefFragment extends BasePrefFragment {
         }
     }
 
-    /*@PreferenceChange(prefs = R.string.key_bilibili_search)
-    private void enableBilibiliSearch(Preference preference, boolean enabled) {
-        ComponentUtils.enableComponent(ComponentUtils.getFullAliasName(ProcessTextActivity.class, "Bilibili"), enabled);
+    @PreferenceChange(prefs = R.string.key_bilibili_search, refreshAtStart = true)
+    private void enableBilibiliSearch(Preference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_bilibili_search,
+                    ComponentUtils.getFullAliasName(ProcessTextActivity.class, "Bilibili"));
+        } else {
+            ComponentUtils.enableComponent(ComponentUtils.getFullAliasName(ProcessTextActivity.class, "Bilibili"), enabled);
+        }
     }
 
-    @PreferenceChange(prefs = R.string.key_bilibili_open_link_in_app)
+    /*@PreferenceChange(prefs = R.string.key_bilibili_open_link_in_app)
     private void enableBilibiliOpenLinkInApp(Preference preference, boolean enabled) {
         ComponentUtils.enableComponent(BilibiliActivity.class, enabled);
     }*/
