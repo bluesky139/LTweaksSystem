@@ -70,4 +70,15 @@ public class ReflectUtils {
             }
         }
     }
+
+    public static Field findFirstFieldByExactType(Class cls, Class type) throws Throwable {
+        Field[] fields = cls.getDeclaredFields();
+        for (Field field : fields) {
+            if (field.getType() == type) {
+                field.setAccessible(true);
+                return field;
+            }
+        }
+        throw new NoSuchFieldError("findFirstFieldByExactType " + type + " in " + cls);
+    }
 }
