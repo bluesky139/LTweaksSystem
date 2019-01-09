@@ -55,6 +55,7 @@ public class PackageNames {
     public static final String ANDROID_SYSTEM_UI = "com.android.systemui";
     public static final String ANDROID = "android";
     public static final String ANDROID_SETTINGS = "com.android.settings";
+    public static final String ANDROID_SETTINGS_PROVIDER = "com.android.providers.settings";
     public static final String ANDROID_SYSTEM = "system";
     public static final String ANDROID_PHONE = "com.android.phone";
     public static final String SHADOWSOCKS = "com.github.shadowsocks";
