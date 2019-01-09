@@ -1,0 +1,116 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_category_wechat">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_wechat_use_incoming_ringtone"
+            android:title="@string/pref_wechat_use_incoming_ringtone"
+            android:summary="@string/pref_wechat_use_incoming_ringtone_summary" />
+        <RingtonePreference
+            android:key="@string/key_wechat_set_incoming_ringtone"
+            android:title="@string/pref_wechat_set_incoming_ringtone"
+            android:showDefault="true"
+            android:showSilent="true"
+            android:ringtoneType="ringtone" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_wechat_remove_bottom_bar"
+            android:title="@string/pref_wechat_remove_bottom_bar"
+            android:summary="@string/pref_wechat_remove_bottom_bar_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_wechat_no_drawer"
+            android:title="@string/pref_wechat_no_drawer"
+            android:summary="@string/pref_wechat_no_drawer_summary" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_category_qq">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_dismiss_contacts_enabler"
+            android:title="@string/pref_qq_dismiss_contacts_enabler"
+            android:summary="@string/pref_qq_dismiss_contacts_enabler_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_remove_ads"
+            android:title="@string/pref_qq_remove_ads" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_outer_browser"
+            android:title="@string/pref_qq_outer_browser" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_collapse_chat_buttons"
+            android:title="@string/pref_qq_collapse_chat_buttons"
+            android:summary="@string/pref_qq_collapse_chat_buttons_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_clear_background"
+            android:title="@string/pref_qq_clear_background"
+            android:summary="@string/pref_qq_clear_background_summary" />
+        <Preference
+            android:key="@string/key_qq_clear_background_path"
+            android:title="@string/pref_qq_clear_background_path" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_exit_directly_by_sharing"
+            android:title="@string/pref_qq_exit_directly_by_sharing"
+            android:summary="@string/pref_qq_exit_directly_by_sharing_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_fix_image_sharing"
+            android:title="@string/pref_qq_fix_image_sharing"
+            android:summary="@string/pref_qq_fix_image_sharing_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_disable_discussion_notification"
+            android:title="@string/pref_qq_disable_discussion_notification"
+            android:summary="@string/pref_qq_disable_discussion_notification_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_prevent_audio_panel"
+            android:title="@string/pref_qq_prevent_audio_panel" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_hide_weak_net_toast"
+            android:title="@string/pref_qq_hide_weak_net_toast" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_category_push_bullet">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_push_bullet_share_to_all"
+            android:title="@string/pref_push_bullet_share_to_all"
+            android:summary="@string/pref_push_bullet_share_to_all_summary" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_category_ttrss">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_ttrss_disable_article_pager"
+            android:title="@string/pref_ttrss_disable_article_pager" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_ttrss_open_link_in_browser_menu"
+            android:title="@string/pref_ttrss_open_link_in_browser_menu"
+            android:summary="@string/pref_ttrss_open_link_in_browser_menu_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_ttrss_refresh_menu"
+            android:title="@string/pref_ttrss_refresh_menu" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_ttrss_disable_show_hide_on_scroll"
+            android:title="@string/pref_ttrss_disable_show_hide_on_scroll" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_ttrss_darken"
+            android:title="@string/pref_ttrss_darken"
+            android:summary="@string/pref_ttrss_darken_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_ttrss_open_all_articles_at_startup"
+            android:title="@string/pref_ttrss_open_all_articles_at_startup"
+            android:summary="@string/pref_ttrss_open_all_articles_at_startup_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

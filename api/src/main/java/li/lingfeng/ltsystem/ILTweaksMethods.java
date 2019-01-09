@@ -82,6 +82,9 @@ public abstract class ILTweaksMethods {
     public void android_content_pm_PackageParser__parsePackage__File_int_boolean(MethodParam param) {
     }
 
+    public void android_media_MediaPlayer__setDataSource__Context_Uri(MethodParam param) {
+    }
+
     public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(MethodParam param) {
     }
 
