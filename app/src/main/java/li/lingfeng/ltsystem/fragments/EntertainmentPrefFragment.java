@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.activities.BilibiliActivity;
 import li.lingfeng.ltsystem.activities.DoubanMovieActivity;
 import li.lingfeng.ltsystem.activities.ProcessTextActivity;
 import li.lingfeng.ltsystem.fragments.base.Extra;
@@ -51,8 +52,12 @@ public class EntertainmentPrefFragment extends BasePrefFragment {
         }
     }
 
-    /*@PreferenceChange(prefs = R.string.key_bilibili_open_link_in_app)
-    private void enableBilibiliOpenLinkInApp(Preference preference, boolean enabled) {
-        ComponentUtils.enableComponent(BilibiliActivity.class, enabled);
-    }*/
+    @PreferenceChange(prefs = R.string.key_bilibili_open_link_in_app, refreshAtStart = true)
+    private void enableBilibiliOpenLinkInApp(Preference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_bilibili_open_link_in_app, BilibiliActivity.class);
+        } else {
+            ComponentUtils.enableComponent(BilibiliActivity.class, enabled);
+        }
+    }
 }

@@ -93,6 +93,22 @@
             </intent-filter>
         </activity-alias>
 
+        <activity
+            android:name=".activities.BilibiliActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Dialog"
+            android:label="Bilibili"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.BilibiliActivity"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="m.bilibili.com" android:pathPattern="/video/av.*\\.html" android:scheme="http"/>
+                <data android:host="m.bilibili.com" android:pathPattern="/video/av.*\\.html" android:scheme="https"/>
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activities.SelectableTextActivity" android:excludeFromRecents="true"
             android:label="@string/text_selectable"
             android:icon="@mipmap/ic_selectable_text"
