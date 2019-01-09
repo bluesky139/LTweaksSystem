@@ -15,12 +15,12 @@
     <header
         android:fragment="li.lingfeng.ltweaks.fragments.CommunicationPrefFragment"
         android:icon="@drawable/ic_communication"
-        android:title="@string/pref_header_communication" />
+        android:title="@string/pref_header_communication" />-->
 
     <header
-        android:fragment="li.lingfeng.ltweaks.fragments.EntertainmentPrefFragment"
+        android:fragment="li.lingfeng.ltsystem.fragments.EntertainmentPrefFragment"
         android:icon="@drawable/ic_entertainment"
-        android:title="@string/pref_header_entertainment" />-->
+        android:title="@string/pref_header_entertainment" />
 
     <header
         android:fragment="li.lingfeng.ltsystem.fragments.SystemPrefFragment"

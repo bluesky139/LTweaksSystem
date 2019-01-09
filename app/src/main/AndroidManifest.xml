@@ -46,6 +46,24 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.DoubanMovieActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Dialog"
+            android:label="@string/douban_movie_app"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.DoubanMovieActivity"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="m.douban.com" android:scheme="http"/>
+                <data android:host="m.douban.com" android:scheme="https"/>
+                <data android:host="movie.douban.com" android:scheme="http"/>
+                <data android:host="movie.douban.com" android:scheme="https"/>
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activities.SelectableTextActivity" android:excludeFromRecents="true"
             android:label="@string/text_selectable"
             android:icon="@mipmap/ic_selectable_text"
