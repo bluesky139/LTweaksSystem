@@ -375,10 +375,10 @@ public class ViewUtils {
         }
     }
 
-    /*public static View.OnClickListener getViewClickListener(View view) {
-        Object listenerInfo = XposedHelpers.callMethod(view, "getListenerInfo");
-        return (View.OnClickListener) XposedHelpers.getObjectField(listenerInfo, "mOnClickListener");
-    }*/
+    public static View.OnClickListener getViewClickListener(View view) throws Throwable {
+        Object listenerInfo = ReflectUtils.callMethod(view, "getListenerInfo");
+        return (View.OnClickListener) ReflectUtils.getObjectField(listenerInfo, "mOnClickListener");
+    }
 
     public static View.OnCreateContextMenuListener getViewCreateContextMenuListener(View view) throws IllegalAccessException {
         Object info = FieldUtils.readField(view, "mListenerInfo", true);

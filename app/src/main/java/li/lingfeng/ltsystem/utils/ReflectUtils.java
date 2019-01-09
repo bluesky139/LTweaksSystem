@@ -36,6 +36,10 @@ public class ReflectUtils {
         return (int) getObjectField(obj, fieldname);
     }
 
+    public static float getFloatField(Object obj, String fieldname) throws Throwable {
+        return (float) getObjectField(obj, fieldname);
+    }
+
     public static void setObjectField(Object obj, String fieldName, Object value) throws Throwable {
         findField(obj.getClass(), fieldName).set(obj, value);
     }
