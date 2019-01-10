@@ -1,15 +1,27 @@
 package li.lingfeng.ltsystem.fragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.Preference;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
+import android.widget.Toast;
+
+import java.io.File;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
+import li.lingfeng.ltsystem.lib.PreferenceClick;
+import li.lingfeng.ltsystem.prefs.ActivityRequestCode;
+import li.lingfeng.ltsystem.utils.IOUtils;
+import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.PermissionUtils;
 
 /**
  * Created by smallville on 2017/1/15.
@@ -40,7 +52,7 @@ public class CommunicationPrefFragment extends BasePrefFragment {
         }
     }
 
-/*    @PreferenceChange(prefs = R.string.key_qq_clear_background, refreshAtStart = true)
+    @PreferenceChange(prefs = R.string.key_qq_clear_background, refreshAtStart = true)
     private void enableQQClearBackground(SwitchPreference preference, boolean enabled) {
         findPreference(R.string.key_qq_clear_background_path).setEnabled(enabled);
     }
@@ -106,5 +118,5 @@ public class CommunicationPrefFragment extends BasePrefFragment {
         if (file.exists()) {
             preference.setSummary(getString(R.string.pref_qq_clear_background_path_summary, filepath));
         }
-    }*/
+    }
 }
