@@ -28,7 +28,7 @@ public class TTRssArticleOpenInBrowserMenu extends TweakBase {
     @Override
     public void android_app_Activity__onCreatePanelMenu__int_Menu(ILTweaks.MethodParam param) {
         afterOnCreateOptionsMenu(DETAIL_ACTIVITY, param, () -> {
-            Menu menu = (Menu) ReflectUtils.getObjectField(param.thisObject, "m_menu");
+            Menu menu = (Menu) param.args[1];
             if (menu != null && menu.findItem(MENU_OPEN_IN_BROWSER_ID) == null) {
                 Logger.i("Create open in browser menu.");
                 int idMenuGroup = ContextUtils.getIdId("menu_group_article");
