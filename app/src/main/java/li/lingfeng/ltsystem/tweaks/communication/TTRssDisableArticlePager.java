@@ -7,6 +7,7 @@ import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
+import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ReflectUtils;
 
 @MethodsLoad(packages = PackageNames.TT_RSS, prefs = R.string.key_ttrss_disable_article_pager)
@@ -21,6 +22,10 @@ public class TTRssDisableArticlePager extends TweakBase {
         afterOnClass(DETAIL_ACTIVITY, param, () -> {
             Object fragmentManager = ReflectUtils.callMethod(param.thisObject, "getSupportFragmentManager");
             List pendingActions = (List) ReflectUtils.getObjectField(fragmentManager, "mPendingActions");
+            if (pendingActions == null) {
+                Logger.w("No pending actions found in ArticlePager, should be resumed from saved state.");
+                return;
+            }
             List ops = (List) ReflectUtils.getObjectField(pendingActions.get(0), "mOps");
             Object fragment = ops.stream()
                     .map(op -> {
