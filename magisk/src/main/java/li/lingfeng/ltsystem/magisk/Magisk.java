@@ -90,7 +90,12 @@ public class Magisk {
             File srcOtherFile = new File(OUT_SYSTEM_OTHER_PATH + "/" + path);
             File dstFile = new File(MODULE_PATH + "/system/" + path);
             assert !(srcFile.exists() && srcOtherFile.exists()) : "oat exists in both system and system_other.";
-            FileUtils.copyDirectory(srcFile.exists() ? srcFile : srcOtherFile, dstFile, true);
+            srcFile = srcFile.exists() ? srcFile : srcOtherFile;
+            if (srcFile.isDirectory()) {
+                FileUtils.copyDirectory(srcFile.exists() ? srcFile : srcOtherFile, dstFile, true);
+            } else {
+                FileUtils.copyFile(srcFile, dstFile, true);
+            }
         }
     }
 
