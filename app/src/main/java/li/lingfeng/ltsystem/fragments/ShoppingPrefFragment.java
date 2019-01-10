@@ -5,6 +5,7 @@ import android.preference.Preference;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.JDActivity;
+import li.lingfeng.ltsystem.activities.JDHistoryActivity;
 import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
@@ -19,10 +20,6 @@ public class ShoppingPrefFragment extends BasePrefFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_shopping);
-
-        /*
-        uncheckPreferenceByDisabledComponent(R.string.key_jd_history, JDHistoryActivity.class);
-        uncheckPreferenceByDisabledComponent(R.string.key_suning_history, JDHistoryActivity.class);*/
     }
 
     @PreferenceChange(prefs = R.string.key_jd_open_link_in_app, refreshAtStart = true)
@@ -34,10 +31,12 @@ public class ShoppingPrefFragment extends BasePrefFragment {
         }
     }
 
-    /*@PreferenceChange(prefs = { R.string.key_jd_history, R.string.key_suning_history })
-    private void enableJdHistory(Preference preference, boolean enabled) {
-        ComponentUtils.enableComponent(JDHistoryActivity.class, enabled);
-        findSwitchPreference(R.string.key_jd_history).setChecked(enabled);
-        findSwitchPreference(R.string.key_suning_history).setChecked(enabled);
-    }*/
+    @PreferenceChange(prefs = R.string.key_jd_history, refreshAtStart = true)
+    private void enableJdHistory(Preference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_jd_history, JDHistoryActivity.class);
+        } else {
+            ComponentUtils.enableComponent(JDHistoryActivity.class, enabled);
+        }
+    }
 }
