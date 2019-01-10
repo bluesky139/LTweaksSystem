@@ -97,6 +97,9 @@ public abstract class ILTweaksMethods {
     public void com_android_internal_widget_FloatingToolbar__getVisibleAndEnabledMenuItems__Menu(MethodParam param) {
     }
 
+    public void com_android_internal_policy_PhoneWindow__generateLayout__DecorView(MethodParam param) {
+    }
+
     public void com_android_internal_telephony_PhoneFactory__makeDefaultPhone__Context(MethodParam param) {
     }
 
