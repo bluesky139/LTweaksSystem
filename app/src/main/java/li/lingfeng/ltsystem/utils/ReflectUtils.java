@@ -3,25 +3,69 @@ package li.lingfeng.ltsystem.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ReflectUtils {
 
+    private static HashMap<String, Field> fieldCache = new HashMap<>();
+    private static HashMap<String, Method> methodCache = new HashMap<>();
+
     public static Object callMethod(Object obj, String methodName, Object... args) throws Throwable {
-        Method method = obj.getClass().getDeclaredMethod(methodName, Arrays.stream(args).map(Object::getClass).toArray(Class[]::new));
+        Method method = findMethod(obj.getClass(), methodName, Arrays.stream(args).map(Object::getClass).toArray(Class[]::new));
         method.setAccessible(true);
         return method.invoke(obj, args);
     }
 
     public static Object callMethod(Object obj, String methodName, Object[] args, Class[] parameterTypes) throws Throwable {
-        Method method = obj.getClass().getDeclaredMethod(methodName, parameterTypes);
+        Method method = findMethod(obj.getClass(), methodName, parameterTypes);
         method.setAccessible(true);
         return method.invoke(obj, args);
     }
 
     public static Object callStaticMethod(Class cls, String methodName, Object... args) throws Throwable {
-        Method method = cls.getDeclaredMethod(methodName, Arrays.stream(args).map(Object::getClass).toArray(Class[]::new));
+        Method method = findMethod(cls, methodName, Arrays.stream(args).map(Object::getClass).toArray(Class[]::new));
         method.setAccessible(true);
         return method.invoke(null, args);
+    }
+
+    public static Method findMethod(Class cls, String methodName, Class[] parameterTypes) throws Throwable {
+        StringBuilder builder = new StringBuilder();
+        builder.append(cls.getName());
+        builder.append('#');
+        builder.append(methodName);
+        builder.append('(');
+        for (int i = 0; i < parameterTypes.length; ++i) {
+            if (i > 0) {
+                builder.append(',');
+            }
+            builder.append(parameterTypes[i].getName());
+        }
+        builder.append(')');
+        String fullMethodName = builder.toString();
+        Method method = methodCache.get(fullMethodName);
+        if (method == null) {
+            method = _findMethod(cls, methodName, parameterTypes);
+            method.setAccessible(true);
+            methodCache.put(fullMethodName, method);
+        }
+        return method;
+    }
+
+    private static Method _findMethod(Class cls, String methodName, Class[] parameterTypes) throws Throwable {
+        try {
+            return cls.getDeclaredMethod(methodName, parameterTypes);
+        } catch (NoSuchMethodException e) {
+            while (true) {
+                cls = cls.getSuperclass();
+                if (cls == null || cls.equals(Object.class)) {
+                    throw e;
+                }
+                try {
+                    return cls.getDeclaredMethod(methodName, parameterTypes);
+                } catch (NoSuchMethodException e1) {
+                }
+            }
+        }
     }
 
     public static Object getObjectField(Object obj, String fieldName) throws Throwable {
@@ -49,8 +93,17 @@ public class ReflectUtils {
     }
 
     public static Field findField(Class cls, String fieldName) throws Throwable {
-        Field field = _findField(cls, fieldName);
-        field.setAccessible(true);
+        StringBuilder builder = new StringBuilder();
+        builder.append(cls.getName());
+        builder.append('#');
+        builder.append(fieldName);
+        String fullFieldName = builder.toString();
+        Field field = fieldCache.get(fullFieldName);
+        if (field == null) {
+            field = _findField(cls, fieldName);
+            field.setAccessible(true);
+            fieldCache.put(fullFieldName, field);
+        }
         return field;
     }
 
