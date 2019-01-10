@@ -7,10 +7,10 @@
         android:icon="@drawable/ic_google"
         android:title="@string/pref_header_google" />
 
-    <!--<header
-        android:fragment="li.lingfeng.ltweaks.fragments.ShoppingPrefFragment"
+    <header
+        android:fragment="li.lingfeng.ltsystem.fragments.ShoppingPrefFragment"
         android:icon="@drawable/ic_shopping"
-        android:title="@string/pref_header_shopping" />-->
+        android:title="@string/pref_header_shopping" />
 
     <header
         android:fragment="li.lingfeng.ltsystem.fragments.CommunicationPrefFragment"
