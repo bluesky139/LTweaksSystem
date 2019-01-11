@@ -1,6 +1,9 @@
 package li.lingfeng.ltsystem.tweaks.system;
 
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alibaba.fastjson.JSONArray;
@@ -121,6 +124,19 @@ public class TextActions extends ILTweaksMethods {
         }
         param.before(() -> {
             ReflectUtils.callMethod(param.thisObject, "loadSupportedActivities");
+            List<ResolveInfo> supportedActivities = (List<ResolveInfo>) ReflectUtils.getObjectField(param.thisObject, "mSupportedActivities");
+            int start = 100; // MENU_ITEM_ORDER_PROCESS_TEXT_INTENT_ACTIONS_START
+            Menu menu = (Menu) param.args[0];
+            for (int i = 0; i < supportedActivities.size(); ++i) {
+                final ResolveInfo resolveInfo = supportedActivities.get(i);
+                Logger.d("Text action supported activity " + resolveInfo.activityInfo.name);
+                menu.add(Menu.NONE, Menu.NONE,
+                        start + i,
+                        (CharSequence) ReflectUtils.callMethod(param.thisObject, "getLabel", resolveInfo))
+                        .setIntent((Intent) ReflectUtils.callMethod(param.thisObject, "createProcessTextIntentForResolveInfo", resolveInfo))
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+            }
+            param.setResult(null);
         });
     }
 }
