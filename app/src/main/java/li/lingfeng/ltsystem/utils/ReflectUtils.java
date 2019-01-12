@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import li.lingfeng.ltsystem.LTHelper;
+
 public class ReflectUtils {
 
     private static HashMap<String, Field> fieldCache = new HashMap<>();
@@ -133,5 +135,21 @@ public class ReflectUtils {
             }
         }
         throw new NoSuchFieldError("findFirstFieldByExactType " + type + " in " + cls);
+    }
+
+    public static Object getSurroundingThis(Object obj) throws Throwable {
+        String name = obj.getClass().getName();
+        int pos = name.lastIndexOf('$');
+        if (pos > 0) {
+            name = name.substring(0, pos);
+            Class cls = findClass(name, obj.getClass().getClassLoader());
+            Field field = findFirstFieldByExactType(obj.getClass(), cls);
+            return field.get(obj);
+        }
+        return null;
+    }
+
+    public static Class findClass(String className, ClassLoader classLoader) throws ClassNotFoundException {
+        return Class.forName(className, false, classLoader);
     }
 }

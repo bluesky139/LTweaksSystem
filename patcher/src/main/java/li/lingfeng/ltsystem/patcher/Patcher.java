@@ -42,6 +42,7 @@ public class Patcher {
 
     private static final Map<String, String> PACKAGE_PATH_MAP = new HashMap<String, String>() {{
         put("java.lang", "/libcore/ojluni/src/main/java/");
+        put("java.util", "/libcore/ojluni/src/main/java/");
         put("android.media", "/frameworks/base/media/java/");
         put("com.android.server", "/frameworks/base/services/core/java/");
         put("com.android.internal.telephony", "/frameworks/opt/telephony/src/java/");

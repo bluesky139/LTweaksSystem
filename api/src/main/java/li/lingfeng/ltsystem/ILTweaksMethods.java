@@ -10,6 +10,9 @@ public abstract class ILTweaksMethods {
     public void java_lang_ProcessBuilder__start__(MethodParam param) {
     }
 
+    public void java_util_concurrent_AbstractExecutorService__submit__Runnable(MethodParam param) {
+    }
+
     public void android_os_PowerManager__getMinimumScreenBrightnessSetting__(MethodParam param) {
     }
 
