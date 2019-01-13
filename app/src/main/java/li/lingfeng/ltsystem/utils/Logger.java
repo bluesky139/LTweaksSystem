@@ -1,6 +1,8 @@
 package li.lingfeng.ltsystem.utils;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -10,34 +12,67 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
+import li.lingfeng.ltsystem.LTHelper;
+
 /**
  * Created by smallville on 2016/11/23.
  */
 public class Logger {
-    private final static String TAG = "LTweaks";
+    private static String TAG = "LTweaks";
+    private static Remote remote;
+
+    public static void useRemote(String tag) {
+        Logger.d("Use remote log for " + tag);
+        TAG += "-" + tag;
+        remote = new Remote();
+    }
 
     public static void v(String msg) {
-        Log.v(TAG, msg);
+        if (remote == null) {
+            Log.v(TAG, msg);
+        } else {
+            remote.log(TAG, "V", msg);
+        }
     }
 
     public static void d(String msg) {
-        Log.d(TAG, msg);
+        if (remote == null) {
+            Log.d(TAG, msg);
+        } else {
+            remote.log(TAG, "D", msg);
+        }
     }
 
     public static void i(String msg) {
-        Log.i(TAG, msg);
+        if (remote == null) {
+            Log.i(TAG, msg);
+        } else {
+            remote.log(TAG, "I", msg);
+        }
     }
 
     public static void w(String msg) {
-        Log.w(TAG, msg);
+        if (remote == null) {
+            Log.w(TAG, msg);
+        } else {
+            remote.log(TAG, "W", msg);
+        }
     }
 
     public static void e(String msg) {
-        Log.e(TAG, msg);
+        if (remote == null) {
+            Log.e(TAG, msg);
+        } else {
+            remote.log(TAG, "E", msg);
+        }
     }
 
     public static void e(String msg, Throwable e) {
-        Log.e(TAG, msg, e);
+        if (remote == null) {
+            Log.e(TAG, msg, e);
+        } else {
+            remote.log(TAG, "E", msg + "\n" + Log.getStackTraceString(e));
+        }
     }
 
     public static void stackTrace() {
@@ -45,7 +80,11 @@ public class Logger {
     }
 
     public static void stackTrace(String message) {
-        Log.v(TAG, "[print stack] " + message);
+        if (remote == null) {
+            Log.v(TAG, "[print stack] " + message);
+        } else {
+            remote.log(TAG, "V", "[print stack] " + message);
+        }
         stackTrace(new Exception("[print stack] " + message));
     }
 
@@ -53,7 +92,11 @@ public class Logger {
         if (e instanceof InvocationTargetException) {
             e = ((InvocationTargetException) e).getTargetException();
         }
-        Log.e(TAG, Log.getStackTraceString(e));
+        if (remote == null) {
+            Log.e(TAG, Log.getStackTraceString(e));
+        } else {
+            remote.log(TAG, "E", Log.getStackTraceString(e));
+        }
     }
 
     public static void intent(Intent intent) {
@@ -92,6 +135,17 @@ public class Logger {
         for (Field field : fields) {
             field.setAccessible(true);
             Logger.d("  " + field.getName() + ": " + field.get(instance));
+        }
+    }
+
+    static class Remote {
+        void log(String tag, String level, String msg) {
+            ContentValues values = new ContentValues();
+            values.put("tag", tag);
+            values.put("level", level);
+            values.put("msg", msg);
+            LTHelper.currentApplication().getContentResolver()
+                    .insert(Uri.parse("content://li.lingfeng.ltsystem.remoteLog/"), values);
         }
     }
 }

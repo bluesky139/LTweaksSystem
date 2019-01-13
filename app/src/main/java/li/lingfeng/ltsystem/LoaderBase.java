@@ -21,6 +21,7 @@ public abstract class LoaderBase extends ILTweaks.Loader {
     private Map<String, Set<Class<? extends ILTweaksMethods>>> mModules = new HashMap<>();
     private Set<Class<? extends ILTweaksMethods>> mModulesForAll = new HashSet<>();
     private List<ILTweaksMethods> mModuleInstances;
+    private static List<ILTweaksMethods> EMPTY_MODULE_INSTANCES = new ArrayList<>();
 
     @Override
     public void initInZygote() throws Throwable {
@@ -55,6 +56,10 @@ public abstract class LoaderBase extends ILTweaks.Loader {
 
     protected List<ILTweaksMethods> getModuleInstances() {
         if (mModuleInstances == null) {
+            if (LTHelper.currentApplication() == null) {
+                return EMPTY_MODULE_INSTANCES;
+            }
+
             Set<Class<? extends ILTweaksMethods>> modules = getModules(getPackageName());
             if (modules != null) {
                 mModuleInstances = new ArrayList<>(modules.size());
@@ -97,7 +102,6 @@ public abstract class LoaderBase extends ILTweaks.Loader {
     }
 
     private String getPackageName() {
-        Application application = LTHelper.currentApplication();
-        return application != null ? application.getPackageName() : "_unknown_package";
+        return LTHelper.currentApplication().getPackageName();
     }
 }

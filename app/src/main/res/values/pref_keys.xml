@@ -22,6 +22,7 @@
     <string name="key_smzdm_open_link_in_jd_app">key_smzdm_open_link_in_jd_app</string>
     <string name="key_suning_share_item">key_suning_share_item</string>
     <string name="key_suning_history">key_suning_history</string>
+    <string name="key_alipay_fingerprint">key_alipay_fingerprint</string>
 
     <!--Communication-->
     <string name="key_wechat_use_incoming_ringtone">key_wechat_use_incoming_ringtone</string>

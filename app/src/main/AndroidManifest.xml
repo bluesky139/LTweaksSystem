@@ -18,6 +18,10 @@
             android:name=".services.ResourceProvider"
             android:authorities="li.lingfeng.ltsystem.resourceProvider"
             android:exported="true" />
+        <provider
+            android:name=".services.RemoteLog"
+            android:authorities="li.lingfeng.ltsystem.remoteLog"
+            android:exported="true" />
 
         <activity android:name=".MainActivity">
             <intent-filter>

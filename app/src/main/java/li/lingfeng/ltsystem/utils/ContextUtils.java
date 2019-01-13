@@ -90,6 +90,10 @@ public class ContextUtils {
         return getResId(name, "id", context);
     }
 
+    public static int getIdId(String name, String packageName) {
+        return getResId(name, "id", packageName);
+    }
+
     public static int getStringId(String name) {
         return getStringId(name, LTHelper.currentApplication());
     }
