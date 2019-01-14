@@ -64,19 +64,9 @@ public class QQChatBackground extends TweakBase {
                 @Override
                 public void onGlobalLayout() {
                     try {
-                        handleLayoutChanged(activity);
+                        handleLayoutChanged(rootView);
                     } catch (Throwable e) {
                         Logger.e("Error to handleLayoutChanged.", e);
-                    }
-                    if (mBackgroundView != null) {
-                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        mBackgroundView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-                            try {
-                                handleLayoutChanged(activity);
-                            } catch (Throwable e) {
-                                Logger.e("Error to handleLayoutChanged2.", e);
-                            }
-                        });
                     }
                 }
             });
@@ -92,16 +82,12 @@ public class QQChatBackground extends TweakBase {
         });
     }
 
-    private void handleLayoutChanged(Activity activity) throws Throwable {
-        ViewGroup viewGroup = mBackgroundView;
-        if (viewGroup == null) {
-            final ViewGroup rootView = activity.findViewById(android.R.id.content);
-            View chatListView = ViewUtils.findViewByType(rootView, (Class<? extends View>) findClass(CHAT_LISTVIEW));
-            if (chatListView == null) {
-                return;
-            }
-            viewGroup = (ViewGroup) chatListView;
+    private void handleLayoutChanged(ViewGroup rootView) throws Throwable {
+        View chatListView = ViewUtils.findViewByType(rootView, (Class<? extends View>) findClass(CHAT_LISTVIEW));
+        if (chatListView == null) {
+            return;
         }
+        ViewGroup viewGroup = (ViewGroup) chatListView;
 
         int width = viewGroup.getMeasuredWidth();
         int height = viewGroup.getMeasuredHeight();
