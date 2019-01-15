@@ -45,6 +45,7 @@ public class ImageSearchActivity extends Activity {
         put("IQDB", "https://iqdb.org/?url=%s");
     }};
     private String mEngine;
+    private boolean mChooserStarted = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,33 +59,21 @@ public class ImageSearchActivity extends Activity {
         }
 
         setContentView(R.layout.activity_image_search);
-        byte[] bytes = getIntent().getByteArrayExtra("image_bytes");
-        String type = getIntent().getStringExtra("image_type");
-        if (bytes == null); {
-            Uri uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
-            if (uri != null) {
-                grantUriPermission(getPackageName(), uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                bytes = IOUtils.uri2bytes(uri);
-                type = getContentResolver().getType(uri);
-            }
-        }
-
-        if (bytes == null) {
+        Uri uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
+        if (uri == null) {
             Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-
         if (!ComponentUtils.isAlias(this)) {
             Logger.i("Choose image engine.");
+            grantUriPermission(getPackageName(), uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Intent intent = new Intent(ACTION_IMAGE_SEARCH);
             intent.setType(getIntent().getType());
-            intent.putExtra("image_bytes", bytes);
-            intent.putExtra("image_type", type);
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(Intent.createChooser(intent, "Choose image engine..."));
-            finish();
         } else {
             mEngine = ComponentUtils.getAlias(this);
             Logger.i("Use image engine " + mEngine);
@@ -93,17 +82,37 @@ public class ImageSearchActivity extends Activity {
                 finish();
                 return;
             }
-            Logger.i("Uploading image.");
-            new SearchByImage().execute(bytes, type);
+            Logger.i("Uploading image file " + uri.toString());
+            new SearchByImage().execute(uri);
         }
     }
 
-    private class SearchByImage extends AsyncTask<Object, Void, byte[]> {
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // It looks like chrome will set file content provider exported to false at chrome resumed,
+        // so we keep activity until second resume.
+        if (mChooserStarted) {
+            finish();
+        }
+        mChooserStarted = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!isFinishing()) {
+            finish();
+        }
+    }
+
+    private class SearchByImage extends AsyncTask<Uri, Void, byte[]> {
 
         @Override
-        protected byte[] doInBackground(Object... params) {
-            byte[] bytes = (byte[]) params[0];
-            String mimeType = (String) params[1];
+        protected byte[] doInBackground(Uri... params) {
+            Uri uri = params[0];
+            byte[] bytes = IOUtils.uri2bytes(uri);
 
             // resize to smaller for faster uploading.
             try {
@@ -116,6 +125,7 @@ public class ImageSearchActivity extends Activity {
                     Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
 
                     Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.PNG;
+                    String mimeType = ImageSearchActivity.this.getContentResolver().getType(uri);
                     if ("image/jpeg".equals(mimeType)) {
                         compressFormat = Bitmap.CompressFormat.JPEG;
                     }
