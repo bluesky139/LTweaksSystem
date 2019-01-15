@@ -24,7 +24,7 @@ public class WeChatIncomingRingtone extends TweakBase {
             int idPhonering = context.getResources().getIdentifier("phonering", "raw", "com.tencent.mm");
             if (uri.toString().equals("android.resource://com.tencent.mm/" + idPhonering)) {
                 String path = Prefs.instance().getString(R.string.key_wechat_set_incoming_ringtone, "");
-                param.args[1] = Uri.parse(path);
+                param.setArg(1, Uri.parse(path));
                 Logger.i("Media source is changed to " + path);
             }
         });
