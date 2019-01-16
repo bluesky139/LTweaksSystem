@@ -21,6 +21,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -108,6 +109,7 @@ public class Patcher {
 
         patchZygote();
         copyFiles();
+        copyAdditionalFiles();
         Logger.i("End patch.");
     }
 
@@ -422,6 +424,12 @@ public class Patcher {
             pkgListContent += "\nli\\.lingfeng\\.ltsystem\n";
             FileUtils.writeStringToFile(pkgListFile, pkgListContent);
         }
+    }
+
+    private void copyAdditionalFiles() throws Throwable {
+        Logger.i("Copy additional files.");
+        String srcDir = "./additional_files";
+        FileUtils.copyDirectory(new File(srcDir), new File(Config.ANDROID_SOURCE_DIR), false);
     }
 
     private int getPositionFromLineCol(String content, int line, int col) {

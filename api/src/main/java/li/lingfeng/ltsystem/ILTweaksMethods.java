@@ -127,6 +127,9 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_statusbar_phone_NavigationBarView__setNavigationIconHints__int_boolean(MethodParam param) {
     }
 
+    public void com_android_systemui_statusbar_policy_MobileSignalController__mapIconSets__(MethodParam param) {
+    }
+
     public void com_android_server_am_ActivityManagerService__finishBooting__(MethodParam param) {
     }
 

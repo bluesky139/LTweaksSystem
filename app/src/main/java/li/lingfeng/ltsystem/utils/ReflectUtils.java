@@ -1,5 +1,6 @@
 package li.lingfeng.ltsystem.utils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -72,6 +73,10 @@ public class ReflectUtils {
 
     public static Object getObjectField(Object obj, String fieldName) throws Throwable {
         return findField(obj.getClass(), fieldName).get(obj);
+    }
+
+    public static Object getStaticObjectField(Class cls, String fieldName) throws Throwable {
+        return findField(cls, fieldName).get(null);
     }
 
     public static boolean getBooleanField(Object obj, String fieldname) throws Throwable {
@@ -147,6 +152,12 @@ public class ReflectUtils {
             return field.get(obj);
         }
         return null;
+    }
+
+    public static Constructor getFirstConstructor(Class cls) {
+        Constructor constructor = cls.getConstructors()[0];
+        constructor.setAccessible(true);
+        return constructor;
     }
 
     public static Class findClass(String className, ClassLoader classLoader) throws ClassNotFoundException {
