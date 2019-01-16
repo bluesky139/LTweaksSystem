@@ -94,6 +94,12 @@ public abstract class ILTweaksMethods {
     public void android_media_MediaPlayer__setDataSource__Context_Uri(MethodParam param) {
     }
 
+    public void android_telephony_TelephonyManager__getLine1Number__int(MethodParam param) {
+    }
+
+    public void android_telephony_SubscriptionInfo__getNumber__(MethodParam param) {
+    }
+
     public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(MethodParam param) {
     }
 
