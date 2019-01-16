@@ -100,6 +100,10 @@ public abstract class LoaderBase extends ILTweaks.Loader {
     }
 
     private String getPackageName() {
-        return LTHelper.currentPackageName();
+        String packageName = LTHelper.currentPackageName();
+        if (packageName == null && LTHelper.currentApplication() != null) {
+            packageName = LTHelper.currentApplication().getPackageName();
+        }
+        return packageName;
     }
 }
