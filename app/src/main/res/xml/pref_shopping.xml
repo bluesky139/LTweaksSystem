@@ -25,5 +25,10 @@
             android:key="@string/key_jd_basic_share_activity"
             android:title="@string/pref_jd_basic_share_activity"
             android:summary="@string/pref_jd_basic_share_activity_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_jd_mini_program_price_history"
+            android:title="@string/pref_jd_mini_program_price_history"
+            android:summary="@string/pref_jd_mini_program_price_history_summary" />
     </PreferenceCategory>
 </PreferenceScreen>

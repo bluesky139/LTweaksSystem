@@ -11,7 +11,7 @@ import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.Logger;
 
 @MethodsLoad(packages = PackageNames.JD, prefs = R.string.key_jd_basic_share_activity)
-public class JdBasicShare extends TweakBase {
+public class JDBasicShare extends TweakBase {
 
     private static final String SHARE_ACTIVITY = "com.jingdong.app.mall.basic.ShareActivity";
 
