@@ -15,37 +15,23 @@
     <string name="key_youtube_set_quality">key_youtube_set_quality</string>
 
     <!--Shopping-->
+    <string name="key_alipay_fingerprint">key_alipay_fingerprint</string>
     <string name="key_jd_open_link_in_app">key_jd_open_link_in_app</string>
     <string name="key_jd_history">key_jd_history</string>
     <string name="key_jd_basic_share_activity">key_jd_basic_share_activity</string>
-    <string name="key_smzdm_open_link_in_jd_app">key_smzdm_open_link_in_jd_app</string>
-    <string name="key_suning_share_item">key_suning_share_item</string>
-    <string name="key_suning_history">key_suning_history</string>
-    <string name="key_alipay_fingerprint">key_alipay_fingerprint</string>
 
     <!--Communication-->
     <string name="key_wechat_use_incoming_ringtone">key_wechat_use_incoming_ringtone</string>
     <string name="key_wechat_set_incoming_ringtone">key_wechat_set_incoming_ringtone</string>
     <string name="key_wechat_remove_bottom_bar">key_wechat_remove_bottom_bar</string>
-    <string name="key_wechat_no_drawer">key_wechat_no_drawer</string>
-    <string name="key_qq_dismiss_contacts_enabler">key_qq_dismiss_contacts_enabler</string>
-    <string name="key_qq_remove_ads">key_qq_remove_ads</string>
     <string name="key_qq_outer_browser">key_qq_outer_browser</string>
-    <string name="key_qq_collapse_chat_buttons">key_qq_collapse_chat_buttons</string>
     <string name="key_qq_clear_background">key_qq_clear_background</string>
     <string name="key_qq_clear_background_path">key_qq_clear_background_path</string>
-    <string name="key_qq_exit_directly_by_sharing">key_qq_exit_directly_by_sharing</string>
-    <string name="key_qq_fix_image_sharing">key_qq_fix_image_sharing</string>
-    <string name="key_qq_disable_discussion_notification">key_qq_disable_discussion_notification</string>
-    <string name="key_qq_prevent_audio_panel">key_qq_prevent_audio_panel</string>
-    <string name="key_qq_hide_weak_net_toast">key_qq_hide_weak_net_toast</string>
     <string name="key_push_bullet_share_to_all">key_push_bullet_share_to_all</string>
     <string name="key_ttrss_disable_article_pager">key_ttrss_disable_article_pager</string>
     <string name="key_ttrss_open_link_in_browser_menu">key_ttrss_open_link_in_browser_menu</string>
     <string name="key_ttrss_refresh_menu">key_ttrss_refresh_menu</string>
-    <string name="key_ttrss_disable_show_hide_on_scroll">key_ttrss_disable_show_hide_on_scroll</string>
     <string name="key_ttrss_darken">key_ttrss_darken</string>
-    <string name="key_ttrss_open_all_articles_at_startup">key_ttrss_open_all_articles_at_startup</string>
 
     <!--Entertainment-->
     <string name="key_douban_movie_url">key_douban_movie_url</string>
@@ -59,13 +45,11 @@
     <string name="key_bilibili_expand_desc">key_bilibili_expand_desc</string>
     <string name="key_bilibili_darken">key_bilibili_darken</string>
     <string name="key_bilibili_hide_follow_at_full_screen">key_bilibili_hide_follow_at_full_screen</string>
-    <string name="key_bilibili_dismiss_update">key_bilibili_dismiss_update</string>
     <string name="key_steam_share_url">key_steam_share_url</string>
     <string name="key_steam_database">key_steam_database</string>
     <string name="key_steam_go_top">key_steam_go_top</string>
     <string name="key_steam_go_reviews">key_steam_go_reviews</string>
     <string name="key_steam_chinese">key_steam_chinese</string>
-    <string name="key_comic_screen_better_sort">key_comic_screen_better_sort</string>
 
     <!--System-->
     <string name="key_text_long_press_to_copy">key_text_long_press_to_copy</string>
@@ -78,13 +62,6 @@
     <string name="key_system_share_filter">key_system_share_filter</string>
     <string name="key_system_share_filter_activities">key_system_share_filter_activities</string>
     <string name="key_system_share_copy_to_share">key_system_share_copy_to_share</string>
-    <string name="key_coolapk_remove_bottom_bar">key_coolapk_remove_bottom_bar</string>
-    <string name="key_prevent_running_set_list">key_prevent_running_set_list</string>
-    <string name="key_prevent_list_prevent_foreground_service">key_prevent_list_prevent_foreground_service</string>
-    <string name="key_prevent_list_set_inactive">key_prevent_list_set_inactive</string>
-    <string name="key_prevent_list_prevent_exact_alarm">key_prevent_list_prevent_exact_alarm</string>
-    <string name="key_prevent_list_prevent_wake_lock">key_prevent_list_prevent_wake_lock</string>
-    <string name="key_prevent_list_prevent_receiver">key_prevent_list_prevent_receiver</string>
     <string name="key_shadowsocks_primary_dns">key_shadowsocks_primary_dns</string>
     <string name="key_shadowsocks_transproxy">key_shadowsocks_transproxy</string>
     <string name="key_quick_settings_tile_adb_wireless">key_quick_settings_tile_adb_wireless</string>
@@ -95,9 +72,6 @@
     <string name="key_quick_settings_tile_preconfigured_brightness">key_quick_settings_tile_preconfigured_brightness</string>
     <string name="key_quick_settings_brightness_by_volume_buttons">key_quick_settings_brightness_by_volume_buttons</string>
     <string name="key_nav_bar_input_cursor_control">key_nav_bar_input_cursor_control</string>
-    <string name="key_native_clipboard_fix_chrome">key_native_clipboard_fix_chrome</string>
-    <string name="key_trust_agent_wifi_aps">key_google_smart_lock_with_wifi_aps</string>
-    <string name="key_solid_explorer_url_replacers">key_solid_explorer_url_replacers</string>
     <string name="key_selection_action_mode_original">key_selection_action_mode_original</string>
     <string name="key_app_info_open_app_data_folder">key_app_info_open_app_data_folder</string>
     <string name="key_app_info_go_market">key_app_info_go_market</string>
@@ -106,8 +80,6 @@
     <string name="key_lineage_os_live_display_time">key_lineage_os_live_display_time</string>
     <string name="key_lineage_os_live_display_time_sunrise">key_lineage_os_live_display_time_sunrise</string>
     <string name="key_lineage_os_live_display_time_sunset">key_lineage_os_live_display_time_sunset</string>
-    <string name="key_lineage_os_gallery_remove_bottom_bar">key_lineage_os_gallery_remove_bottom_bar</string>
-    <string name="key_keys_long_press_back_to_kill">key_keys_long_press_back_to_kill</string>
     <string name="key_recent_task_swipe_to_kill">key_recent_task_swipe_to_kill</string>
     <string name="key_phone_deny_access_phone_number">key_phone_deny_access_phone_number</string>
     <string name="key_display_light_amber_in_daylight">key_display_light_amber_in_daylight</string>
@@ -117,7 +89,6 @@
     <string name="key_web_search_to_browser">key_web_search_to_browser</string>
     <string name="key_web_chrome_webview_provider">key_web_chrome_webview_provider</string>
     <string name="key_debug_app_crash_info">key_debug_app_crash_info</string>
-    <string name="key_debug_mtp_always">key_debug_mtp_always</string>
     <string name="key_debug_debuggable">key_debug_debuggable</string>
 
     <!--Donate-->

@@ -53,23 +53,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_category_coolapk">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_coolapk_remove_bottom_bar"
-            android:title="@string/pref_coolapk_remove_bottom_bar"
-            android:summary="@string/pref_coolapk_remove_bottom_bar_summary" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/pref_category_prevent_running">
-        <Preference
-            android:key="@string/key_prevent_running_set_list"
-            android:title="@string/pref_prevent_running_set_list"
-            android:summary="@string/pref_prevent_running_set_list_summary" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:title="@string/pref_category_shadowsocks">
         <EditTextPreference
             android:key="@string/key_shadowsocks_primary_dns"
@@ -111,31 +94,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_category_native_clipboard">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_native_clipboard_fix_chrome"
-            android:title="@string/pref_native_clipboard_fix_chrome"
-            android:summary="@string/pref_native_clipboard_fix_chrome_summary" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/pref_category_trust_agent">
-        <Preference
-            android:key="@string/key_trust_agent_wifi_aps"
-            android:title="@string/pref_trust_agent_wifi"
-            android:summary="@string/pref_trust_agent_wifi_summary" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/pref_category_solid_explorer">
-        <Preference
-            android:key="@string/key_solid_explorer_url_replacers"
-            android:title="@string/pref_solid_explorer_replace_url"
-            android:summary="@string/pref_solid_explorer_replace_url_summary" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:title="@string/pref_category_app_info">
         <SwitchPreference
             android:defaultValue="false"
@@ -147,19 +105,19 @@
             android:key="@string/key_app_info_go_market"
             android:title="@string/pref_app_info_go_market"
             android:summary="@string/pref_app_info_go_market_summary" />
-        <SwitchPreference
+        <!--<SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_app_info_allow_disable"
             android:title="@string/pref_app_info_allow_disable"
-            android:summary="@string/pref_app_info_allow_disable_summary" />
-        <SwitchPreference
+            android:summary="@string/pref_app_info_allow_disable_summary" />-->
+        <!--<SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_app_info_app_ops"
             android:title="@string/pref_app_info_app_ops"
-            android:summary="@string/pref_app_info_app_ops_summary" />
+            android:summary="@string/pref_app_info_app_ops_summary" />-->
     </PreferenceCategory>
 
-    <PreferenceCategory
+    <!--<PreferenceCategory
         android:title="@string/pref_category_lineage_os">
         <SwitchPreference
             android:defaultValue="false"
@@ -174,39 +132,25 @@
             android:defaultValue="19:00"
             android:key="@string/key_lineage_os_live_display_time_sunset"
             android:title="@string/pref_lineage_os_live_display_time_sunset" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_lineage_os_gallery_remove_bottom_bar"
-            android:title="@string/pref_lineage_os_gallery_remove_bottom_bar"
-            android:summary="@string/pref_lineage_os_gallery_remove_bottom_bar_summary" />
-    </PreferenceCategory>
+    </PreferenceCategory>-->
 
-    <PreferenceCategory
-        android:title="@string/pref_category_keys">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_keys_long_press_back_to_kill"
-            android:title="@string/pref_keys_long_press_back_to_kill"
-            android:summary="@string/pref_keys_long_press_back_to_kill_summary" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
+    <!--<PreferenceCategory
         android:title="@string/pref_category_recent_task">
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_recent_task_swipe_to_kill"
             android:title="@string/pref_recent_task_swipe_to_kill"
             android:summary="@string/pref_recent_task_swipe_to_kill_summary" />
-    </PreferenceCategory>
+    </PreferenceCategory>-->
 
-    <PreferenceCategory
+    <!--<PreferenceCategory
         android:title="@string/pref_category_phone">
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_phone_deny_access_phone_number"
             android:title="@string/pref_phone_deny_access_phone_number"
             android:summary="@string/pref_phone_deny_access_phone_number_summary" />
-    </PreferenceCategory>
+    </PreferenceCategory>-->
 
     <PreferenceCategory
         android:title="@string/pref_category_display">
@@ -224,20 +168,20 @@
             android:key="@string/key_display_dark_wallpaper_color"
             android:title="@string/pref_display_dark_wallpaper_color"
             android:summary="@string/pref_display_dark_wallpaper_color_summary" />
-        <SwitchPreference
+        <!--<SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_display_hspap_signal"
             android:title="@string/pref_display_hspap_signal"
-            android:summary="@string/pref_display_hspap_signal_summary" />
+            android:summary="@string/pref_display_hspap_signal_summary" />-->
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/pref_category_web">
-        <SwitchPreference
+        <!--<SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_web_search_to_browser"
             android:title="@string/pref_web_search_to_browser"
-            android:summary="@string/pref_web_search_to_browser_summary" />
+            android:summary="@string/pref_web_search_to_browser_summary" />-->
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_web_chrome_webview_provider"
@@ -246,16 +190,11 @@
 
     <PreferenceCategory
         android:title="@string/pref_category_debug">
-        <SwitchPreference
+        <!--<SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_debug_app_crash_info"
             android:title="@string/pref_debug_app_crash_info"
-            android:summary="@string/pref_debug_app_crash_info_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_debug_mtp_always"
-            android:title="@string/pref_debug_mtp_always"
-            android:summary="@string/pref_debug_mtp_always_summary" />
+            android:summary="@string/pref_debug_app_crash_info_summary" />-->
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_debug_debuggable"

@@ -17,32 +17,13 @@
             android:key="@string/key_wechat_remove_bottom_bar"
             android:title="@string/pref_wechat_remove_bottom_bar"
             android:summary="@string/pref_wechat_remove_bottom_bar_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_wechat_no_drawer"
-            android:title="@string/pref_wechat_no_drawer"
-            android:summary="@string/pref_wechat_no_drawer_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_qq">
         <SwitchPreference
             android:defaultValue="false"
-            android:key="@string/key_qq_dismiss_contacts_enabler"
-            android:title="@string/pref_qq_dismiss_contacts_enabler"
-            android:summary="@string/pref_qq_dismiss_contacts_enabler_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_qq_remove_ads"
-            android:title="@string/pref_qq_remove_ads" />
-        <SwitchPreference
-            android:defaultValue="false"
             android:key="@string/key_qq_outer_browser"
             android:title="@string/pref_qq_outer_browser" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_qq_collapse_chat_buttons"
-            android:title="@string/pref_qq_collapse_chat_buttons"
-            android:summary="@string/pref_qq_collapse_chat_buttons_summary" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_qq_clear_background"
@@ -51,29 +32,6 @@
         <Preference
             android:key="@string/key_qq_clear_background_path"
             android:title="@string/pref_qq_clear_background_path" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_qq_exit_directly_by_sharing"
-            android:title="@string/pref_qq_exit_directly_by_sharing"
-            android:summary="@string/pref_qq_exit_directly_by_sharing_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_qq_fix_image_sharing"
-            android:title="@string/pref_qq_fix_image_sharing"
-            android:summary="@string/pref_qq_fix_image_sharing_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_qq_disable_discussion_notification"
-            android:title="@string/pref_qq_disable_discussion_notification"
-            android:summary="@string/pref_qq_disable_discussion_notification_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_qq_prevent_audio_panel"
-            android:title="@string/pref_qq_prevent_audio_panel" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_qq_hide_weak_net_toast"
-            android:title="@string/pref_qq_hide_weak_net_toast" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_push_bullet">
@@ -100,17 +58,8 @@
             android:title="@string/pref_ttrss_refresh_menu" />
         <SwitchPreference
             android:defaultValue="false"
-            android:key="@string/key_ttrss_disable_show_hide_on_scroll"
-            android:title="@string/pref_ttrss_disable_show_hide_on_scroll" />
-        <SwitchPreference
-            android:defaultValue="false"
             android:key="@string/key_ttrss_darken"
             android:title="@string/pref_ttrss_darken"
             android:summary="@string/pref_ttrss_darken_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_ttrss_open_all_articles_at_startup"
-            android:title="@string/pref_ttrss_open_all_articles_at_startup"
-            android:summary="@string/pref_ttrss_open_all_articles_at_startup_summary" />
     </PreferenceCategory>
 </PreferenceScreen>

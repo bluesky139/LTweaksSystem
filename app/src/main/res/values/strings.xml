@@ -131,15 +131,6 @@ Open source on github: \n
     <string name="pref_jd_history_summary">Use with above share function</string>
     <string name="pref_jd_basic_share_activity">Original share activity</string>
     <string name="pref_jd_basic_share_activity_summary">Not something like \"Share Reward\", in case no \"Copy Link\" button</string>
-    <string name="pref_category_suning">Suning</string>
-    <string name="pref_suning_share_item">Share product by \"System Share\"</string>
-    <string name="pref_suning_share_item_summary">Use \"Copy To Clipboard\" in app share menu, a button will appear for you</string>
-    <string name="pref_suning_history">Price history in share menu</string>
-    <string name="pref_suning_history_summary">Use with above share function</string>
-    <string name="pref_category_taobao">Taobao</string>
-    <string name="pref_category_smzdm">SMZDM</string>
-    <string name="pref_smzdm_open_link_in_jd_app">Open link in JD app</string>
-    <string name="pref_smzdm_open_link_in_jd_app_summary">Of course only for JD link</string>
 
     <!-- JD -->
     <string name="jd_app">JD App</string>
@@ -157,27 +148,12 @@ Open source on github: \n
     <string name="pref_wechat_set_incoming_ringtone">Set incoming ringtone</string>
     <string name="pref_wechat_remove_bottom_bar">Remove bottom bar</string>
     <string name="pref_wechat_remove_bottom_bar_summary">Put them into drawer menu\nNote: If WeChat can\'t be launched, try delete /data/data/com.tencent.mm/tinker folder, and create a same one with 000 permission.</string>
-    <string name="pref_wechat_no_drawer">No drawer menu after bottom bar removed</string>
-    <string name="pref_wechat_no_drawer_summary">You can also swipe left or right to switch pages</string>
-    <string name="pref_category_qq">QQ (Only tested on lite version)</string>
-    <string name="pref_qq_dismiss_contacts_enabler">Dismiss contacts enabler</string>
-    <string name="pref_qq_dismiss_contacts_enabler_summary">Don\'t enable this if you are using contacts</string>
-    <string name="pref_qq_remove_ads">Remove banner ads</string>
+    <string name="pref_category_qq">QQ (TIM only)</string>
     <string name="pref_qq_outer_browser">Use outer browser</string>
-    <string name="pref_qq_collapse_chat_buttons">Hide bottom buttons first in chat activity</string>
-    <string name="pref_qq_collapse_chat_buttons_summary">Until you press an \"Add\" button</string>
     <string name="pref_qq_clear_background">Set a clear and undistorted chat background</string>
     <string name="pref_qq_clear_background_summary">May not work on very high definition device, no problem on 1080x1920 (Nexus 5)\nSet path below</string>
     <string name="pref_qq_clear_background_path">Set chat background path</string>
     <string name="pref_qq_clear_background_path_summary">File is copied to %s</string>
-    <string name="pref_qq_exit_directly_by_sharing">Exit directly by sharing</string>
-    <string name="pref_qq_exit_directly_by_sharing_summary">After sharing something to someone, do not back to main activity by pressing back button</string>
-    <string name="pref_qq_fix_image_sharing">Fix image sharing in some situation</string>
-    <string name="pref_qq_fix_image_sharing_summary">eg. Sharing from Google+</string>
-    <string name="pref_qq_disable_discussion_notification">Disable notification of discussion group</string>
-    <string name="pref_qq_disable_discussion_notification_summary">No matter \"Notification\" is checked or not in discussion group settings</string>
-    <string name="pref_qq_prevent_audio_panel">Prevent \"Press To Talk\" panel popup automatically</string>
-    <string name="pref_qq_hide_weak_net_toast">Hide weak network hint</string>
     <string name="pref_category_push_bullet">Pushbullet</string>
     <string name="pref_push_bullet_share_to_all">Share to all devices by default</string>
     <string name="pref_push_bullet_share_to_all_summary">Then you can disable direct share in Pushbullet settings if you only want to push everything to all devices with one tap</string>
@@ -186,11 +162,8 @@ Open source on github: \n
     <string name="pref_ttrss_open_link_in_browser_menu">More menu in article page</string>
     <string name="pref_ttrss_open_link_in_browser_menu_summary">Open in browser, Share, Go top, Go bottom</string>
     <string name="pref_ttrss_refresh_menu">Put refresh button to top right menu</string>
-    <string name="pref_ttrss_disable_show_hide_on_scroll">Disable top app bar show hide on scroll</string>
     <string name="pref_ttrss_darken">A more better night mode</string>
     <string name="pref_ttrss_darken_summary">For switching back after low memory kill</string>
-    <string name="pref_ttrss_open_all_articles_at_startup">Open all articles at startup</string>
-    <string name="pref_ttrss_open_all_articles_at_startup_summary">\"Open fresh articles at startup\" must be checked in TT RSS settings</string>
 
     <!-- TTRss -->
     <string name="ttrss_open_in_browser">Open In Browser</string>
@@ -220,7 +193,6 @@ Open source on github: \n
     <string name="pref_bilibili_darken">A more better night mode</string>
     <string name="pref_bilibili_darken_summary">1.When entering reading page in night mode, it will switch to daytime mode first, then suddenly back to night mode. Try fix this\n2.When entering this app, the whole screen will become white before app loading finish, change it to dark</string>
     <string name="pref_bilibili_hide_follow_at_full_screen">Hide follow button at full screen</string>
-    <string name="pref_bilibili_dismiss_update">Never check for new version</string>
     <string name="pref_category_steam">Steam</string>
     <string name="pref_steam_share_url">Share url</string>
     <string name="pref_steam_share_url_summary">Add a top right menu to use system share</string>
@@ -232,9 +204,6 @@ Open source on github: \n
     <string name="pref_steam_go_reviews_summary">Add a top right menu</string>
     <string name="pref_steam_chinese">Chinese store page</string>
     <string name="pref_steam_chinese_summary">Check this if your system language is English but you want Chinese store page</string>
-    <string name="pref_category_comic_screen">Comic Screen</string>
-    <string name="pref_comic_screen_better_sort">Better sort</string>
-    <string name="pref_comic_screen_better_sort_summary">If you have folder name like \"01.5\", try this method to get right sort.\neg. \"01 -> 01.5 -> 02 -> 03\"</string>
 
     <!-- Bilibili -->
     <string name="bilibili_get_cover">Get Cover</string>
@@ -264,24 +233,6 @@ Open source on github: \n
     <string name="pref_system_share_filter">Hide share menu items</string>
     <string name="pref_system_share_copy_to_share">Copy to share</string>
     <string name="pref_system_share_copy_to_share_summary">When you copy text, a button will appear for you to trigger share action.\nMay not work in some app</string>
-    <string name="pref_category_coolapk">Coolapk</string>
-    <string name="pref_coolapk_remove_bottom_bar">Remove bottom bar</string>
-    <string name="pref_coolapk_remove_bottom_bar_summary">Put them into drawer menu.\nYou need disable \"Disable Xposed modules\" in settings</string>
-    <string name="pref_category_prevent_running">Prevent Running</string>
-    <string name="pref_prevent_running_prevent_foreground_service">Prevent foreground service</string>
-    <string name="pref_prevent_running_prevent_foreground_service_summary">Prevent service becomes foreground service, some app will create invisible foreground service to avoid low memory kill.\n
-Note, this is a simple and crude way, visible \"Running Notification\" will also disappear.</string>
-    <string name="pref_prevent_running_set_inactive">App standby</string>
-    <string name="pref_prevent_running_set_inactive_summary">Try set app to standby, rather than kill it.\nFor Android 6.0+\n
-Note, somehow, some app will disconnect from internet, those apps didn\'t have a long time test on 6.0</string>
-    <string name="pref_prevent_running_prevent_exact_alarm">Delay wakeup of exact alarm</string>
-    <string name="pref_prevent_running_prevent_exact_alarm_summary">Some task will be delayed due to optimize battery use by system\nFor Android 6.0+</string>
-    <string name="pref_prevent_running_prevent_wake_lock">Prevent wake lock</string>
-    <string name="pref_prevent_running_prevent_wake_lock_summary">Without wake lock, app may hard to keep running at screen off</string>
-    <string name="pref_prevent_running_prevent_receiver">Prevent some broadcast</string>
-    <string name="pref_prevent_running_set_list">Set prevent list</string>
-    <string name="pref_prevent_running_set_list_summary">You can set each prevent method for individual app.\n
-Note, you\'d better know what these methods for, in case of unexpected error</string>
     <string name="pref_category_shadowsocks">Shadowsocks</string>
     <string name="pref_shadowsocks_primary_dns">Primary DNS</string>
     <string name="pref_shadowsocks_primary_dns_summary">Comma seperated ip:port</string>
@@ -303,15 +254,6 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <string name="pref_category_nav_bar">Navigation Bar</string>
     <string name="pref_nav_bar_input_cursor_control">Input cursor control</string>
     <string name="pref_nav_bar_input_cursor_control_summary">Add left / right buttons on navigation bar to control cursor at inputting\nFor Android 7.0+</string>
-    <string name="pref_category_native_clipboard">Native Clipboard (A Xposed module)</string>
-    <string name="pref_native_clipboard_fix_chrome">Fix in Chrome</string>
-    <string name="pref_native_clipboard_fix_chrome_summary">Try this if \"Native Clipboard\" doesn\'t work in Chrome</string>
-    <string name="pref_category_trust_agent">Trust Agents</string>
-    <string name="pref_trust_agent_wifi">Smart Lock with WiFi</string>
-    <string name="pref_trust_agent_wifi_summary">Unlock device by certain Wifi connected, just like Smart Lock which provided by Google.\nUse both SSID and BSSID to match.\nYou need go \"Settings -> Security -> Trust agents\" to enable this agent.\nClick to set WiFi list, only connected WiFi can be added.\nFor Android 5.0+\nPlease manually give location permission on Android 8.1+, or SSID and BSSID can\'t be got.</string>
-    <string name="pref_category_solid_explorer">Solid Explorer (Not Classic)</string>
-    <string name="pref_solid_explorer_replace_url">Replace Streaming Url</string>
-    <string name="pref_solid_explorer_replace_url_summary">When playing video from network, Solid Explorer will streaming video to local url (eg: \"http://127.0.0.1:12345/public/a.mp4\"), it has performance loss.\nReplace \"127.0.0.1:12345\" to server url for accessing video directly (If server supports it).\nSupport smb, dav, ftp, sftp.</string>
     <string name="pref_category_app_info">App Info</string>
     <string name="pref_app_info_open_app_data_folder">Open App Data/APK Folder</string>
     <string name="pref_app_info_open_app_data_folder_summary">Generally, it will open \"/data/data/[package_name]\", \"/sdcard/Android/data/[package_name]\", \"/data/user_de/0/[package_name]\" or \"/data/app/[package_name]\", you need a file explorer which supports root access, tested with Solid Explorer\nAdd as menu</string>
@@ -327,11 +269,6 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <string name="pref_lineage_os_live_display_time_summary">Manually set Live Display time, not calculate sunrise/sunset from location</string>
     <string name="pref_lineage_os_live_display_time_sunrise">Set Live Display sunrise</string>
     <string name="pref_lineage_os_live_display_time_sunset">Set Live Display sunset</string>
-    <string name="pref_lineage_os_gallery_remove_bottom_bar">Remove Gallery bottom bar</string>
-    <string name="pref_lineage_os_gallery_remove_bottom_bar_summary">Put them into drawer menu</string>
-    <string name="pref_category_keys">Keys</string>
-    <string name="pref_keys_long_press_back_to_kill">Long press back key to kill current app</string>
-    <string name="pref_keys_long_press_back_to_kill_summary">Exclude system apps</string>
     <string name="pref_category_recent_task">Recent Tasks</string>
     <string name="pref_recent_task_swipe_to_kill">Right swipe to kill app</string>
     <string name="pref_recent_task_swipe_to_kill_summary">Exclude system apps</string>
@@ -354,8 +291,6 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <string name="pref_category_debug">Debug / Misc</string>
     <string name="pref_debug_app_crash_info">Show app crash info</string>
     <string name="pref_debug_app_crash_info_summary">Show crash info in app crash dialog.\nAll exception handlers from user installed apps will be disabled.\nFor Android 7.0+</string>
-    <string name="pref_debug_mtp_always">MTP always</string>
-    <string name="pref_debug_mtp_always_summary">Always enable MTP when device is connected to PC.\nMTP will also be enabled if you choose charge only.\nFor Android 8.0+</string>
     <string name="pref_debug_debuggable">Enable debuggable for all apps</string>
     <string name="pref_debug_debuggable_summary">Equal to set debuggable in AndroidManifest.xml</string>
 
