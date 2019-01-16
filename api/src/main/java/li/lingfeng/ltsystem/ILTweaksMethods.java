@@ -37,6 +37,9 @@ public abstract class ILTweaksMethods {
     public void android_app_Activity__onCreatePanelMenu__int_Menu(MethodParam param) {
     }
 
+    public void android_app_Activity__onPreparePanel__int_View_Menu(MethodParam param) {
+    }
+
     public void android_app_Activity__onMenuItemSelected__int_MenuItem(MethodParam param) {
     }
 

@@ -75,6 +75,26 @@ public class TweakBase extends ILTweaksMethods {
         }
     }
 
+    protected void beforeOnPrepareOptionsMenu(String className, ILTweaks.MethodParam param, ILTweaks.Before before) {
+        final Activity activity = (Activity) param.thisObject;
+        if (activity.getClass().getName().equals(className)) {
+            int featureId = (int) param.args[0];
+            if (featureId == Window.FEATURE_OPTIONS_PANEL && param.args[2] != null) {
+                param.before(before);
+            }
+        }
+    }
+
+    protected void afterOnPrepareOptionsMenu(String className, ILTweaks.MethodParam param, ILTweaks.After after) {
+        final Activity activity = (Activity) param.thisObject;
+        if (activity.getClass().getName().equals(className)) {
+            int featureId = (int) param.args[0];
+            if (featureId == Window.FEATURE_OPTIONS_PANEL && param.args[2] != null) {
+                param.after(after);
+            }
+        }
+    }
+
     protected void beforeOnOptionsItemSelected(String className, ILTweaks.MethodParam param, ILTweaks.Before before) {
         final Activity activity = (Activity) param.thisObject;
         if (activity.getClass().getName().equals(className)) {
