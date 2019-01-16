@@ -82,6 +82,9 @@ public abstract class ILTweaksMethods {
     public void android_view_View__setOnClickListener__OnClickListener(MethodParam param) {
     }
 
+    public void android_content_ContextWrapper__attachBaseContext__Context(MethodParam param) {
+    }
+
     public void android_content_Intent__getParcelableExtra__String(MethodParam param) {
     }
 

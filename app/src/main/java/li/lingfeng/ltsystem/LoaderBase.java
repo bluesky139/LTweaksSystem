@@ -1,7 +1,5 @@
 package li.lingfeng.ltsystem;
 
-import android.app.Application;
-
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -56,7 +54,7 @@ public abstract class LoaderBase extends ILTweaks.Loader {
 
     protected List<ILTweaksMethods> getModuleInstances() {
         if (mModuleInstances == null) {
-            if (LTHelper.currentApplication() == null) {
+            if (getPackageName() == null) {
                 return EMPTY_MODULE_INSTANCES;
             }
 
@@ -102,6 +100,6 @@ public abstract class LoaderBase extends ILTweaks.Loader {
     }
 
     private String getPackageName() {
-        return LTHelper.currentApplication().getPackageName();
+        return LTHelper.currentPackageName();
     }
 }
