@@ -48,12 +48,20 @@ public class ContextUtils {
         }
     }
 
-    private static Context sLTweaksContext;
-    public static Context createLTweaksContext() {
-        if (sLTweaksContext == null) {
-            sLTweaksContext = createPackageContext(PackageNames.L_TWEAKS);
+    public static Resources getResourcesForApplication(String packageName) {
+        try {
+            return LTHelper.currentApplication().getPackageManager().getResourcesForApplication(packageName);
+        } catch (PackageManager.NameNotFoundException e) {
+            return null;
         }
-        return sLTweaksContext;
+    }
+
+    private static Resources sLTweaksResources;
+    public static Resources getLResources() {
+        if (sLTweaksResources == null) {
+            sLTweaksResources = getResourcesForApplication(PackageNames.L_TWEAKS);
+        }
+        return sLTweaksResources;
     }
 
     public static String getResNameById(int id) {
@@ -147,7 +155,7 @@ public class ContextUtils {
     }
 
     public static String getLString(int resId) {
-        return createLTweaksContext().getString(resId);
+        return getLResources().getString(resId);
     }
 
     public static String[] getStringArray(String name) {
@@ -159,7 +167,7 @@ public class ContextUtils {
     }
 
     public static String[] getLStringArray(int resId) {
-        return createLTweaksContext().getResources().getStringArray(resId);
+        return getLResources().getStringArray(resId);
     }
 
     public static int[] getIntArrayFromStringArray(String name) {
@@ -184,11 +192,13 @@ public class ContextUtils {
     }
 
     public static Drawable getDrawable(int id, String packageName) {
-        return createPackageContext(packageName).getResources().getDrawable(id);
+        return getResourcesForApplication(packageName).getDrawable(id);
     }
 
     public static Drawable getDrawable(String name, String packageName) {
-        return getDrawable(name, createPackageContext(packageName));
+        Resources resources = getResourcesForApplication(packageName);
+        int id = resources.getIdentifier(name, "drawable", packageName);
+        return resources.getDrawable(id);
     }
 
     public static Drawable getColorDrawable(String name) {
@@ -200,7 +210,7 @@ public class ContextUtils {
     }
 
     public static Drawable getLDrawable(int resId) {
-        return createLTweaksContext().getResources().getDrawable(resId);
+        return getLResources().getDrawable(resId);
     }
 
     public static Drawable getMipmap(String name) {
@@ -268,7 +278,7 @@ public class ContextUtils {
     }
 
     public static XmlResourceParser getLLayout(int resId) {
-        return createLTweaksContext().getResources().getLayout(resId);
+        return getLResources().getLayout(resId);
     }
 
     public static int getThemeId(String name) {
