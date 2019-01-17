@@ -16,7 +16,7 @@ import li.lingfeng.ltsystem.utils.ContextUtils;
 @MethodsLoad(packages = PackageNames.ANDROID_SETTINGS, prefs = R.string.key_app_info_go_market)
 public class AppInfoGoMarket extends AppInfo {
     @Override
-    protected Pair<String, Integer>[] newMenuNames() {
+    protected Pair<String, Integer>[] newMenuNames(ILTweaks.MethodParam param) throws Throwable {
         return new Pair[] {
                 Pair.create("Google Play", 1010),
                 Pair.create("CoolApk", 1011),

@@ -74,6 +74,7 @@
     <string name="key_quick_settings_brightness_by_volume_buttons">key_quick_settings_brightness_by_volume_buttons</string>
     <string name="key_nav_bar_input_cursor_control">key_nav_bar_input_cursor_control</string>
     <string name="key_selection_action_mode_original">key_selection_action_mode_original</string>
+    <string name="key_app_info_package_name">key_app_info_package_name</string>
     <string name="key_app_info_open_app_data_folder">key_app_info_open_app_data_folder</string>
     <string name="key_app_info_go_market">key_app_info_go_market</string>
     <string name="key_app_info_allow_disable">key_app_info_allow_disable</string>

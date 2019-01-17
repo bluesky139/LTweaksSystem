@@ -24,7 +24,7 @@ public class AppInfoGoAppData extends AppInfo {
     private static final String MENU_APP_APK_FOLDER = "Open APK Folder";
 
     @Override
-    protected Pair<String, Integer>[] newMenuNames() {
+    protected Pair<String, Integer>[] newMenuNames(ILTweaks.MethodParam param) throws Throwable {
         return new Pair[] {
                 Pair.create(MENU_APP_DATA_FOLDER, 1000),
                 Pair.create(MENU_APP_EXTERNAL_DATA_FOLDER, 1001),

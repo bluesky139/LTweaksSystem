@@ -257,6 +257,8 @@ Open source on github: \n
     <string name="pref_nav_bar_input_cursor_control">Input cursor control</string>
     <string name="pref_nav_bar_input_cursor_control_summary">Add left / right buttons on navigation bar to control cursor at inputting\nFor Android 7.0+</string>
     <string name="pref_category_app_info">App Info</string>
+    <string name="pref_app_info_package_name">Add package name as menu item</string>
+    <string name="pref_app_info_package_name_summary">Package name will be copied at menu item selected</string>
     <string name="pref_app_info_open_app_data_folder">Open App Data/APK Folder</string>
     <string name="pref_app_info_open_app_data_folder_summary">Generally, it will open \"/data/data/[package_name]\", \"/sdcard/Android/data/[package_name]\", \"/data/user_de/0/[package_name]\" or \"/data/app/[package_name]\", you need a file explorer which supports root access, tested with Solid Explorer\nAdd as menu</string>
     <string name="pref_app_info_go_market">Go to market</string>
@@ -329,39 +331,12 @@ Open source on github: \n
     <string name="share_image_tineye_search">TinEye</string>
     <string name="share_image_iqdb_search">IQDB</string>
 
-    <!-- Prevent Running -->
-    <string name="prevent_running_list_all">All</string>
-    <string name="prevent_running_list_prevented">Prevented</string>
-    <string name="prevent_running_list_not_prevented">Not prevented</string>
-
     <!-- Process Text -->
     <string name="process_text_douban_movie">Douban Movie</string>
     <string name="process_text_bilibili">Bilibili</string>
     <string name="process_text_incognito_search">Incognito Search</string>
 
-    <!-- Url Replacer -->
-    <string name="solid_explorer_db_query_error">Can\'t connect to Solid Explorer.</string>
-    <string name="solid_explorer_db_empty">No supported network storage in Solid Explorer.</string>
-    <string name="solid_explorer_url_replacer_dialog_title">Edit Url Replacer</string>
-    <string name="solid_explorer_url_replacer_dialog_instruction"></string>
-    <string name="solid_explorer_url_replacer_dialog_instruction_from">Server:</string>
-    <string name="solid_explorer_url_replacer_dialog_instruction_to">Replace To (eg: http://10.0.0.4/download):</string>
-    
     <!-- Adb Wireless -->
     <string name="adb_wireless_notification_title">ADB over network enabled</string>
     <string name="adb_wireless_notification_text">Touch to disable debugging</string>
-
-    <!-- Donate -->
-    <string name="pref_header_doate">Donate</string>
-    <string name="pref_header_doate_summary">Please donate if this module is really useful for you</string>
-    <string name="pref_donate_alipay">Alipay</string>
-    <string name="pref_donate_alipay_summary">Recommended\nSimply click this menu, Alipay will be opened</string>
-    <string name="pref_donate_wechat">WeChat</string>
-    <string name="pref_donate_wechat_summary">Click this menu, WeChat scanner will be opened, QrCode of donate will be scanned automatically.\nIf nothing happened in scanner, choose QrCode from gallery, the QrCode should at the first place, you can see my app name in that QrCode image</string>
-
-    <!-- Alipay -->
-    <string name="alipay_not_installed">Alipay is not installed.</string>
-
-    <!-- WeChat -->
-    <string name="wechat_not_installed">WeChat is not installed.</string>
 </resources>

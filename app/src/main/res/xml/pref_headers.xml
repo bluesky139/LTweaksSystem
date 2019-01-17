@@ -1,7 +1,5 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- These settings headers are only used on tablets. -->
-
     <header
         android:fragment="li.lingfeng.ltsystem.fragments.GooglePrefFragment"
         android:icon="@drawable/ic_google"
@@ -26,11 +24,5 @@
         android:fragment="li.lingfeng.ltsystem.fragments.SystemPrefFragment"
         android:icon="@drawable/ic_tools"
         android:title="@string/pref_header_system" />
-
-    <!--<header
-        android:fragment="li.lingfeng.ltweaks.fragments.DonateFragment"
-        android:icon="@drawable/ic_coin"
-        android:title="@string/pref_header_doate"
-        android:summary="@string/pref_header_doate_summary" />-->
 
 </preference-headers>

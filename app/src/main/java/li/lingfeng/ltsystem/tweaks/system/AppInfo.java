@@ -20,7 +20,7 @@ public abstract class AppInfo extends TweakBase {
     @Override
     public void android_app_Fragment__performCreateOptionsMenu__Menu_MenuInflater(ILTweaks.MethodParam param) {
         afterOnClass(INSTALLED_APP_DETAILS, param, () -> {
-            final Pair[] names = newMenuNames();
+            final Pair[] names = newMenuNames(param);
             if (names == null || names.length == 0) {
                 return;
             }
@@ -38,7 +38,7 @@ public abstract class AppInfo extends TweakBase {
     @Override
     public void android_app_Fragment__performOptionsItemSelected__MenuItem(ILTweaks.MethodParam param) {
         beforeOnClass(INSTALLED_APP_DETAILS, param, () -> {
-            final Pair[] names = newMenuNames();
+            final Pair[] names = newMenuNames(param);
             if (names == null || names.length == 0) {
                 return;
             }
@@ -66,6 +66,6 @@ public abstract class AppInfo extends TweakBase {
         return (ApplicationInfo) ReflectUtils.getObjectField(appEntry, "info");
     }
 
-    protected abstract Pair<String, Integer>[] newMenuNames();
+    protected abstract Pair<String, Integer>[] newMenuNames(ILTweaks.MethodParam param) throws Throwable;
     protected abstract void menuItemSelected(CharSequence menuName, ILTweaks.MethodParam param) throws Throwable;
 }
