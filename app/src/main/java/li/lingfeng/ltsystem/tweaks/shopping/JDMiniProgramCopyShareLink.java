@@ -28,7 +28,7 @@ public class JDMiniProgramCopyShareLink extends TweakBase {
         param.before(() -> {
             Intent intent = (Intent) param.args[0];
             if (intent.getComponent() == null || !intent.getComponent().getClassName().equals(SELECT_CONVERSATION_UI)
-                    || !param.thisObject.getClass().getName().equals(APP_BRAND_UI)) {
+                    || !param.thisObject.getClass().getName().startsWith(APP_BRAND_UI)) {
                 return;
             }
             HashMap map = (HashMap) intent.getSerializableExtra("appbrand_params");
