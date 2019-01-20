@@ -20,7 +20,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ShareUtils;
 
 @MethodsLoad(packages = {}, prefs = R.string.key_system_share_copy_to_share, excludedPackages = {
-        PackageNames.ANDROID, PackageNames.ANDROID_SYSTEM_UI
+        PackageNames.ANDROID, PackageNames.ANDROID_SYSTEM_UI, PackageNames.ELE
 })
 public class CopyToShare extends TweakBase {
 
