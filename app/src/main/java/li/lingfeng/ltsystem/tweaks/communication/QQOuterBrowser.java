@@ -21,7 +21,6 @@ public class QQOuterBrowser extends TweakBase {
     public void android_app_Activity__startActivityForResult__Intent_int_Bundle(ILTweaks.MethodParam param) {
         param.before(() -> {
             Intent intent = (Intent) param.args[0];
-            Logger.intent(intent);
             if (intent.getComponent() == null
                     || !intent.getComponent().getClassName().equals(BROWSER_DELEGATED_ACTIVITY)) {
                 return;

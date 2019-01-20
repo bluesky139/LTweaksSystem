@@ -32,6 +32,11 @@
         <Preference
             android:key="@string/key_qq_clear_background_path"
             android:title="@string/pref_qq_clear_background_path" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_disallow_soft_input_first"
+            android:title="@string/pref_qq_disallow_soft_input_first"
+            android:summary="@string/pref_qq_disallow_soft_input_first_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_push_bullet">
