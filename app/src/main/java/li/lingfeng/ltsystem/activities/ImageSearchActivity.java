@@ -43,6 +43,8 @@ public class ImageSearchActivity extends Activity {
         put("Google", "https://www.google.com/searchbyimage?image_url=%s");
         put("TinEye", "https://tineye.com/search/?pluginver=chrome-1.1.5&url=%s");
         put("IQDB", "https://iqdb.org/?url=%s");
+        put("SauceNAO", "http://saucenao.com/search.php?url=%s");
+        put("WAIT", "https://trace.moe/?url=%s");
     }};
     private String mEngine;
     private boolean mChooserStarted = false;

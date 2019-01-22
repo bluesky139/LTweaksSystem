@@ -231,6 +231,26 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity-alias>
+        <activity-alias
+            android:name=".activities.SauceNAOImageSearchActivity"
+            android:label="@string/share_image_saucenao_search"
+            android:targetActivity=".activities.ImageSearchActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_IMAGE_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.WAITImageSearchActivity"
+            android:label="@string/share_image_wait_search"
+            android:targetActivity=".activities.ImageSearchActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_IMAGE_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
 
         <activity android:name=".activities.TileActivity" android:excludeFromRecents="true"
             android:theme="@style/Theme.Dialog">

@@ -333,6 +333,8 @@ Open source on github: \n
     <string name="share_image_google_search">Google</string>
     <string name="share_image_tineye_search">TinEye</string>
     <string name="share_image_iqdb_search">IQDB</string>
+    <string name="share_image_saucenao_search">SauceNAO</string>
+    <string name="share_image_wait_search">WAIT</string>
 
     <!-- Process Text -->
     <string name="process_text_douban_movie">Douban Movie</string>
