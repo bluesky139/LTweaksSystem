@@ -16,9 +16,12 @@ import android.widget.Toast;
 import java.io.File;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.activities.WeChatBrowserActivity;
+import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.lib.PreferenceClick;
 import li.lingfeng.ltsystem.prefs.ActivityRequestCode;
+import li.lingfeng.ltsystem.utils.ComponentUtils;
 import li.lingfeng.ltsystem.utils.IOUtils;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.PermissionUtils;
@@ -49,6 +52,15 @@ public class CommunicationPrefFragment extends BasePrefFragment {
             Uri uri = Uri.parse(path);
             Ringtone ring = RingtoneManager.getRingtone(getActivity(), uri);
             preference.setSummary(ring.getTitle(getActivity()));
+        }
+    }
+
+    @PreferenceChange(prefs = R.string.key_wechat_browser, refreshAtStart = true)
+    private void enableWeChatBrowser(SwitchPreference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_wechat_browser, WeChatBrowserActivity.class);
+        } else {
+            ComponentUtils.enableComponent(WeChatBrowserActivity.class, enabled);
         }
     }
 

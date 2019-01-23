@@ -163,6 +163,22 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.WeChatBrowserActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Dialog"
+            android:label="WeChat"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.WeChatBrowserActivity"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="mp.weixin.qq.com" android:scheme="http"/>
+                <data android:host="mp.weixin.qq.com" android:scheme="https"/>
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activities.SelectableTextActivity" android:excludeFromRecents="true"
             android:label="@string/text_selectable"
             android:icon="@mipmap/ic_selectable_text"

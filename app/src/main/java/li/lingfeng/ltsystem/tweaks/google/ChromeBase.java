@@ -27,7 +27,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.Utils;
 import li.lingfeng.ltsystem.utils.ViewUtils;
 
-public class ChromeBase extends TweakBase {
+public abstract class ChromeBase extends TweakBase {
 
     protected static final String TABBED_ACTIVITY = "org.chromium.chrome.browser.ChromeTabbedActivity";
     protected static final String CUSTOM_ACTIVITY = "org.chromium.chrome.browser.customtabs.CustomTabActivity";
@@ -36,7 +36,7 @@ public class ChromeBase extends TweakBase {
     protected static final String TAB_WEB_CONTENTS_DELEGATE_ANDROID = "org.chromium.chrome.browser.tab.TabWebContentsDelegateAndroid";
 
     protected interface NewMenuCallback {
-        void onOptionsItemSelected(Activity activity, String url, boolean isCustomTab);
+        void onOptionsItemSelected(Activity activity, String url, boolean isCustomTab) throws Throwable;
     }
 
     protected class MenuInfo {
