@@ -42,6 +42,17 @@
             android:key="@string/key_qq_disallow_soft_input_first"
             android:title="@string/pref_qq_disallow_soft_input_first"
             android:summary="@string/pref_qq_disallow_soft_input_first_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_use_incoming_ringtone"
+            android:title="@string/pref_qq_use_incoming_ringtone"
+            android:summary="@string/pref_qq_use_incoming_ringtone_summary" />
+        <RingtonePreference
+            android:key="@string/key_qq_set_incoming_ringtone"
+            android:title="@string/pref_qq_set_incoming_ringtone"
+            android:showDefault="true"
+            android:showSilent="true"
+            android:ringtoneType="ringtone" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_push_bullet">

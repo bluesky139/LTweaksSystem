@@ -131,4 +131,21 @@ public class CommunicationPrefFragment extends BasePrefFragment {
             preference.setSummary(getString(R.string.pref_qq_clear_background_path_summary, filepath));
         }
     }
+
+    @PreferenceChange(prefs = R.string.key_qq_use_incoming_ringtone, refreshAtStart = true)
+    private void enableQQIncomingRingtone(SwitchPreference preference, boolean enabled) {
+        Preference setRingtonePref = findPreference(R.string.key_qq_set_incoming_ringtone);
+        setRingtonePref.setEnabled(enabled);
+    }
+
+    @PreferenceChange(prefs = R.string.key_qq_set_incoming_ringtone, refreshAtStart = true)
+    private void setQQIncomingRingtone(RingtonePreference preference, String path) {
+        if (path.equals("")) {
+            preference.setSummary("");
+        } else {
+            Uri uri = Uri.parse(path);
+            Ringtone ring = RingtoneManager.getRingtone(getActivity(), uri);
+            preference.setSummary(ring.getTitle(getActivity()));
+        }
+    }
 }

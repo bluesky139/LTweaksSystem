@@ -31,6 +31,8 @@
     <string name="key_qq_clear_background">key_qq_clear_background</string>
     <string name="key_qq_clear_background_path">key_qq_clear_background_path</string>
     <string name="key_qq_disallow_soft_input_first">key_qq_disallow_soft_input_first</string>
+    <string name="key_qq_use_incoming_ringtone">key_qq_use_incoming_ringtone</string>
+    <string name="key_qq_set_incoming_ringtone">key_qq_set_incoming_ringtone</string>
     <string name="key_push_bullet_share_to_all">key_push_bullet_share_to_all</string>
     <string name="key_ttrss_disable_article_pager">key_ttrss_disable_article_pager</string>
     <string name="key_ttrss_open_link_in_browser_menu">key_ttrss_open_link_in_browser_menu</string>
