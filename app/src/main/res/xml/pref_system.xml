@@ -194,6 +194,15 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_mixplorer">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_mixplorer_ignore_cpu_usage_kill"
+            android:title="@string/pref_mixplorer_ignore_cpu_usage_kill"
+            android:summary="@string/pref_mixplorer_ignore_cpu_usage_kill_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_debug">
         <!--<SwitchPreference
             android:defaultValue="false"

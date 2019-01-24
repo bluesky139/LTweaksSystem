@@ -148,6 +148,9 @@ public abstract class ILTweaksMethods {
     public void com_android_server_am_ActivityManagerService__checkBroadcastFromSystem__Intent_ProcessRecord_String_int_boolean_List(MethodParam param) {
     }
 
+    public void com_android_server_am_ProcessRecord__kill__String_boolean(MethodParam param) {
+    }
+
     public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(MethodParam param) {
     }
 
