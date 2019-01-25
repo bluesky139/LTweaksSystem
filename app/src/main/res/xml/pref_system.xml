@@ -203,6 +203,15 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_nova_launcher">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_nova_launcher_search_go_chrome"
+            android:title="@string/pref_nova_launcher_search_go_chrome"
+            android:summary="@string/pref_nova_launcher_search_go_chrome_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_debug">
         <!--<SwitchPreference
             android:defaultValue="false"

@@ -13,6 +13,7 @@ public class PackageParser {
         public String packageName;
         public ApplicationInfo applicationInfo;
         public final ArrayList<Activity> activities = new ArrayList<Activity>(0);
+        public final ArrayList<Activity> receivers = new ArrayList<Activity>(0);
     }
 
     public final static class Activity extends Component<ActivityIntentInfo> {
