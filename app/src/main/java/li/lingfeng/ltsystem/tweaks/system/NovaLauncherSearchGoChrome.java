@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageParser;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -28,37 +27,24 @@ public class NovaLauncherSearchGoChrome {
         public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
             afterOnClass(NOVA_LAUNCHER, param, () -> {
                 Activity activity = (Activity) param.thisObject;
-                activity.getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        boolean ok = true;
+                View searchSpace = ViewUtils.findViewByName(activity, "qsb_base_search_space");
+                if (searchSpace != null) {
+                    Logger.d("searchSpace " + searchSpace);
+                    searchSpace.setOnClickListener((v) -> {
                         try {
-                            View searchSpace = ViewUtils.findViewByName(activity, "qsb_base_search_space");
-                            if (searchSpace != null) {
-                                Logger.d("searchSpace " + searchSpace);
-                                searchSpace.setOnClickListener((v) -> {
-                                    try {
-                                        Intent intent = new Intent();
-                                        intent.setComponent(new ComponentName(PackageNames.CHROME, SEARCH_ACTIVITY));
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-                                        activity.startActivity(intent);
-                                    } catch (Throwable e) {
-                                        Logger.e("Launch chrome search activity failed.", e);
-                                        Toast.makeText(activity, "Launch chrome search activity failed.", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            } else {
-                                ok = false;
-                            }
+                            Intent intent = new Intent();
+                            intent.setComponent(new ComponentName(PackageNames.CHROME, SEARCH_ACTIVITY));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                            activity.startActivity(intent);
                         } catch (Throwable e) {
-                            Logger.e("Handle nova search exception.", e);
+                            Logger.e("Launch chrome search activity failed.", e);
+                            Toast.makeText(activity, "Launch chrome search activity failed.", Toast.LENGTH_SHORT).show();
                         }
-                        if (ok) {
-                            activity.getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        }
-                    }
-                });
+                    });
+                } else {
+                    Logger.e("Can't find qsb_base_search_space.");
+                }
             });
         }
     }
