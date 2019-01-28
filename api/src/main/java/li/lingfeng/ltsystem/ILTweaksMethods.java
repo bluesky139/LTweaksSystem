@@ -82,6 +82,9 @@ public abstract class ILTweaksMethods {
     public void android_view_View__setOnClickListener__OnClickListener(MethodParam param) {
     }
 
+    public void android_view_View__setSystemUiVisibility__int(MethodParam param) {
+    }
+
     public void android_view_inputmethod_InputMethodManager__showSoftInput__View_int_ResultReceiver(MethodParam param) {
     }
 
@@ -119,6 +122,12 @@ public abstract class ILTweaksMethods {
     }
 
     public void com_android_internal_policy_PhoneWindow__generateLayout__DecorView(MethodParam param) {
+    }
+
+    public void com_android_internal_policy_PhoneWindow__setStatusBarColor__int(MethodParam param) {
+    }
+
+    public void com_android_internal_policy_PhoneWindow__setNavigationBarColor__int(MethodParam param) {
     }
 
     public void com_android_internal_telephony_PhoneFactory__makeDefaultPhone__Context(MethodParam param) {
