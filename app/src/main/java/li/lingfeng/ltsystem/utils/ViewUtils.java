@@ -401,4 +401,15 @@ public class ViewUtils {
         }
         return null;
     }
+
+    public static boolean isVisibleWithParent(View view) {
+        ViewGroup rootView = (ViewGroup) view.getRootView();
+        do {
+            if (view.getVisibility() != View.VISIBLE) {
+                return false;
+            }
+            view = (View) view.getParent();
+        } while (view != rootView);
+        return true;
+    }
 }

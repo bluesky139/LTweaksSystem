@@ -26,6 +26,7 @@ public class QQChatBackground extends TweakBase {
 
     private static final String SPLASH_ACTIVITY = "com.tencent.mobileqq.activity.SplashActivity";
     private static final String CHAT_LISTVIEW = "com.tencent.mobileqq.bubble.ChatXListView";
+    private static final int TITLE_COLOR = Color.parseColor("#00B1E9");
     private BitmapDrawable mLargestDrawable;
     private LruCache<Integer, BitmapDrawable> mBackgroundDrawables; // height -> drawable, consider width is fixed.
     private long mLastModified = 0;
@@ -91,7 +92,7 @@ public class QQChatBackground extends TweakBase {
 
         int width = viewGroup.getMeasuredWidth();
         int height = viewGroup.getMeasuredHeight();
-        if (width <= 0 || height <= 0) {
+        if (width <= 0 || height <= 0 || !ViewUtils.isVisibleWithParent(viewGroup)) {
             return;
         }
 
@@ -139,6 +140,12 @@ public class QQChatBackground extends TweakBase {
             if (mBackgroundView == null) {
                 mBackgroundView = viewGroup;
             }
+        }
+
+        View title = ViewUtils.findViewByName(rootView, "rlCommenTitle");
+        if (title != null && ViewUtils.isVisibleWithParent(title)) {
+            title.setBackgroundColor(TITLE_COLOR);
+            ViewUtils.prevView(title).setBackgroundColor(TITLE_COLOR);
         }
     }
 
