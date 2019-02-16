@@ -72,7 +72,7 @@
     <string name="key_shadowsocks_primary_dns">key_shadowsocks_primary_dns</string>
     <string name="key_shadowsocks_transproxy">key_shadowsocks_transproxy</string>
     <string name="key_quick_settings_tile_adb_wireless">key_quick_settings_tile_adb_wireless</string>
-    <string name="key_quick_settings_tile_4g3g">key_quick_settings_tile_4g3g</string>
+    <!-- key_quick_settings_tile_4g3g -->
     <string name="key_quick_settings_tile_4g">key_quick_settings_tile_4g</string>
     <string name="key_quick_settings_tile_3g">key_quick_settings_tile_3g</string>
     <string name="key_quick_settings_tile_set_preconfigured_brightness">key_quick_settings_tile_set_preconfigured_brightness</string>

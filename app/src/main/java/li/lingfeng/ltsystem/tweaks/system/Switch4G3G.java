@@ -18,10 +18,9 @@ import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ReflectUtils;
 
-@MethodsLoad(packages = PackageNames.ANDROID_PHONE, prefs = R.string.key_quick_settings_tile_4g3g)
+@MethodsLoad(packages = PackageNames.ANDROID_PHONE, prefs = {})
 public class Switch4G3G extends TweakBase {
 
-    private static final String PHONE_FACTORY = "com.android.internal.telephony.PhoneFactory";
     public static final String ACTION_SWITCH = Switch4G3G.class.getName() + ".ACTION_SWITCH";
     private SwitchHandler mHandler;
     private SwitchNetTypeReceiver mSwitchNetTypeReceiver;
@@ -47,7 +46,8 @@ public class Switch4G3G extends TweakBase {
         public void onReceive(Context context, Intent intent) {
             try {
                 boolean isOn = intent.getBooleanExtra("is_on", true);
-                int typeKey = isOn ? R.string.key_quick_settings_tile_3g : R.string.key_quick_settings_tile_4g;
+                Logger.d("SwitchNetTypeReceiver onReceive " + isOn);
+                int typeKey = isOn ? R.string.key_quick_settings_tile_4g : R.string.key_quick_settings_tile_3g;
                 String strType = Prefs.instance().getString(typeKey, null);
                 if (strType == null) {
                     Logger.e("SwitchNetTypeReceiver strType is null.");

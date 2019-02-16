@@ -79,16 +79,16 @@ public class ReflectUtils {
         return findField(cls, fieldName).get(null);
     }
 
-    public static boolean getBooleanField(Object obj, String fieldname) throws Throwable {
-        return (boolean) getObjectField(obj, fieldname);
+    public static boolean getBooleanField(Object obj, String fieldName) throws Throwable {
+        return findField(obj.getClass(), fieldName).getBoolean(obj);
     }
 
-    public static int getIntField(Object obj, String fieldname) throws Throwable {
-        return (int) getObjectField(obj, fieldname);
+    public static int getIntField(Object obj, String fieldName) throws Throwable {
+        return findField(obj.getClass(), fieldName).getInt(obj);
     }
 
-    public static float getFloatField(Object obj, String fieldname) throws Throwable {
-        return (float) getObjectField(obj, fieldname);
+    public static float getFloatField(Object obj, String fieldName) throws Throwable {
+        return findField(obj.getClass(), fieldName).getFloat(obj);
     }
 
     public static void setObjectField(Object obj, String fieldName, Object value) throws Throwable {
@@ -97,6 +97,10 @@ public class ReflectUtils {
 
     public static void setStaticObjectField(Class cls, String fieldName, Object value) throws Throwable {
         findField(cls, fieldName).set(null, value);
+    }
+
+    public static void setIntField(Object obj, String fieldName, int value) throws Throwable {
+        findField(obj.getClass(), fieldName).setInt(obj, value);
     }
 
     public static Field findField(Class cls, String fieldName) throws Throwable {

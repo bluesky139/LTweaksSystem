@@ -6,6 +6,7 @@ import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.utils.Logger;
 
 public class Switch4G3G extends TileService {
 
@@ -14,6 +15,7 @@ public class Switch4G3G extends TileService {
     @Override
     public void onClick() {
         mIs4G = !mIs4G;
+        Logger.d("Switch4G3G onClick " + mIs4G);
         Tile tile = getQsTile();
         Intent intent = new Intent(li.lingfeng.ltsystem.tweaks.system.Switch4G3G.ACTION_SWITCH);
         intent.putExtra("is_on", mIs4G);
