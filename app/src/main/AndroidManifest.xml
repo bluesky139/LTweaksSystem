@@ -269,7 +269,8 @@
         </activity-alias>
 
         <activity android:name=".activities.TileActivity" android:excludeFromRecents="true"
-            android:theme="@style/Theme.Dialog">
+            android:theme="@style/Theme.Dialog"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.TileActivity">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
