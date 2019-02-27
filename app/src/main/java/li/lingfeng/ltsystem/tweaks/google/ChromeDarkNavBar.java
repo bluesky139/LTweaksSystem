@@ -22,4 +22,20 @@ public class ChromeDarkNavBar extends TweakBase {
             decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         });
     }
+
+    @Override
+    public void android_view_View__setSystemUiVisibility__int(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            param.setArg(0, (int) param.args[0] & ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        });
+    }
+
+    @Override
+    public void com_android_internal_policy_PhoneWindow__setNavigationBarColor__int(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            if ((int) param.args[0] != Color.BLACK) {
+                param.setResult(null);
+            }
+        });
+    }
 }
