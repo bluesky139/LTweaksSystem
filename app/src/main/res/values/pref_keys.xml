@@ -39,6 +39,7 @@
     <string name="key_ttrss_open_link_in_browser_menu">key_ttrss_open_link_in_browser_menu</string>
     <string name="key_ttrss_refresh_menu">key_ttrss_refresh_menu</string>
     <string name="key_ttrss_darken">key_ttrss_darken</string>
+    <string name="key_ttrss_toolbar_no_hide">key_ttrss_toolbar_no_hide</string>
 
     <!--Entertainment-->
     <string name="key_douban_movie_url">key_douban_movie_url</string>
