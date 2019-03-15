@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -23,10 +22,11 @@ import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.SimpleDrawer;
 import li.lingfeng.ltsystem.utils.ViewUtils;
 
-@MethodsLoad(packages = PackageNames.DOUBAN_MOVIE, prefs = R.string.key_douban_movie_remove_bottom_bar)
-public class DoubanMovieRemoveBottomBar extends TweakBase {
+@MethodsLoad(packages = PackageNames.DOUBAN, prefs = R.string.key_douban_remove_bottom_bar)
+public class DoubanRemoveBottomBar extends TweakBase {
 
-    private static final String MAIN_ACTIVITY = "com.douban.movie.activity.MainActivity";
+    private static final String MAIN_ACTIVITY = "com.douban.frodo.MainActivity";
+    private static final String MAIN_TAB_ITEM = "com.douban.frodo.view.MainTabItem";
     private SimpleDrawer mDrawerLayout;
 
     @Override
@@ -70,7 +70,7 @@ public class DoubanMovieRemoveBottomBar extends TweakBase {
             if (view instanceof ViewGroup) {
                 ViewGroup tabStrip = (ViewGroup) view;
                 Logger.d("tabStrip " + tabStrip);
-                List<RelativeLayout> layouts = ViewUtils.findAllViewByType(tabStrip, RelativeLayout.class);
+                List<ViewGroup> layouts = ViewUtils.findAllViewByType(tabStrip, (Class<ViewGroup>) findClass(MAIN_TAB_ITEM));
                 Logger.d("tabStrip with " + layouts.size() + " relative layouts.");
                 if (layouts.size() == 0) {
                     continue;
@@ -78,7 +78,7 @@ public class DoubanMovieRemoveBottomBar extends TweakBase {
 
                 SimpleDrawer.NavItem[] navItems = new SimpleDrawer.NavItem[layouts.size()];
                 for (int i = 0; i < layouts.size(); ++i) {
-                    RelativeLayout layout = layouts.get(i);
+                    ViewGroup layout = layouts.get(i);
                     ImageView imageView = ViewUtils.findViewByType(layout, ImageView.class);
                     if (imageView == null) {
                         continue;

@@ -54,11 +54,13 @@ public class ProcessTextActivity extends Activity {
         finish();
     }
 
-    private void doubanMovie(String text) {
+    private void douban(String text) {
         Intent intent = new Intent();
-        intent.setClassName(PackageNames.DOUBAN_MOVIE, ClassNames.DOUBAN_MOVIE_SEARCH_ACTIVITY);
-        intent.putExtra("search_entry", "all");
+        intent.setClassName(PackageNames.DOUBAN, ClassNames.DOUBAN_SEARCH_ACTIVITY);
+        //intent.putExtra("query_type", "subject");
         intent.putExtra("query", text);
+        //intent.putExtra("search_show_result", true);
+        intent.putExtra("from_ltweaks", true);
         startActivity(intent);
     }
 

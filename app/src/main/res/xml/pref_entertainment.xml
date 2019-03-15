@@ -1,24 +1,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="@string/pref_category_douban_movie">
+        android:title="@string/pref_category_douban">
         <SwitchPreference
             android:defaultValue="false"
-            android:key="@string/key_douban_movie_url"
-            android:title="@string/pref_douban_movie_url" />
+            android:key="@string/key_douban_search"
+            android:title="@string/pref_douban_search"
+            android:summary="@string/pref_douban_search_summary" />
         <SwitchPreference
             android:defaultValue="false"
-            android:key="@string/key_douban_movie_search"
-            android:title="@string/pref_douban_movie_search"
-            android:summary="@string/pref_douban_movie_search_summary" />
+            android:key="@string/key_douban_remove_bottom_bar"
+            android:title="@string/pref_douban_remove_bottom_bar"
+            android:summary="@string/pref_douban_remove_bottom_bar_summary" />
         <SwitchPreference
             android:defaultValue="false"
-            android:key="@string/key_douban_movie_remove_bottom_bar"
-            android:title="@string/pref_douban_movie_remove_bottom_bar"
-            android:summary="@string/pref_douban_movie_remove_bottom_bar_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_douban_movie_remove_ads"
-            android:title="@string/pref_douban_movie_remove_ads" />
+            android:key="@string/key_douban_remove_ads"
+            android:title="@string/pref_douban_remove_ads" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_bilibili">

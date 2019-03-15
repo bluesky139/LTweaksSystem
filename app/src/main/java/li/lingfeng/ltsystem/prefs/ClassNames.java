@@ -43,7 +43,6 @@ public class ClassNames {
     public static final String TEXT_ACTION_MODE_CALLBACK = "android.widget.Editor.TextActionModeCallback";
 
     public static final String WE_CHAT_LAUNCHER_UI = "com.tencent.mm.ui.LauncherUI";
-    public static final String DOUBAN_MOVIE_INTENT_HANDLER_ACTIVITY = "com.douban.movie.activity.InnerFacadeActivity";
-    public static final String DOUBAN_MOVIE_SEARCH_ACTIVITY = "com.douban.frodo.search.activity.SearchActivity";
+    public static final String DOUBAN_SEARCH_ACTIVITY = "com.douban.frodo.search.activity.NewSearchActivity";
     public static final String BILIBILI_SEARCH_ACTIVITY = "com.bilibili.search.stardust.StarDustSearchActivity";
 }

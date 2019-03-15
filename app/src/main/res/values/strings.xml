@@ -186,13 +186,12 @@ Open source on github: \n
 
     <!--Entertainment-->
     <string name="pref_header_entertainment">Entertainment</string>
-    <string name="pref_category_douban_movie">Douban Movie</string>
-    <string name="pref_douban_movie_url">Open link in app</string>
-    <string name="pref_douban_movie_search">Search in Douban Movie with selected text</string>
-    <string name="pref_douban_movie_search_summary">Use floating menu with text selection\nFor Android 6.0+</string>
-    <string name="pref_douban_movie_remove_bottom_bar">Remove bottom bar</string>
-    <string name="pref_douban_movie_remove_bottom_bar_summary">Put them into drawer menu</string>
-    <string name="pref_douban_movie_remove_ads">Remove fullscreen ads</string>
+    <string name="pref_category_douban">Douban</string>
+    <string name="pref_douban_search">Search in Douban with selected text</string>
+    <string name="pref_douban_search_summary">Use floating menu with text selection\nFor Android 6.0+</string>
+    <string name="pref_douban_remove_bottom_bar">Remove bottom bar</string>
+    <string name="pref_douban_remove_bottom_bar_summary">Put them into drawer menu</string>
+    <string name="pref_douban_remove_ads">Remove fullscreen ads</string>
     <string name="pref_category_bilibili">Bilibili</string>
     <string name="pref_bilibili_search">Search in Bilibili with selected text</string>
     <string name="pref_bilibili_search_summary">Use floating menu with text selection\nFor Android 6.0+</string>
@@ -220,9 +219,6 @@ Open source on github: \n
 
     <!-- Bilibili -->
     <string name="bilibili_get_cover">Get Cover</string>
-
-    <!-- Douban Movie -->
-    <string name="douban_movie_app">Douban Movie</string>
 
     <!--System-->
     <string name="pref_header_system">System / Tools</string>
@@ -351,7 +347,7 @@ Open source on github: \n
     <string name="share_image_wait_search">WAIT</string>
 
     <!-- Process Text -->
-    <string name="process_text_douban_movie">Douban Movie</string>
+    <string name="process_text_douban">Douban</string>
     <string name="process_text_bilibili">Bilibili</string>
     <string name="process_text_incognito_search">Incognito Search</string>
 

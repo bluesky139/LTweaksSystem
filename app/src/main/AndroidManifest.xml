@@ -101,33 +101,15 @@
         </activity>
 
         <activity
-            android:name=".activities.DoubanMovieActivity"
-            android:excludeFromRecents="true"
-            android:theme="@style/Theme.Dialog"
-            android:label="@string/douban_movie_app"
-            android:taskAffinity="li.lingfeng.ltsystem.activities.DoubanMovieActivity"
-            android:enabled="false">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:host="m.douban.com" android:scheme="http"/>
-                <data android:host="m.douban.com" android:scheme="https"/>
-                <data android:host="movie.douban.com" android:scheme="http"/>
-                <data android:host="movie.douban.com" android:scheme="https"/>
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".activities.ProcessTextActivity"
             android:taskAffinity="li.lingfeng.ltsystem.activities.ProcessTextActivity"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.Dialog">
         </activity>
         <activity-alias
-            android:name=".activities.DoubanMovieProcessTextActivity"
+            android:name=".activities.DoubanProcessTextActivity"
             android:targetActivity=".activities.ProcessTextActivity"
-            android:label="@string/process_text_douban_movie"
+            android:label="@string/process_text_douban"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />

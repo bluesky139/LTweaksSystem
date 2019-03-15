@@ -8,15 +8,15 @@ import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ReflectUtils;
 
-@MethodsLoad(packages = PackageNames.DOUBAN_MOVIE, prefs = R.string.key_douban_movie_remove_ads)
-public class DoubanMovieAds extends TweakBase {
+@MethodsLoad(packages = PackageNames.DOUBAN, prefs = R.string.key_douban_remove_ads)
+public class DoubanAds extends TweakBase {
 
     @Override
     public void java_util_concurrent_AbstractExecutorService__submit__Runnable(ILTweaks.MethodParam param) {
         param.before(() -> {
             Runnable runnable = (Runnable) param.args[0];
             if (runnable.getClass().getName().startsWith("com.douban.ad.")) {
-                Logger.v("Disable douban movie ads request submit.");
+                Logger.v("Disable douban ads request submit.");
                 param.setArg(0, new Runnable() {
                     @Override
                     public void run() {

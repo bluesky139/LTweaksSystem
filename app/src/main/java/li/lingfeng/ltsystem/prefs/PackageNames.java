@@ -43,7 +43,7 @@ public class PackageNames {
     public static final String TT_RSS = "org.fox.ttrss";
 
     // Entertainment
-    public static final String DOUBAN_MOVIE = "com.douban.movie";
+    public static final String DOUBAN = "com.douban.frodo";
     public static final String BILIBILI = "tv.danmaku.bili";
     public static final String BILIBILI_IN = "com.bilibili.app.in";
     public static final String STEAM = "com.valvesoftware.android.steam.community";
