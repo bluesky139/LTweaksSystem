@@ -39,6 +39,7 @@ public class BilibiliRemoveBottomBar extends TweakBase {
     private SimpleDrawer.NavItem[] mNavItems;
     private ListView mListView;
     private CheckedTextView mHomeTextView;
+    private ViewGroup mBottomNav;
 
     private TextView mNickView;
     private boolean mHookedDynamicPageTab = false;
@@ -50,7 +51,14 @@ public class BilibiliRemoveBottomBar extends TweakBase {
             final ViewGroup rootView = (ViewGroup) activity.findViewById(android.R.id.content);
             rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
                 try {
-                    hookBottomBar(activity);
+                    if (mBottomNav != null) {
+                        if (!ViewUtils.isViewInWindow(mBottomNav)) {
+                            mBottomNav = null;
+                        }
+                    }
+                    if (mBottomNav == null) {
+                        hookBottomBar(activity);
+                    }
                     if (mNavHeader != null) {
                         int[] pos = new int[2];
                         mNavHeader.getLocationInWindow(pos);
@@ -74,12 +82,14 @@ public class BilibiliRemoveBottomBar extends TweakBase {
             mNavItems = null;
             mListView = null;
             mHomeTextView = null;
+            mBottomNav = null;
             mNickView = null;
             mHookedDynamicPageTab = false;
         });
     }
 
     private void hookBottomBar(final Activity activity) throws Throwable {
+        Logger.v("hookBottomBar");
         int idNav = ContextUtils.getIdId("design_navigation_view");
         ViewGroup nav = (ViewGroup) activity.findViewById(idNav);
         if (nav == null || nav.getChildCount() == 0) {
@@ -148,6 +158,13 @@ public class BilibiliRemoveBottomBar extends TweakBase {
                     mNavHeader.addView(mListView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                             mHomeTextView.getMeasuredHeight() * navItems.length));
                     Logger.i("Drawer is created.");
+
+                    ViewGroup contentView = (ViewGroup) ViewUtils.findViewByName(rootView, "content");
+                    int height = rootView.getMeasuredHeight();
+                    if (contentView.getMeasuredHeight() < height) {
+                        Logger.d("Set contentView height to android content height " + height);
+                        contentView.getLayoutParams().height = height;
+                    }
                 } catch (Throwable e) {
                     Logger.e("Drawer create exception.", e);
                 }
@@ -162,6 +179,7 @@ public class BilibiliRemoveBottomBar extends TweakBase {
         if (hideDefaultHomeFromDrawer()) {
             bottomNav.setVisibility(View.GONE);
         }
+        mBottomNav = bottomNav;
 
         if (mListView != null) {
             ViewGroup contentView = (ViewGroup) ViewUtils.findViewByName(rootView, "content");

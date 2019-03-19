@@ -32,6 +32,7 @@ public class ClassNames {
     public static final String PACKAGE_MANAGER_SERVICE = "com.android.server.pm.PackageManagerService";
     public static final String ACTIVITY_INTENT_RESOLVER = "com.android.server.pm.PackageManagerService$ActivityIntentResolver";
     public static final String PHONE_WINDOW = "com.android.internal.policy.PhoneWindow";
+    public static final String DECOR_VIEW = "com.android.internal.policy.DecorView";
     public static final String MENU_BUILDER = "com.android.internal.view.menu.MenuBuilder";
     public static final String APPLICATION_PACKAGE_MANAGER = "android.app.ApplicationPackageManager";
 

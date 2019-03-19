@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Queue;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.prefs.ClassNames;
 
 /**
  * Created by smallville on 2017/2/9.
@@ -411,5 +412,16 @@ public class ViewUtils {
             view = (View) view.getParent();
         } while (view != rootView);
         return true;
+    }
+
+    public static boolean isViewInWindow(View view) {
+        ViewParent parent = view.getParent();
+        while (parent != null) {
+            if (parent.getClass().getName().equals(ClassNames.DECOR_VIEW)) {
+                return true;
+            }
+            parent = parent.getParent();
+        }
+        return false;
     }
 }
