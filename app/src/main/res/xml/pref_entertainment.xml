@@ -51,6 +51,10 @@
             android:defaultValue="false"
             android:key="@string/key_bilibili_hide_follow_at_full_screen"
             android:title="@string/pref_bilibili_hide_follow_at_full_screen" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_bilibili_remove_upper_ad"
+            android:title="@string/pref_bilibili_remove_upper_ad" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_steam">
