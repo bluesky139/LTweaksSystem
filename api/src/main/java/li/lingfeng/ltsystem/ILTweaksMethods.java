@@ -169,6 +169,15 @@ public abstract class ILTweaksMethods {
     public void com_android_server_pm_PackageManagerService__queryIntentActivitiesInternal__Intent_String_int_int_int_boolean_boolean(MethodParam param) {
     }
 
+    public void com_android_server_DeviceIdleController__startMonitoringMotionLocked__(MethodParam param) {
+    }
+
+    public void com_android_server_DeviceIdleController__stopMonitoringMotionLocked__(MethodParam param) {
+    }
+
+    public void com_android_server_DeviceIdleController__motionLocked__(MethodParam param) {
+    }
+
     public void com_android_server_webkit_SystemImpl__SystemImpl__(MethodParam param) {
     }
 

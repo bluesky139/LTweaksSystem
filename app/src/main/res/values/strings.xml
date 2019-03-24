@@ -288,6 +288,8 @@ Open source on github: \n
     <string name="pref_category_phone">Phone</string>
     <string name="pref_phone_deny_access_phone_number">Deny access phone number</string>
     <string name="pref_phone_deny_access_phone_number_summary">Your phone number may be stored in SIM card, deny access it for non-system apps</string>
+    <string name="pref_phone_doze_on_the_go">Doze on the go</string>
+    <string name="pref_phone_doze_on_the_go_summary">Do not interrupt doze at move</string>
     <string name="pref_category_display">Display</string>
     <string name="pref_display_light_amber_in_daylight">Light amber in daylight</string>
     <string name="pref_display_light_amber_in_daylight_summary">Color temperature is about 5500K\nFor Android 7.1+</string>
