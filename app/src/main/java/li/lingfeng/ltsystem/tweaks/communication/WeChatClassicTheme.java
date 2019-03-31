@@ -6,10 +6,12 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.WeakHashMap;
 
@@ -26,7 +28,8 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 public class WeChatClassicTheme extends TweakBase {
 
     private static final int COLOR = Color.parseColor("#303030");
-    private WeakHashMap<ViewGroup, Void> mHandledToolbar = new WeakHashMap<>(10);
+    private static final int MAX_TOOLBAR_COUNT_IN_ACTIVITY = 2;
+    private WeakHashMap<Activity, List<ViewGroup>> mActivityToolbars = new WeakHashMap<>(10);
     private WeakReference<TextView> mTitleTextView;
 
     @Override
@@ -35,27 +38,39 @@ public class WeChatClassicTheme extends TweakBase {
             Activity activity = (Activity) param.thisObject;
             ViewGroup rootView = (ViewGroup) activity.getWindow().getDecorView();
             Class<? extends View> clsToolbar = (Class<? extends View>) findClass(ClassNames.TOOLBAR);
-            rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-                try {
-                    List<ViewGroup> toolbars = (List<ViewGroup>) ViewUtils.findAllViewByType(rootView, clsToolbar);
-                    for (ViewGroup toolbar : toolbars) {
-                        if (!mHandledToolbar.containsKey(toolbar)) {
-                            Logger.v("Handle toolbar " + toolbar);
-                            handleToolbar(toolbar);
-                            mHandledToolbar.put(toolbar, null);
+            rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    //Logger.d("onGlobalLayout " + activity);
+                    try {
+                        List<ViewGroup> toolbars = (List<ViewGroup>) ViewUtils.findAllViewByType(rootView, clsToolbar);
+                        for (ViewGroup toolbar : toolbars) {
+                            List<ViewGroup> handledToolbars = mActivityToolbars.get(activity);
+                            if (handledToolbars == null) {
+                                handledToolbars = new ArrayList<>(2);
+                                mActivityToolbars.put(activity, handledToolbars);
+                            }
+                            if (!handledToolbars.contains(toolbar)) {
+                                Logger.v("Handle toolbar " + toolbar + " in activity " + activity);
+                                handleToolbar(toolbar);
+                                handledToolbars.add(toolbar);
+                            }
+                            if (handledToolbars.size() >= MAX_TOOLBAR_COUNT_IN_ACTIVITY) {
+                                rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                            }
                         }
-                    }
 
-                    View statusBarBackground = rootView.findViewById(android.R.id.statusBarBackground);
-                    if (statusBarBackground != null) {
-                        statusBarBackground.setBackgroundColor(COLOR);
-                        ViewGroup viewGroup = (ViewGroup) statusBarBackground.getParent();
-                        if (viewGroup.indexOfChild(statusBarBackground) != viewGroup.getChildCount() - 1) {
-                            statusBarBackground.bringToFront();
+                        View statusBarBackground = rootView.findViewById(android.R.id.statusBarBackground);
+                        if (statusBarBackground != null) {
+                            statusBarBackground.setBackgroundColor(COLOR);
+                            ViewGroup viewGroup = (ViewGroup) statusBarBackground.getParent();
+                            if (viewGroup.indexOfChild(statusBarBackground) != viewGroup.getChildCount() - 1) {
+                                statusBarBackground.bringToFront();
+                            }
                         }
+                    } catch (Throwable e) {
+                        Logger.e("Exception in classic theme global layout listener.", e);
                     }
-                } catch (Throwable e) {
-                    Logger.e("Exception in classic theme global layout listener.", e);
                 }
             });
         });
