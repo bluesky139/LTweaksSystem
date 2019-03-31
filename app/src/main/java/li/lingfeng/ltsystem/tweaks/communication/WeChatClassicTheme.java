@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.WeakHashMap;
 
@@ -26,6 +27,7 @@ public class WeChatClassicTheme extends TweakBase {
 
     private static final int COLOR = Color.parseColor("#303030");
     private WeakHashMap<ViewGroup, Void> mHandledToolbar = new WeakHashMap<>(10);
+    private WeakReference<TextView> mTitleTextView;
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
@@ -65,12 +67,19 @@ public class WeChatClassicTheme extends TweakBase {
             try {
                 toolbar.setBackgroundColor(COLOR);
                 ViewUtils.traverseViews(toolbar, (view, deep) -> {
+                    if (view.getVisibility() != View.VISIBLE) {
+                        return false;
+                    }
                     if (view instanceof ViewGroup) {
                         view.setBackgroundColor(COLOR);
                     } else if (view instanceof TextView) {
                         TextView textView = (TextView) view;
                         if (textView.getCurrentTextColor() != Color.WHITE) {
                             textView.setTextColor(Color.WHITE);
+                            if ("WeChat".equals(textView.getText().toString())) {
+                                Logger.d("Title textview " + textView);
+                                mTitleTextView = new WeakReference<>(textView);
+                            }
                         }
                     } else if (view instanceof ImageView) {
                         Drawable drawable = ((ImageView) view).getDrawable();
@@ -104,6 +113,16 @@ public class WeChatClassicTheme extends TweakBase {
     public void android_view_View__setSystemUiVisibility__int(ILTweaks.MethodParam param) {
         param.before(() -> {
             param.setArg(0, (int) param.args[0] & ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        });
+    }
+
+    @Override
+    public void android_widget_TextView__setTextColor__int(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            TextView textView = mTitleTextView != null ? mTitleTextView.get() : null;
+            if (param.thisObject == textView && Color.WHITE != (int) param.args[0]) {
+                param.setResult(null);
+            }
         });
     }
 }

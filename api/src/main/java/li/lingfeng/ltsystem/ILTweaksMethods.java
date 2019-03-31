@@ -73,6 +73,9 @@ public abstract class ILTweaksMethods {
     public void android_widget_TextView__canProcessText__(MethodParam param) {
     }
 
+    public void android_widget_TextView__setTextColor__int(MethodParam param) {
+    }
+
     public void android_widget_Editor$ProcessTextIntentActionsHandler__onInitializeMenu__Menu(MethodParam param) {
     }
 
