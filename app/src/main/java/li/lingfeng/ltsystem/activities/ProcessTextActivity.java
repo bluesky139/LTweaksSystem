@@ -61,6 +61,7 @@ public class ProcessTextActivity extends Activity {
         intent.putExtra("query", text);
         //intent.putExtra("search_show_result", true);
         intent.putExtra("from_ltweaks", true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
@@ -69,6 +70,7 @@ public class ProcessTextActivity extends Activity {
         intent.setClassName(PackageUtils.isPackageInstalled(PackageNames.BILIBILI_IN)
                 ? PackageNames.BILIBILI_IN : PackageNames.BILIBILI, ClassNames.BILIBILI_SEARCH_ACTIVITY);
         intent.putExtra("query", text);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }
