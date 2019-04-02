@@ -139,14 +139,14 @@
             android:title="@string/pref_lineage_os_live_display_time_sunset" />
     </PreferenceCategory>-->
 
-    <!--<PreferenceCategory
+    <PreferenceCategory
         android:title="@string/pref_category_recent_task">
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_recent_task_swipe_to_kill"
             android:title="@string/pref_recent_task_swipe_to_kill"
             android:summary="@string/pref_recent_task_swipe_to_kill_summary" />
-    </PreferenceCategory>-->
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/pref_category_phone">

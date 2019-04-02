@@ -2,17 +2,20 @@ package li.lingfeng.ltsystem.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Process;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 
@@ -77,12 +80,15 @@ public class PackageUtils {
                 .show();
     }
 
-    /*public static boolean killPackage(Context context, String packageName) throws Throwable {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    public static boolean killPackage(Context context, String packageName) throws Throwable {
         ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, 0);
         if (info.uid >= Process.FIRST_APPLICATION_UID && info.uid <= Process.LAST_APPLICATION_UID) {
             Logger.i("Kill " + packageName);
-            XposedHelpers.callMethod(activityManager, "forceStopPackage", packageName);
+            new Shell("su", new String[] {
+                    "am force-stop " + packageName
+            }, 5000, (isOk, stderr, stdout) -> {
+                Logger.d("am force-stop return " + isOk);
+            }).execute();
 
             CharSequence label = info.loadLabel(context.getPackageManager());
             String toastStr = ContextUtils.getLString(R.string.app_kill_hint);
@@ -93,7 +99,7 @@ public class PackageUtils {
             Logger.i("Should not kill system app " + packageName);
             return false;
         }
-    }*/
+    }
 
     public static int getUid() {
         try {
