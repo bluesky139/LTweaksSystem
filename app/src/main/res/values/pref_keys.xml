@@ -53,7 +53,6 @@
     <string name="key_bilibili_darken">key_bilibili_darken</string>
     <string name="key_bilibili_hide_follow_at_full_screen">key_bilibili_hide_follow_at_full_screen</string>
     <string name="key_bilibili_remove_upper_ad">key_bilibili_remove_upper_ad</string>
-    <string name="key_bilibili_prevent_component_enabled">key_bilibili_prevent_component_enabled</string>
     <string name="key_steam_share_url">key_steam_share_url</string>
     <string name="key_steam_database">key_steam_database</string>
     <string name="key_steam_go_top">key_steam_go_top</string>
@@ -74,6 +73,7 @@
     <string name="key_prevent_running_set_list">key_prevent_running_set_list</string>
     <string name="key_prevent_list_prevent_exact_alarm">key_prevent_list_prevent_exact_alarm</string>
     <string name="key_prevent_list_prevent_receiver">key_prevent_list_prevent_receiver</string>
+    <string name="key_prevent_list_prevent_component_enabled">key_prevent_list_prevent_component_enabled</string>
     <string name="key_shadowsocks_primary_dns">key_shadowsocks_primary_dns</string>
     <string name="key_shadowsocks_transproxy">key_shadowsocks_transproxy</string>
     <string name="key_quick_settings_tile_adb_wireless">key_quick_settings_tile_adb_wireless</string>

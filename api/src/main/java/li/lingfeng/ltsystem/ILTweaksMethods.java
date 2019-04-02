@@ -61,9 +61,6 @@ public abstract class ILTweaksMethods {
     public void android_app_WallpaperColors__WallpaperColors__Color_Color_Color_int(MethodParam param) {
     }
 
-    public void android_app_ApplicationPackageManager__setComponentEnabledSetting__ComponentName_int_int(MethodParam param) {
-    }
-
     public void android_widget_TextView__onTouchEvent__MotionEvent(MethodParam param) {
     }
 
@@ -176,6 +173,9 @@ public abstract class ILTweaksMethods {
     }
 
     public void com_android_server_pm_PackageManagerService__queryIntentActivitiesInternal__Intent_String_int_int_int_boolean_boolean(MethodParam param) {
+    }
+
+    public void com_android_server_pm_PackageManagerService__setComponentEnabledSetting__ComponentName_int_int_int(MethodParam param) {
     }
 
     public void com_android_server_AlarmManagerService__setImpl__int_long_long_long_PendingIntent_IAlarmListener_String_int_WorkSource_AlarmManager$AlarmClockInfo_int_String(MethodParam param) {

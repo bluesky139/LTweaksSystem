@@ -33,7 +33,8 @@ public class PreventListDataProvider extends ListCheckActivity.DataProvider {
 
     private static final int[] KEYS = {
             R.string.key_prevent_list_prevent_exact_alarm,
-            R.string.key_prevent_list_prevent_receiver
+            R.string.key_prevent_list_prevent_receiver,
+            R.string.key_prevent_list_prevent_component_enabled
     };
 
     class AppInfo {

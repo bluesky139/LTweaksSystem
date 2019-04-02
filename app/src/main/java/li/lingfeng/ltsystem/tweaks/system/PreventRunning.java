@@ -17,16 +17,14 @@ import li.lingfeng.ltsystem.utils.Logger;
 
 public abstract class PreventRunning extends TweakBase {
 
-    protected static JSONArray sPreventList;
-    protected static Set<Integer> sPreventUids = new HashSet<>();
+    protected JSONArray mPreventList;
+    protected Set<Integer> mPreventUids = new HashSet<>();
 
     public PreventRunning() {
-        if (sPreventList == null) {
-            sPreventList = Prefs.large().getArray(getPreventListKey(), new JSONArray());
-            sPreventList.forEach((line) -> {
-                Logger.d("Prevent list item: " + line);
-            });
-        }
+        mPreventList = Prefs.large().getArray(getPreventListKey(), new JSONArray());
+        mPreventList.forEach((line) -> {
+            Logger.d(getClass().getSimpleName() + " list item: " + line);
+        });
     }
 
     protected abstract int getPreventListKey();
@@ -34,15 +32,15 @@ public abstract class PreventRunning extends TweakBase {
     @Override
     public void com_android_server_am_ActivityManagerService__finishBooting__(ILTweaks.MethodParam param) {
         param.after(() -> {
-            if (sPreventUids.size() > 0) {
+            if (mPreventUids.size() > 0) {
                 return;
             }
             Context context = LTHelper.currentApplication();
-            sPreventList.forEach((line) -> {
+            mPreventList.forEach((line) -> {
                 try {
                     ApplicationInfo info = context.getPackageManager().getApplicationInfo((String) line, PackageManager.GET_META_DATA);
-                    sPreventUids.add(info.uid);
-                    Logger.d("Prevent list item uid: " + info.uid);
+                    mPreventUids.add(info.uid);
+                    Logger.d(getClass().getSimpleName() + " list item uid: " + info.uid);
                 } catch (Exception e)
                 {}
             });

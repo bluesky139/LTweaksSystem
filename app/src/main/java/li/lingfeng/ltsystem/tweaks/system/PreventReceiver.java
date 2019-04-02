@@ -27,7 +27,7 @@ public class PreventReceiver extends PreventRunning {
     public void com_android_server_am_ActivityManagerService__registerReceiver__IApplicationThread_String_IIntentReceiver_IntentFilter_String_int_int(ILTweaks.MethodParam param) {
         param.before(() -> {
             String callerPackage = (String) param.args[1];
-            if (!sPreventList.contains(callerPackage)) {
+            if (!mPreventList.contains(callerPackage)) {
                 return;
             }
             IntentFilter filter = (IntentFilter) param.args[3];
@@ -42,7 +42,7 @@ public class PreventReceiver extends PreventRunning {
     public void android_content_pm_PackageParser__parsePackage__File_int_boolean(ILTweaks.MethodParam param) {
         param.after(() -> {
             PackageParser.Package pkg = (PackageParser.Package) param.getResult();
-            if (pkg == null || !sPreventList.contains(pkg.packageName)) {
+            if (pkg == null || !mPreventList.contains(pkg.packageName)) {
                 return;
             }
             for (PackageParser.Activity receiver : pkg.receivers) {
