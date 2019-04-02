@@ -23,6 +23,7 @@ import li.lingfeng.ltsystem.activities.ListCheckActivity;
 import li.lingfeng.ltsystem.activities.QrCodeActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
 import li.lingfeng.ltsystem.fragments.base.Extra;
+import li.lingfeng.ltsystem.fragments.sub.system.PreventListDataProvider;
 import li.lingfeng.ltsystem.fragments.sub.system.ShareFilterDataProvider;
 import li.lingfeng.ltsystem.fragments.sub.system.TextActionDataProvider;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
@@ -122,11 +123,11 @@ public class SystemPrefFragment extends BasePrefFragment {
         ListCheckActivity.create(getActivity(), ShareFilterDataProvider.class);
     }
 
-/*    @PreferenceClick(prefs = R.string.key_prevent_running_set_list)
+    @PreferenceClick(prefs = R.string.key_prevent_running_set_list)
     private void setPreventList(Preference preference) {
         ListCheckActivity.create(getActivity(), PreventListDataProvider.class);
     }
-*/
+
     @PreferenceChange(prefs = R.string.key_shadowsocks_primary_dns, refreshAtStart = true)
     private void setShadowsocksPrimaryDns(EditTextPreference preference, String value, Extra extra) {
         String[] dnsArray = StringUtils.split(value, ',');

@@ -71,6 +71,9 @@
     <string name="key_system_share_filter">key_system_share_filter</string>
     <string name="key_system_share_filter_activities">key_system_share_filter_activities</string>
     <string name="key_system_share_copy_to_share">key_system_share_copy_to_share</string>
+    <string name="key_prevent_running_set_list">key_prevent_running_set_list</string>
+    <string name="key_prevent_list_prevent_exact_alarm">key_prevent_list_prevent_exact_alarm</string>
+    <string name="key_prevent_list_prevent_receiver">key_prevent_list_prevent_receiver</string>
     <string name="key_shadowsocks_primary_dns">key_shadowsocks_primary_dns</string>
     <string name="key_shadowsocks_transproxy">key_shadowsocks_transproxy</string>
     <string name="key_quick_settings_tile_adb_wireless">key_quick_settings_tile_adb_wireless</string>

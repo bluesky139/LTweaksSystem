@@ -53,6 +53,14 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_prevent_running">
+        <Preference
+            android:key="@string/key_prevent_running_set_list"
+            android:title="@string/pref_prevent_running_set_list"
+            android:summary="@string/pref_prevent_running_set_list_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_shadowsocks">
         <EditTextPreference
             android:key="@string/key_shadowsocks_primary_dns"

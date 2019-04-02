@@ -1,7 +1,6 @@
 package li.lingfeng.ltsystem.prefs;
 
 import android.content.Intent;
-import android.hardware.Camera;
 import android.net.ConnectivityManager;
 import android.net.Proxy;
 import android.net.wifi.WifiManager;
@@ -23,8 +22,10 @@ public class IntentActions {
             WifiManager.NETWORK_STATE_CHANGED_ACTION,
             WifiManager.NETWORK_IDS_CHANGED_ACTION,
             Proxy.PROXY_CHANGE_ACTION,
-            Camera.ACTION_NEW_PICTURE,
-            Camera.ACTION_NEW_VIDEO,
+            Intent.ACTION_MEDIA_CHECKING,
+            Intent.ACTION_MEDIA_MOUNTED,
+            Intent.ACTION_MEDIA_SCANNER_STARTED,
+            Intent.ACTION_MEDIA_SCANNER_FINISHED,
             Intent.ACTION_USER_PRESENT,
             Intent.ACTION_USER_UNLOCKED,
             Intent.ACTION_PACKAGES_SUSPENDED,
@@ -45,8 +46,13 @@ public class IntentActions {
             Intent.ACTION_SCREEN_OFF,
             Intent.ACTION_SCREEN_ON,
             Intent.ACTION_BATTERY_CHANGED,
+            Intent.ACTION_BATTERY_LOW,
+            Intent.ACTION_BATTERY_OKAY,
             Intent.ACTION_REBOOT,
-            Intent.ACTION_SHUTDOWN
+            Intent.ACTION_SHUTDOWN,
+            Intent.ACTION_BOOT_COMPLETED,
+            Intent.ACTION_LOCKED_BOOT_COMPLETED,
+            Intent.ACTION_CLOSE_SYSTEM_DIALOGS
     };
 
     public static final String[] sSendActions = {

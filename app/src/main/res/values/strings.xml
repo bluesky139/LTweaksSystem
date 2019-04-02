@@ -244,6 +244,13 @@ Open source on github: \n
     <string name="pref_system_share_filter">Hide share menu items</string>
     <string name="pref_system_share_copy_to_share">Copy to share</string>
     <string name="pref_system_share_copy_to_share_summary">When you copy text, a button will appear for you to trigger share action.\nMay not work in some app</string>
+    <string name="pref_category_prevent_running">Prevent Running</string>
+    <string name="pref_prevent_running_prevent_exact_alarm">Delay wakeup of exact alarm</string>
+    <string name="pref_prevent_running_prevent_exact_alarm_summary">Some task will be delayed due to optimize battery use by system\nFor Android 6.0+</string>
+    <string name="pref_prevent_running_prevent_receiver">Prevent some broadcast</string>
+    <string name="pref_prevent_running_set_list">Set prevent list</string>
+    <string name="pref_prevent_running_set_list_summary">You can set each prevent method for individual app.\n
+Note, you\'d better know what these methods for, in case of unexpected error</string>
     <string name="pref_category_shadowsocks">Shadowsocks</string>
     <string name="pref_shadowsocks_primary_dns">Primary DNS</string>
     <string name="pref_shadowsocks_primary_dns_summary">Comma seperated ip:port</string>
@@ -349,6 +356,11 @@ Open source on github: \n
     <string name="share_image_iqdb_search">IQDB</string>
     <string name="share_image_saucenao_search">SauceNAO</string>
     <string name="share_image_wait_search">WAIT</string>
+
+    <!-- Prevent Running -->
+    <string name="prevent_running_list_all">All</string>
+    <string name="prevent_running_list_prevented">Prevented</string>
+    <string name="prevent_running_list_not_prevented">Not prevented</string>
 
     <!-- Process Text -->
     <string name="process_text_douban">Douban</string>
