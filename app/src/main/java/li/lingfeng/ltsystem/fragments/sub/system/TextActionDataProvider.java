@@ -10,8 +10,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONArray;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -110,7 +108,7 @@ public class TextActionDataProvider extends ListCheckActivity.DataProvider {
 
     public TextActionDataProvider(ListCheckActivity activity) {
         super(activity);
-        final JSONArray savedSet = Prefs.largeEditor().getArray(R.string.key_text_actions_set, new JSONArray());
+        List<String> savedSet = Prefs.large().getStringList(R.string.key_text_actions_set, new ArrayList<>());
         mActions = new ArrayList<>(savedSet.size());
 
         final Map<String, Triple<Integer, Boolean, String>> itemMap = new HashMap<>(savedSet.size());
@@ -343,11 +341,11 @@ public class TextActionDataProvider extends ListCheckActivity.DataProvider {
 
     private void save() {
         Logger.i("Save text actions.");
-        JSONArray toSaveSet = new JSONArray(mActions.size());
+        List<String> toSaveSet = new ArrayList<>(mActions.size());
         for (int i = 0; i < mActions.size(); ++i) {
             Action action = mActions.get(i);
             toSaveSet.add(action.toSaveString(i, action.block));
         }
-        Prefs.largeEditor().putArray(R.string.key_text_actions_set, toSaveSet);
+        Prefs.large().putStringList(R.string.key_text_actions_set, toSaveSet);
     }
 }

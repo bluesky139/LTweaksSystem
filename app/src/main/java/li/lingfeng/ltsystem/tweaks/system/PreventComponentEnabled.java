@@ -4,6 +4,8 @@ import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.os.Binder;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
@@ -22,7 +24,7 @@ public class PreventComponentEnabled extends PreventRunning {
     public void com_android_server_pm_PackageManagerService__setComponentEnabledSetting__ComponentName_int_int_int(ILTweaks.MethodParam param) {
         param.before(() -> {
             int callingUid = Binder.getCallingUid();
-            if (mPreventUids.contains(callingUid) && (int) param.args[1] == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+            if (ArrayUtils.contains(getPreventUids(), callingUid) && (int) param.args[1] == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
                 ComponentName componentName = (ComponentName) param.args[0];
                 Logger.v("Prevent " + componentName + " to be enabled.");
                 param.setResult(null);

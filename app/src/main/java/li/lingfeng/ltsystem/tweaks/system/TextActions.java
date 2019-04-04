@@ -6,8 +6,6 @@ import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.alibaba.fastjson.JSONArray;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
@@ -35,7 +33,7 @@ public class TextActions extends ILTweaksMethods {
 
     @Override
     public void com_android_internal_widget_FloatingToolbar__getVisibleAndEnabledMenuItems__Menu(ILTweaks.MethodParam param) {
-        JSONArray savedItems = Prefs.large().getArray(R.string.key_text_actions_set, null);
+        List<String> savedItems = Prefs.large().getStringList(R.string.key_text_actions_set, null);
         if (savedItems == null || savedItems.size() == 0) {
             return;
         }

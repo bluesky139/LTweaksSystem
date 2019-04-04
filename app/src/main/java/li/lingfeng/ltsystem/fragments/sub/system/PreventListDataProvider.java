@@ -3,8 +3,6 @@ package li.lingfeng.ltsystem.fragments.sub.system;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.alibaba.fastjson.JSONArray;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -60,7 +58,7 @@ public class PreventListDataProvider extends ListCheckActivity.DataProvider {
         }
     }
 
-    private JSONArray[] mPreventSets;
+    private List<String>[] mPreventSets;
     private AppInfo[] mAppInfos;
     private List<AppInfo> mPreventedAppInfos;
     private List<AppInfo> mFreeAppInfos;
@@ -69,9 +67,9 @@ public class PreventListDataProvider extends ListCheckActivity.DataProvider {
 
     public PreventListDataProvider(ListCheckActivity activity) {
         super(activity);
-        mPreventSets = new JSONArray[KEYS.length];
+        mPreventSets = new ArrayList[KEYS.length];
         for (int i = 0; i < KEYS.length; ++i) {
-            mPreventSets[i] = Prefs.largeEditor().getArray(KEYS[i], new JSONArray());
+            mPreventSets[i] = Prefs.large().getStringList(KEYS[i], new ArrayList<>());
         }
 
         List<PackageInfo> packages = PackageUtils.getInstalledPackages();
@@ -190,7 +188,7 @@ public class PreventListDataProvider extends ListCheckActivity.DataProvider {
         }
 
         for (int i = 0; i < KEYS.length; ++i) {
-            JSONArray set = mPreventSets[i];
+            List<String> set = mPreventSets[i];
             if (prevented[i]) {
                 if (!set.contains(appInfo.packageInfo.packageName)) {
                     set.add(appInfo.packageInfo.packageName);
@@ -198,7 +196,7 @@ public class PreventListDataProvider extends ListCheckActivity.DataProvider {
             } else {
                 set.remove(appInfo.packageInfo.packageName);
             }
-            Prefs.largeEditor().putArray(KEYS[i], set);
+            Prefs.large().putStringList(KEYS[i], set);
         }
         mNeedReload = true;
     }

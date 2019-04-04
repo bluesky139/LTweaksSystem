@@ -157,10 +157,10 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_SwipeHelper__dismissChild__View_float_boolean(MethodParam param) {
     }
 
-    public void com_android_server_am_ActivityManagerService__finishBooting__(MethodParam param) {
+    public void com_android_server_am_ActivityManagerService__ActivityManagerService__Context(MethodParam param) {
     }
 
-    public void com_android_server_am_ActivityManagerService__checkBroadcastFromSystem__Intent_ProcessRecord_String_int_boolean_List(MethodParam param) {
+    public void com_android_server_am_ActivityManagerService__finishBooting__(MethodParam param) {
     }
 
     public void com_android_server_am_ActivityManagerService__registerReceiver__IApplicationThread_String_IIntentReceiver_IntentFilter_String_int_int(MethodParam param) {

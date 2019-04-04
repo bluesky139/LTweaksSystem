@@ -27,7 +27,7 @@ AUTOMOUNT=true
 PROPFILE=true
 
 # Set to true if you need post-fs-data script
-POSTFSDATA=false
+POSTFSDATA=true
 
 # Set to true if you need late_start service script
 LATESTARTSERVICE=false

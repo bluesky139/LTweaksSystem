@@ -3,8 +3,6 @@ package li.lingfeng.ltsystem.fragments.sub.system;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 
-import com.alibaba.fastjson.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +36,12 @@ public class ShareFilterDataProvider extends ListCheckActivity.DataProvider {
     private List<ActivityInfo> mAllInfos;
     private List<ActivityInfo> mDisabledInfos;
     private List<ActivityInfo> mEnabledInfos;
-    private JSONArray mDisabledActivities;
+    private List<String> mDisabledActivities;
     private boolean mNeedReload = true;
 
     public ShareFilterDataProvider(ListCheckActivity activity) {
         super(activity);
-        mDisabledActivities = Prefs.largeEditor().getArray(R.string.key_system_share_filter_activities, new JSONArray());
+        mDisabledActivities = Prefs.large().getStringList(R.string.key_system_share_filter_activities, new ArrayList<>());
         for (String action : IntentActions.sSendActions) {
             Intent intent = new Intent(action);
             intent.setType("*/*");
@@ -145,6 +143,6 @@ public class ShareFilterDataProvider extends ListCheckActivity.DataProvider {
         }
         mNeedReload = true;
 
-        Prefs.largeEditor().putArray(R.string.key_system_share_filter_activities, mDisabledActivities);
+        Prefs.large().putStringList(R.string.key_system_share_filter_activities, mDisabledActivities);
     }
 }

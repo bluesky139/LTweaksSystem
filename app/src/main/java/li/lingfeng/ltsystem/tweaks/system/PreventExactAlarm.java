@@ -1,5 +1,7 @@
 package li.lingfeng.ltsystem.tweaks.system;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
@@ -22,7 +24,7 @@ public class PreventExactAlarm extends PreventRunning {
     public void com_android_server_AlarmManagerService__setImpl__int_long_long_long_PendingIntent_IAlarmListener_String_int_WorkSource_AlarmManager$AlarmClockInfo_int_String(ILTweaks.MethodParam param) {
         param.before(() -> {
             int uid = (int) param.args[10];
-            if (mPreventUids.contains(uid)) {
+            if (ArrayUtils.contains(getPreventUids(), uid)) {
                 long windowMillis = (long) param.args[2];
                 int flags = (int) param.args[7];
                 //Logger.d("Alarm from " + uid + " " + windowMillis + " " + Integer.toBinaryString(flags));

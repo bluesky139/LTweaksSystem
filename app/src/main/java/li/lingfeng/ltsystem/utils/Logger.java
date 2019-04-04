@@ -59,6 +59,14 @@ public class Logger {
         }
     }
 
+    public static void w(String msg, Throwable e) {
+        if (remote == null) {
+            Log.w(TAG, msg, e);
+        } else {
+            remote.log(TAG, "W", msg + "\n" + Log.getStackTraceString(e));
+        }
+    }
+
     public static void e(String msg) {
         if (remote == null) {
             Log.e(TAG, msg);

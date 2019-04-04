@@ -1,16 +1,13 @@
 package li.lingfeng.ltsystem.prefs;
 
-import android.content.Intent;
+import android.os.RemoteException;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-
-import li.lingfeng.ltsystem.LTHelper;
+import li.lingfeng.ltsystem.ILTPrefListener;
+import li.lingfeng.ltsystem.LTPref;
 import li.lingfeng.ltsystem.utils.Logger;
 
 public class Prefs {
@@ -21,81 +18,77 @@ public class Prefs {
         return _instance;
     }
 
-    public static final String LARGE_STORE_GET = Prefs.class.getName() + ".LARGE_STORE_GET";
-    public static final String LARGE_STORE_ALL = Prefs.class.getName() + ".LARGE_STORE_ALL";
-    public static final String LARGE_STORE_UPDATE = Prefs.class.getName() + ".LARGE_STORE_UPDATE";
     public static final String LARGE_STORE_PATH = "/data/system/ltweaks_large_store";
 
-    // Large store read from tweaks.
+    // Large store read write.
     private static LargeStore _large = new LargeStore();
     public static LargeStore large() {
         return _large;
     }
 
-    // Large store read write in preference activity.
-    private static LargeStoreEditor _largeEditor;
-    public static LargeStoreEditor largeEditor() {
-        if (_largeEditor == null) {
-            _largeEditor = new LargeStoreEditor();
-        }
-        return _largeEditor;
-    }
-
     public static class LargeStore {
 
-        protected JSONObject jLargeStore;
+        private Map<String, Object> mValues = new HashMap<>();
 
-        // Load in zygote, so any modification should take effect after reboot.
-        public void load() {
-            File file = new File(LARGE_STORE_PATH);
-            if (file.exists()) {
-                try {
-                    String content = FileUtils.readFileToString(file, "UTF-8");
-                    jLargeStore = JSON.parseObject(content);
-                } catch (Throwable e) {
-                    Logger.e("Load large store " + LARGE_STORE_PATH + " exception.", e);
-                    jLargeStore = new JSONObject();
+        public List<String> getStringList(int key, List<String> defValue) {
+            return getStringList(getKeyById(key), defValue, true);
+        }
+
+        /**
+         * @param listenForCache false if you add listener from outside and handle value updated by yourself, otherwise true.
+         */
+        public List<String> getStringList(int key, List<String> defValue, boolean listenForCache) {
+            return getStringList(getKeyById(key), defValue, listenForCache);
+        }
+
+        public List<String> getStringList(String key, List<String> defValue, boolean listenForCache) {
+            List<String> result;
+            if (listenForCache) {
+                if (mValues.containsKey(key)) {
+                    result = (List<String>) mValues.get(key);
+                } else {
+                    result = LTPref.instance().getStringList(key);
+                    mValues.put(key, result);
+                    addListener(key, new ILTPrefListener.Stub() {
+                        @Override
+                        public void onPrefChanged(String key) throws RemoteException {
+                            mValues.remove(key);
+                            removeListener(key, this);
+                        }
+                    });
                 }
             } else {
-                jLargeStore = new JSONObject();
+                result = LTPref.instance().getStringList(key);
             }
+            return result != null ? result : defValue;
         }
 
-        // Only set in preference activity, to receive newest large store values.
-        public void setLargeStore(JSONObject jLargeStore) {
-            this.jLargeStore = jLargeStore;
+        public void putStringList(int key, List<String> value) {
+            putStringList(getKeyById(key), value);
         }
 
-        public JSONArray getArray(int key, JSONArray jDefArray) {
-            return getArray(getKeyById(key), jDefArray);
+        public void putStringList(String key, List<String> value) {
+            LTPref.instance().putStringList(key, value);
         }
 
-        public JSONArray getArray(String key, JSONArray jDefArray) {
-            JSONArray jArray = jLargeStore.getJSONArray(key);
-            return jArray != null ? jArray : jDefArray;
+        public void addListener(int key, ILTPrefListener listener) {
+            addListener(getKeyById(key), listener);
+        }
+
+        public void addListener(String key, ILTPrefListener listener) {
+            LTPref.instance().addListener(key, listener);
+        }
+
+        public void removeListener(int key, ILTPrefListener listener) {
+            removeListener(getKeyById(key), listener);
+        }
+
+        public void removeListener(String key, ILTPrefListener listener) {
+            LTPref.instance().removeListener(key, listener);
         }
 
         protected String getKeyById(int id) {
             return PrefKeys.getById(id);
-        }
-    }
-
-    public static class LargeStoreEditor extends LargeStore {
-
-        public void putArray(int key, JSONArray jArray) {
-            putArray(getKeyById(key), jArray);
-        }
-
-        public void putArray(String key, JSONArray jArray) {
-            sendLargeStoreUpdate(key, jArray.toString());
-            jLargeStore.put(key, jArray);
-        }
-
-        private void sendLargeStoreUpdate(String key, String value) {
-            Intent intent = new Intent(LARGE_STORE_UPDATE);
-            intent.putExtra("key", key);
-            intent.putExtra("value", value);
-            LTHelper.currentApplication().sendBroadcast(intent);
         }
     }
 }
