@@ -25,6 +25,18 @@ import li.lingfeng.ltsystem.utils.Shell;
 public class AdbWireless extends TileService {
 
     private static final String ADB_WIRELESS_OFF = AdbWireless.class + ".ADB_WIRELESS_OFF";
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onClick();
+        }
+    };
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        registerReceiver(mReceiver, new IntentFilter(ADB_WIRELESS_OFF));
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -32,13 +44,6 @@ public class AdbWireless extends TileService {
         Tile tile = getQsTile();
         tile.setState(Tile.STATE_INACTIVE);
         tile.updateTile();
-
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                onClick();
-            }
-        }, new IntentFilter(ADB_WIRELESS_OFF));
         return binder;
     }
 
@@ -112,5 +117,11 @@ public class AdbWireless extends TileService {
         } catch (Throwable e) {
             Logger.e("Can't set notification for " + getClass().getSimpleName() + ", " + e);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mReceiver);
     }
 }
