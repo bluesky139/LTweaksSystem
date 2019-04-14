@@ -91,7 +91,7 @@ public class WeChatClassicTheme extends TweakBase {
                         TextView textView = (TextView) view;
                         if (textView.getCurrentTextColor() != Color.WHITE) {
                             textView.setTextColor(Color.WHITE);
-                            if ("WeChat".equals(textView.getText().toString())) {
+                            if (textView.getText().toString().startsWith("WeChat")) {
                                 Logger.d("Title textview " + textView);
                                 mTitleTextView = new WeakReference<>(textView);
                             }
