@@ -32,6 +32,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 public class AlipayFingerprint extends TweakBase {
 
     private static final String MSP_CONTAINER_ACTIVITY = "com.alipay.android.msp.ui.views.MspContainerActivity";
+    private static final String PAY_PWD_HALF_ACTIVITY = "com.alipay.mobile.verifyidentity.module.password.pay.ui.PayPwdHalfActivity";
     private CancellationSignal mCancellationSignal;
 
     // https://github.com/eritpchy/Xposed-Fingerprint-pay/blob/master/app/src/main/java/com/yyxx/wechatfp/xposed/plugin/XposedAlipayPlugin.java
@@ -43,6 +44,7 @@ public class AlipayFingerprint extends TweakBase {
                 @Override
                 public void onGlobalLayout() {
                     try {
+                        Logger.d("In MSP_CONTAINER_ACTIVITY");
                         if (activity.isFinishing() || activity.isDestroyed()) {
                             return;
                         }
@@ -54,6 +56,39 @@ public class AlipayFingerprint extends TweakBase {
                         View view1 = activity.findViewById(id1);
                         View view2 = activity.findViewById(id2);
                         if (view1 == null && view2 == null) {
+                            return;
+                        }
+
+                        String password = getPassword(activity);
+                        if (password == null) { // Save password at first time.
+                            savePassword(activity);
+                        } else {
+                            authWithFingerprint(activity, password);
+                        }
+                        activity.getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    } catch (Throwable e) {
+                        Logger.e("onGlobalLayout exception.", e);
+                    }
+                }
+            });
+        });
+
+        afterOnClass(PAY_PWD_HALF_ACTIVITY, param, () -> {
+            Activity activity = (Activity) param.thisObject;
+            activity.getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    try {
+                        Logger.d("In PAY_PWD_HALF_ACTIVITY");
+                        if (activity.isFinishing() || activity.isDestroyed()) {
+                            return;
+                        }
+                        int id1 = ContextUtils.getIdId("key_num_1", "com.alipay.android.phone.safepaybase");
+                        if (id1 == 0) {
+                            return;
+                        }
+                        View view1 = activity.findViewById(id1);
+                        if (view1 == null) {
                             return;
                         }
 
