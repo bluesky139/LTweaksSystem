@@ -28,10 +28,11 @@ import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ViewUtils;
 
-@MethodsLoad(packages = PackageNames.ALIPAY, prefs = R.string.key_alipay_fingerprint)
+@MethodsLoad(packages = { PackageNames.ALIPAY, PackageNames.TAOBAO }, prefs = R.string.key_alipay_fingerprint)
 public class AlipayFingerprint extends TweakBase {
 
     private static final String MSP_CONTAINER_ACTIVITY = "com.alipay.android.msp.ui.views.MspContainerActivity";
+    private static final String FLY_BIRD_WINDOW_ACTIVITY = "com.alipay.android.app.flybird.ui.window.FlyBirdWindowActivity";
     private static final String PAY_PWD_HALF_ACTIVITY = "com.alipay.mobile.verifyidentity.module.password.pay.ui.PayPwdHalfActivity";
     private CancellationSignal mCancellationSignal;
 
@@ -39,38 +40,11 @@ public class AlipayFingerprint extends TweakBase {
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         afterOnClass(MSP_CONTAINER_ACTIVITY, param, () -> {
-            Activity activity = (Activity) param.thisObject;
-            activity.getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    try {
-                        Logger.d("In MSP_CONTAINER_ACTIVITY");
-                        if (activity.isFinishing() || activity.isDestroyed()) {
-                            return;
-                        }
-                        int id1 = ContextUtils.getIdId("simplePwdLayout", "com.alipay.android.app");
-                        int id2 = ContextUtils.getIdId("mini_linSimplePwdComponent", "com.alipay.android.phone.safepaybase");
-                        if (id1 == 0 && id2 == 0) {
-                            return;
-                        }
-                        View view1 = activity.findViewById(id1);
-                        View view2 = activity.findViewById(id2);
-                        if (view1 == null && view2 == null) {
-                            return;
-                        }
+            handleMspContainerActivity(param);
+        });
 
-                        String password = getPassword(activity);
-                        if (password == null) { // Save password at first time.
-                            savePassword(activity);
-                        } else {
-                            authWithFingerprint(activity, password);
-                        }
-                        activity.getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    } catch (Throwable e) {
-                        Logger.e("onGlobalLayout exception.", e);
-                    }
-                }
-            });
+        afterOnClass(FLY_BIRD_WINDOW_ACTIVITY, param, () -> {
+            handleMspContainerActivity(param);
         });
 
         afterOnClass(PAY_PWD_HALF_ACTIVITY, param, () -> {
@@ -83,7 +57,8 @@ public class AlipayFingerprint extends TweakBase {
                         if (activity.isFinishing() || activity.isDestroyed()) {
                             return;
                         }
-                        int id1 = ContextUtils.getIdId("key_num_1", "com.alipay.android.phone.safepaybase");
+                        int id1 = ContextUtils.getIdId("key_num_1",
+                                isAlipay() ? "com.alipay.android.phone.safepaybase" : "com.taobao.taobao");
                         if (id1 == 0) {
                             return;
                         }
@@ -105,6 +80,49 @@ public class AlipayFingerprint extends TweakBase {
                 }
             });
         });
+    }
+
+    private void handleMspContainerActivity(ILTweaks.MethodParam param) {
+        Activity activity = (Activity) param.thisObject;
+        activity.getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                try {
+                    Logger.d("In MSP_CONTAINER_ACTIVITY");
+                    if (activity.isFinishing() || activity.isDestroyed()) {
+                        return;
+                    }
+                    int id1 = isAlipay() ?
+                            ContextUtils.getIdId("simplePwdLayout", "com.alipay.android.app") :
+                            ContextUtils.getIdId("simplePwdLayout", "com.taobao.taobao");
+                    int id2 = isAlipay() ?
+                            ContextUtils.getIdId("mini_linSimplePwdComponent", "com.alipay.android.phone.safepaybase") :
+                            ContextUtils.getIdId("mini_spwd_input", "com.taobao.taobao");
+                    if (id1 == 0 && id2 == 0) {
+                        return;
+                    }
+                    View view1 = activity.findViewById(id1);
+                    View view2 = activity.findViewById(id2);
+                    if (view1 == null && view2 == null) {
+                        return;
+                    }
+
+                    String password = getPassword(activity);
+                    if (password == null) { // Save password at first time.
+                        savePassword(activity);
+                    } else {
+                        authWithFingerprint(activity, password);
+                    }
+                    activity.getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } catch (Throwable e) {
+                    Logger.e("onGlobalLayout exception.", e);
+                }
+            }
+        });
+    }
+
+    private boolean isAlipay() {
+        return getPackageName().equals(PackageNames.ALIPAY);
     }
 
     @Override
