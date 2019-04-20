@@ -225,7 +225,8 @@ public class AlipayFingerprint extends TweakBase {
     }
 
     private EditText getPasswordView(Activity activity) {
-        int id = ContextUtils.getIdId("input_et_password", "com.alipay.android.phone.safepaybase");
+        int id = ContextUtils.getIdId("input_et_password",
+                isAlipay() ? "com.alipay.android.phone.safepaybase" : "com.taobao.taobao");
         EditText passwordEditText = null;
         if (id > 0) {
             View view = activity.findViewById(id);
@@ -246,7 +247,8 @@ public class AlipayFingerprint extends TweakBase {
     }
 
     private View getPayButton(Activity activity) {
-        int id = ContextUtils.getIdId("button_ok", "com.alipay.android.phone.safepaybase");
+        int id = ContextUtils.getIdId("button_ok",
+                isAlipay() ? "com.alipay.android.phone.safepaybase" : "com.taobao.taobao");
         View payButton = null;
         if (id > 0) {
             View view = activity.findViewById(id);
