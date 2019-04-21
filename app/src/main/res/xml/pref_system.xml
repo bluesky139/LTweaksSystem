@@ -213,6 +213,11 @@
             android:key="@string/key_mixplorer_ignore_cpu_usage_kill"
             android:title="@string/pref_mixplorer_ignore_cpu_usage_kill"
             android:summary="@string/pref_mixplorer_ignore_cpu_usage_kill_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_mixplorer_highlight_visited_files"
+            android:title="@string/pref_mixplorer_highlight_visited_files"
+            android:summary="@string/pref_mixplorer_highlight_visited_files_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory

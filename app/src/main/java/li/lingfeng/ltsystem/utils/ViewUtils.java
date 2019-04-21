@@ -21,7 +21,9 @@ import android.view.ViewParent;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import java.lang.reflect.Method;
@@ -160,13 +162,28 @@ public class ViewUtils {
     }
 
     public static void printChilds(ViewGroup rootView) {
-        traverseViews(rootView, false, new ViewTraverseCallback() {
+        Logger.v("printChilds rootView " + rootView);
+        printChilds(rootView, 0);
+
+        /*traverseViews(rootView, false, new ViewTraverseCallback() {
             @Override
             public boolean onAddResult(View view, int deep) {
-                Logger.v(" child[" + deep + "] " + view);
+                Logger.v(" child[" + deep + "] " + view
+                        + (view instanceof TextView ? " " + ((TextView) view).getText() : ""));
                 return false;
             }
-        });
+        });*/
+    }
+
+    private static void printChilds(ViewGroup viewGroup, int deep) {
+        for (int i = 0; i < viewGroup.getChildCount(); ++i) {
+            View view = viewGroup.getChildAt(i);
+            Logger.v(StringUtils.repeat(' ', deep + 1) + "child[" + deep + "] " + view
+                    + (view instanceof TextView ? " " + ((TextView) view).getText() : ""));
+            if (view instanceof ViewGroup) {
+                printChilds((ViewGroup) view, deep + 1);
+            }
+        }
     }
 
     public static <T extends View> List<T> traverseViews(ViewGroup rootView, final boolean onlyOne,

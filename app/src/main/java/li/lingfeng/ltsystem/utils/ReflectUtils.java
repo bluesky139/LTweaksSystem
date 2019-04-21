@@ -1,8 +1,11 @@
 package li.lingfeng.ltsystem.utils;
 
+import android.text.DynamicLayout;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -144,6 +147,21 @@ public class ReflectUtils {
             }
         }
         throw new NoSuchFieldError("findFirstFieldByExactType " + type + " in " + cls);
+    }
+
+    public static void printFields(Object obj) throws Throwable {
+        Field[] fields = obj.getClass().getFields();
+        for (Field field : fields) {
+            if (Modifier.isFinal(field.getModifiers())) {
+                continue;
+            }
+            field.setAccessible(true);
+            Object value = field.get(obj);
+            Logger.v(" field[" + field.getName() + "] " + value
+                    + (value == null ? "" :
+                     (field.getType() == DynamicLayout.class ? " " + getObjectField(value, "mBase") : ""))
+                    );
+        }
     }
 
     public static Object getSurroundingThis(Object obj) throws Throwable {
