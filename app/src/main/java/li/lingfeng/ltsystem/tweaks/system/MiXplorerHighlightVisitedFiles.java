@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.LruCache;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
 
     private static final String BROWSER_ACTIVITY = "com.mixplorer.activities.BrowseActivity";
     private static final String MI_PAGER = "com.mixplorer.widgets.MiPager";
-    private static final int HIGHLIGHT_COLOR = 0xFFF0F0F0;
+    private static final int HIGHLIGHT_COLOR = 0xFF383838;
     private DBHelper mDBHelper;
     private String mNavPath;
     private String mVisitedFile;
@@ -139,6 +140,7 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
                     String name2 = getFileNameIfItsFile(v);
                     if (name2 != null) {
                         Logger.i("File visited: " + name2);
+                        mVisitedFile = name2;
                         mDBHelper.fileVisited(mNavPath, name2);
                         ViewGroup page = (ViewGroup) v.getParent();
                         for (int i = 0; i < page.getChildCount(); ++i) {
@@ -189,6 +191,8 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
 
     class DBHelper extends SQLiteOpenHelper {
 
+        private LruCache<String, String> cache = new LruCache<>(20);
+
         public DBHelper() {
             super(LTHelper.currentApplication(), "ltweaks_highlight_visited_files", null, 1);
         }
@@ -221,17 +225,22 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
         public void fileVisited(String folder, String file) {
             String sql = "REPLACE INTO Visited (Folder, File) VALUES ('%1$s', '%2$s');";
             execSQL(getWritableDatabase(), String.format(sql, folder, file));
+            cache.put(folder, file);
         }
 
         public String getVisitedFile(String folder) {
+            String file = cache.get(folder);
+            if (file != null) {
+                return !file.isEmpty() ? file : null;
+            }
             String sql = "SELECT File from Visited WHERE Folder='%1$s' LIMIT 1;";
             Cursor cursor = rawQuery(getWritableDatabase(), String.format(sql, folder));
-            String file = null;
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 file = cursor.getString(0);
             }
             cursor.close();
+            cache.put(folder, file != null ? file : "");
             return file;
         }
     }
