@@ -139,12 +139,14 @@ public class AlipayFingerprint extends TweakBase {
     private void savePassword(Activity activity) throws Throwable {
         EditText passwordEditText = getPasswordView(activity);
         if (passwordEditText == null) {
+            ViewUtils.printChilds(activity);
             throw new RuntimeException("Null password edit text.");
         }
         Logger.d("passwordEditText " + passwordEditText);
 
         View payButton = getPayButton(activity);
         if (payButton == null) {
+            ViewUtils.printChilds(activity);
             throw new RuntimeException("Null pay button.");
         }
         Logger.d("payButton " + payButton);
@@ -209,12 +211,14 @@ public class AlipayFingerprint extends TweakBase {
     private void inputGenericPassword(Activity activity, String password) throws Throwable {
         EditText passwordEditText = getPasswordView(activity);
         if (passwordEditText == null) {
+            ViewUtils.printChilds(activity);
             throw new RuntimeException("Null password edit text.");
         }
         Logger.d("passwordEditText " + passwordEditText);
 
         View payButton = getPayButton(activity);
         if (payButton == null) {
+            ViewUtils.printChilds(activity);
             throw new RuntimeException("Null pay button.");
         }
         Logger.d("payButton " + payButton);
