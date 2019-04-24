@@ -161,6 +161,10 @@ public class ViewUtils {
         return id > 0 ? rootView.findViewById(id) : null;
     }
 
+    public static void printChilds(Activity activity) {
+        printChilds((ViewGroup) activity.getWindow().getDecorView());
+    }
+
     public static void printChilds(ViewGroup rootView) {
         Logger.v("printChilds rootView " + rootView);
         printChilds(rootView, 0);
