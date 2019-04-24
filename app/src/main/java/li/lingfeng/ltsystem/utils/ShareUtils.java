@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import org.apache.commons.lang3.StringUtils;
 
+import li.lingfeng.ltsystem.activities.ChromeIncognitoActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 
@@ -27,18 +27,11 @@ public class ShareUtils {
                 return;
             }
             SimpleSnackbar.make(activity, "Got text", SimpleSnackbar.LENGTH_LONG)
-                    .setAction("Select", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            selectText(activity, text.toString());
-                        }
+                    .setAction("Incognito", (v) -> {
+                        incognitoText(activity, text.toString());
                     })
-                    .setAction("Share...", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            shareText(activity, text.toString());
-                        }
-                    })
+                    .setAction("Select", (v) -> selectText(activity, text.toString()))
+                    .setAction("Share...", (v) -> shareText(activity, text.toString()))
                     .show();
         } catch (Throwable e) {
             Logger.e("shareClipWithSnackbar error, " + e);
@@ -46,18 +39,25 @@ public class ShareUtils {
         }
     }
 
-    public static void shareText(Context context, String text) {
+    public static void incognitoText(Activity activity, String text) {
+        Intent intent = new Intent(Intent.ACTION_PROCESS_TEXT);
+        intent.setClassName(PackageNames.L_TWEAKS, ChromeIncognitoActivity.class.getName());
+        intent.putExtra(Intent.EXTRA_PROCESS_TEXT, text);
+        activity.startActivity(intent);
+    }
+
+    public static void shareText(Activity activity, String text) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-        context.startActivity(Intent.createChooser(shareIntent, "Share with..."));
+        activity.startActivity(Intent.createChooser(shareIntent, "Share with..."));
     }
 
-    public static void selectText(Context context, String text) {
+    public static void selectText(Activity activity, String text) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         shareIntent.setClassName(PackageNames.L_TWEAKS, SelectableTextActivity.class.getName());
-        context.startActivity(shareIntent);
+        activity.startActivity(shareIntent);
     }
 }
