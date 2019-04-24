@@ -7,12 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Selection;
+import android.text.Spannable;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.ReflectUtils;
 import li.lingfeng.ltsystem.utils.ShareUtils;
 
 /**
@@ -23,19 +26,13 @@ public class SelectableTextActivity extends Activity implements View.OnClickList
 
     private TextView mTextView;
     private EditText mEditView;
-    private ImageView mCopyButton;
-    private ImageView mShareButton;
-    private ImageView mEditButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_selectable);
-        mTextView = (TextView) findViewById(R.id.text);
-        mEditView = (EditText) findViewById(R.id.text_edit);
-        mCopyButton = (ImageView) findViewById(R.id.copy);
-        mShareButton = (ImageView) findViewById(R.id.share);
-        mEditButton = (ImageView) findViewById(R.id.edit);
+        mTextView = findViewById(R.id.text);
+        mEditView = findViewById(R.id.text_edit);
 
         String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         if (text == null) {
@@ -44,10 +41,6 @@ public class SelectableTextActivity extends Activity implements View.OnClickList
         mTextView.setText(text);
         mTextView.setTextIsSelectable(true);
         mEditView.setText(text);
-
-        mCopyButton.setOnClickListener(this);
-        mShareButton.setOnClickListener(this);
-        mEditButton.setOnClickListener(this);
     }
 
     @Override
@@ -63,6 +56,17 @@ public class SelectableTextActivity extends Activity implements View.OnClickList
             case R.id.edit:
                 mEditView.setVisibility(View.VISIBLE);
                 mTextView.setVisibility(View.GONE);
+                break;
+            case R.id.select_all:
+                try {
+                    TextView textView = mEditView.getVisibility() == View.VISIBLE ? mEditView : mTextView;
+                    Selection.selectAll((Spannable) textView.getText());
+                    Object editor = ReflectUtils.getObjectField(textView, "mEditor");
+                    ReflectUtils.callMethod(editor, "startSelectionActionModeAsync",
+                            new Object[] { false }, new Class[] { boolean.class } );
+                } catch (Throwable e) {
+                    Logger.e("Select all exception.", e);
+                }
                 break;
         }
     }
