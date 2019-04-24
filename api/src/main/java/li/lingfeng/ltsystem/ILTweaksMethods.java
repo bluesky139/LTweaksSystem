@@ -16,6 +16,9 @@ public abstract class ILTweaksMethods {
     public void android_os_PowerManager__getMinimumScreenBrightnessSetting__(MethodParam param) {
     }
 
+    public void android_app_ContextImpl__startActivity__Intent_Bundle(MethodParam param) {
+    }
+
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(MethodParam param) {
     }
 
