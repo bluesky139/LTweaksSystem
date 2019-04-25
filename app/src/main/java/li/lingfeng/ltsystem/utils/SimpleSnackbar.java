@@ -2,7 +2,9 @@ package li.lingfeng.ltsystem.utils;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
@@ -48,7 +50,7 @@ public class SimpleSnackbar extends LinearLayout {
         mActivity = activity;
         mDuration = duration;
         mHandler = new Handler();
-        setBackgroundColor(Color.parseColor("#FF303030"));
+        setBackgroundColor(0xFF303030);
         setOrientation(LinearLayout.HORIZONTAL);
         createTextView(mainText);
     }
@@ -82,26 +84,57 @@ public class SimpleSnackbar extends LinearLayout {
         StateListDrawable bgColor = new StateListDrawable();
         bgColor.setExitFadeDuration(250);
         GradientDrawable pressedDrawable = new GradientDrawable();
-        pressedDrawable.setColor(Color.parseColor("#FF464646"));
-        pressedDrawable.setStroke(dp2px(4f), Color.parseColor("#FF303030"));
+        pressedDrawable.setColor(0xFF464646);
+        pressedDrawable.setStroke(dp2px(4f), 0xFF303030);
         bgColor.addState(new int[] { android.R.attr.state_pressed }, pressedDrawable);
-        bgColor.addState(new int[] {}, new ColorDrawable(Color.parseColor("#FF303030")));
+        bgColor.addState(new int[] {}, new ColorDrawable(0xFF303030));
         button.setBackgroundDrawable(bgColor);
 
-        button.setTextColor(Color.parseColor("#FFFF4081"));
+        button.setTextColor(0xFFFF4081);
         button.setText(buttonText);
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logger.i("SimpleSnackbar onClick.");
-                dismiss();
-                clickListener.onClick(v);
-            }
+        button.setOnClickListener((v) -> {
+            Logger.i("SimpleSnackbar onClick.");
+            dismiss();
+            clickListener.onClick(v);
         });
 
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT | Gravity.END;
         params.rightMargin = dp2px(6f);
+        addView(button, params);
+    }
+
+    public SimpleSnackbar setAction(Drawable drawable, OnClickListener clickListener) {
+        createButton(drawable, clickListener);
+        return this;
+    }
+
+    protected void createButton(Drawable drawable, final OnClickListener clickListener) {
+        Button button = new Button(getContext());
+        button.setMinWidth(dp2px(48f));
+
+        drawable.setTintMode(PorterDuff.Mode.SRC_ATOP);
+        drawable.setTint(0xFFFF4081);
+
+        StateListDrawable bgColor = new StateListDrawable();
+        bgColor.setExitFadeDuration(250);
+        GradientDrawable pressedDrawable = new GradientDrawable();
+        pressedDrawable.setColor(0xFF464646);
+        pressedDrawable.setStroke(dp2px(4f), 0xFF303030);
+        bgColor.addState(new int[] { android.R.attr.state_pressed }, pressedDrawable);
+        bgColor.addState(new int[] {}, drawable);
+        button.setBackgroundDrawable(bgColor);
+
+        button.setOnClickListener((v) -> {
+            Logger.i("SimpleSnackbar onClick.");
+            dismiss();
+            clickListener.onClick(v);
+        });
+
+        LayoutParams params = new LayoutParams(dp2px(20f), dp2px(20f));
+        params.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT | Gravity.END;
+        params.leftMargin = dp2px(10f);
+        params.rightMargin = dp2px(10f);
         addView(button, params);
     }
 
