@@ -41,6 +41,7 @@ public class PackageNames {
     public static final String DIALER = "com.android.dialer";
     public static final String PUSH_BULLET = "com.pushbullet.android";
     public static final String TT_RSS = "org.fox.ttrss";
+    public static final String TELEGRAM = "org.telegram.messenger";
 
     // Entertainment
     public static final String DOUBAN = "com.douban.frodo";

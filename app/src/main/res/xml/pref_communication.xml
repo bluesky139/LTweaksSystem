@@ -92,4 +92,11 @@
             android:key="@string/key_ttrss_toolbar_no_hide"
             android:title="@string/pref_ttrss_toolbar_no_hide" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_category_telegram">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_telegram_remove_floating_button"
+            android:title="@string/pref_telegram_remove_floating_button" />
+    </PreferenceCategory>
 </PreferenceScreen>

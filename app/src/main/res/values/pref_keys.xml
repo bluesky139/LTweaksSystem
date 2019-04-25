@@ -40,6 +40,7 @@
     <string name="key_ttrss_refresh_menu">key_ttrss_refresh_menu</string>
     <string name="key_ttrss_darken">key_ttrss_darken</string>
     <string name="key_ttrss_toolbar_no_hide">key_ttrss_toolbar_no_hide</string>
+    <string name="key_telegram_remove_floating_button">key_telegram_remove_floating_button</string>
 
     <!--Entertainment-->
     <string name="key_douban_search">key_douban_search</string>

@@ -120,6 +120,10 @@ public class ViewUtils {
         return results.size() >= minCount ? results : new ArrayList<T>();
     }
 
+    public static <T extends View> T findViewByType(Activity activity, final Class<? extends View> type) {
+        return findViewByType((ViewGroup) activity.getWindow().getDecorView(), type);
+    }
+
     public static <T extends View> T findViewByType(ViewGroup rootView, final Class<? extends View> type) {
         return findViewByType(rootView, type, -1);
     }
