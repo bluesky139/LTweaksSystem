@@ -27,10 +27,11 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 @MethodsLoad(packages = PackageNames.WE_CHAT, prefs = R.string.key_wechat_classic_theme)
 public class WeChatClassicTheme extends TweakBase {
 
-    private static final int COLOR = Color.parseColor("#303030");
+    private static final int COLOR = 0xFF303030;
     private static final int MAX_TOOLBAR_COUNT_IN_ACTIVITY = 2;
     private WeakHashMap<Activity, List<ViewGroup>> mActivityToolbars = new WeakHashMap<>(10);
     private WeakReference<TextView> mTitleTextView;
+    private WeakHashMap<View, Void> mStatusBarBackgrounds = new WeakHashMap<>(5);
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
@@ -67,6 +68,7 @@ public class WeChatClassicTheme extends TweakBase {
                             if (viewGroup.indexOfChild(statusBarBackground) != viewGroup.getChildCount() - 1) {
                                 statusBarBackground.bringToFront();
                             }
+                            mStatusBarBackgrounds.put(statusBarBackground, null);
                         }
                     } catch (Throwable e) {
                         Logger.e("Exception in classic theme global layout listener.", e);
@@ -136,6 +138,15 @@ public class WeChatClassicTheme extends TweakBase {
         param.before(() -> {
             TextView textView = mTitleTextView != null ? mTitleTextView.get() : null;
             if (param.thisObject == textView && Color.WHITE != (int) param.args[0]) {
+                param.setResult(null);
+            }
+        });
+    }
+
+    @Override
+    public void android_view_View__setBackgroundColor__int(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            if (mStatusBarBackgrounds.containsKey(param.thisObject) && (int) param.args[0] != COLOR) {
                 param.setResult(null);
             }
         });
