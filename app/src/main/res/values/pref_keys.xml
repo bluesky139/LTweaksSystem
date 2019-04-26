@@ -41,6 +41,7 @@
     <string name="key_ttrss_darken">key_ttrss_darken</string>
     <string name="key_ttrss_toolbar_no_hide">key_ttrss_toolbar_no_hide</string>
     <string name="key_telegram_remove_floating_button">key_telegram_remove_floating_button</string>
+    <string name="key_telegram_open_url_without_confirmation">key_telegram_open_url_without_confirmation</string>
 
     <!--Entertainment-->
     <string name="key_douban_search">key_douban_search</string>

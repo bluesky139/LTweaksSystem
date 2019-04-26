@@ -98,5 +98,9 @@
             android:defaultValue="false"
             android:key="@string/key_telegram_remove_floating_button"
             android:title="@string/pref_telegram_remove_floating_button" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_telegram_open_url_without_confirmation"
+            android:title="@string/pref_telegram_open_url_without_confirmation" />
     </PreferenceCategory>
 </PreferenceScreen>
