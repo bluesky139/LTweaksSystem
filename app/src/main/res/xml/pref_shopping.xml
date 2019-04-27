@@ -9,6 +9,14 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_taobao">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_taobao_ads"
+            android:title="@string/pref_taobao_ads" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_jd">
         <SwitchPreference
             android:defaultValue="false"
