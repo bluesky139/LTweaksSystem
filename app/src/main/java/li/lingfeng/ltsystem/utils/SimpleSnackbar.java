@@ -52,6 +52,7 @@ public class SimpleSnackbar extends LinearLayout {
         mHandler = new Handler();
         setBackgroundColor(0xFF303030);
         setOrientation(LinearLayout.HORIZONTAL);
+        setOnTouchListener((v, event) -> true);
         createTextView(mainText);
     }
 
