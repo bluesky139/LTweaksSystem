@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -33,6 +34,9 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
     private static final String MI_PAGER = "com.mixplorer.widgets.MiPager";
     private static final int HIGHLIGHT_COLOR = 0xFF383838;
     private DBHelper mDBHelper;
+    private WeakReference<ViewGroup> mButtons;
+    private boolean mHasButtons = false;
+    private WeakReference<TextView> mNavPathView;
     private String mNavPath;
     private String mVisitedFile;
     private WeakHashMap<ViewGroup, Void> mPages = new WeakHashMap<>(5);
@@ -46,26 +50,16 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
             Activity activity = (Activity) param.thisObject;
             ViewGroup rootView = (ViewGroup) activity.getWindow().getDecorView();
 
-            TextView navPath = (TextView) ViewUtils.findViewByName(rootView, "nav_path");
-            navPath.addTextChangedListener(new TextWatcher() {
+            updateNavPathView(rootView);
+            ViewGroup topBar = (ViewGroup) ViewUtils.findViewByName(rootView, "top_bar");
+            topBar.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                public void onChildViewAdded(View parent, View child) {
+                    updateNavPathView(topBar);
                 }
 
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    mNavPath = s.toString();
-                    mVisitedFile = mDBHelper.getVisitedFile(mNavPath);
-                    Logger.v("Nav path changed " + mNavPath + ", visited file " + mVisitedFile);
-                    try {
-                        refreshHightlight();
-                    } catch (Throwable e) {
-                        Logger.e("refreshHightlight exception after nav path changed.", e);
-                    }
+                public void onChildViewRemoved(View parent, View child) {
                 }
             });
 
@@ -90,6 +84,63 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
                     mPages.remove(page);
                 }
             });
+        });
+    }
+
+    private void updateNavPathView(ViewGroup viewGroup) {
+        ViewGroup buttons = (ViewGroup) ViewUtils.findViewByName(viewGroup, "buttons");
+        if (buttons == null) {
+            mButtons = null;
+            mHasButtons = false;
+        } else if (mButtons == null || mButtons.get() != buttons) {
+            mButtons = new WeakReference<>(buttons);
+            mHasButtons = buttons.getChildCount() > 0;
+            buttons.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                @Override
+                public void onChildViewAdded(View parent, View child) {
+                    mHasButtons = ((ViewGroup) parent).getChildCount() > 0;
+                }
+
+                @Override
+                public void onChildViewRemoved(View parent, View child) {
+                    mHasButtons = ((ViewGroup) parent).getChildCount() > 0;
+                }
+            });
+        }
+
+        TextView navPath = (TextView) ViewUtils.findViewByName(viewGroup, "nav_path");
+        if (navPath == null || (mNavPathView != null && mNavPathView.get() == navPath)) {
+            return;
+        }
+        Logger.d("updateNavPathView " + navPath);
+        mNavPathView = new WeakReference<>(navPath);
+        navPath.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mHasButtons) {
+                    Logger.d("buttons exist, empty nav path.");
+                    mNavPathView = null;
+                    mNavPath = null;
+                    mVisitedFile = null;
+                    return;
+                }
+                mNavPath = s.toString();
+                mVisitedFile = mDBHelper.getVisitedFile(mNavPath);
+                Logger.v("Nav path changed " + mNavPath + ", visited file " + mVisitedFile);
+                try {
+                    refreshHightlight();
+                } catch (Throwable e) {
+                    Logger.e("refreshHightlight exception after nav path changed.", e);
+                }
+            }
         });
     }
 
@@ -137,16 +188,18 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
             }
             fileChild.setOnClickListener((v) -> {
                 try {
-                    String name2 = getFileNameIfItsFile(v);
-                    if (name2 != null) {
-                        Logger.i("File visited: " + name2);
-                        mVisitedFile = name2;
-                        mDBHelper.fileVisited(mNavPath, name2);
-                        ViewGroup page = (ViewGroup) v.getParent();
-                        for (int i = 0; i < page.getChildCount(); ++i) {
-                            page.getChildAt(i).setBackground(null);
+                    if (mNavPath != null) {
+                        String name2 = getFileNameIfItsFile(v);
+                        if (name2 != null) {
+                            Logger.i("File visited: " + name2);
+                            mVisitedFile = name2;
+                            mDBHelper.fileVisited(mNavPath, name2);
+                            ViewGroup page = (ViewGroup) v.getParent();
+                            for (int i = 0; i < page.getChildCount(); ++i) {
+                                page.getChildAt(i).setBackground(null);
+                            }
+                            v.setBackgroundColor(HIGHLIGHT_COLOR);
                         }
-                        v.setBackgroundColor(HIGHLIGHT_COLOR);
                     }
                 } catch (Throwable e) {
                     Logger.e("File click exception.", e);
