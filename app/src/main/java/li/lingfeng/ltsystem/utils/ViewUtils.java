@@ -338,16 +338,6 @@ public class ViewUtils {
         new AlertDialog.Builder(context)
                 .setMessage(messageId)
                 .setPositiveButton(ContextUtils.getLString(R.string.app_ok), positiveListener)
-                .setOnKeyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                        if (keyCode == KeyEvent.KEYCODE_BACK && positiveListener != null) {
-                            positiveListener.onClick(dialog, AlertDialog.BUTTON_POSITIVE);
-                            return true;
-                        }
-                        return false;
-                    }
-                })
                 .show();
     }
 

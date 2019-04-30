@@ -158,6 +158,7 @@ public class Patcher {
         if (!info.methodName.equals("static")) {
             String[] paramTypes = Arrays.stream(info.getParamTypes())
                     .map(type -> Utils.replace$ToAngleBrackets(type))
+                    .map(type -> type.replace("$array", "[]"))
                     .map(type -> type.replace('$', '.'))
                     .toArray(String[]::new);
             if (info.getClassSimpleName().equals(info.methodName)) {

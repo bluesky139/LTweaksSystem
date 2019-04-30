@@ -187,6 +187,9 @@ public abstract class ILTweaksMethods {
     public void com_android_server_pm_PackageManagerService__setComponentEnabledSetting__ComponentName_int_int_int(MethodParam param) {
     }
 
+    public void com_android_server_pm_PackageDexOptimizer__performDexOptLI__PackageParser$Package_String$array_String$array_CompilerStats$PackageStats_PackageDexUsage$PackageUseInfo_DexoptOptions(MethodParam param) {
+    }
+
     public void com_android_server_AlarmManagerService__setImpl__int_long_long_long_PendingIntent_IAlarmListener_String_int_WorkSource_AlarmManager$AlarmClockInfo_int_String(MethodParam param) {
     }
 
