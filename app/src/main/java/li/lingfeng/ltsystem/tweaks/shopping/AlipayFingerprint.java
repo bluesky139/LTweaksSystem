@@ -263,7 +263,7 @@ public class AlipayFingerprint extends TweakBase {
         if (payButton == null) {
             Optional<TextView> textView = ViewUtils.findAllViewByType((ViewGroup) activity.getWindow().getDecorView(), TextView.class)
                     .stream()
-                    .filter(v -> StringUtils.equalsAny(v.getText().toString(), "付款", "Pay", "确定"))
+                    .filter(v -> StringUtils.equalsAny(v.getText().toString(), "付款", "Pay", "确定", "确认"))
                     .findFirst();
             if (textView.isPresent()) {
                 payButton = textView.get();
