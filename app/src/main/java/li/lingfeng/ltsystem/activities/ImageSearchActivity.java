@@ -158,9 +158,8 @@ public class ImageSearchActivity extends Activity {
         }
 
         Request request = new Request.Builder()
-                .url("https://transfer.sh/ltweaks-image-search.png")
-                .put(RequestBody.create(MEDIA_TYPE_PNG, bytes))
-                .header("Max-Days", "1")
+                .url("http://172.96.200.226:8000/tmp_image/")
+                .post(RequestBody.create(MEDIA_TYPE_PNG, bytes))
                 .build();
         new OkHttpClient().newCall(request).enqueue(new Callback() {
             @Override
