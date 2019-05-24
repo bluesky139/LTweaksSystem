@@ -55,6 +55,11 @@
             android:defaultValue="false"
             android:key="@string/key_bilibili_remove_upper_ad"
             android:title="@string/pref_bilibili_remove_upper_ad" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_bilibili_best_quality"
+            android:title="@string/pref_bilibili_best_quality"
+            android:summary="@string/pref_bilibili_best_quality_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_steam">
