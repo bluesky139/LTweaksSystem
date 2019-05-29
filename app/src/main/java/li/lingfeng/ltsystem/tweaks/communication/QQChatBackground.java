@@ -24,8 +24,10 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 public class QQChatBackground extends TweakBase {
 
     private static final String SPLASH_ACTIVITY = "com.tencent.mobileqq.activity.SplashActivity";
+    private static final String TOP_GESTURE_LAYOUT = "com.tencent.mobileqq.activity.fling.TopGestureLayout";
     private static final String CHAT_LISTVIEW = "com.tencent.mobileqq.bubble.ChatXListView";
     private static final int TITLE_COLOR = Color.parseColor("#00B1E9");
+    private ViewGroup mTopGestureLayout;
     private boolean mInChatList = false;
     private BitmapDrawable mLargestDrawable;
     private LruCache<Integer, BitmapDrawable> mBackgroundDrawables; // height -> drawable, consider width is fixed.
@@ -60,14 +62,37 @@ public class QQChatBackground extends TweakBase {
             }
 
             final Activity activity = (Activity) param.thisObject;
-            final ViewGroup rootView = (ViewGroup) activity.findViewById(android.R.id.content);
+            final ViewGroup rootView = activity.findViewById(android.R.id.content);
             rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
                 try {
+                    if (mTopGestureLayout == null) {
+                        mTopGestureLayout = (ViewGroup) ViewUtils.findViewByType(activity, findClass(TOP_GESTURE_LAYOUT));
+                        if (mTopGestureLayout != null) {
+                            Logger.d("mTopGestureLayout " + mTopGestureLayout);
+                            mTopGestureLayout.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                                @Override
+                                public void onChildViewAdded(View parent, View child) {
+                                    Logger.d("mTopGestureLayout onChildViewAdded " + child);
+                                    mBackgroundView = null;
+                                    try {
+                                        handleLayoutChanged((ViewGroup) child);
+                                    } catch (Throwable e) {
+                                        Logger.e("Error to handleLayoutChanged in onChildViewAdded.", e);
+                                    }
+                                }
+
+                                @Override
+                                public void onChildViewRemoved(View parent, View child) {
+                                }
+                            });
+                        }
+                    }
+
                     if (mInChatList && mBackgroundView == null) {
                         handleLayoutChanged(rootView);
                     }
                 } catch (Throwable e) {
-                    Logger.e("Error to handleLayoutChanged.", e);
+                    Logger.e("Error in root onGlobalLayout().", e);
                 }
             });
         });
@@ -86,6 +111,7 @@ public class QQChatBackground extends TweakBase {
     @Override
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
         afterOnClass(SPLASH_ACTIVITY, param, () -> {
+            mTopGestureLayout = null;
             mInChatList = false;
             mBackgroundView = null;
             mBackgroundDrawables = null;
@@ -100,12 +126,6 @@ public class QQChatBackground extends TweakBase {
             return;
         }
 
-        int width = chatListView.getMeasuredWidth();
-        int measuredHeight = chatListView.getMeasuredHeight();
-        if (width <= 0 || measuredHeight <= 0 || !ViewUtils.isVisibleWithParent(chatListView)) {
-            return;
-        }
-
         mBackgroundView = chatListView;
         mBackgroundView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -114,10 +134,14 @@ public class QQChatBackground extends TweakBase {
                     v.removeOnLayoutChangeListener(this);
                     return;
                 }
+                if (right <= 0 || bottom <= 0) {
+                    return;
+                }
 
                 //Logger.d("mBackgroundView onLayoutChange " + bottom + ", " + oldBottom);
                 if (bottom != oldBottom || mBackgroundView.getBackground() == null) {
                     BitmapDrawable drawable = null;
+                    int width = right - left;
                     int height = bottom - top;
                     if (mLargestDrawable != null && mLargestDrawable.getBitmap().getHeight() == height) {
                         drawable = mLargestDrawable;
