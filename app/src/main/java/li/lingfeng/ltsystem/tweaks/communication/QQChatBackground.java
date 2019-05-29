@@ -33,6 +33,7 @@ public class QQChatBackground extends TweakBase {
     private LruCache<Integer, BitmapDrawable> mBackgroundDrawables; // height -> drawable, consider width is fixed.
     private long mLastModified = 0;
     private ViewGroup mBackgroundView;
+    private View mTitlePrev;
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
@@ -104,6 +105,7 @@ public class QQChatBackground extends TweakBase {
             mInChatList = ((int) param.args[0] & View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR) > 0;
             if (!mInChatList) {
                 mBackgroundView = null;
+                mTitlePrev = null;
             }
         });
     }
@@ -116,6 +118,7 @@ public class QQChatBackground extends TweakBase {
             mBackgroundView = null;
             mBackgroundDrawables = null;
             mLargestDrawable = null;
+            mTitlePrev = null;
         });
     }
 
@@ -185,12 +188,20 @@ public class QQChatBackground extends TweakBase {
                         mBackgroundView.setBackgroundDrawable(drawable);
                     }
                 }
+            }
+        });
 
-                View title = ViewUtils.findViewByName(rootView, "rlCommenTitle");
-                if (title != null && ViewUtils.isVisibleWithParent(title)) {
-                    title.setBackgroundColor(TITLE_COLOR);
-                    ViewUtils.prevView(title).setBackgroundColor(TITLE_COLOR);
-                }
+        View title = ViewUtils.findViewByName(rootView, "rlCommenTitle");
+        title.setBackgroundColor(TITLE_COLOR);
+        mTitlePrev = ViewUtils.prevView(title);
+        mTitlePrev.setBackgroundColor(TITLE_COLOR);
+    }
+
+    @Override
+    public void android_view_View__setBackgroundColor__int(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            if (mTitlePrev == param.thisObject && (int) param.args[0] == 0xFFF6F7F9) {
+                param.setResult(null);
             }
         });
     }
