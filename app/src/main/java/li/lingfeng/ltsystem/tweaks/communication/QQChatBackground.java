@@ -124,77 +124,93 @@ public class QQChatBackground extends TweakBase {
 
     private void handleLayoutChanged(ViewGroup rootView) throws Throwable {
         //Logger.d("rootView handleLayoutChanged");
-        ViewGroup chatListView = (ViewGroup) ViewUtils.findViewByType(rootView, (Class<? extends View>) findClass(CHAT_LISTVIEW));
+        ViewGroup chatListView = ViewUtils.findViewByType(rootView, (Class<? extends View>) findClass(CHAT_LISTVIEW));
         if (chatListView == null) {
             return;
         }
 
         mBackgroundView = chatListView;
-        mBackgroundView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (v != mBackgroundView) {
-                    v.removeOnLayoutChangeListener(this);
-                    return;
-                }
-                if (right <= 0 || bottom <= 0) {
-                    return;
-                }
-
-                //Logger.d("mBackgroundView onLayoutChange " + bottom + ", " + oldBottom);
-                if (bottom != oldBottom || mBackgroundView.getBackground() == null) {
-                    BitmapDrawable drawable = null;
-                    int width = right - left;
-                    int height = bottom - top;
-                    if (mLargestDrawable != null && mLargestDrawable.getBitmap().getHeight() == height) {
-                        drawable = mLargestDrawable;
-                    }
-                    if (drawable == null) {
-                        drawable = mBackgroundDrawables.get(height);
-                    }
-
-                    if (drawable == null) {
-                        if (mLargestDrawable != null && mLargestDrawable.getBitmap().getHeight() > height) {
-                            Bitmap bitmap = IOUtils.bitmapCopy(mLargestDrawable.getBitmap(), 0, 0, width, height);
-                            if (bitmap == null) {
-                                return;
-                            }
-                            drawable = new BitmapDrawable(bitmap);
-                            mBackgroundDrawables.put(height, drawable);
-                        }
-
-                        if (drawable == null) {
-                            mBackgroundDrawables.evictAll();
-                            if (mLargestDrawable != null) {
-                                removeBackgroundDrawable(mLargestDrawable);
-                                mLargestDrawable = null;
-                            }
-                            String filepath = getImagePath();
-                            if (!new File(filepath).exists()) {
-                                Logger.e("Can't access file " + filepath);
-                                return;
-                            }
-                            Bitmap dest = IOUtils.createCenterCropBitmapFromFile(filepath, width, height);
-                            if (dest == null) {
-                                return;
-                            }
-                            drawable = new BitmapDrawable(dest);
-                            mLargestDrawable = drawable;
-                        }
-                    }
-
-                    if (mBackgroundView.getBackground() != drawable) {
-                        Logger.i("Set chat activity background, " + width + "x" + height);
-                        mBackgroundView.setBackgroundDrawable(drawable);
-                    }
-                }
+        if (mBackgroundView.getBackground() == null) {
+            int measuredHeight = mBackgroundView.getMeasuredHeight();
+            if (measuredHeight > 0) {
+                int measuredWidth = mBackgroundView.getMeasuredWidth();
+                Logger.d("Has measuredWidth " + measuredWidth + ", measuredHeight " + measuredHeight);
+                updateChatBackground(measuredWidth, measuredHeight);
             }
-        });
+
+            mBackgroundView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    if (v != mBackgroundView) {
+                        // We only set layout change listener once, so we shouldn't remove listener if not in chat page.
+                        if (mBackgroundView != null) {
+                            v.removeOnLayoutChangeListener(this);
+                        }
+                        return;
+                    }
+                    if (right <= 0 || bottom <= 0) {
+                        return;
+                    }
+
+                    //Logger.d("mBackgroundView onLayoutChange " + bottom + ", " + oldBottom);
+                    if (bottom != oldBottom || mBackgroundView.getBackground() == null) {
+                        int width = right - left;
+                        int height = bottom - top;
+                        updateChatBackground(width, height);
+                    }
+                }
+            });
+        }
 
         View title = ViewUtils.findViewByName(rootView, "rlCommenTitle");
         title.setBackgroundColor(TITLE_COLOR);
         mTitlePrev = ViewUtils.prevView(title);
         mTitlePrev.setBackgroundColor(TITLE_COLOR);
+    }
+
+    private void updateChatBackground(int width, int height) {
+        BitmapDrawable drawable = null;
+        if (mLargestDrawable != null && mLargestDrawable.getBitmap().getHeight() == height) {
+            drawable = mLargestDrawable;
+        }
+        if (drawable == null) {
+            drawable = mBackgroundDrawables.get(height);
+        }
+
+        if (drawable == null) {
+            if (mLargestDrawable != null && mLargestDrawable.getBitmap().getHeight() > height) {
+                Bitmap bitmap = IOUtils.bitmapCopy(mLargestDrawable.getBitmap(), 0, 0, width, height);
+                if (bitmap == null) {
+                    return;
+                }
+                drawable = new BitmapDrawable(bitmap);
+                mBackgroundDrawables.put(height, drawable);
+            }
+
+            if (drawable == null) {
+                mBackgroundDrawables.evictAll();
+                if (mLargestDrawable != null) {
+                    removeBackgroundDrawable(mLargestDrawable);
+                    mLargestDrawable = null;
+                }
+                String filepath = getImagePath();
+                if (!new File(filepath).exists()) {
+                    Logger.e("Can't access file " + filepath);
+                    return;
+                }
+                Bitmap dest = IOUtils.createCenterCropBitmapFromFile(filepath, width, height);
+                if (dest == null) {
+                    return;
+                }
+                drawable = new BitmapDrawable(dest);
+                mLargestDrawable = drawable;
+            }
+        }
+
+        if (mBackgroundView.getBackground() != drawable) {
+            Logger.i("Set chat activity background, " + width + "x" + height);
+            mBackgroundView.setBackgroundDrawable(drawable);
+        }
     }
 
     @Override
@@ -208,7 +224,7 @@ public class QQChatBackground extends TweakBase {
 
     private void removeBackgroundDrawable(BitmapDrawable drawable) {
         if (mBackgroundView != null && mBackgroundView.getBackground() == drawable) {
-            mBackgroundView.setBackgroundColor(Color.TRANSPARENT);
+            mBackgroundView.setBackground(null);
         }
         drawable.getBitmap().recycle();
     }
