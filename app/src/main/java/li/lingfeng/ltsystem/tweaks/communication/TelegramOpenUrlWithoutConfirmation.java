@@ -20,9 +20,10 @@ public class TelegramOpenUrlWithoutConfirmation extends TweakBase {
     public void android_app_Dialog__show__(ILTweaks.MethodParam param) {
         beforeOnClass(ALERT_DIALOG, param, () -> {
             Dialog dialog = (Dialog) param.thisObject;
+            String title = ReflectUtils.getObjectField(dialog, "title").toString();
             String message = ReflectUtils.getObjectField(dialog, "message").toString();
-            if (message.startsWith("Open url ")) {
-                Logger.v(message + " without confirmation.");
+            if (title.equals("Open Link") && message.startsWith("Do you want to open ")) {
+                Logger.v(message + " Yes.");
                 DialogInterface.OnClickListener listener = (DialogInterface.OnClickListener)
                         ReflectUtils.getObjectField(dialog, "positiveButtonListener");
                 listener.onClick(dialog, -1);
