@@ -22,6 +22,7 @@ public class WeChatBrowser extends TweakBase {
         afterOnClass(ClassNames.WE_CHAT_LAUNCHER_UI, param, () -> {
             final Activity activity = (Activity) param.thisObject;
             String url = activity.getIntent().getStringExtra("ltweaks_open_url");
+            Logger.d("WeChat performCreate ltweaks_open_url " + url);
             if (url != null) {
                 openBrowser(activity, url);
             }
@@ -34,6 +35,7 @@ public class WeChatBrowser extends TweakBase {
             Activity activity = (Activity) param.thisObject;
             Intent intent = (Intent) param.args[0];
             String url = intent.getStringExtra("ltweaks_open_url");
+            Logger.d("WeChat performNewIntent ltweaks_open_url " + url);
             if (url != null) {
                 openBrowser(activity, url);
             }
