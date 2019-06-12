@@ -17,6 +17,7 @@ import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
+import li.lingfeng.ltsystem.prefs.Prefs;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
@@ -58,24 +59,55 @@ public class ShadowsocksTransproxy extends TweakBase {
         afterOnClass(TRANSPROXY_SERVICE, param, () -> {
             mStarted = true;
             final long startTime = System.currentTimeMillis();
-            String[] ipList = ContextUtils.getLStringArray(R.array.shadowsocks_bypass_ip_list);
-            String[] preCmds = new String[] {
-                    "iptables -w -t nat -D OUTPUT -j Shadowsocks",
-                    "iptables -w -t nat -F Shadowsocks",
-                    "iptables -w -t nat -N Shadowsocks",
-                    "iptables -w -t nat -A Shadowsocks -o lo -j RETURN",
-                    "iptables -w -t nat -A Shadowsocks -d 127.0.0.1 -j RETURN",
-                    "iptables -w -t nat -A Shadowsocks -m owner --uid-owner " + PackageUtils.getUid() + " -j RETURN",
-                    "iptables -w -t nat -A Shadowsocks -p udp --dport 53 -j DNAT --to-destination 127.0.0.1:5450",
-                    "iptables -w -t nat -A Shadowsocks -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1:5450",
-            };
-            String[] cmds = new String[preCmds.length + ipList.length + 2];
-            System.arraycopy(preCmds, 0, cmds, 0, preCmds.length);
-            for (int i = 0; i < ipList.length; ++i) {
-                cmds[i + preCmds.length] = "iptables -w -t nat -A Shadowsocks -p all -d " + ipList[i] + " -j RETURN";
+            String[] cmds;
+            if (Prefs.instance().getBoolean(R.string.key_shadowsocks_transproxy_with_ipset, false)) {
+                cmds = new String[] {
+                        "iptables -w -t nat -D OUTPUT -j Shadowsocks",
+                        "iptables -w -t nat -F Shadowsocks",
+                        "iptables -w -t nat -N Shadowsocks",
+                        "iptables -w -t nat -A Shadowsocks -o lo -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -d 127.0.0.1 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -m owner --uid-owner " + PackageUtils.getUid() + " -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p udp --dport 53 -j REDIRECT --to-port 5450",
+                        "iptables -w -t nat -A Shadowsocks -p tcp --dport 53 -j REDIRECT --to-port 5450",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 0.0.0.0/8 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 10.0.0.0/8 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 100.64.0.0/10 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 127.0.0.0/8 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 169.254.0.0/16 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 172.16.0.0/12 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 192.0.0.0/29 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 192.0.2.0/24 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 192.88.99.0/24 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 192.168.0.0/16 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 198.18.0.0/15 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 198.51.100.0/24 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 203.0.113.0/24 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -d 224.0.0.0/3 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p all -m set --match-set china_ip_list dst -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p tcp -j REDIRECT --to-port 8200",
+                        "iptables -w -t nat -A OUTPUT -j Shadowsocks"
+                };
+            } else {
+                String[] ipList = ContextUtils.getLStringArray(R.array.shadowsocks_bypass_ip_list);
+                String[] preCmds = new String[] {
+                        "iptables -w -t nat -D OUTPUT -j Shadowsocks",
+                        "iptables -w -t nat -F Shadowsocks",
+                        "iptables -w -t nat -N Shadowsocks",
+                        "iptables -w -t nat -A Shadowsocks -o lo -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -d 127.0.0.1 -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -m owner --uid-owner " + PackageUtils.getUid() + " -j RETURN",
+                        "iptables -w -t nat -A Shadowsocks -p udp --dport 53 -j DNAT --to-destination 127.0.0.1:5450",
+                        "iptables -w -t nat -A Shadowsocks -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1:5450",
+                };
+                cmds = new String[preCmds.length + ipList.length + 2];
+                System.arraycopy(preCmds, 0, cmds, 0, preCmds.length);
+                for (int i = 0; i < ipList.length; ++i) {
+                    cmds[i + preCmds.length] = "iptables -w -t nat -A Shadowsocks -p all -d " + ipList[i] + " -j RETURN";
+                }
+                cmds[cmds.length - 2] = "iptables -w -t nat -A Shadowsocks -p tcp -j DNAT --to-destination 127.0.0.1:8200";
+                cmds[cmds.length - 1] = "iptables -w -t nat -A OUTPUT -j Shadowsocks";
             }
-            cmds[cmds.length - 2] = "iptables -w -t nat -A Shadowsocks -p tcp -j DNAT --to-destination 127.0.0.1:8200";
-            cmds[cmds.length - 1] = "iptables -w -t nat -A OUTPUT -j Shadowsocks";
 
             createOngoingNotification();
             synchronized (ShadowsocksTransproxy.this) {
