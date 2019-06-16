@@ -395,7 +395,7 @@ public class Patcher {
         File srcDir = new File("./api/src/main/java/li/lingfeng/ltsystem");
 
         File[] srcFiles = srcDir.listFiles();
-        File mkFile = new File(Config.ANDROID_SOURCE_DIR + "/libcore/openjdk_java_files.mk");
+        File mkFile = new File(Config.ANDROID_SOURCE_DIR + "/libcore/openjdk_java_files.bp");
         String mkContent = FileUtils.readFileToString(mkFile, "UTF-8");
 
         for (File srcFile : srcFiles) {
@@ -408,9 +408,9 @@ public class Patcher {
             FileUtils.copyFile(srcFile, dstFile);
 
             if (dstDir == dstLibcoreDir) {
-                int i = mkContent.indexOf('\n') + 1;
-                mkContent = mkContent.substring(0, i) + "    ojluni/src/main/java/li/lingfeng/ltsystem/"
-                        + dstFile.getName() + " \\\n" + mkContent.substring(i);
+                int i = mkContent.indexOf("srcs: [\n") + 8;
+                mkContent = mkContent.substring(0, i) + "        \"ojluni/src/main/java/li/lingfeng/ltsystem/"
+                        + dstFile.getName() + "\",\n" + mkContent.substring(i);
             }
         }
         FileUtils.writeStringToFile(mkFile, mkContent, "UTF-8");

@@ -154,10 +154,10 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_statusbar_phone_NotificationPanelView__setQsExpansion__float(MethodParam param) {
     }
 
-    public void com_android_systemui_statusbar_phone_NavigationBarView__setDisabledFlags__int_boolean(MethodParam param) {
+    public void com_android_systemui_statusbar_phone_NavigationBarView__setDisabledFlags__int(MethodParam param) {
     }
 
-    public void com_android_systemui_statusbar_phone_NavigationBarView__setNavigationIconHints__int_boolean(MethodParam param) {
+    public void com_android_systemui_statusbar_phone_NavigationBarView__setNavigationIconHints__int(MethodParam param) {
     }
 
     public void com_android_systemui_statusbar_policy_MobileSignalController__mapIconSets__(MethodParam param) {
@@ -205,6 +205,6 @@ public abstract class ILTweaksMethods {
     public void com_android_server_webkit_SystemImpl__SystemImpl__(MethodParam param) {
     }
 
-    public void com_android_server_display_NightDisplayService__static__(MethodParam param) {
+    public void com_android_server_display_ColorDisplayService__static__(MethodParam param) {
     }
 }

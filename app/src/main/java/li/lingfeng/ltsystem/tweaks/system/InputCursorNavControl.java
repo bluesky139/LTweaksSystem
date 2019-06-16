@@ -18,14 +18,14 @@ public class InputCursorNavControl extends TweakBase {
     private boolean mVisible = false;
 
     @Override
-    public void com_android_systemui_statusbar_phone_NavigationBarView__setDisabledFlags__int_boolean(ILTweaks.MethodParam param) {
+    public void com_android_systemui_statusbar_phone_NavigationBarView__setDisabledFlags__int(ILTweaks.MethodParam param) {
         param.after(() -> {
             updateVisibility((View) param.thisObject);
         });
     }
 
     @Override
-    public void com_android_systemui_statusbar_phone_NavigationBarView__setNavigationIconHints__int_boolean(ILTweaks.MethodParam param) {
+    public void com_android_systemui_statusbar_phone_NavigationBarView__setNavigationIconHints__int(ILTweaks.MethodParam param) {
         param.after(() -> {
             updateVisibility((View) param.thisObject);
         });

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import li.lingfeng.ltsystem.common.Config;
@@ -54,11 +55,36 @@ public class Magisk {
 
     private List<String> generateFileList() {
         List<String> list = new ArrayList<>();
-        list.add("framework/arm");
         list.add("framework/oat");
+
+        Function<Pair<String, String>, List<String>> collectAllFiles = (folder) -> {
+            File dir = new File(folder.getLeft() + "/" + folder.getRight());
+            List<String> files = new ArrayList<>();
+            for (File file : dir.listFiles()) {
+                if (file.isFile() && !file.getName().endsWith(".apk")) {
+                    if (file.getName().endsWith(".jar")) {
+                        try {
+                            ZipFile zipFile = new ZipFile(file);
+                            if (zipFile.getEntry("classes.dex") == null) {
+                                continue;
+                            }
+                        } catch (Throwable e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    String s = folder.getRight() + "/" + file.getName();
+                    files.add(s);
+                }
+            }
+            return files;
+        };
+
+        list.addAll(collectAllFiles.apply(Pair.of(OUT_SYSTEM_PATH, "framework/arm")));
         if (new File(OUT_SYSTEM_OTHER_PATH).exists()) {
-            list.add("framework/arm64");
+            list.addAll(collectAllFiles.apply(Pair.of(OUT_SYSTEM_PATH, "framework/arm64")));
         }
+        list.addAll(collectAllFiles.apply(Pair.of(OUT_SYSTEM_PATH, "framework")));
+        list.add("etc/boot-image.prof");
         list.add("priv-app/SystemUI/SystemUI.apk");
 
         Function<Pair<String, String>, List<String>> collectOatList = (folder) -> {

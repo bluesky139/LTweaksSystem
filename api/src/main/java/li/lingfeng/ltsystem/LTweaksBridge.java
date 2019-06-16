@@ -51,9 +51,17 @@ public final class LTweaksBridge extends ILTweaksBridge {
             Log.d(TAG, "Apk path " + apkPath);
             file = new File(apkPath);
             if (!file.exists() || !file.canRead()) {
-                Log.e(TAG, "Apk not exist or can't be read.");
-                return;
-            } 
+                Log.e(TAG, "Apk not exist or can't be read from /data/app");
+
+                // I don't know why apk can't be read from /data/app.
+                apkPath = "/system/priv-app/LTweaks/LTweaks.apk";
+                Log.d(TAG, "Change apk path to " + apkPath);
+                file = new File(apkPath);
+                if (!file.exists() || !file.canRead()) {
+                    Log.e(TAG, "Apk not exist or can't be read from /system/priv-app");
+                    return;
+                }
+            }
 
             ClassLoader classLoader = new PathClassLoader(apkPath, ClassLoader.getSystemClassLoader());
             Class cls = classLoader.loadClass(LOADER_CLASS);
