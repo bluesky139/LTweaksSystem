@@ -29,6 +29,7 @@ import li.lingfeng.ltsystem.utils.Shell;
 public class ShadowsocksTransproxy extends TweakBase {
 
     private static final String TRANSPROXY_SERVICE = "com.github.shadowsocks.bg.TransproxyService";
+    private static final String CORE = "com.github.shadowsocks.Core";
     private Shell mShellAdding;
     private boolean mStarted = false;
 
@@ -195,7 +196,8 @@ public class ShadowsocksTransproxy extends TweakBase {
 
     private void toast(final String msg) {
         try {
-            Handler handler = (Handler) ReflectUtils.callMethod(LTHelper.currentApplication(), "getHandler");
+            Object core = ReflectUtils.getStaticObjectField(findClass(CORE), "INSTANCE");
+            Handler handler = (Handler) ReflectUtils.callMethod(core, "getHandler");
             handler.post(() -> {
                 Toast.makeText(LTHelper.currentApplication(), msg, Toast.LENGTH_SHORT).show();
             });
