@@ -34,7 +34,7 @@ public class ShadowsocksPrimaryDns extends TweakBase {
                 }
                 Logger.i("Modify primary dns, " + value);
 
-                File file = new File("/data/user_de/0/" + PackageNames.SHADOWSOCKS + "/files/overture.conf");
+                File file = new File("/data/user_de/0/" + PackageNames.SHADOWSOCKS + "/no_backup/overture.conf");
                 String content = FileUtils.readFileToString(file);
                 JSONObject jContent = (JSONObject) JSON.parse(content, Feature.OrderedField);
                 JSONArray jDnsArray = jContent.getJSONArray("PrimaryDNS");
