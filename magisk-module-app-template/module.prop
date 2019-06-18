@@ -1,0 +1,7 @@
+id=ltsystem_app
+name=LTweaks System App
+version=v1
+versionCode=1
+author=lingfeng.li
+description=LTweaks System App
+minMagisk=17000
