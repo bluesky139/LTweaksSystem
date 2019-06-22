@@ -102,5 +102,10 @@
             android:defaultValue="false"
             android:key="@string/key_telegram_open_url_without_confirmation"
             android:title="@string/pref_telegram_open_url_without_confirmation" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_telegram_darken"
+            android:title="@string/pref_telegram_darken"
+            android:summary="@string/pref_telegram_darken_summary" />
     </PreferenceCategory>
 </PreferenceScreen>
