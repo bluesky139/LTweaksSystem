@@ -186,8 +186,10 @@ public class SimpleSnackbar extends LinearLayout {
                 .setListener(new ViewPropertyAnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(View view) {
-                        SimpleSnackbar.this.setVisibility(View.INVISIBLE);
-                        ((ViewGroup) SimpleSnackbar.this.getParent()).removeView(SimpleSnackbar.this);
+                        try {
+                            SimpleSnackbar.this.setVisibility(View.INVISIBLE);
+                            ((ViewGroup) SimpleSnackbar.this.getParent()).removeView(SimpleSnackbar.this);
+                        } catch (Throwable e) {}
                     }
                 })
                 .start();
