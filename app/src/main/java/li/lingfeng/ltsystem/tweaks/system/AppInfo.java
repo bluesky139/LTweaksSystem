@@ -15,11 +15,11 @@ import li.lingfeng.ltsystem.utils.Utils;
 
 public abstract class AppInfo extends TweakBase {
 
-    protected static final String INSTALLED_APP_DETAILS = "com.android.settings.applications.InstalledAppDetails";
+    protected static final String APP_INFO_FRAGMENT = "com.android.settings.applications.appinfo.AppInfoDashboardFragment";
 
     @Override
     public void android_app_Fragment__performCreateOptionsMenu__Menu_MenuInflater(ILTweaks.MethodParam param) {
-        afterOnClass(INSTALLED_APP_DETAILS, param, () -> {
+        afterOnClass(APP_INFO_FRAGMENT, param, () -> {
             final Pair[] names = newMenuNames(param);
             if (names == null || names.length == 0) {
                 return;
@@ -37,7 +37,7 @@ public abstract class AppInfo extends TweakBase {
 
     @Override
     public void android_app_Fragment__performOptionsItemSelected__MenuItem(ILTweaks.MethodParam param) {
-        beforeOnClass(INSTALLED_APP_DETAILS, param, () -> {
+        beforeOnClass(APP_INFO_FRAGMENT, param, () -> {
             final Pair[] names = newMenuNames(param);
             if (names == null || names.length == 0) {
                 return;
