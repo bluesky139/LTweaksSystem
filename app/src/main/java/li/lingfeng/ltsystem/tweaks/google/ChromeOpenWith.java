@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import li.lingfeng.ltsystem.ILTweaks;
-import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
@@ -51,21 +50,25 @@ public class ChromeOpenWith {
 
         @Override
         public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(ILTweaks.MethodParam param) {
-            Intent intent = (Intent) param.args[0];
-            if (intent.getBooleanExtra("ltweaks_activities_without_preferred_filter", false)) {
-                Logger.d("Return whole resolve infos in filterCandidatesWithDomainPreferredActivitiesLPr().");
-                List<ResolveInfo> infos = (List<ResolveInfo>) param.args[2];
-                param.setResult(infos);
-            }
+            param.before(() -> {
+                Intent intent = (Intent) param.args[0];
+                if (intent.getBooleanExtra("ltweaks_activities_without_preferred_filter", false)) {
+                    Logger.d("Return whole resolve infos in filterCandidatesWithDomainPreferredActivitiesLPr().");
+                    List<ResolveInfo> infos = (List<ResolveInfo>) param.args[2];
+                    param.setResult(infos);
+                }
+            });
         }
 
         @Override
         public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(ILTweaks.MethodParam param) {
-            Activity activity = (Activity) param.thisObject;
-            if (activity.getClass().getName().equals(CHOOSER_ACTIVITY)) {
-                Logger.d("shouldAutoLaunchSingleChoice false");
-                param.setResult(false);
-            }
+            param.before(() -> {
+                Activity activity = (Activity) param.thisObject;
+                if (activity.getClass().getName().equals(CHOOSER_ACTIVITY)) {
+                    Logger.d("shouldAutoLaunchSingleChoice false");
+                    param.setResult(false);
+                }
+            });
         }
     }
 }
