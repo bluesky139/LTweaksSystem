@@ -183,7 +183,7 @@ public class ImageSearchActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(ImageSearchActivity.this, R.string.upload_failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ImageSearchActivity.this, message, Toast.LENGTH_LONG).show();
                 finish();
             }
         });
