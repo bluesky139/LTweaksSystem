@@ -20,6 +20,7 @@ import java.lang.reflect.Modifier;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ImageSearchActivity;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
+import li.lingfeng.ltsystem.activities.ProcessTextActivity;
 import li.lingfeng.ltsystem.activities.QrCodeActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
 import li.lingfeng.ltsystem.fragments.base.Extra;
@@ -60,6 +61,16 @@ public class SystemPrefFragment extends BasePrefFragment {
     @PreferenceClick(prefs = R.string.key_text_actions)
     private void manageTextActions(Preference preference) {
         ListCheckActivity.create(getActivity(), TextActionDataProvider.class);
+    }
+
+    @PreferenceChange(prefs = R.string.key_selection_action_mode_original, refreshAtStart = true)
+    private void enableOriginalSelectionActionMode(Preference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_selection_action_mode_original,
+                    ComponentUtils.getFullAliasName(ProcessTextActivity.class, "WebSearch"));
+        } else {
+            ComponentUtils.enableComponent(ComponentUtils.getFullAliasName(ProcessTextActivity.class, "WebSearch"), enabled);
+        }
     }
 
     @PreferenceClick(prefs = R.string.key_youdao_quick_query_shortcut)

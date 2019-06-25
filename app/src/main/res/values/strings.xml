@@ -380,6 +380,7 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <!-- Process Text -->
     <string name="process_text_douban">Douban</string>
     <string name="process_text_bilibili">Bilibili</string>
+    <string name="process_text_web_search">Web Search</string>
     <string name="process_text_incognito_search">Incognito Search</string>
 
     <!-- Adb Wireless -->

@@ -2,6 +2,7 @@ package li.lingfeng.ltsystem.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.prefs.ClassNames;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
+import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.PackageUtils;
 
@@ -72,5 +74,10 @@ public class ProcessTextActivity extends Activity {
         intent.putExtra("query", text);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    private void webSearch(String text) {
+        String url = "https://www.google.com/search?q=" + Uri.encode(text);
+        ContextUtils.startBrowser(this, url);
     }
 }

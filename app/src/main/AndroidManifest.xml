@@ -128,6 +128,17 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity-alias>
+        <activity-alias
+            android:name=".activities.WebSearchProcessTextActivity"
+            android:targetActivity=".activities.ProcessTextActivity"
+            android:label="@string/process_text_web_search"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
 
         <activity
             android:name=".activities.BilibiliActivity"
