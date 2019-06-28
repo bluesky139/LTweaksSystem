@@ -100,6 +100,9 @@ public abstract class ILTweaksMethods {
     public void android_view_inputmethod_InputMethodManager__showSoftInput__View_int_ResultReceiver(MethodParam param) {
     }
 
+    public void android_text_StaticLayout__generate__Builder_boolean_boolean(MethodParam param) {
+    }
+
     public void android_content_ContextWrapper__attachBaseContext__Context(MethodParam param) {
     }
 

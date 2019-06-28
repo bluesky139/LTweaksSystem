@@ -45,6 +45,7 @@
     <string name="key_telegram_remove_floating_button">key_telegram_remove_floating_button</string>
     <string name="key_telegram_open_url_without_confirmation">key_telegram_open_url_without_confirmation</string>
     <string name="key_telegram_darken">key_telegram_darken</string>
+    <string name="key_telegram_white_instant_view_text">key_telegram_white_instant_view_text</string>
 
     <!--Entertainment-->
     <string name="key_douban_search">key_douban_search</string>
