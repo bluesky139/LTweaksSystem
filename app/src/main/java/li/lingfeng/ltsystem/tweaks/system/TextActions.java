@@ -50,13 +50,14 @@ public class TextActions extends ILTweaksMethods {
                 int order = Integer.parseInt(strs[0]);
                 boolean block = Boolean.parseBoolean(strs[1]);
                 savedItemMap.put(name.toUpperCase(), new Triple(order, block, rename));
-                //Logger.d("savedItem " + savedItem);
+                //Logger.d("savedItem " + name + ", " + order + ", " + block + ", " + rename);
             }
 
             List<MenuItem> items = (List<MenuItem>) param.getResult();
             for (int i = items.size() - 1; i >= 0; --i) {
                 MenuItem item = items.get(i);
                 String title = item.getTitle().toString().toUpperCase();
+                title = StringUtils.strip(title, "\u200F\u200E ");
                 Triple<Integer, Boolean, String> triple = savedItemMap.get(title);
                 if (triple != null && triple.second) {
                     Logger.d("Remove floating menu " + item.getTitle());
@@ -76,14 +77,16 @@ public class TextActions extends ILTweaksMethods {
                     }
 
                     String title1 = i1.getTitle().toString().toUpperCase();
+                    title1 = StringUtils.strip(title1, "\u200F\u200E ");
                     Triple<Integer, Boolean, String> triple = savedItemMap.get(title1);
                     Integer order1 = triple == null ? null : triple.first;
 
                     String title2 = i2.getTitle().toString().toUpperCase();
+                    title2 = StringUtils.strip(title2, "\u200F\u200E ");
                     triple = savedItemMap.get(title2);
                     Integer order2 = triple == null ? null : triple.first;
 
-                    //Logger.d("title1 " + title1 + "[" + order1 + "], title2 " + title2 + "[" + order2 + "]");
+                    Logger.d("title1 " + title1 + "[" + order1 + "], title2 " + title2 + "[" + order2 + "]");
                     if (order1 == null && order2 == null) {
                         return 0;
                     }
@@ -102,6 +105,7 @@ public class TextActions extends ILTweaksMethods {
 
             for (MenuItem item : items) {
                 String title = item.getTitle().toString().toUpperCase();
+                title = StringUtils.strip(title, "\u200F\u200E ");
                 Triple<Integer, Boolean, String> triple = savedItemMap.get(title);
                 if (triple != null && !StringUtils.isBlank(triple.third)) {
                     item.setTitle(triple.third);
@@ -112,8 +116,10 @@ public class TextActions extends ILTweaksMethods {
             // Remove title duplicated menu items after sorting and renaming.
             for (int i = items.size() - 1; i > 0; --i) {
                 String title = items.get(i).getTitle().toString().toUpperCase();
+                title = StringUtils.strip(title, "\u200F\u200E ");
                 for (int j = i - 1; j >= 0; --j) {
                     String title2 = items.get(j).getTitle().toString().toUpperCase();
+                    title2 = StringUtils.strip(title2, "\u200F\u200E ");
                     if (title.equals(title2)) {
                         Logger.d("Remove duplicated " + title);
                         items.remove(i);
