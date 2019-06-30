@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Dialog" parent="android:Theme.Material.Light.Dialog">
+    <style name="Theme.App" parent="android:Theme.Material">
+    </style>
+    <style name="Theme.Dialog" parent="android:Theme.Material.Dialog">
         <item name="android:windowMinWidthMajor">96%</item>
         <item name="android:windowMinWidthMinor">96%</item>
         <item name="android:windowNoTitle">true</item>

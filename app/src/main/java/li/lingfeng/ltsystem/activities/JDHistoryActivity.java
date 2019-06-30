@@ -224,6 +224,7 @@ public class JDHistoryActivity extends Activity implements
             }
         });
         xAxis.setTextSize(12f);
+        xAxis.setTextColor(0xFFFAFAFA);
         //xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         //xAxis.addLimitLine(llXAxis); // add x-axis limit line
 
@@ -254,6 +255,7 @@ public class JDHistoryActivity extends Activity implements
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(false);
         leftAxis.setTextSize(12f);
+        leftAxis.setTextColor(0xFFFAFAFA);
 
         // limit lines are drawn behind data (and not on top)
         leftAxis.setDrawLimitLinesBehindData(true);
@@ -279,6 +281,7 @@ public class JDHistoryActivity extends Activity implements
         // modify the legend ...
         l.setForm(Legend.LegendForm.LINE);
         l.setTextSize(12f);
+        l.setTextColor(0xFFFAFAFA);
         //l.setPosition(Legend.LegendPosition.ABOVE_CHART_LEFT);
 
         // // dont forget to refresh the drawing

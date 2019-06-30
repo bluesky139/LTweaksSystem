@@ -23,7 +23,7 @@
                 android:clickable="true"
                 android:layout_width="20.0dp"
                 android:layout_height="20.0dp"
-                android:tint="#ff606060"
+                android:tint="#fffafafa"
                 android:src="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
                 android:onClick="onClick" />
             <ImageView
@@ -34,7 +34,7 @@
                 android:layout_height="20.0dp"
                 android:layout_marginLeft="10.0dp"
                 android:layout_marginRight="5.0dp"
-                android:tint="#ff606060"
+                android:tint="#fffafafa"
                 android:src="@drawable/abc_ic_menu_share_mtrl_alpha"
                 android:onClick="onClick" />
             <ImageView
@@ -45,7 +45,7 @@
                 android:layout_height="20.0dp"
                 android:layout_marginLeft="5.0dp"
                 android:layout_marginRight="5.0dp"
-                android:tint="#ff606060"
+                android:tint="#fffafafa"
                 android:src="@drawable/ic_edit"
                 android:onClick="onClick" />
             <ImageView
@@ -56,7 +56,7 @@
                 android:layout_height="20.0dp"
                 android:layout_marginLeft="5.0dp"
                 android:layout_marginRight="5.0dp"
-                android:tint="#ff606060"
+                android:tint="#fffafafa"
                 android:src="@drawable/ic_select_all"
                 android:onClick="onClick" />
         </LinearLayout>
@@ -68,7 +68,7 @@
         android:layout_weight="1.0">
         <TextView
             android:textSize="15.0sp"
-            android:textColor="#ff505050"
+            android:textColor="#fffafafa"
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             android:textIsSelectable="true" />
         <EditText
             android:textSize="15.0sp"
-            android:textColor="#ff505050"
+            android:textColor="#fffafafa"
             android:id="@+id/text_edit"
             android:visibility="gone"
             android:layout_width="match_parent"
