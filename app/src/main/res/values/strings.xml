@@ -138,6 +138,9 @@ Open source on github: \n
     <string name="pref_jd_mini_program_price_history">Price history in WeChat mini program</string>
     <string name="pref_jd_mini_program_price_history_summary">Use \"Share To Friend\" button to copy item link, do same thing like copy link from native app.\n\"Share To Friend\" will not open friend list anymore</string>
     <string name="pref_jd_ads">Remove fullscreen ads</string>
+    <string name="pref_category_ele">ELE</string>
+    <string name="pref_ele_route_share_link">Route share link</string>
+    <string name="pref_ele_route_share_link_summary">App can be opened from their share link, but it will not take you to the specified shop/food</string>
 
     <!-- JD -->
     <string name="jd_app">JD App</string>

@@ -81,6 +81,10 @@ public class ViewUtils {
         });
     }
 
+    public static <T extends View> List<T> findAllViewByType(Activity activity, final Class<T> type) {
+        return findAllViewByType((ViewGroup) activity.getWindow().getDecorView(), type);
+    }
+
     public static <T extends View> List<T> findAllViewByType(ViewGroup rootView, final Class<T> type) {
         return traverseViews(rootView, false, new ViewTraverseCallback() {
             @Override
