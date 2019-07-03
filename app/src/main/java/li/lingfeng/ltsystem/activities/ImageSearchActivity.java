@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.prefs.PackageNames;
@@ -48,6 +49,7 @@ public class ImageSearchActivity extends Activity {
     }};
     private String mEngine;
     private boolean mChooserStarted = false;
+    private static OkHttpClient sHttpClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -161,7 +163,12 @@ public class ImageSearchActivity extends Activity {
                 .url("http://172.96.200.226:8000/tmp_image/")
                 .post(RequestBody.create(MEDIA_TYPE_PNG, bytes))
                 .build();
-        new OkHttpClient().newCall(request).enqueue(new Callback() {
+        if (sHttpClient == null) {
+            sHttpClient = new OkHttpClient.Builder()
+                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .build();
+        }
+        sHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 failedUpload("Request failed, " + e.getMessage());
