@@ -15,8 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.List;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -97,14 +95,10 @@ public class BilibiliRemoveBottomBar extends TweakBase {
             return;
         }
 
-        String strHome = ContextUtils.getString("nav_home");
-        if (StringUtils.isEmpty(strHome)) {
-            Logger.w("String home is empty.");
-            return;
-        }
         List<CheckedTextView> textViews = ViewUtils.findAllViewByType(nav, CheckedTextView.class);
         for (CheckedTextView textView : textViews) {
-            if (strHome.equals(textView.getText())) {
+            String text = textView.getText().toString();
+            if ("首页".equals(text) || "Home".equals(text)) {
                 //Logger.v("Got home textview.");
                 mHomeTextView = textView;
                 break;
