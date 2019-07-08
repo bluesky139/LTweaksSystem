@@ -1,6 +1,9 @@
 package li.lingfeng.ltsystem.tweaks.entertainment;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +44,9 @@ public class BilibiliCover extends TweakBase {
             layoutParams.gravity = overflowLayoutParams.gravity;
             imageView.setLayoutParams(layoutParams);
             imageView.setScaleType(overflowImageView.getScaleType());
-            imageView.setImageDrawable(ContextUtils.getDrawable("ic_image"));
+            Drawable drawable = ContextUtils.getDrawable("sobot_uploadpicture");
+            drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+            imageView.setImageDrawable(drawable);
             imageView.setBackground(overflowImageView.getBackground());
 
             LinearLayout parent = (LinearLayout) overflowImageView.getParent();
