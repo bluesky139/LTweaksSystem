@@ -168,6 +168,11 @@
             android:summary="@string/pref_phone_deny_access_phone_number_summary" />
         <SwitchPreference
             android:defaultValue="false"
+            android:key="@string/key_phone_doze"
+            android:title="@string/pref_phone_doze"
+            android:summary="@string/pref_phone_doze_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
             android:key="@string/key_phone_doze_on_the_go"
             android:title="@string/pref_phone_doze_on_the_go"
             android:summary="@string/pref_phone_doze_on_the_go_summary" />

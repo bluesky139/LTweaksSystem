@@ -106,6 +106,10 @@ public class ReflectUtils {
         findField(obj.getClass(), fieldName).setInt(obj, value);
     }
 
+    public static void setBooleanField(Object obj, String fieldName, boolean value) throws Throwable {
+        findField(obj.getClass(), fieldName).setBoolean(obj, value);
+    }
+
     public static Field findField(Class cls, String fieldName) throws Throwable {
         StringBuilder builder = new StringBuilder();
         builder.append(cls.getName());

@@ -106,6 +106,7 @@
     <string name="key_lineage_os_live_display_time_sunset">key_lineage_os_live_display_time_sunset</string>
     <string name="key_recent_task_swipe_to_kill">key_recent_task_swipe_to_kill</string>
     <string name="key_phone_deny_access_phone_number">key_phone_deny_access_phone_number</string>
+    <string name="key_phone_doze">key_phone_doze</string>
     <string name="key_phone_doze_on_the_go">key_phone_doze_on_the_go</string>
     <string name="key_display_light_amber_in_daylight">key_display_light_amber_in_daylight</string>
     <string name="key_display_min_brightness">key_display_min_brightness</string>

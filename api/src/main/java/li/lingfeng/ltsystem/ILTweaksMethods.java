@@ -199,6 +199,9 @@ public abstract class ILTweaksMethods {
     public void com_android_server_AlarmManagerService__setImpl__int_long_long_long_PendingIntent_IAlarmListener_String_int_WorkSource_AlarmManager$AlarmClockInfo_int_String(MethodParam param) {
     }
 
+    public void com_android_server_DeviceIdleController__onStart__(MethodParam param) {
+    }
+
     public void com_android_server_DeviceIdleController__startMonitoringMotionLocked__(MethodParam param) {
     }
 
