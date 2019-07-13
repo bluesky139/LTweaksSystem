@@ -195,6 +195,8 @@ Open source on github: \n
     <string name="pref_telegram_white_instant_view_text_summary">Original gray is hard to read</string>
     <string name="pref_telegram_hide_sticker">Hide sticker</string>
     <string name="pref_telegram_hide_sticker_summary">Set sticker height to 1px to hide it, so user icons may overlap</string>
+    <string name="pref_telegram_edittext_no_focus_first">No focus on message enter view first</string>
+    <string name="pref_telegram_edittext_no_focus_first_summary">To stop cursor blink</string>
 
     <!-- TTRss -->
     <string name="ttrss_open_in_browser">Open In Browser</string>
