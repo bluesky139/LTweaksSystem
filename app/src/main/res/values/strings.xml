@@ -190,7 +190,7 @@ Open source on github: \n
     <string name="pref_telegram_remove_floating_button">Remove floating button</string>
     <string name="pref_telegram_open_url_without_confirmation">Open url without confirmation</string>
     <string name="pref_telegram_darken">A more better night mode</string>
-    <string name="pref_telegram_darken_summary">For app start and switching back from low memory kill</string>
+    <string name="pref_telegram_darken_summary">For app start and switching back from low memory kill.\nFor half screen video play dialog popping up</string>
     <string name="pref_telegram_white_instant_view_text">White Instance View text</string>
     <string name="pref_telegram_white_instant_view_text_summary">Original gray is hard to read</string>
     <string name="pref_telegram_hide_sticker">Hide sticker</string>
