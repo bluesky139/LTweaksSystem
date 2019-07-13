@@ -74,8 +74,6 @@ public class MainActivity extends PreferenceActivity {
 
                     long startTime = System.currentTimeMillis();
                     new Shell("su", new String[] {
-                            "rm -f /data/dalvik-cache/arm/data@app@li.lingfeng.ltsystem-*",
-                            "rm -f /data/dalvik-cache/arm64/data@app@li.lingfeng.ltsystem-*",
                             "cmd package bg-dexopt-job"
                     }, 0, (isOk, stderr, stdout) -> {
                         notificationManager.cancel(100);
