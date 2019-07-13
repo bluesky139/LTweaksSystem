@@ -23,6 +23,7 @@ public class ChromeDarkenStartingWindow extends TweakBase {
                 Logger.i("Set night background for chrome phone window.");
                 window.setBackgroundDrawable(drawable);
                 window.setNavigationBarColor(Color.BLACK);
+                window.setStatusBarColor(0x313235);
             }
         });
     }
