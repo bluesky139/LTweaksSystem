@@ -164,6 +164,8 @@ Open source on github: \n
     <string name="pref_wechat_browser_summary">Url like https://mp.weixin.qq.com/...</string>
     <string name="pref_wechat_classic_theme">Classic theme</string>
     <string name="pref_wechat_classic_theme_summary">Instead of the whole white theme</string>
+    <string name="pref_wechat_mute_annoying_notification">Mute annoying notification</string>
+    <string name="pref_wechat_mute_annoying_notification_summary">Mute notification if notified 3 times at screen off.\nIt\'s useful for PC chat, why notify me on my phone again and again</string>
     <string name="pref_category_qq">QQ (TIM only)</string>
     <string name="pref_qq_outer_browser">Use outer browser</string>
     <string name="pref_qq_clear_background">Set a clear and undistorted chat background</string>
