@@ -60,6 +60,10 @@
             android:key="@string/key_bilibili_best_quality"
             android:title="@string/pref_bilibili_best_quality"
             android:summary="@string/pref_bilibili_best_quality_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_bilibili_disable_teen_mode_hint"
+            android:title="@string/pref_bilibili_disable_teen_mode_hint" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_steam">

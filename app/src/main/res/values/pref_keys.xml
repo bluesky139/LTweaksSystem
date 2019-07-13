@@ -63,6 +63,7 @@
     <string name="key_bilibili_hide_follow_at_full_screen">key_bilibili_hide_follow_at_full_screen</string>
     <string name="key_bilibili_remove_upper_ad">key_bilibili_remove_upper_ad</string>
     <string name="key_bilibili_best_quality">key_bilibili_best_quality</string>
+    <string name="key_bilibili_disable_teen_mode_hint">key_bilibili_disable_teen_mode_hint</string>
     <string name="key_steam_share_url">key_steam_share_url</string>
     <string name="key_steam_database">key_steam_database</string>
     <string name="key_steam_go_top">key_steam_go_top</string>

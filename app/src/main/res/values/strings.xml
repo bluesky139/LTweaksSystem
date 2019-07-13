@@ -226,6 +226,7 @@ Open source on github: \n
     <string name="pref_bilibili_remove_upper_ad">Remove upper ad</string>
     <string name="pref_bilibili_best_quality">Best quality</string>
     <string name="pref_bilibili_best_quality_summary">For half screen play</string>
+    <string name="pref_bilibili_disable_teen_mode_hint">Disable teen mode hint</string>
     <string name="pref_category_steam">Steam</string>
     <string name="pref_steam_share_url">Share url</string>
     <string name="pref_steam_share_url_summary">Add a top right menu to use system share</string>
