@@ -1,9 +1,5 @@
 package li.lingfeng.ltsystem.tweaks.communication;
 
-import android.view.View;
-
-import java.util.WeakHashMap;
-
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
@@ -15,26 +11,21 @@ import li.lingfeng.ltsystem.utils.Logger;
 public class TelegramEditTextNoFocusFirst extends TweakBase {
 
     private static final String CHAT_ACTIVITY_ENTER_VIEW = "org.telegram.ui.Components.ChatActivityEnterView";
-    private WeakHashMap<View, Void> mViews = new WeakHashMap<>();
 
     @Override
     public void android_view_View__requestFocus__(ILTweaks.MethodParam param) {
         param.before(() -> {
             if (param.thisObject.getClass().getName().startsWith(CHAT_ACTIVITY_ENTER_VIEW)) {
-                View view = (View) param.thisObject;
-                if (!mViews.containsKey(view)) {
-                    Logger.v("EditText no focus first.");
-                    mViews.put(view, null);
-                    param.setResult(null);
+                StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+                for (int i = 0; i < Math.min(10, elements.length); ++i) {
+                    StackTraceElement element = elements[i];
+                    if (element.getClassName().equals("android.widget.TextView")) {
+                        return;
+                    }
                 }
+                Logger.v("EditText no focus without keyboard.");
+                param.setResult(false);
             }
-        });
-    }
-
-    @Override
-    public void android_app_Activity__onResume__(ILTweaks.MethodParam param) {
-        param.before(() -> {
-            mViews.clear();
         });
     }
 }
