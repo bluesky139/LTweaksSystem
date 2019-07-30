@@ -132,10 +132,10 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
                     mVisitedFile = null;
                     return;
                 }
-                mNavPath = s.toString();
-                mVisitedFile = mDBHelper.getVisitedFile(mNavPath);
-                Logger.v("Nav path changed " + mNavPath + ", visited file " + mVisitedFile);
                 try {
+                    mNavPath = s.toString();
+                    mVisitedFile = mDBHelper.getVisitedFile(mNavPath);
+                    Logger.v("Nav path changed " + mNavPath + ", visited file " + mVisitedFile);
                     refreshHightlight();
                 } catch (Throwable e) {
                     Logger.e("refreshHightlight exception after nav path changed.", e);
@@ -277,7 +277,8 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
 
         public void fileVisited(String folder, String file) {
             String sql = "REPLACE INTO Visited (Folder, File) VALUES ('%1$s', '%2$s');";
-            execSQL(getWritableDatabase(), String.format(sql, folder, file));
+            execSQL(getWritableDatabase(), String.format(sql, folder.replace("'", "''"),
+                    file.replace("'", "''")));
             cache.put(folder, file);
         }
 
@@ -287,7 +288,7 @@ public class MiXplorerHighlightVisitedFiles extends TweakBase {
                 return !file.isEmpty() ? file : null;
             }
             String sql = "SELECT File from Visited WHERE Folder='%1$s' LIMIT 1;";
-            Cursor cursor = rawQuery(getWritableDatabase(), String.format(sql, folder));
+            Cursor cursor = rawQuery(getWritableDatabase(), String.format(sql, folder.replace("'", "''")));
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 file = cursor.getString(0);
