@@ -63,6 +63,11 @@
             android:showDefault="true"
             android:showSilent="true"
             android:ringtoneType="ringtone" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_hide_annoying_notification"
+            android:title="@string/pref_qq_hide_annoying_notification"
+            android:summary="@string/pref_qq_hide_annoying_notification_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_push_bullet">
