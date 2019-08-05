@@ -28,11 +28,16 @@ public class EleRouteShareLink extends TweakBase {
             Activity activity = (Activity) param.thisObject;
             String url = activity.getIntent().getDataString();
             Logger.d("ele url " + url);
-            Pattern pattern = Pattern.compile("\\/#id=(\\w+)&food_id=(\\w+)");
+            Pattern pattern = Pattern.compile("\\/#id=(\\w+)(&food_id=(\\w+))?");
             Matcher matcher = pattern.matcher(url);
             if (matcher.find()) {
                 mShopId = matcher.group(1);
-                mFoodId = matcher.group(2);
+                if (matcher.groupCount() == 3) {
+                    mFoodId = matcher.group(3);
+                } else {
+                    mFoodId = null;
+                }
+                Logger.d("mShopId " + mShopId + ", mFoodId " + mFoodId);
             }
         });
         afterOnClass(HOME_ACTIVITY, param, () -> {
@@ -42,7 +47,9 @@ public class EleRouteShareLink extends TweakBase {
                 Intent intent = new Intent();
                 intent.setClassName(activity, SHOP_ACTIVITY);
                 intent.putExtra("restaurant_id", mShopId);
-                intent.putExtra("target_food_id", mFoodId);
+                if (mFoodId != null) {
+                    intent.putExtra("target_food_id", mFoodId);
+                }
                 activity.startActivity(intent);
                 mShopId = null;
                 mFoodId = null;
