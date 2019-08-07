@@ -13,6 +13,7 @@ import android.widget.Toast;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
@@ -52,12 +53,18 @@ public abstract class ChromeBase extends TweakBase {
     }
 
     private Map<String, MenuInfo> mMenuInfos;
+    private static WeakReference<Activity> sActivity;
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         if (mMenuInfos == null) {
             mMenuInfos = newMenus();
         }
+    }
+
+    @Override
+    public void android_app_Activity__onResume__(ILTweaks.MethodParam param) {
+        sActivity = new WeakReference<>((Activity) param.thisObject);
     }
 
     protected Map<String, MenuInfo> newMenus() {
@@ -116,13 +123,13 @@ public abstract class ChromeBase extends TweakBase {
                             @Override
                             public void onClick(View v) {
                                 ViewUtils.dispatchBackKeyEventOnRoot(view);
-                                Activity activity = ViewUtils.getActivityFromView(view);
+                                Activity activity = sActivity.get();
                                 try {
                                     String url = getCurrentUrl(activity);
                                     Logger.i("Menu \"" + info.title + "\" is clicked, url " + url);
                                     info.selectedCallback.onOptionsItemSelected(activity, url, isCustomTab(activity));
                                 } catch (Throwable e) {
-                                    Toast.makeText(activity, "Error.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(activity, "Menu click error, " + e.getMessage(), Toast.LENGTH_LONG).show();
                                     Logger.stackTrace(e);
                                 }
                             }

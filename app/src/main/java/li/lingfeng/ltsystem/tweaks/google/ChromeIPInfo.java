@@ -8,7 +8,6 @@ import android.util.Pair;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.net.InetAddress;
@@ -132,8 +131,9 @@ public class ChromeIPInfo extends ChromeBase {
             if (pair.first) {
                 ViewUtils.showDialog(mActivity, Html.fromHtml(pair.second));
             } else {
-                Logger.e("Get IP info error, " + pair.second);
-                Toast.makeText(mActivity, R.string.error, Toast.LENGTH_SHORT).show();
+                String msg = "Get IP info error, " + pair.second;
+                Logger.e(msg);
+                Toast.makeText(mActivity, msg, Toast.LENGTH_LONG).show();
             }
             cleanup();
         }
