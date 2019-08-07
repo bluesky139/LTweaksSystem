@@ -205,6 +205,7 @@ Open source on github: \n
     <!-- TTRss -->
     <string name="ttrss_open_in_browser">Open In Browser</string>
     <string name="ttrss_refresh">Refresh</string>
+    <string name="ttrss_copy_title">Copy Title</string>
     <string name="ttrss_go_top">Go Top</string>
     <string name="ttrss_go_bottom">Go Bottom</string>
 

@@ -1,6 +1,9 @@
 package li.lingfeng.ltsystem.tweaks.communication;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,9 +24,10 @@ public class TTRssArticleOpenInBrowserMenu extends TweakBase {
 
     private static final String DETAIL_ACTIVITY = "org.fox.ttrss.DetailActivity";
     private static final int MENU_OPEN_IN_BROWSER_ID = 10000;
-    private static final int MENU_SHARE_ID = 10001;
-    private static final int MENU_GO_TOP_ID = 10002;
-    private static final int MENU_GO_BOTTOM_ID = 10003;
+    private static final int MENU_COPY_TITLE_ID = 10001;
+    private static final int MENU_SHARE_ID = 10002;
+    private static final int MENU_GO_TOP_ID = 10003;
+    private static final int MENU_GO_BOTTOM_ID = 10004;
 
     @Override
     public void android_app_Activity__onCreatePanelMenu__int_Menu(ILTweaks.MethodParam param) {
@@ -37,6 +41,7 @@ public class TTRssArticleOpenInBrowserMenu extends TweakBase {
                 menuItem.setIcon(ContextUtils.getDrawable("ic_action_web_site"));
                 menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
+                menu.add(idMenuGroup, MENU_COPY_TITLE_ID, Menu.NONE, ContextUtils.getLString(R.string.ttrss_copy_title));
                 menu.add(idMenuGroup, MENU_SHARE_ID, Menu.NONE, ContextUtils.getString("share_share_button"));
                 menu.add(idMenuGroup, MENU_GO_TOP_ID, Menu.NONE, ContextUtils.getLString(R.string.ttrss_go_top));
                 menu.add(idMenuGroup, MENU_GO_BOTTOM_ID, Menu.NONE, ContextUtils.getLString(R.string.ttrss_go_bottom));
@@ -59,6 +64,14 @@ public class TTRssArticleOpenInBrowserMenu extends TweakBase {
                     ReflectUtils.callMethod(param.thisObject, "openUri",
                             new Object[] { Uri.parse(link) },
                             new Class[] { Uri.class });
+                    break;
+                }
+                case MENU_COPY_TITLE_ID: {
+                    Logger.i("Copy title.");
+                    Object article = getArticleFromActivity(activity);
+                    String title = (String) ReflectUtils.getObjectField(article, "title");
+                    ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                    clipboardManager.setPrimaryClip(ClipData.newPlainText("", title));
                     break;
                 }
                 case MENU_SHARE_ID: {
