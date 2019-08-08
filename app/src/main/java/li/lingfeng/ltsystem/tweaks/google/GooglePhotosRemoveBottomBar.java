@@ -46,7 +46,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
     Button[] tabButtons = new Button[4];
 
     LinearLayout drawerFragment;
-    ListView navList;
+    ViewGroup navList;
     ListView barList;
     BarListAdapter barListAdapter;
 
@@ -157,10 +157,10 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
                     }
                 }
                 if (drawerFragment == null && view.getId() > 0) {
-                    if (activity.getResources().getResourceEntryName(view.getId()).equals("navigation_list")) {
-                        Logger.i("got navigation_list.");
+                    if (activity.getResources().getResourceEntryName(view.getId()).equals("navigation_items")) {
+                        Logger.i("got navigation_items.");
                         drawerFragment = (LinearLayout) view.getParent().getParent();
-                        navList = (ListView) view;
+                        navList = (ViewGroup) view;
                         if (isReady())
                             createBarList();
                     }
@@ -171,7 +171,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
     }
 
     void createBarList() {
-        ListAdapter adapter = navList.getAdapter();
+        /*ListAdapter adapter = navList.getAdapter();
         if (adapter != null && adapter.getCount() > 3) {
             int titleId = activity.getResources().getIdentifier("title", "id", "com.google.android.apps.photos");
             View view = adapter.getView(0, null, null).findViewById(titleId);
@@ -183,7 +183,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
                     return;
                 }
             }
-        }
+        }*/
 
         barList = new ListView(activity);
         barListAdapter = new BarListAdapter();
@@ -213,8 +213,8 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
                 int height = one.getMeasuredHeight();
                 barList.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         height * barListAdapter.getCount()));
-                navList.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        height * navList.getAdapter().getCount()));
+                /*navList.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        height * navList.getAdapter().getCount()));*/
             }
         });
 
@@ -268,7 +268,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
             if (views[position] != null)
                 return views[position];
 
-            int layoutId = activity.getResources().getIdentifier("photos_drawermenu_navigation_item", "layout", "com.google.android.apps.photos");
+            int layoutId = activity.getResources().getIdentifier("photos_drawermenu_navigation_item_view", "layout", "com.google.android.apps.photos");
             View view = LayoutInflater.from(activity).inflate(layoutId, barList, false);
             int titleId = activity.getResources().getIdentifier("title", "id", "com.google.android.apps.photos");
             TextView title = (TextView) view.findViewById(titleId);
