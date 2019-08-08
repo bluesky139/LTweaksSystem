@@ -181,6 +181,9 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_statusbar_policy_MobileSignalController__mapIconSets__(MethodParam param) {
     }
 
+    public void com_android_systemui_qs_external_TileLifecycleManager__setBindService__boolean(MethodParam param) {
+    }
+
     public void com_android_systemui_SwipeHelper__dismissChild__View_float_boolean(MethodParam param) {
     }
 

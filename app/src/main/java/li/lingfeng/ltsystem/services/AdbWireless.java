@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Icon;
 import android.net.wifi.WifiManager;
-import android.os.IBinder;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import android.support.v4.app.NotificationCompat;
@@ -31,6 +30,7 @@ public class AdbWireless extends TileService {
             onClick();
         }
     };
+    private boolean mIsOn = false;
 
     @Override
     public void onCreate() {
@@ -39,17 +39,13 @@ public class AdbWireless extends TileService {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        IBinder binder = super.onBind(intent);
-        Tile tile = getQsTile();
-        tile.setState(Tile.STATE_INACTIVE);
-        tile.updateTile();
-        return binder;
+    public void onStartListening() {
+        updateTile(mIsOn);
     }
 
     @Override
     public void onClick() {
-        boolean isOn = getQsTile().getState() != Tile.STATE_ACTIVE;
+        boolean isOn = mIsOn = !mIsOn;
         new Shell("su", new String[] {
                 "setprop service.adb.tcp.port " + (isOn ? "5555" : "-1"),
                 "stop adbd",
@@ -59,17 +55,21 @@ public class AdbWireless extends TileService {
             Logger.d("Adb Wireless onResult " + isOk);
             if (isOk) {
                 Toast.makeText(AdbWireless.this, isOn ? "Switched to adb wireless" : "Switched to adb usb", Toast.LENGTH_LONG).show();
-                Tile tile = getQsTile();
-                tile.setIcon(Icon.createWithResource(AdbWireless.this,
-                        isOn ? R.drawable.ic_quick_settings_adb_wireless_on : R.drawable.ic_quick_settings_adb_wireless_off));
-                tile.setLabel(getTileName(AdbWireless.this, isOn));
-                tile.setState(isOn ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
-                tile.updateTile();
+                updateTile(isOn);
                 setupNotification(AdbWireless.this, isOn);
             } else {
                 Toast.makeText(AdbWireless.this, "Failed to switch adb, no root?", Toast.LENGTH_LONG).show();
             }
         }).execute();
+    }
+
+    private void updateTile(boolean isOn) {
+        Tile tile = getQsTile();
+        tile.setIcon(Icon.createWithResource(AdbWireless.this,
+                isOn ? R.drawable.ic_quick_settings_adb_wireless_on : R.drawable.ic_quick_settings_adb_wireless_off));
+        tile.setLabel(getTileName(AdbWireless.this, isOn));
+        tile.setState(isOn ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+        tile.updateTile();
     }
 
     private String getTileName(Context context, boolean isOn) {

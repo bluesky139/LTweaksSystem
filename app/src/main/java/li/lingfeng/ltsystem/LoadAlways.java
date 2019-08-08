@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageParser;
 
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +40,23 @@ public class LoadAlways {
                     String[] allInstructionSets = ((List<String>) ReflectUtils.callStaticMethod(cls, "getAllInstructionSets")).toArray(new String[0]);
                     Logger.i("Set targetInstructionSets to all: " + StringUtils.join(allInstructionSets, ','));
                     param.setArg(2, allInstructionSets);
+                }
+            });
+        }
+    }
+
+    @MethodsLoad(packages = PackageNames.ANDROID_SYSTEM_UI, prefs = {})
+    public static class SystemUI extends TweakBase {
+
+        @Override
+        public void com_android_systemui_qs_external_TileLifecycleManager__setBindService__boolean(ILTweaks.MethodParam param) {
+            param.before(() -> {
+                if (!((boolean) param.args[0])) {
+                    Intent intent = (Intent) ReflectUtils.getObjectField(param.thisObject, "mIntent");
+                    if (PackageNames.L_TWEAKS.equals(intent.getComponent().getPackageName())) {
+                        Logger.v("Stay bound with " + intent.getComponent().toShortString());
+                        param.setResult(null);
+                    }
                 }
             });
         }
