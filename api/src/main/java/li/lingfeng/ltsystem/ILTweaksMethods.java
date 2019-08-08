@@ -16,6 +16,9 @@ public abstract class ILTweaksMethods {
     public void android_os_PowerManager__getMinimumScreenBrightnessSetting__(MethodParam param) {
     }
 
+    public void android_os_SystemVibrator__vibrate__int_String_VibrationEffect_AudioAttributes(MethodParam param) {
+    }
+
     public void android_app_ContextImpl__startActivity__Intent_Bundle(MethodParam param) {
     }
 
@@ -125,6 +128,9 @@ public abstract class ILTweaksMethods {
     }
 
     public void android_media_MediaPlayer__setDataSource__FileDescriptor_long_long(MethodParam param) {
+    }
+
+    public void android_media_MediaPlayer__start__(MethodParam param) {
     }
 
     public void android_telephony_TelephonyManager__getLine1Number__int(MethodParam param) {
