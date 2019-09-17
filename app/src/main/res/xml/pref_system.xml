@@ -229,6 +229,15 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_solid_explorer">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_solid_explorer_darken"
+            android:title="@string/pref_solid_explorer_darken"
+            android:summary="@string/pref_solid_explorer_darken_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_nova_launcher">
         <SwitchPreference
             android:defaultValue="false"
