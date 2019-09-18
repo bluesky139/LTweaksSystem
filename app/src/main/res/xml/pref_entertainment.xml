@@ -64,6 +64,10 @@
             android:defaultValue="false"
             android:key="@string/key_bilibili_disable_teen_mode_hint"
             android:title="@string/pref_bilibili_disable_teen_mode_hint" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_bilibili_disable_splash"
+            android:title="@string/pref_bilibili_disable_splash" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_steam">
