@@ -13,6 +13,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 public class BilibiliDisableSplash extends TweakBase {
 
     private static final String SPLASH_ACTIVITY = "tv.danmaku.bili.ui.splash.SplashActivity";
+    private static final String HOT_SPLASH_ACTIVITY = "tv.danmaku.bili.ui.splash.HotSplashActivity";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
@@ -21,6 +22,13 @@ public class BilibiliDisableSplash extends TweakBase {
             Activity activity = (Activity) param.thisObject;
             activity.getSharedPreferences("bili_main_settings_preferences", 0)
                     .edit().putBoolean("DisableSplash", true).commit();
+        });
+        afterOnClass(HOT_SPLASH_ACTIVITY, param, () -> {
+            Activity activity = (Activity) param.thisObject;
+            if (!activity.isFinishing()) {
+                Logger.v("Finish HotSplashActivity.");
+                activity.finish();
+            }
         });
     }
 }
