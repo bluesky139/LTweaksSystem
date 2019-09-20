@@ -1,8 +1,11 @@
 package li.lingfeng.ltsystem.tweaks.entertainment;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
@@ -30,11 +33,24 @@ public class BilibiliHideToolbarAtPlay extends TweakBase {
             }
             coverView.setOnClickListener((v) -> {
                 originalClickListener.onClick(v);
-                if (toolbar.getVisibility() == View.VISIBLE) {
-                    Logger.v("Hide toolbar at play.");
-                    toolbar.setVisibility(View.INVISIBLE);
-                }
                 coverView.setOnClickListener(originalClickListener);
+                try {
+                    if (toolbar.getVisibility() == View.VISIBLE) {
+                        Logger.v("Hide toolbar at play.");
+                        toolbar.setVisibility(View.INVISIBLE);
+                    }
+
+                    // Stop share icon animation.
+                    ImageView iconView = (ImageView) ViewUtils.findViewByName(activity, "share_icon");
+                    Drawable drawable = iconView.getDrawable();
+                    new Handler().postDelayed(() -> {
+                        Logger.v("Stop share icon animation.");
+                        iconView.clearAnimation();
+                        iconView.setImageDrawable(drawable);
+                    }, 5000);
+                } catch (Throwable e) {
+                    Logger.e("coverView click exception.", e);
+                }
             });
         });
     }
