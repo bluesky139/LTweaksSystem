@@ -26,12 +26,14 @@ public class BilibiliHideToolbarAtPlay extends TweakBase {
             final Activity activity = (Activity) param.thisObject;
             ViewGroup toolbar = (ViewGroup) ViewUtils.findViewByName(activity, "nav_top_bar");
             View coverView = ViewUtils.findViewByName(activity, "cover");
+            View playButton = ViewUtils.findViewByName(activity, "play");
             View.OnClickListener originalClickListener = ViewUtils.getViewClickListener(coverView);
-            if (coverView == null || originalClickListener == null) {
-                Logger.e("coverView " + coverView + ", originalClickListener " + originalClickListener);
+            if (coverView == null || playButton == null || originalClickListener == null) {
+                Logger.e("coverView " + coverView + ", playButton " + playButton + ", originalClickListener " + originalClickListener);
                 return;
             }
-            coverView.setOnClickListener((v) -> {
+            
+            View.OnClickListener listener = v -> {
                 originalClickListener.onClick(v);
                 coverView.setOnClickListener(originalClickListener);
                 try {
@@ -51,7 +53,9 @@ public class BilibiliHideToolbarAtPlay extends TweakBase {
                 } catch (Throwable e) {
                     Logger.e("coverView click exception.", e);
                 }
-            });
+            };
+            coverView.setOnClickListener(listener);
+            playButton.setOnClickListener(listener);
         });
     }
 }

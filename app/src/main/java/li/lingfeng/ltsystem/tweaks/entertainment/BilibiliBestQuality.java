@@ -32,6 +32,9 @@ public class BilibiliBestQuality extends TweakBase {
             String preload = uri.getQueryParameter("player_preload");
             preload = Uri.decode(preload);
             JSONObject jPreload = JSON.parseObject(preload);
+            if (jPreload == null) {
+                return;
+            }
             int quality = jPreload.getIntValue("quality");
             int bestQuality = quality;
             JSONArray jVideos = jPreload.getJSONObject("dash").getJSONArray("video");
