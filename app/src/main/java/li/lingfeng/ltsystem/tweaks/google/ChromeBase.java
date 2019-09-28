@@ -186,7 +186,7 @@ public abstract class ChromeBase extends TweakBase {
                         && m.getParameterTypes()[0] == clsLoadUrlParams && m.getReturnType() == int.class;
             }
         });
-        Object loadUrlParams = ConstructorUtils.invokeConstructor(clsLoadUrlParams, url);
+        Object loadUrlParams = ConstructorUtils.invokeConstructor(clsLoadUrlParams, url, 0);
         int ret = (int) method.invoke(tab, loadUrlParams);
         Logger.d("loadUrl return " + ret);
     }
