@@ -13,6 +13,7 @@ public class PackageNames {
     public static final String GOOGLE = "com.google.android.googlequicksearchbox";
     public static final String GOOGLE_PLUS = "com.google.android.apps.plus";
     public static final String GOOGLE_PHOTOS = "com.google.android.apps.photos";
+    public static final String GOOGLE_MAP = "com.google.android.apps.maps";
     public static final String GOOGLE_NEWSSTAND = "com.google.android.apps.magazines";
     public static final String GOOGLE_BOOKS = "com.google.android.apps.books";
     public static final String GOOGLE_PLAY = "com.android.vending";

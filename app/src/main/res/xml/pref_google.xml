@@ -18,6 +18,15 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_google_map">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_map_chinese"
+            android:title="@string/pref_google_map_chinese"
+            android:summary="@string/pref_google_map_chinese_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_google_play">
         <SwitchPreference
             android:defaultValue="false"
