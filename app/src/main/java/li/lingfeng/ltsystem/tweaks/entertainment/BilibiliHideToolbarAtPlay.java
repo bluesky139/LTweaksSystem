@@ -24,9 +24,10 @@ public class BilibiliHideToolbarAtPlay extends TweakBase {
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         afterOnClass(VIDEO_DETAILS_ACTIVITY, param, () -> {
             final Activity activity = (Activity) param.thisObject;
-            ViewGroup toolbar = (ViewGroup) ViewUtils.findViewByName(activity, "nav_top_bar");
-            View coverView = ViewUtils.findViewByName(activity, "cover");
-            View playButton = ViewUtils.findViewByName(activity, "play");
+            ViewGroup appbar = (ViewGroup) ViewUtils.findViewByName(activity, "appbar");
+            ViewGroup toolbar = (ViewGroup) ViewUtils.findViewByName(appbar, "nav_top_bar");
+            View coverView = ViewUtils.findViewByName(appbar, "cover");
+            View playButton = ViewUtils.findViewByName(appbar, "play");
             View.OnClickListener originalClickListener = ViewUtils.getViewClickListener(coverView);
             if (coverView == null || playButton == null || originalClickListener == null) {
                 Logger.e("coverView " + coverView + ", playButton " + playButton + ", originalClickListener " + originalClickListener);
@@ -40,6 +41,7 @@ public class BilibiliHideToolbarAtPlay extends TweakBase {
                     if (toolbar.getVisibility() == View.VISIBLE) {
                         Logger.v("Hide toolbar at play.");
                         toolbar.setVisibility(View.INVISIBLE);
+                        ViewUtils.findViewByName(appbar, "shadow").setVisibility(View.INVISIBLE);
                     }
 
                     // Stop share icon animation.
