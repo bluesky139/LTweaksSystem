@@ -262,6 +262,59 @@
             </intent-filter>
         </activity-alias>
 
+        <activity android:name=".activities.GoMarketActivity" android:excludeFromRecents="true"
+            android:label="@string/share_go_market"
+            android:icon="@mipmap/ic_go_market"
+            android:theme="@style/Theme.Dialog"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.GoMarketActivity"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity-alias
+            android:name=".activities.CoolApkGoMarketActivity"
+            android:label="@string/share_go_market_coolapk"
+            android:targetActivity=".activities.GoMarketActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_GO_MARKET" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.ApkPureGoMarketActivity"
+            android:label="@string/share_go_market_apkpure"
+            android:targetActivity=".activities.GoMarketActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_GO_MARKET" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.ApkMirrorGoMarketActivity"
+            android:label="@string/share_go_market_apkmirror"
+            android:targetActivity=".activities.GoMarketActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_GO_MARKET" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.AppInfoGoMarketActivity"
+            android:label="@string/share_go_market_appinfo"
+            android:targetActivity=".activities.GoMarketActivity">
+            <intent-filter>
+                <action android:name="li.lingfeng.ltsystem.ACTION_GO_MARKET" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+
         <activity android:name=".activities.TileActivity" android:excludeFromRecents="true"
             android:theme="@style/Theme.Dialog"
             android:taskAffinity="li.lingfeng.ltsystem.activities.TileActivity">

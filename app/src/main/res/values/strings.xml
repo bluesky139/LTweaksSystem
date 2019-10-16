@@ -397,6 +397,11 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <string name="share_image_iqdb_search">IQDB</string>
     <string name="share_image_saucenao_search">SauceNAO</string>
     <string name="share_image_wait_search">WAIT</string>
+    <string name="share_go_market">Go Market</string>
+    <string name="share_go_market_coolapk">CoolApk</string>
+    <string name="share_go_market_apkpure">ApkPure</string>
+    <string name="share_go_market_apkmirror">ApkMirror</string>
+    <string name="share_go_market_appinfo">AppInfo</string>
 
     <!-- Prevent Running -->
     <string name="prevent_running_list_all">All</string>
