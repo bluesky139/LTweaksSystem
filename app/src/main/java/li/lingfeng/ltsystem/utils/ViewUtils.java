@@ -310,12 +310,14 @@ public class ViewUtils {
 
     public static View prevView(View view) {
         ViewGroup parent = (ViewGroup) view.getParent();
-        return parent.getChildAt(parent.indexOfChild(view) - 1);
+        int i = parent.indexOfChild(view);
+        return i > 0 ? parent.getChildAt(i - 1) : null;
     }
 
     public static View nextView(View view) {
         ViewGroup parent = (ViewGroup) view.getParent();
-        return parent.getChildAt(parent.indexOfChild(view) + 1);
+        int i = parent.indexOfChild(view);
+        return i < parent.getChildCount() - 1 ? parent.getChildAt(i + 1) : null;
     }
 
     public static void removeView(View view) {

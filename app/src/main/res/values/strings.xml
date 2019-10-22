@@ -354,6 +354,8 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <string name="pref_category_solid_explorer">Solid Explorer</string>
     <string name="pref_solid_explorer_darken">A more better night mode</string>
     <string name="pref_solid_explorer_darken_summary">For file save from system share</string>
+    <string name="pref_solid_explorer_highlight_visited_files">Highlight visited files</string>
+    <string name="pref_solid_explorer_highlight_visited_files_summary">It\'s very useful if you use Solid Explorer to play episodes</string>
     <string name="pref_category_nova_launcher">Nova Launcher</string>
     <string name="pref_nova_launcher_search_go_chrome">Open chrome search activity on search bar click</string>
     <string name="pref_nova_launcher_search_go_chrome_summary">Instead of Google Search App</string>

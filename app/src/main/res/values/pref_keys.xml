@@ -123,6 +123,7 @@
     <string name="key_mixplorer_ignore_cpu_usage_kill">key_mixplorer_ignore_cpu_usage_kill</string>
     <string name="key_mixplorer_highlight_visited_files">key_mixplorer_highlight_visited_files</string>
     <string name="key_solid_explorer_darken">key_solid_explorer_darken</string>
+    <string name="key_solid_explorer_highlight_visited_files">key_solid_explorer_highlight_visited_files</string>
     <string name="key_nova_launcher_search_go_chrome">key_nova_launcher_search_go_chrome</string>
     <string name="key_debug_app_crash_info">key_debug_app_crash_info</string>
     <string name="key_debug_debuggable">key_debug_debuggable</string>
