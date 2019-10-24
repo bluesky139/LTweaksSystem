@@ -97,6 +97,9 @@ public abstract class ILTweaksMethods {
     public void android_view_View__setOnClickListener__OnClickListener(MethodParam param) {
     }
 
+    public void android_view_View__setVisibility__int(MethodParam param) {
+    }
+
     public void android_view_View__setSystemUiVisibility__int(MethodParam param) {
     }
 

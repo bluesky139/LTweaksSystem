@@ -15,6 +15,11 @@
             android:key="@string/key_google_photos_remove_bottom_bar"
             android:title="@string/pref_google_photos_remove_bottom_bar"
             android:summary="@string/pref_google_photos_remove_bottom_bar_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_google_photos_hide_suggestion"
+            android:title="@string/pref_google_photos_hide_suggestion"
+            android:summary="@string/pref_google_photos_hide_suggestion_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory
