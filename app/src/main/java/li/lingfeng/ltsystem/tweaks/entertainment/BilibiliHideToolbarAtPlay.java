@@ -1,11 +1,8 @@
 package li.lingfeng.ltsystem.tweaks.entertainment;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
@@ -19,6 +16,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 public class BilibiliHideToolbarAtPlay extends TweakBase {
 
     private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
+    private static final String SHARE_ICON_VIEW = "tv.danmaku.biliplayer.features.share.ShareIconView";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
@@ -43,21 +41,22 @@ public class BilibiliHideToolbarAtPlay extends TweakBase {
                         toolbar.setVisibility(View.INVISIBLE);
                         ViewUtils.findViewByName(appbar, "shadow").setVisibility(View.INVISIBLE);
                     }
-
-                    // Stop share icon animation.
-                    ImageView iconView = (ImageView) ViewUtils.findViewByName(activity, "share_icon");
-                    Drawable drawable = iconView.getDrawable();
-                    new Handler().postDelayed(() -> {
-                        Logger.v("Stop share icon animation.");
-                        iconView.clearAnimation();
-                        iconView.setImageDrawable(drawable);
-                    }, 5000);
                 } catch (Throwable e) {
                     Logger.e("coverView click exception.", e);
                 }
             };
             coverView.setOnClickListener(listener);
             playButton.setOnClickListener(listener);
+        });
+    }
+
+    @Override
+    public void android_view_View__startAnimation__Animation(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            if (param.thisObject.getClass().getName().equals(SHARE_ICON_VIEW)) {
+                Logger.v("Stop share icon animation.");
+                param.setResult(null);
+            }
         });
     }
 }

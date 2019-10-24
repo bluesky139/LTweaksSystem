@@ -109,6 +109,9 @@ public abstract class ILTweaksMethods {
     public void android_view_View__requestFocus__(MethodParam param) {
     }
 
+    public void android_view_View__startAnimation__Animation(MethodParam param) {
+    }
+
     public void android_view_inputmethod_InputMethodManager__showSoftInput__View_int_ResultReceiver(MethodParam param) {
     }
 
