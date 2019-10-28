@@ -32,6 +32,10 @@
             android:key="@string/key_wechat_mute_annoying_notification"
             android:title="@string/pref_wechat_mute_annoying_notification"
             android:summary="@string/pref_wechat_mute_annoying_notification_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_wechat_expand_subscribed_list"
+            android:title="@string/pref_wechat_expand_subscribed_list" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_qq">
