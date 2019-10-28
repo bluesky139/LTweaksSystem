@@ -107,7 +107,7 @@ public class SolidExplorerHighlightVisitedFile extends TweakBase {
 
     @Override
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
-        param.before(() -> {
+        beforeOnClass(MAIN_ACTIVITY, param, () -> {
             mHandler = null;
             mHeaderViews = null;
             mDBHelper = null;
