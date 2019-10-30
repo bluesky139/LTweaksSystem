@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.tweaks.entertainment;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
@@ -23,11 +24,15 @@ public class BilibiliDisableSplash extends TweakBase {
             activity.getSharedPreferences("bili_main_settings_preferences", 0)
                     .edit().putBoolean("DisableSplash", true).commit();
         });
-        afterOnClass(HOT_SPLASH_ACTIVITY, param, () -> {
-            Activity activity = (Activity) param.thisObject;
-            if (!activity.isFinishing()) {
-                Logger.v("Finish HotSplashActivity.");
-                activity.finish();
+    }
+
+    @Override
+    public void android_app_Activity__startActivityForResult__Intent_int_Bundle(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            Intent intent = (Intent) param.args[0];
+            if (intent.getComponent() != null && HOT_SPLASH_ACTIVITY.equals(intent.getComponent().getClassName())) {
+                Logger.v("Disallow HotSplashActivity.");
+                param.setResult(null);
             }
         });
     }
