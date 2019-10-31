@@ -7,6 +7,7 @@
     <string name="key_google_photos_hide_suggestion">key_google_photos_hide_suggestion</string>
     <string name="key_google_map_chinese">key_google_map_chinese</string>
     <string name="key_google_play_view_in_coolapk">key_google_play_view_in_coolapk</string>
+    <string name="key_google_play_services_dismiss_system_update">key_google_play_services_dismiss_system_update</string>
     <string name="key_chrome_incognito_search">key_chrome_incognito_search</string>
     <string name="key_chrome_google_cache">key_chrome_google_cache</string>
     <string name="key_chrome_wayback">key_chrome_wayback</string>
