@@ -73,6 +73,10 @@
         <SwitchPreference
             android:key="@string/key_shadowsocks_transproxy_with_ipset"
             android:title="@string/pref_shadowsocks_transproxy_with_ipset" />
+        <SwitchPreference
+            android:key="@string/key_shadowsocks_ddns_update"
+            android:title="@string/pref_shadowsocks_ddns_update"
+            android:summary="@string/pref_shadowsocks_ddns_update_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory

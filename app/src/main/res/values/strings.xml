@@ -295,6 +295,8 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <string name="pref_shadowsocks_transproxy">Transproxy</string>
     <string name="pref_shadowsocks_transproxy_summary">Use it with Shadowsocks transproxy mode, set route to \"bypass LAN &amp; mainland China\".\nss-local acl will be disabled, IP list will be added by iptables.\nIt will take several minutes at Shadowsocks enabled.\nRoot is required</string>
     <string name="pref_shadowsocks_transproxy_with_ipset">Transproxy with ipset</string>
+    <string name="pref_shadowsocks_ddns_update">DDNS update</string>
+    <string name="pref_shadowsocks_ddns_update_summary">Update by system connectivity validation</string>
     <string name="pref_category_quick_settings">Quick Settings in status bar</string>
     <string name="pref_quick_settings_tile_adb_wireless">Add tile \"Adb Wireless\"</string>
     <string name="pref_quick_settings_tile_adb_wireless_summary">Use \"adb connect x:x:x:x:5555\" to connect\nFor Android 5.0+, root is required</string>

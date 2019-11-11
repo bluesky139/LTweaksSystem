@@ -96,6 +96,7 @@
     <string name="key_shadowsocks_primary_dns">key_shadowsocks_primary_dns</string>
     <string name="key_shadowsocks_transproxy">key_shadowsocks_transproxy</string>
     <string name="key_shadowsocks_transproxy_with_ipset">key_shadowsocks_transproxy_with_ipset</string>
+    <string name="key_shadowsocks_ddns_update">key_shadowsocks_ddns_update</string>
     <string name="key_quick_settings_tile_adb_wireless">key_quick_settings_tile_adb_wireless</string>
     <!-- key_quick_settings_tile_4g3g -->
     <string name="key_quick_settings_tile_4g">key_quick_settings_tile_4g</string>
