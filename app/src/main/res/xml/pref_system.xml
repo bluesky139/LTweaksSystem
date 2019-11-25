@@ -247,6 +247,15 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_quick_edit">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_quick_edit_darken"
+            android:title="@string/pref_quick_edit_darken"
+            android:summary="@string/pref_quick_edit_darken_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_nova_launcher">
         <SwitchPreference
             android:defaultValue="false"

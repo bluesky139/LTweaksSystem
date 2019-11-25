@@ -69,6 +69,7 @@ public class PackageNames {
     public static final String SUPER_SU = "eu.chainfire.supersu";
     public static final String NOVA_LAUNCHER = "com.teslacoilsw.launcher";
     public static final String MIXPLORER = "com.mixplorer";
+    public static final String QUICK_EDIT = "com.rhmsoft.edit";
 
     public static final String[] _SYSTEM_BOOT_PACKAGES = new String[] {
             ANDROID,
