@@ -3,6 +3,7 @@ package li.lingfeng.ltsystem.utils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -334,17 +335,27 @@ public class ViewUtils {
     }
 
     public static void showDialog(Context context, CharSequence message, DialogInterface.OnClickListener positiveListener) {
-        new AlertDialog.Builder(context)
+        Dialog dialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton(ContextUtils.getLString(R.string.app_ok), positiveListener)
-                .show();
+                .create();
+        dialog.setOnShowListener((_dialog -> {
+            TextView textView = dialog.findViewById(android.R.id.message);
+            textView.setTextIsSelectable(true);
+        }));
+        dialog.show();
     }
 
     public static void showDialog(Context context, int messageId, final DialogInterface.OnClickListener positiveListener) {
-        new AlertDialog.Builder(context)
+        Dialog dialog = new AlertDialog.Builder(context)
                 .setMessage(messageId)
                 .setPositiveButton(ContextUtils.getLString(R.string.app_ok), positiveListener)
-                .show();
+                .create();
+        dialog.setOnShowListener((_dialog -> {
+            TextView textView = dialog.findViewById(android.R.id.message);
+            textView.setTextIsSelectable(true);
+        }));
+        dialog.show();
     }
 
     public static AlertDialog showProgressingDialog(Context context, final boolean cancelable, final Callback.C0 cancelCallback) {
