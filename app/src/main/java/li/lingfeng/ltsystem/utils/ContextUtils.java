@@ -415,6 +415,7 @@ public class ContextUtils {
         Logger.v("startBrowser " + url);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -449,6 +450,7 @@ public class ContextUtils {
         Logger.v("openAppInfo " + packageName);
         Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + packageName));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
     }
 
@@ -461,6 +463,7 @@ public class ContextUtils {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setPackage(market);
             intent.setData(Uri.parse("market://details?id=" + app));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(intent);
         } else {
             openAppInWebMarket(activity, app, market);
