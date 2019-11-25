@@ -30,7 +30,7 @@ public class TTRssDisableArticlePager extends TweakBase {
             Object fragment = ops.stream()
                     .map(op -> {
                         try {
-                            return ReflectUtils.getObjectField(op, "fragment");
+                            return ReflectUtils.getObjectField(op, "mFragment");
                         } catch (Throwable e) {
                             return null;
                         }
