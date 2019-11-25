@@ -77,6 +77,7 @@
     <string name="key_steam_go_top">key_steam_go_top</string>
     <string name="key_steam_go_reviews">key_steam_go_reviews</string>
     <string name="key_steam_chinese">key_steam_chinese</string>
+    <string name="key_tachiyomi_darken">key_tachiyomi_darken</string>
 
     <!--System-->
     <string name="key_text_long_press_to_copy">key_text_long_press_to_copy</string>

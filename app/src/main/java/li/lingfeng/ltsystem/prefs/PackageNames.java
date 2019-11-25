@@ -50,6 +50,7 @@ public class PackageNames {
     public static final String BILIBILI_IN = "com.bilibili.app.in";
     public static final String STEAM = "com.valvesoftware.android.steam.community";
     public static final String COMIC_SCREEN = "com.viewer.comicscreen";
+    public static final String TACHIYOMI = "eu.kanade.tachiyomi";
 
     // System / Tool
     public static final String TEXT_AIDE = "com.arjerine.textxposed";

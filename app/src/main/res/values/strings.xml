@@ -254,6 +254,9 @@ Open source on github: \n
     <string name="pref_steam_go_reviews_summary">Add a top right menu</string>
     <string name="pref_steam_chinese">Chinese store page</string>
     <string name="pref_steam_chinese_summary">Check this if your system language is English but you want Chinese store page</string>
+    <string name="pref_category_tachiyomi">Tachiyomi</string>
+    <string name="pref_tachiyomi_darken">A more better night mode</string>
+    <string name="pref_tachiyomi_darken_summary">At starting window</string>
 
     <!-- Bilibili -->
     <string name="bilibili_get_cover">Get Cover</string>
