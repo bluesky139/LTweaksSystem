@@ -257,6 +257,8 @@ Open source on github: \n
     <string name="pref_category_tachiyomi">Tachiyomi</string>
     <string name="pref_tachiyomi_darken">A more better night mode</string>
     <string name="pref_tachiyomi_darken_summary">At starting window</string>
+    <string name="pref_category_pica_comic">Pica Comic</string>
+    <string name="pref_pica_comic_ads">Remove ads</string>
 
     <!-- Bilibili -->
     <string name="bilibili_get_cover">Get Cover</string>

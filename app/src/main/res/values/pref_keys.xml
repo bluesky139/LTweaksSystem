@@ -78,6 +78,7 @@
     <string name="key_steam_go_reviews">key_steam_go_reviews</string>
     <string name="key_steam_chinese">key_steam_chinese</string>
     <string name="key_tachiyomi_darken">key_tachiyomi_darken</string>
+    <string name="key_pica_comic_ads">key_pica_comic_ads</string>
 
     <!--System-->
     <string name="key_text_long_press_to_copy">key_text_long_press_to_copy</string>
