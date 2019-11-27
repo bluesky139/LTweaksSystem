@@ -73,6 +73,12 @@ public abstract class ILTweaksMethods {
     public void android_app_NotificationManager__notify__String_int_Notification(MethodParam param) {
     }
 
+    public void android_app_ApplicationPackageManager__getInstalledApplications__int(MethodParam param) {
+    }
+
+    public void android_app_ApplicationPackageManager__getInstalledPackages__int(MethodParam param) {
+    }
+
     public void android_widget_TextView__onTouchEvent__MotionEvent(MethodParam param) {
     }
 

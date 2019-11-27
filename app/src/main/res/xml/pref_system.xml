@@ -61,6 +61,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_app_list_block">
+        <Preference
+            android:key="@string/key_app_list_block_package"
+            android:title="@string/pref_app_list_block_package"
+            android:summary="@string/pref_app_list_block_package_summary" />
+        <Preference
+            android:key="@string/key_app_list_block_for"
+            android:title="@string/pref_app_list_block_for"
+            android:summary="@string/pref_app_list_block_for_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_shadowsocks">
         <EditTextPreference
             android:key="@string/key_shadowsocks_primary_dns"

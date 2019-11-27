@@ -131,6 +131,13 @@ public class ListCheckActivity extends FragmentActivity {
         activity.startActivity(intent);
     }
 
+    public static void create(Activity activity, Class<? extends DataProvider> clsDataProvider, Bundle extra) {
+        Intent intent = new Intent(activity, ListCheckActivity.class);
+        intent.putExtra("data_provider", clsDataProvider);
+        intent.putExtras(extra);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
