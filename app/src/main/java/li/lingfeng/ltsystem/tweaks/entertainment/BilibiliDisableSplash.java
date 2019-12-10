@@ -15,14 +15,19 @@ public class BilibiliDisableSplash extends TweakBase {
 
     private static final String SPLASH_ACTIVITY = "tv.danmaku.bili.ui.splash.SplashActivity";
     private static final String HOT_SPLASH_ACTIVITY = "tv.danmaku.bili.ui.splash.HotSplashActivity";
+    private static final String MAIN_ACTIVITY = "tv.danmaku.bili.MainActivityV2";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         beforeOnClass(SPLASH_ACTIVITY, param, () -> {
-            Logger.v("Set DisableSplash to true.");
             Activity activity = (Activity) param.thisObject;
-            activity.getSharedPreferences("bili_main_settings_preferences", 0)
-                    .edit().putBoolean("DisableSplash", true).commit();
+            if (!activity.isFinishing()) {
+                Logger.v("Skip SplashActivity.");
+                Intent intent = new Intent();
+                intent.setClassName(PackageNames.BILIBILI, MAIN_ACTIVITY);
+                activity.startActivity(intent);
+                activity.finish();
+            }
         });
     }
 
