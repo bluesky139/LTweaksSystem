@@ -51,5 +51,10 @@
             android:key="@string/key_ele_route_share_link"
             android:title="@string/pref_ele_route_share_link"
             android:summary="@string/pref_ele_route_share_link_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_ele_address_map"
+            android:title="@string/pref_ele_address_map"
+            android:summary="@string/pref_ele_address_map_summary" />
     </PreferenceCategory>
 </PreferenceScreen>

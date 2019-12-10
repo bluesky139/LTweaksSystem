@@ -150,6 +150,8 @@ Open source on github: \n
     <string name="pref_category_ele">ELE</string>
     <string name="pref_ele_route_share_link">Route share link</string>
     <string name="pref_ele_route_share_link_summary">App can be opened from their share link, but it will not take you to the specified shop/food</string>
+    <string name="pref_ele_address_map">Open map from shop address</string>
+    <string name="pref_ele_address_map_summary">Baidu map</string>
 
     <!-- JD -->
     <string name="jd_app">JD App</string>
