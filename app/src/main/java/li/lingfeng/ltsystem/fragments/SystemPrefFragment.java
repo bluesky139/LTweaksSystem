@@ -33,6 +33,7 @@ import li.lingfeng.ltsystem.lib.PreferenceClick;
 import li.lingfeng.ltsystem.lib.PreferenceLoad;
 import li.lingfeng.ltsystem.prefs.ClassNames;
 import li.lingfeng.ltsystem.prefs.PackageNames;
+import li.lingfeng.ltsystem.services.CopyToShareService;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
 import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
@@ -133,6 +134,15 @@ public class SystemPrefFragment extends BasePrefFragment {
     @PreferenceClick(prefs = R.string.key_system_share_filter)
     private void systemShareFilter(Preference preference) {
         ListCheckActivity.create(getActivity(), ShareFilterDataProvider.class);
+    }
+
+    @PreferenceClick(prefs = R.string.key_system_share_copy_to_share)
+    private void systemShareCopyToShare(SwitchPreference preference) {
+        Intent intent = new Intent(getActivity(), CopyToShareService.class);
+        if (!preference.isChecked()) {
+            intent.putExtra("stop", true);
+        }
+        getActivity().startService(intent);
     }
 
     @PreferenceClick(prefs = R.string.key_prevent_running_set_list)

@@ -2,6 +2,7 @@ package li.lingfeng.ltsystem.utils;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -39,30 +40,32 @@ public class ShareUtils {
         }
     }
 
-    public static void searchText(Activity activity, String text) {
+    public static void searchText(Context context, String text) {
         String url = Utils.isUrl(text) ? text : "https://www.google.com/search?gws_rd=cr&q=" + Uri.encode(text);
-        ContextUtils.startBrowser(activity, url);
+        ContextUtils.startBrowser(context, url);
     }
 
-    public static void incognitoText(Activity activity, String text) {
+    public static void incognitoText(Context context, String text) {
         Intent intent = new Intent(Intent.ACTION_PROCESS_TEXT);
         intent.setClassName(PackageNames.L_TWEAKS, ChromeIncognitoActivity.class.getName());
         intent.putExtra(Intent.EXTRA_PROCESS_TEXT, text);
-        activity.startActivity(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
-    public static void shareText(Activity activity, String text) {
+    public static void shareText(Context context, String text) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-        activity.startActivity(Intent.createChooser(shareIntent, "Share with..."));
+        context.startActivity(Intent.createChooser(shareIntent, "Share with..."));
     }
 
-    public static void selectText(Activity activity, String text) {
+    public static void selectText(Context context, String text) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         shareIntent.setClassName(PackageNames.L_TWEAKS, SelectableTextActivity.class.getName());
-        activity.startActivity(shareIntent);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(shareIntent);
     }
 }

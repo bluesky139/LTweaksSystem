@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -30,24 +31,24 @@ import static li.lingfeng.ltsystem.utils.ContextUtils.dp2px;
 
 public class SimpleSnackbar extends LinearLayout {
 
-    private static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
+    public static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
     public static final int LENGTH_LONG  = 3500;
     public static final int LENGTH_SHORT = 2000;
 
-    protected Activity mActivity;
+    protected Context mContext;
     protected Handler mHandler;
 
     protected TextView mTextView;
     protected int mDuration;
 
-    public static SimpleSnackbar make(Activity activity, String mainText, int duration) {
-        SimpleSnackbar snackbar = new SimpleSnackbar(activity, mainText, duration);
+    public static SimpleSnackbar make(Context context, String mainText, int duration) {
+        SimpleSnackbar snackbar = new SimpleSnackbar(context, mainText, duration);
         return snackbar;
     }
 
-    private SimpleSnackbar(Activity activity, String mainText, int duration) {
-        super(activity);
-        mActivity = activity;
+    private SimpleSnackbar(Context context, String mainText, int duration) {
+        super(context);
+        mContext = context;
         mDuration = duration;
         mHandler = new Handler();
         setBackgroundColor(0xFF303030);
@@ -140,8 +141,14 @@ public class SimpleSnackbar extends LinearLayout {
     }
 
     public void show() {
+        if (!(mContext instanceof Activity)) {
+            Logger.e("SimpleSnackbar context is not activity, " + mContext);
+            return;
+        }
+
         Logger.i("SimpleSnackbar show.");
-        View view = mActivity.findViewById(android.R.id.content);
+        Activity activity = (Activity) mContext;
+        View view = activity.findViewById(android.R.id.content);
         if (view == null) {
             Logger.w("android.R.id.content is null.");
             return;
@@ -151,10 +158,10 @@ public class SimpleSnackbar extends LinearLayout {
         params.gravity = Gravity.BOTTOM;
 
         float yPos = rootView.getY() + rootView.getHeight();
-        int windowHeight = ViewUtils.getWindowHeight(mActivity);
+        int windowHeight = ViewUtils.getWindowHeight(activity);
         Logger.d("yPos " + yPos + ", windowHeight " + windowHeight);
         if (yPos > windowHeight) {
-            params.bottomMargin = ViewUtils.getWindowHeightWithNavigator(mActivity) - windowHeight;
+            params.bottomMargin = ViewUtils.getWindowHeightWithNavigator(activity) - windowHeight;
             Logger.d("params.bottomMargin " + params.bottomMargin);
         }
         setAlpha(0f);

@@ -410,6 +410,7 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     </string>
     <string name="text_actions_rename">Rename</string>
     <string name="text_actions_remove_custom_only">Only custom items can be removed.</string>
+    <string name="copy_to_share_service">Copy to share service</string>
 
     <!--Share-->
     <string name="share_qrcode_scan">Scan QR Code in image</string>

@@ -19,9 +19,9 @@ import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ShareUtils;
 
-@MethodsLoad(packages = {}, prefs = R.string.key_system_share_copy_to_share, excludedPackages = {
+/*@MethodsLoad(packages = {}, prefs = R.string.key_system_share_copy_to_share, excludedPackages = {
         PackageNames.ANDROID, PackageNames.ANDROID_SYSTEM_UI, PackageNames.ELE, PackageNames.NOVA_LAUNCHER
-})
+})*/
 public class CopyToShare extends TweakBase {
 
     private boolean mListenerAdded = false;

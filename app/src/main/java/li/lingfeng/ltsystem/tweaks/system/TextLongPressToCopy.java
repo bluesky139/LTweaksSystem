@@ -17,7 +17,7 @@ import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.Logger;
 
 @MethodsLoad(packages = {}, prefs = R.string.key_text_long_press_to_copy, excludedPackages = {
-        PackageNames.ANDROID, PackageNames.ANDROID_SYSTEM_UI
+        PackageNames.ANDROID, PackageNames.ANDROID_SYSTEM_UI, PackageNames.NOVA_LAUNCHER, PackageNames.ELE
 })
 public class TextLongPressToCopy extends TweakBase {
 
