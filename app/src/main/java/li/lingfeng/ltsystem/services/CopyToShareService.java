@@ -26,6 +26,7 @@ import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.prefs.NotificationId;
 import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.ReflectUtils;
 import li.lingfeng.ltsystem.utils.ShareUtils;
 import li.lingfeng.ltsystem.utils.SimpleSnackbar;
 
@@ -85,8 +86,9 @@ public class CopyToShareService extends Service implements ClipboardManager.OnPr
                     .setContentIntent(pendingIntent)
                     .setChannelId(title)
                     .setVisibility(Notification.VISIBILITY_PUBLIC);
-            notificationManager.createNotificationChannel(
-                    new NotificationChannel(title, title, NotificationManager.IMPORTANCE_LOW));
+            NotificationChannel channel = new NotificationChannel(title, title, NotificationManager.IMPORTANCE_LOW);
+            ReflectUtils.setBooleanField(channel, "mBlockableSystem", true);
+            notificationManager.createNotificationChannel(channel);
             Notification notification = builder.build();
             startForeground(NotificationId.COPY_TO_SHARE_SERVICE, notification);
         } catch (Throwable e) {
