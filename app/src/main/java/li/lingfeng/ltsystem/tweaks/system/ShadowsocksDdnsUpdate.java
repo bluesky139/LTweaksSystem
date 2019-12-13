@@ -21,6 +21,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.net.InetAddress;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.LTHelper;
@@ -73,6 +74,10 @@ public class ShadowsocksDdnsUpdate extends TweakBase {
                 Object data = ReflectUtils.callMethod(param.thisObject, "getData");
                 Object profile = ReflectUtils.callMethod(data, "getProfile");
                 mDomain = (String) ReflectUtils.callMethod(profile, "getHost");
+                if (Pattern.matches("^[\\d\\.]+$", mDomain)) {
+                    Logger.i("ss-local not domain " + mDomain);
+                    return;
+                }
                 Logger.i("ss-local domain " + mDomain);
 
                 mHandler = new Handler();
@@ -185,11 +190,16 @@ public class ShadowsocksDdnsUpdate extends TweakBase {
             mConfigFile = null;
             mDomain = null;
             mIP = null;
-            LTHelper.currentApplication().unregisterReceiver(mReceiver);
-            mReceiver = null;
+            mProcess = null;
+            if (mReceiver != null) {
+                LTHelper.currentApplication().unregisterReceiver(mReceiver);
+                mReceiver = null;
+            }
+            if (mHandler != null) {
+                mHandler.removeCallbacksAndMessages(null);
+                mHandler = null;
+            }
             mConnectivityManager = null;
-            mHandler.removeCallbacksAndMessages(null);
-            mHandler = null;
         });
     }
 }
