@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 import li.lingfeng.ltsystem.ILTweaks;
-import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
@@ -45,7 +43,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
     Button tabSharing;
     Button[] tabButtons = new Button[4];
 
-    LinearLayout drawerFragment;
+    ViewGroup drawerFragment;
     ViewGroup navList;
     ListView barList;
     BarListAdapter barListAdapter;
@@ -159,7 +157,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
                 if (drawerFragment == null && view.getId() > 0) {
                     if (activity.getResources().getResourceEntryName(view.getId()).equals("navigation_items")) {
                         Logger.i("got navigation_items.");
-                        drawerFragment = (LinearLayout) view.getParent().getParent();
+                        drawerFragment = (ViewGroup) view.getParent();
                         navList = (ViewGroup) view;
                         if (isReady())
                             createBarList();
