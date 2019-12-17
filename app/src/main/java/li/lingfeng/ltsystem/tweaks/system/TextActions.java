@@ -86,7 +86,7 @@ public class TextActions extends ILTweaksMethods {
                     triple = savedItemMap.get(title2);
                     Integer order2 = triple == null ? null : triple.first;
 
-                    Logger.d("title1 " + title1 + "[" + order1 + "], title2 " + title2 + "[" + order2 + "]");
+                    //Logger.d("title1 " + title1 + "[" + order1 + "], title2 " + title2 + "[" + order2 + "]");
                     if (order1 == null && order2 == null) {
                         return 0;
                     }
