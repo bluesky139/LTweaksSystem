@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.prefs.ClassNames;
 
@@ -41,6 +42,9 @@ import li.lingfeng.ltsystem.prefs.ClassNames;
  */
 
 public class ViewUtils {
+
+    private static final String WEBVIEW_FACTORY = "android.webkit.WebViewFactory";
+    private static final String WEBVIEW_DELEGATE = "android.webkit.WebViewDelegate";
 
     public static List<View> findAllViewByName(ViewGroup rootView, String containerName, String name) {
         if (containerName != null)
@@ -371,6 +375,17 @@ public class ViewUtils {
                     }
                 })
                 .show();
+    }
+
+    public static void createWebViewProvider() throws Throwable {
+        Class clsWebViewFactory = Class.forName(WEBVIEW_FACTORY, false, LTHelper.currentApplication().getClassLoader());
+        if (ReflectUtils.getStaticObjectField(clsWebViewFactory, "sProviderInstance") != null) {
+            return;
+        }
+        Class clsWebViewDelegate = Class.forName(WEBVIEW_DELEGATE, false, LTHelper.currentApplication().getClassLoader());
+        Class clsProvider = (Class) ReflectUtils.callStaticMethod(clsWebViewFactory, "getProviderClass");
+        Object providerInstance = ReflectUtils.callStaticMethod(clsProvider, "create", ReflectUtils.getFirstConstructor(clsWebViewDelegate).newInstance());
+        ReflectUtils.setStaticObjectField(clsWebViewFactory, "sProviderInstance", providerInstance);
     }
 
     public static void executeJs(WebView webView, String js) {

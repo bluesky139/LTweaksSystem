@@ -23,6 +23,7 @@ public class PriceHistoryGrabber {
 
     public interface GrabCallback {
         void onResult(Result result);
+        void onRedirect(String url);
     }
 
     public class Result {
@@ -35,6 +36,7 @@ public class PriceHistoryGrabber {
 
     private String mItemId;
     private String mUrl = "https://browser.gwdang.com/extension?ac=price_trend&dp_ids=&dp_id=%s-%d&price=&format=json&union=union_gwdang&version=1478246552639&from_device=chrome&crc64=1";
+    private String mCookie;
     private OkHttpClient client = new OkHttpClient();
     private GrabCallback mGrabCallback;
 
@@ -44,14 +46,21 @@ public class PriceHistoryGrabber {
         mGrabCallback = callback;
     }
 
+    public void setCookie(String cookie) {
+        mCookie = cookie;
+    }
+
     public void startRequest() {
         try {
             Logger.i("Start request " + mUrl);
-            Request request = new Request.Builder()
+            Request.Builder builder = new Request.Builder()
                     .url(mUrl)
                     .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36")
-                    .header("Referer", "https://item.jd.com/" + mItemId + ".html")
-                    .build();
+                    .header("Referer", "https://item.jd.com/" + mItemId + ".html");
+            if (mCookie != null) {
+                builder.header("Cookie", mCookie);
+            }
+            Request request = builder.build();
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
@@ -66,6 +75,11 @@ public class PriceHistoryGrabber {
                         Logger.i("Got prices, parsing...");
                         Result result = parseResponse(response.body().string());
                         mGrabCallback.onResult(result);
+                    } else if (response.code() == 202) {
+                        String body = response.body().string();
+                        Logger.d("Redirect response, " + body);
+                        String url = parseRedirectResponse(body);
+                        mGrabCallback.onRedirect(url);
                     } else {
                         Logger.e("onResponse " + response);
                         mGrabCallback.onResult(null);
@@ -106,6 +120,15 @@ public class PriceHistoryGrabber {
             return result;
         } catch (Exception e) {
             Logger.e("Failed to parse json, " + e.getMessage());
+            return null;
+        }
+    }
+
+    private String parseRedirectResponse(String text) {
+        try {
+            return JSON.parseObject(text).getJSONObject("action").getString("to");
+        } catch (Throwable e) {
+            Logger.e("Failed to parse redirect response, ", e);
             return null;
         }
     }

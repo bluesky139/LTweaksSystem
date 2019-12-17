@@ -6,13 +6,20 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Pair;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +52,7 @@ import java.util.regex.Matcher;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ShoppingUtils;
+import li.lingfeng.ltsystem.utils.ViewUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -58,6 +66,7 @@ public class JDHistoryActivity extends Activity implements
     private OkHttpClient mHttpClient;
     private ProgressBar mProgressBar;
     private LineChart mChart;
+    private PriceHistoryGrabber mGrabber;
     private PriceHistoryGrabber.Result mData;
     private DecimalFormat mDec = new DecimalFormat("#,###.00");
 
@@ -65,6 +74,15 @@ public class JDHistoryActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!getIntent().getAction().equals(Intent.ACTION_SEND) || !getIntent().getType().equals("text/plain")) {
+            Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        try {
+            ViewUtils.createWebViewProvider();
+        } catch (Throwable e) {
+            Logger.e("Can't create webview provider.", e);
             Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -90,28 +108,63 @@ public class JDHistoryActivity extends Activity implements
         String itemId = item.first;
         @ShoppingUtils.Store int store = item.second;
 
-        PriceHistoryGrabber grabber = new PriceHistoryGrabber(store, itemId,
+        mGrabber = new PriceHistoryGrabber(store, itemId,
                 new PriceHistoryGrabber.GrabCallback() {
             @Override
             public void onResult(final PriceHistoryGrabber.Result result) {
                 Logger.i("Prices result " + result);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (result == null) {
-                            Toast.makeText(JDHistoryActivity.this, R.string.jd_history_can_not_get_prices, Toast.LENGTH_SHORT).show();
-                            JDHistoryActivity.this.finish();
-                            return;
-                        }
-                        mData = result;
-                        createChart(result);
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        mChart.setVisibility(View.VISIBLE);
+                runOnUiThread(() -> {
+                    if (result == null) {
+                        Toast.makeText(JDHistoryActivity.this, R.string.jd_history_can_not_get_prices, Toast.LENGTH_SHORT).show();
+                        JDHistoryActivity.this.finish();
+                        return;
                     }
+                    mData = result;
+                    createChart(result);
+                    mProgressBar.setVisibility(View.INVISIBLE);
+                    mChart.setVisibility(View.VISIBLE);
+                });
+            }
+
+            @Override
+            public void onRedirect(String url) {
+                Logger.i("Redirect url " + url + ", should be recaptcha.");
+                runOnUiThread(() -> {
+                    if (url == null) {
+                        Toast.makeText(JDHistoryActivity.this, R.string.jd_history_can_not_get_prices, Toast.LENGTH_SHORT).show();
+                        JDHistoryActivity.this.finish();
+                        return;
+                    }
+                    WebView webView = new WebView(JDHistoryActivity.this);
+                    webView.getSettings().setJavaScriptEnabled(true);
+                    webView.setWebViewClient(new WebViewClient() {
+                        @Override
+                        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                            Uri uri = request.getUrl();
+                            Logger.d("shouldOverrideUrlLoading " + uri);
+                            if (uri.getHost().endsWith("jd.com")) {
+                                String cookie = CookieManager.getInstance().getCookie("https://browser.gwdang.com");
+                                Logger.d("Got cookie " + cookie);
+                                ViewUtils.removeView(webView);
+                                mGrabber.setCookie(cookie);
+                                mGrabber.startRequest();
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                    addContentView(webView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    webView.loadUrl(url);
                 });
             }
         });
-        grabber.startRequest();
+
+        String cookie = CookieManager.getInstance().getCookie("https://browser.gwdang.com");
+        if (cookie != null) {
+            Logger.d("Has cookie " + cookie);
+            mGrabber.setCookie(cookie);
+        }
+        mGrabber.startRequest();
         return true;
     };
 

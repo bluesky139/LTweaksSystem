@@ -181,7 +181,7 @@ public class ReflectUtils {
     }
 
     public static Constructor getFirstConstructor(Class cls) {
-        Constructor constructor = cls.getConstructors()[0];
+        Constructor constructor = cls.getDeclaredConstructors()[0];
         constructor.setAccessible(true);
         return constructor;
     }
