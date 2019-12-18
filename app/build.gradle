@@ -34,6 +34,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    aaptOptions {
+        noCompress "overture/overture", "overture/overture.conf", "overture/china_ip_list.txt",
+                "overture/domain_primary", "overture/domain_alternative", "overture/version.txt"
+    }
 }
 
 dependencies {

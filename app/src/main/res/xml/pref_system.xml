@@ -89,6 +89,10 @@
             android:key="@string/key_shadowsocks_ddns_update"
             android:title="@string/pref_shadowsocks_ddns_update"
             android:summary="@string/pref_shadowsocks_ddns_update_summary" />
+        <SwitchPreference
+            android:key="@string/key_shadowsocks_upgrade_overture"
+            android:title="@string/pref_shadowsocks_upgrade_overture"
+            android:summary="@string/pref_shadowsocks_upgrade_overture_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory

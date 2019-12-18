@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.LTHelper;
 
 /**
@@ -24,39 +23,38 @@ import li.lingfeng.ltsystem.LTHelper;
 public class IOUtils {
 
     public static byte[] uri2bytes(Uri uri) {
-        byte[] bytes = null;
-        InputStream stream = null;
         try {
-            stream = LTHelper.currentApplication().getContentResolver().openInputStream(uri);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[524288];
-            int read;
-            while ((read = stream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, read);
-            }
-            bytes = outputStream.toByteArray();
+            InputStream stream = LTHelper.currentApplication().getContentResolver().openInputStream(uri);
+            return org.apache.commons.io.IOUtils.toByteArray(stream);
         } catch (Throwable e) {
             Logger.e("uri2bytes error, " + e);
-            Logger.stackTrace(e);
-        } finally {
-            try {
-                if (stream != null)
-                    stream.close();
-            } catch (Throwable e) {}
+            return null;
         }
-        return bytes;
+    }
+
+    public static String uri2string(Uri uri) {
+        try {
+            InputStream stream = LTHelper.currentApplication().getContentResolver().openInputStream(uri);
+            return org.apache.commons.io.IOUtils.toString(stream);
+        } catch (Throwable e) {
+            Logger.e("uri2string exception.", e);
+            return null;
+        }
     }
 
     public static boolean saveUriToFile(Uri uri, String filePath) {
-        Logger.v("Save uri " + uri + " to " + filePath);
+        return saveUriToFile(uri, new File(filePath));
+    }
+
+    public static boolean saveUriToFile(Uri uri, File file) {
+        Logger.v("Save uri " + uri + " to " + file.getAbsolutePath());
         byte[] bytes = uri2bytes(uri);
         if (bytes != null) {
             try {
-                File file = new File(filePath);
                 FileUtils.writeByteArrayToFile(file, bytes);
                 return true;
             } catch (Throwable e) {
-                Logger.e("saveUriToFile error, " + e);
+                Logger.e("saveUriToFile exception.", e);
             }
         }
         return false;

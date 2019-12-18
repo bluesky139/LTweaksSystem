@@ -11,8 +11,11 @@ import android.support.annotation.Nullable;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 
 import li.lingfeng.ltsystem.utils.ContextUtils;
+import li.lingfeng.ltsystem.utils.Logger;
 
 /**
  * Created by lilingfeng on 2018/1/22.
@@ -30,11 +33,22 @@ public class ResourceProvider extends ContentProvider {
         if (!"r".equals(mode)) {
             throw new UnsupportedOperationException("ResourceProvider mode " + mode + " is not supported.");
         }
-        String type = uri.getPathSegments().get(0);
-        String name = uri.getPathSegments().get(1);
+        List<String> pathSegments = uri.getPathSegments();
+        String type = pathSegments.get(0);
+        String name = pathSegments.get(1);
+        if (pathSegments.size() > 2) {
+            name = name + "/" + pathSegments.get(2);
+        }
         if (type.equals("raw")) {
             int rawId = ContextUtils.getRawId(name);
             return getContext().getResources().openRawResourceFd(rawId);
+        } else if (type.equals("assets")) {
+            try {
+                return getContext().getAssets().openFd(name);
+            } catch (IOException e) {
+                Logger.e("openAssetFile exception.", e);
+                throw new RuntimeException(e);
+            }
         } else {
             throw new NotImplementedException("ResourceProvider openFile type " + type);
         }
