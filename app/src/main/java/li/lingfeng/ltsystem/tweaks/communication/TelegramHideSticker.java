@@ -21,8 +21,8 @@ public class TelegramHideSticker extends TweakBase {
                 Logger.w("currentMessageObject is null.");
                 return;
             }
-            if ((boolean) ReflectUtils.callMethod(messageObject, "isSticker")) {
-                Logger.v("Hide sticker.");
+            if ((boolean) ReflectUtils.callMethod(messageObject, "isAnyKindOfSticker")) {
+                Logger.v("Hide sticker " + messageObject.hashCode());
                 param.setArg(1, 1);
             }
         });
