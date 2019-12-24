@@ -55,7 +55,7 @@ public class ShadowsocksUpgradeOverture extends TweakBase {
 
                 Logger.i("Replace overture process command.");
                 processBuilder.directory(workingFile);
-                processBuilder.command("./overture", "-c", "overture.conf", "-v");
+                processBuilder.command("./overture", "-c", "overture.conf"/*, "-v"*/);
             }
         });
     }
