@@ -42,20 +42,25 @@ public class EleAddressMap extends TweakBase {
                         listView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                             @Override
                             public void onChildViewAdded(View parent, View child) {
-                                TextView textView = (TextView) ViewUtils.findViewByName(listView, "address");
-                                if (textView != null) {
-                                    textView.setOnClickListener((v) -> {
-                                        String address = textView.getText().toString();
+                                TextView addressTextView = (TextView) ViewUtils.findViewByName(listView, "address");
+                                if (addressTextView != null) {
+                                    addressTextView.setOnClickListener((v) -> {
+                                        String address = addressTextView.getText().toString();
                                         Logger.v("Shop address " + address);
-                                        try {
-                                            Intent intent = new Intent();
-                                            intent.setData(Uri.parse("baidumap://map/geocoder?src=" + PackageNames.ELE + "&address=" + address));
-                                            activity.startActivity(intent);
-                                        } catch (Throwable e) {
-                                            Logger.e("Start baidumap exception.", e);
-                                        }
+                                        openMap(activity, address);
                                     });
                                     listView.setOnHierarchyChangeListener(null);
+
+                                    TextView nameTextView = (TextView) ViewUtils.findViewByName(listView, "shop_name");
+                                    if (nameTextView != null) {
+                                        nameTextView.setOnClickListener((v) -> {
+                                            String name = nameTextView.getText().toString();
+                                            Logger.v("Shop name " + name);
+                                            openMap(activity, name);
+                                        });
+                                    } else {
+                                        Logger.w("No shop name.");
+                                    }
                                 }
                             }
 
@@ -69,5 +74,15 @@ public class EleAddressMap extends TweakBase {
                 }
             });
         });
+    }
+
+    private void openMap(Activity activity, String address) {
+        try {
+            Intent intent = new Intent();
+            intent.setData(Uri.parse("baidumap://map/geocoder?src=" + PackageNames.ELE + "&address=" + address));
+            activity.startActivity(intent);
+        } catch (Throwable e) {
+            Logger.e("Start baidumap exception.", e);
+        }
     }
 }
