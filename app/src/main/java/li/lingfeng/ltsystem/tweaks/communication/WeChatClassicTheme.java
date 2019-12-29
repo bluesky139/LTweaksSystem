@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.WeakHashMap;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -29,7 +31,7 @@ public class WeChatClassicTheme extends TweakBase {
 
     private static final int COLOR = 0xFF303030;
     private static final int MAX_TOOLBAR_COUNT_IN_ACTIVITY = 2;
-    private WeakHashMap<Activity, List<ViewGroup>> mActivityToolbars = new WeakHashMap<>(10);
+    private Map<Activity, List<ViewGroup>> mActivityToolbars = new HashMap<>(10);
     private WeakReference<TextView> mTitleTextView;
     private WeakHashMap<View, Void> mStatusBarBackgrounds = new WeakHashMap<>(5);
 
@@ -109,6 +111,14 @@ public class WeChatClassicTheme extends TweakBase {
             } catch (Throwable e) {
                 Logger.e("Handle toolbar " + toolbar + " exception.", e);
             }
+        });
+    }
+
+    @Override
+    public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
+        param.after(() -> {
+            Activity activity = (Activity) param.thisObject;
+            mActivityToolbars.remove(activity);
         });
     }
 
