@@ -47,12 +47,13 @@ public class ShadowsocksUpgradeOverture extends TweakBase {
                     copyFile("overture", workingDir);
                     new File(workingDir + "/overture").setExecutable(true);
                     copyFile("overture.conf", workingDir);
-                    ShadowsocksPrimaryDns.modifyPrimaryDNS(workingDir + "/overture.conf");
                     copyFile("china_ip_list.txt", workingDir);
                     copyFile("domain_primary", workingDir);
                     copyFile("domain_alternative", workingDir);
                     org.apache.commons.io.IOUtils.write(version, new FileOutputStream(versionFile));
                 }
+                ShadowsocksPrimaryDns.modifyPrimaryDNS(workingDir + "/overture.conf");
+                ShadowsocksDdnsUpdate.appendDdnsDomainToOvertureConf(workingDir + "/domain_primary");
 
                 Logger.i("Replace overture process command.");
                 processBuilder.directory(workingFile);

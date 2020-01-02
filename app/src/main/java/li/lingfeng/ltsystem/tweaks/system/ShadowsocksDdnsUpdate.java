@@ -37,12 +37,28 @@ public class ShadowsocksDdnsUpdate extends TweakBase {
 
     private static final String INET_CONDITION_ACTION = "android.net.conn.INET_CONDITION_ACTION";
     private File mConfigFile;
-    private String mDomain;
+    private static String sDomain;
     private String mIP;
     private Process mProcess;
     private BroadcastReceiver mReceiver;
     private Handler mHandler;
     private ConnectivityManager mConnectivityManager;
+
+    public static void appendDdnsDomainToOvertureConf(String path) throws Throwable {
+        if (sDomain == null) {
+            Logger.v("sDomain is null, ddns domain won't append to domain_primary");
+            return;
+        }
+        File file = new File(path);
+        String domains = FileUtils.readFileToString(file);
+        if (!domains.contains(sDomain)) {
+            Logger.v("Append " + sDomain + " to " + path);
+            domains += sDomain + '\n';
+            FileUtils.writeStringToFile(file, domains);
+        } else {
+            Logger.v("Domain " + sDomain + " is already in " + path);
+        }
+    }
 
     @Override
     public void java_lang_ProcessBuilder__start__(ILTweaks.MethodParam param) {
@@ -73,12 +89,13 @@ public class ShadowsocksDdnsUpdate extends TweakBase {
             if (mReceiver == null) {
                 Object data = ReflectUtils.callMethod(param.thisObject, "getData");
                 Object profile = ReflectUtils.callMethod(data, "getProfile");
-                mDomain = (String) ReflectUtils.callMethod(profile, "getHost");
-                if (Pattern.matches("^[\\d\\.]+$", mDomain)) {
-                    Logger.i("ss-local not domain " + mDomain);
+                sDomain = (String) ReflectUtils.callMethod(profile, "getHost");
+                if (Pattern.matches("^[\\d\\.]+$", sDomain)) {
+                    Logger.i("ss-local not domain " + sDomain);
+                    sDomain = null;
                     return;
                 }
-                Logger.i("ss-local domain " + mDomain);
+                Logger.i("ss-local domain " + sDomain);
 
                 mHandler = new Handler();
                 mConnectivityManager = (ConnectivityManager) LTHelper.currentApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -113,7 +130,7 @@ public class ShadowsocksDdnsUpdate extends TweakBase {
     }
 
     private void pendingValidation(int retry) {
-        if (mDomain == null) {
+        if (sDomain == null) {
             return;
         }
         Logger.d("Pending validation, retry " + retry);
@@ -157,11 +174,11 @@ public class ShadowsocksDdnsUpdate extends TweakBase {
         protected Integer doInBackground(Integer[] retry) {
             try {
                 Logger.v("Update DDNS.");
-                InetAddress address = InetAddress.getByName(mDomain);
+                InetAddress address = InetAddress.getByName(sDomain);
                 String ip = address.getHostAddress();
                 Logger.d("ip " + ip);
                 if (!ip.equals(mIP)) {
-                    Logger.i("New ip " + ip + " from " + mDomain);
+                    Logger.i("New ip " + ip + " from " + sDomain);
                     JSONObject jConfig = JSON.parseObject(FileUtils.readFileToString(mConfigFile));
                     jConfig.put("server", ip);
                     FileUtils.writeStringToFile(mConfigFile, jConfig.toString());
@@ -188,7 +205,7 @@ public class ShadowsocksDdnsUpdate extends TweakBase {
     public void android_app_Service__stopForeground__int(ILTweaks.MethodParam param) {
         param.before(() -> {
             mConfigFile = null;
-            mDomain = null;
+            sDomain = null;
             mIP = null;
             mProcess = null;
             if (mReceiver != null) {
