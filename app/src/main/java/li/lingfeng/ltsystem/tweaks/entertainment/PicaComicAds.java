@@ -23,6 +23,7 @@ public class PicaComicAds extends TweakBase {
 
     private static final String MAIN_ACTIVITY = "com.picacomic.fregata.activities.MainActivity";
     private static final String COMIC_VIEWER_ACTIVITY = "com.picacomic.fregata.activities.ComicViewerActivity";
+    private static final String SQUARE_WEBVIEW = "com.picacomic.fregata.utils.views.SquareWebview";
     private WeakReference<ViewGroup> mComicList;
 
     @Override
@@ -38,23 +39,33 @@ public class PicaComicAds extends TweakBase {
             ViewUtils.removeView(bannerWebview);
 
             rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-                ViewGroup comicList = (ViewGroup) ViewUtils.findViewByName(rootView, "recyclerView_comic_list");
-                if (comicList != null && (mComicList == null || mComicList.get() != comicList)) {
-                    Logger.d("comicList " + comicList);
-                    mComicList = new WeakReference<>(comicList);
-                    for (int i = 0; i < comicList.getChildCount(); ++i) {
-                        removeAdFromChild(comicList.getChildAt(i));
-                    }
-                    comicList.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
-                        @Override
-                        public void onChildViewAdded(View parent, View child) {
-                            removeAdFromChild(child);
+                try {
+                    ViewGroup comicList = (ViewGroup) ViewUtils.findViewByName(rootView, "recyclerView_comic_list");
+                    if (comicList != null && (mComicList == null || mComicList.get() != comicList)) {
+                        Logger.d("comicList " + comicList);
+                        mComicList = new WeakReference<>(comicList);
+                        for (int i = 0; i < comicList.getChildCount(); ++i) {
+                            removeAdFromChild(comicList.getChildAt(i));
                         }
+                        comicList.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                            @Override
+                            public void onChildViewAdded(View parent, View child) {
+                                removeAdFromChild(child);
+                            }
 
-                        @Override
-                        public void onChildViewRemoved(View parent, View child) {
-                        }
-                    });
+                            @Override
+                            public void onChildViewRemoved(View parent, View child) {
+                            }
+                        });
+                    }
+
+                    View squareWebview = ViewUtils.findViewByType(rootView, findClass(SQUARE_WEBVIEW));
+                    if (squareWebview != null) {
+                        Logger.v("Remove " + squareWebview);
+                        ViewUtils.removeView(squareWebview);
+                    }
+                } catch (Throwable e) {
+                    Logger.e("Exception in MainActivity global layout listener.", e);
                 }
             });
         });
