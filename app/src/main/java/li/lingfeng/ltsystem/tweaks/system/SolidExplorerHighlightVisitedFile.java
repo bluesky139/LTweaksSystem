@@ -31,6 +31,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 public class SolidExplorerHighlightVisitedFile extends TweakBase {
 
     private static final String MAIN_ACTIVITY = "pl.solidexplorer.SolidExplorer";
+    private static final String PANEL_LAYOUT = "pl.solidexplorer.panel.ui.PanelLayout";
     private static final String SAFE_SWIPE_REFRESH_LAYOUT = "pl.solidexplorer.common.gui.SafeSwipeRefreshLayout";
     private static final String CHECKABLE_RELATIVE_LAYOUT = "pl.solidexplorer.common.gui.CheckableRelativeLayout";
 
@@ -56,38 +57,17 @@ public class SolidExplorerHighlightVisitedFile extends TweakBase {
                             Logger.d("2 list.");
                             rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             for (int i = 0; i < 2; ++i) {
-                                GridView gridView = views.get(i).findViewById(android.R.id.list);
-                                AdapterView.OnItemClickListener originalItemClickListener = gridView.getOnItemClickListener();
-                                gridView.setOnItemClickListener((parent, view, position, id) -> {
-                                    originalItemClickListener.onItemClick(parent, view, position, id);
-                                    fileClicked(view);
-                                });
+                                handleRefreshLayout(views.get(i), i);
+                            }
 
-                                gridView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                            List<View> panelLayouts = ViewUtils.findAllViewByType(rootView, (Class<View>) findClass(PANEL_LAYOUT));
+                            for (int i = 0; i < 2; ++i) {
+                                final int panelId = i;
+                                ((ViewGroup) panelLayouts.get(i)).setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                                     @Override
                                     public void onChildViewAdded(View parent, View child) {
-                                        try {
-                                            if (child.getClass().getName().equals(CHECKABLE_RELATIVE_LAYOUT)) {
-                                                TextView titleView = (TextView) ViewUtils.findViewByName((ViewGroup) child, "title");
-                                                checkTitle(titleView);
-
-                                                titleView.addTextChangedListener(new TextWatcher() {
-                                                    @Override
-                                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                                    }
-
-                                                    @Override
-                                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                                    }
-
-                                                    @Override
-                                                    public void afterTextChanged(Editable s) {
-                                                        checkTitle(titleView);
-                                                    }
-                                                });
-                                            }
-                                        } catch (Throwable e) {
-                                            Logger.e("listView onChildViewAdded exception.", e);
+                                        if (child.getClass().getName().equals(SAFE_SWIPE_REFRESH_LAYOUT)) {
+                                            handleRefreshLayout(child, panelId);
                                         }
                                     }
 
@@ -114,7 +94,50 @@ public class SolidExplorerHighlightVisitedFile extends TweakBase {
         });
     }
 
-    private void checkTitle(TextView titleView) {
+    private void handleRefreshLayout(View layout, int panelId) {
+        Logger.d("handleRefreshLayout " + panelId + ", " + layout);
+        GridView gridView = layout.findViewById(android.R.id.list);
+        AdapterView.OnItemClickListener originalItemClickListener = gridView.getOnItemClickListener();
+        gridView.setOnItemClickListener((parent, view, position, id) -> {
+            originalItemClickListener.onItemClick(parent, view, position, id);
+            fileClicked(view);
+        });
+
+        gridView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+            @Override
+            public void onChildViewAdded(View parent, View child) {
+                try {
+                    if (child.getClass().getName().equals(CHECKABLE_RELATIVE_LAYOUT)) {
+                        TextView titleView = (TextView) ViewUtils.findViewByName((ViewGroup) child, "title");
+                        checkTitle(titleView, panelId);
+
+                        titleView.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                                checkTitle(titleView, panelId);
+                            }
+                        });
+                    }
+                } catch (Throwable e) {
+                    Logger.e("listView onChildViewAdded exception.", e);
+                }
+            }
+
+            @Override
+            public void onChildViewRemoved(View parent, View child) {
+            }
+        });
+    }
+
+    private void checkTitle(TextView titleView, int panelId) {
         mHandler.post(() -> {
             try {
                 ViewGroup parent = (ViewGroup) titleView.getParent();
@@ -122,7 +145,7 @@ public class SolidExplorerHighlightVisitedFile extends TweakBase {
                 String subtitle = subtitleView.getText().toString();
                 if (subtitle.endsWith("B") && !subtitle.contains("/")) {
                     String title = titleView.getText().toString();
-                    String folder = getCurrentFolder();
+                    String folder = getFolderByPannelId(panelId);
                     if (title.equals(mDBHelper.getVisitedFile(folder))) {
                         Logger.v("Visited file " + folder + "/" + title);
                         parent.setBackgroundColor(Color.DKGRAY);
@@ -174,7 +197,11 @@ public class SolidExplorerHighlightVisitedFile extends TweakBase {
     private String getCurrentFolder() {
         int[] location = new int[2];
         mHeaderViews.get(0).getLocationOnScreen(location);
-        ViewGroup headerView = (ViewGroup) (location[0] == 0  ? mHeaderViews.get(0) : mHeaderViews.get(1));
+        return getFolderByPannelId(location[0] == 0  ? 0 : 1);
+    }
+
+    private String getFolderByPannelId(int panelId) {
+        ViewGroup headerView = (ViewGroup) mHeaderViews.get(panelId);
         View rootSwitchView = ViewUtils.findViewByName(headerView, "root_switch");
         TextView rootTextView = (TextView) ViewUtils.nextView(rootSwitchView);
         String path = rootTextView.getText().toString();
