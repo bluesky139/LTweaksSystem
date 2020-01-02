@@ -42,22 +42,13 @@ public class PicaComicAds extends TweakBase {
                 if (comicList != null && (mComicList == null || mComicList.get() != comicList)) {
                     Logger.d("comicList " + comicList);
                     mComicList = new WeakReference<>(comicList);
+                    for (int i = 0; i < comicList.getChildCount(); ++i) {
+                        removeAdFromChild(comicList.getChildAt(i));
+                    }
                     comicList.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                         @Override
                         public void onChildViewAdded(View parent, View child) {
-                            if (child instanceof ViewGroup) {
-                                ViewGroup viewGroup = (ViewGroup) child;
-                                child = viewGroup.getChildAt(0);
-                                if (child instanceof WebView) {
-                                    Logger.v("Remove " + child);
-                                    ViewUtils.removeView(child);
-                                    TextView textView = new TextView(activity);
-                                    textView.setText("   ↓");
-                                    textView.setTextColor(Color.BLACK);
-                                    textView.setTextSize(24);
-                                    viewGroup.addView(textView);
-                                }
-                            }
+                            removeAdFromChild(child);
                         }
 
                         @Override
@@ -73,22 +64,14 @@ public class PicaComicAds extends TweakBase {
                 try {
                     Activity activity = (Activity) param.thisObject;
                     ViewGroup listView = (ViewGroup) ViewUtils.findViewByName(activity, "recyclerView_comic_viewer");
+                    for (int i = 0; i < listView.getChildCount(); ++i) {
+                        View child = listView.getChildAt(i);
+                        removeAdFromChild(child);
+                    }
                     listView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                         @Override
                         public void onChildViewAdded(View parent, View child) {
-                            if (child instanceof ViewGroup) {
-                                ViewGroup viewGroup = (ViewGroup) child;
-                                child = viewGroup.getChildAt(0);
-                                if (child instanceof WebView) {
-                                    Logger.v("Remove " + child);
-                                    ViewUtils.removeView(child);
-                                    TextView textView = new TextView(activity);
-                                    textView.setText("   ↓");
-                                    textView.setTextColor(Color.BLACK);
-                                    textView.setTextSize(24);
-                                    viewGroup.addView(textView);
-                                }
-                            }
+                            removeAdFromChild(child);
                         }
 
                         @Override
@@ -100,5 +83,21 @@ public class PicaComicAds extends TweakBase {
                 }
             });
         });
+    }
+
+    private void removeAdFromChild(View child) {
+        if (child instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) child;
+            child = viewGroup.getChildAt(0);
+            if (child instanceof WebView) {
+                Logger.v("Remove " + child);
+                ViewUtils.removeView(child);
+                TextView textView = new TextView(child.getContext());
+                textView.setText("   ↓");
+                textView.setTextColor(Color.BLACK);
+                textView.setTextSize(24);
+                viewGroup.addView(textView);
+            }
+        }
     }
 }
