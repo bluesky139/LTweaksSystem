@@ -27,28 +27,35 @@ public class ShadowsocksPrimaryDns extends TweakBase {
         param.before(() -> {
             ProcessBuilder processBuilder = (ProcessBuilder) param.thisObject;
             if (processBuilder.command().get(0).endsWith("liboverture.so")) {
-                String value = Prefs.instance().getString(R.string.key_shadowsocks_primary_dns, "");
-                String[] dnsArray = StringUtils.split(value, ',');
-                if (dnsArray.length == 0) {
+                if (Prefs.instance().getBoolean(R.string.key_shadowsocks_upgrade_overture, false)) {
                     return;
                 }
-                Logger.i("Modify primary dns, " + value);
-
-                File file = new File("/data/user_de/0/" + PackageNames.SHADOWSOCKS + "/no_backup/overture.conf");
-                String content = FileUtils.readFileToString(file);
-                JSONObject jContent = (JSONObject) JSON.parse(content, Feature.OrderedField);
-                JSONArray jDnsArray = jContent.getJSONArray("PrimaryDNS");
-                JSONObject jDnsTemplate = jContent.getJSONArray("PrimaryDNS").getJSONObject(0);
-                jDnsArray.clear();
-
-                for (String dns : dnsArray) {
-                    JSONObject jDns = (JSONObject) jDnsTemplate.clone();
-                    jDns.put("Name", "Primary-" + dns);
-                    jDns.put("Address", dns);
-                    jDnsArray.add(jDns);
-                }
-                FileUtils.writeStringToFile(file, JSON.toJSONString(jContent, SerializerFeature.DisableCircularReferenceDetect));
+                modifyPrimaryDNS("/data/user_de/0/" + PackageNames.SHADOWSOCKS + "/no_backup/overture.conf");
             }
         });
+    }
+
+    public static void modifyPrimaryDNS(String confPath) throws Throwable {
+        String value = Prefs.instance().getString(R.string.key_shadowsocks_primary_dns, "");
+        String[] dnsArray = StringUtils.split(value, ',');
+        if (dnsArray.length == 0) {
+            return;
+        }
+        Logger.i("Set primary dns " + value + " for " + confPath);
+
+        File file = new File(confPath);
+        String content = FileUtils.readFileToString(file);
+        JSONObject jContent = (JSONObject) JSON.parse(content, Feature.OrderedField);
+        JSONArray jDnsArray = jContent.getJSONArray("PrimaryDNS");
+        JSONObject jDnsTemplate = jContent.getJSONArray("PrimaryDNS").getJSONObject(0);
+        jDnsArray.clear();
+
+        for (String dns : dnsArray) {
+            JSONObject jDns = (JSONObject) jDnsTemplate.clone();
+            jDns.put("Name", "Primary-" + dns);
+            jDns.put("Address", dns);
+            jDnsArray.add(jDns);
+        }
+        FileUtils.writeStringToFile(file, JSON.toJSONString(jContent, SerializerFeature.DisableCircularReferenceDetect));
     }
 }

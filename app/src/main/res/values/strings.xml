@@ -310,7 +310,7 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <string name="pref_shadowsocks_ddns_update">DDNS update</string>
     <string name="pref_shadowsocks_ddns_update_summary">Update by system connectivity validation</string>
     <string name="pref_shadowsocks_upgrade_overture">Upgrade overture</string>
-    <string name="pref_shadowsocks_upgrade_overture_summary">v1.6-rc6 arm64\nPrimary dns modification won\'t work.\nShould only use with transproxy mode</string>
+    <string name="pref_shadowsocks_upgrade_overture_summary">v1.6-rc6 arm64\nShould only use with transproxy mode</string>
     <string name="pref_category_quick_settings">Quick Settings in status bar</string>
     <string name="pref_quick_settings_tile_adb_wireless">Add tile \"Adb Wireless\"</string>
     <string name="pref_quick_settings_tile_adb_wireless_summary">Use \"adb connect x:x:x:x:5555\" to connect\nFor Android 5.0+, root is required</string>
