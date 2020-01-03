@@ -296,6 +296,8 @@ Open source on github: \n
     <string name="pref_prevent_running_set_list">Set prevent list</string>
     <string name="pref_prevent_running_set_list_summary">You can set each prevent method for individual app.\n
 Note, you\'d better know what these methods for, in case of unexpected error</string>
+    <string name="pref_prevent_process">Prevent process</string>
+    <string name="pref_prevent_process_summary">If no any activity exist, kill app in 2 minutes, prevent process to be created</string>
     <string name="pref_category_app_list_block">App List Block</string>
     <string name="pref_app_list_block_package">Package</string>
     <string name="pref_app_list_block_package_summary">Package will be removed from list</string>

@@ -150,6 +150,14 @@ public class SystemPrefFragment extends BasePrefFragment {
         ListCheckActivity.create(getActivity(), PreventListDataProvider.class);
     }
 
+    @PreferenceClick(prefs = R.string.key_prevent_process_set_list)
+    private void setPreventProcessList(Preference preference) {
+        Bundle extra = new Bundle();
+        extra.putInt("key", R.string.key_prevent_process_list);
+        extra.putString("title", getString(R.string.pref_prevent_process));
+        ListCheckActivity.create(getActivity(), AppListProvider.class, extra);
+    }
+
     @PreferenceClick(prefs = R.string.key_app_list_block_package)
     private void setAppListBlockPackage(Preference preference) {
         Bundle extra = new Bundle();

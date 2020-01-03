@@ -205,7 +205,22 @@ public abstract class ILTweaksMethods {
     public void com_android_server_am_ActivityManagerService__finishBooting__(MethodParam param) {
     }
 
+    public void com_android_server_am_ActivityManagerService__startProcessLocked__String_ApplicationInfo_boolean_int_String_ComponentName_boolean_boolean_int_boolean_String_String_String$array_Runnable(MethodParam param) {
+    }
+
     public void com_android_server_am_ActivityManagerService__registerReceiver__IApplicationThread_String_IIntentReceiver_IntentFilter_String_int_int(MethodParam param) {
+    }
+
+    public void com_android_server_am_ActivityManagerService__handleAppDiedLocked__ProcessRecord_boolean_boolean(MethodParam param) {
+    }
+
+    public void com_android_server_am_ActivityStackSupervisor__realStartActivityLocked__ActivityRecord_ProcessRecord_boolean_boolean(MethodParam param) {
+    }
+
+    public void com_android_server_am_ActivityStackSupervisor__logIfTransactionTooLarge__Intent_Bundle(MethodParam param) {
+    }
+
+    public void com_android_server_am_ActivityStack__cleanUpActivityLocked__ActivityRecord_boolean_boolean(MethodParam param) {
     }
 
     public void com_android_server_am_ProcessRecord__kill__String_boolean(MethodParam param) {
