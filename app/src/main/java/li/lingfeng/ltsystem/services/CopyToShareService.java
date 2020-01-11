@@ -61,7 +61,7 @@ public class CopyToShareService extends Service implements ClipboardManager.OnPr
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getBooleanExtra("stop", false)) {
+        if (intent != null && intent.getBooleanExtra("stop", false)) {
             stopSelf();
         }
         return super.onStartCommand(intent, flags, startId);
