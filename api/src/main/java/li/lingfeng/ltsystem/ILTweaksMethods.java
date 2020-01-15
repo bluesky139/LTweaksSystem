@@ -97,6 +97,12 @@ public abstract class ILTweaksMethods {
     public void android_widget_PopupMenu__inflate__int(MethodParam param) {
     }
 
+    public void android_webkit_WebView__setWebViewClient__WebViewClient(MethodParam param) {
+    }
+
+    public void android_webkit_WebView__getWebViewClient__(MethodParam param) {
+    }
+
     public void android_view_View__dispatchPointerEvent__MotionEvent(MethodParam param) {
     }
 
