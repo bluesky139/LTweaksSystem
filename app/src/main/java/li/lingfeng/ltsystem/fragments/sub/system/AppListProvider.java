@@ -1,6 +1,6 @@
 package li.lingfeng.ltsystem.fragments.sub.system;
 
-import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,15 @@ import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
 import li.lingfeng.ltsystem.prefs.Prefs;
 import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.PackageUtils;
 
 public class AppListProvider extends ListCheckActivity.DataProvider {
 
     public class AppInfo {
-        public ApplicationInfo mInfo;
+        public PackageInfo mInfo;
         public boolean mDisabled;
 
-        public AppInfo(ApplicationInfo info, boolean disabled) {
+        public AppInfo(PackageInfo info, boolean disabled) {
             mInfo = info;
             mDisabled = disabled;
         }
@@ -38,8 +39,9 @@ public class AppListProvider extends ListCheckActivity.DataProvider {
         super(activity);
         mKey = activity.getIntent().getIntExtra("key", 0);
         mDisabledApps = Prefs.large().getStringList(mKey, new ArrayList<>());
-        List<ApplicationInfo> infos = mActivity.getPackageManager().getInstalledApplications(0);
-        for (ApplicationInfo info : infos) {
+        List<PackageInfo> infos = activity.getIntent().getBooleanExtra("app_user_only", false)
+                ? PackageUtils.getUserInstalledPackages() : PackageUtils.getInstalledPackages();
+        for (PackageInfo info : infos) {
             AppInfo appInfo = new AppInfo(info, mDisabledApps.contains(info.packageName));
             mMapAllInfos.put(info.packageName, appInfo);
             if (appInfo.mDisabled) {
@@ -94,8 +96,8 @@ public class AppListProvider extends ListCheckActivity.DataProvider {
         ListItem item = new ListItem();
         final AppInfo appInfo = infos.get(position);
         item.mData = appInfo;
-        item.mIcon = appInfo.mInfo.loadIcon(mActivity.getPackageManager());
-        item.mTitle = appInfo.mInfo.loadLabel(mActivity.getPackageManager());
+        item.mIcon = appInfo.mInfo.applicationInfo.loadIcon(mActivity.getPackageManager());
+        item.mTitle = appInfo.mInfo.applicationInfo.loadLabel(mActivity.getPackageManager());
         item.mDescription = appInfo.mInfo.packageName;
         item.mChecked = appInfo.mDisabled;
         return item;

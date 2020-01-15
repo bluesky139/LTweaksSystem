@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import li.lingfeng.ltsystem.LTHelper;
@@ -30,6 +31,18 @@ public class PackageUtils {
 
     public static List<PackageInfo> getInstalledPackages() {
         return LTHelper.currentApplication().getPackageManager().getInstalledPackages(0);
+    }
+
+    public static List<PackageInfo> getUserInstalledPackages() {
+        List<PackageInfo> packages = LTHelper.currentApplication().getPackageManager().getInstalledPackages(0);
+        Iterator<PackageInfo> it = packages.iterator();
+        while (it.hasNext()) {
+            PackageInfo info = it.next();
+            if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0) {
+                it.remove();
+            }
+        }
+        return packages;
     }
 
     public static void sortPackages(List<PackageInfo> packages, final int sort) {

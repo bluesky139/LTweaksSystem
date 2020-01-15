@@ -155,6 +155,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         Bundle extra = new Bundle();
         extra.putInt("key", R.string.key_prevent_process_list);
         extra.putString("title", getString(R.string.pref_prevent_process));
+        extra.putBoolean("app_user_only", true);
         ListCheckActivity.create(getActivity(), AppListProvider.class, extra);
     }
 
@@ -171,6 +172,7 @@ public class SystemPrefFragment extends BasePrefFragment {
         Bundle extra = new Bundle();
         extra.putInt("key", R.string.key_app_list_block_for_list);
         extra.putString("title", getString(R.string.pref_app_list_block_for_summary));
+        extra.putBoolean("app_user_only", true);
         ListCheckActivity.create(getActivity(), AppListProvider.class, extra);
     }
 
