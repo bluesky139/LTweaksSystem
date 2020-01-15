@@ -179,10 +179,9 @@ public class PreventProcess extends TweakBase {
                 return;
             }
             Object processRecord = param.args[0];
-            String processName = (String) ReflectUtils.getObjectField(processRecord, "processName");
-            if (mPreventList.contains(processName)) {
+            ApplicationInfo info = (ApplicationInfo) ReflectUtils.getObjectField(processRecord, "info");
+            if (mPreventList.contains(info.packageName)) {
                 Logger.d("handleAppDiedLocked " + processRecord);
-                ApplicationInfo info = (ApplicationInfo) ReflectUtils.getObjectField(processRecord, "info");
                 SparseIntArray counters = mActivityCounter.get(info.packageName);
                 int pid = ReflectUtils.getIntField(processRecord, "pid");
                 int count = counters.get(pid, 0);
