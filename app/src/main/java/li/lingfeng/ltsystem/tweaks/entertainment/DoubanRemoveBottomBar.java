@@ -95,9 +95,9 @@ public class DoubanRemoveBottomBar extends TweakBase {
 
                 FrameLayout allView = ViewUtils.rootChildsIntoOneLayout(activity);
                 mDrawerLayout = new SimpleDrawer(activity, allView, navItems, headerItem);
-                mDrawerLayout.updateHeaderBackground(Color.parseColor("#51C061"));
-                mDrawerLayout.updateNavListBackground(Color.parseColor("#F2F1EE"));
-                mDrawerLayout.updateNavListTextColor(Color.BLACK);
+                mDrawerLayout.updateHeaderBackground(Color.parseColor("#232326"));
+                mDrawerLayout.updateNavListBackground(Color.parseColor("#232326"));
+                mDrawerLayout.updateNavListTextColor(Color.WHITE);
                 rootView.addView(mDrawerLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT));
                 tabStrip.setVisibility(View.GONE);
