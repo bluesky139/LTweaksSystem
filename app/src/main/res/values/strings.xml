@@ -383,6 +383,8 @@ Note, you\'d better know what these methods for, in case of unexpected error</st
     <string name="pref_solid_explorer_darken_summary">For file save from system share</string>
     <string name="pref_solid_explorer_highlight_visited_files">Highlight visited files</string>
     <string name="pref_solid_explorer_highlight_visited_files_summary">It\'s very useful if you use Solid Explorer to play episodes</string>
+    <string name="pref_solid_explorer_replace_streaming_url">Replace streaming url</string>
+    <string name="pref_solid_explorer_replace_streaming_url_summary">Replace server only, eg. SMB01:10.0.0.1,SMB02:10.0.0.2\nThus, player can access http://10.0.0.1/... to play video directly, instead of local redirect</string>
     <string name="pref_category_quick_edit">Quick Edit</string>
     <string name="pref_quick_edit_darken">A more better night mode</string>
     <string name="pref_quick_edit_darken_summary">At starting window</string>

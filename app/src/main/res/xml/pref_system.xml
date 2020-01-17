@@ -264,6 +264,10 @@
             android:key="@string/key_solid_explorer_highlight_visited_files"
             android:title="@string/pref_solid_explorer_highlight_visited_files"
             android:summary="@string/pref_solid_explorer_highlight_visited_files_summary" />
+        <EditTextPreference
+            android:key="@string/key_solid_explorer_replace_streaming_url"
+            android:title="@string/pref_solid_explorer_replace_streaming_url"
+            android:summary="@string/pref_solid_explorer_replace_streaming_url_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory
