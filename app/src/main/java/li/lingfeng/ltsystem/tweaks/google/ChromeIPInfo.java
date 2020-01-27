@@ -39,7 +39,7 @@ public class ChromeIPInfo extends ChromeBase {
     protected Map<String, MenuInfo> newMenus() {
         Map<String, MenuInfo> infos = new HashMap<>(1);
         String title = ContextUtils.getLString(R.string.chrome_ip_info);
-        infos.put(title, new MenuInfo(title, 1007, (activity, url, isCustomTab) -> {
+        infos.put(title, new MenuInfo(title, 1008, (activity, url, isCustomTab) -> {
             new GetIpInfoTask(activity).execute(url);
         }));
         return infos;

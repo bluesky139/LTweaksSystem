@@ -69,6 +69,8 @@ Open source on github: \n
     <string name="pref_chrome_google_cache_summary">Menu \"View Google cached\" in Chrome and Custom Tab</string>
     <string name="pref_chrome_wayback">Wayback Machine</string>
     <string name="pref_chrome_wayback_summary">Menu \"Wayback Machine\" in Chrome and Custom Tab</string>
+    <string name="pref_chrome_archive_is">archive.is</string>
+    <string name="pref_chrome_archive_is_summary">As menu</string>
     <string name="pref_chrome_go_top_or_bottom">Go top or bottom</string>
     <string name="pref_chrome_go_top_or_bottom_summary">Menu \"Go Top\" and \"Go Bottom\" in Chrome and Custom Tab</string>
     <string name="pref_chrome_open_with">Open with...</string>
@@ -120,6 +122,7 @@ Open source on github: \n
     <string name="chrome_open_in_incognito">Open in Incognito</string>
     <string name="chrome_google_cache">View Google Cache</string>
     <string name="chrome_wayback_machine">Wayback Machine</string>
+    <string name="chrome_archive_is">archive.is</string>
     <string name="chrome_go_top">Go Top</string>
     <string name="chrome_go_bottom">Go Bottom</string>
     <string name="chrome_open_with">Open With...</string>

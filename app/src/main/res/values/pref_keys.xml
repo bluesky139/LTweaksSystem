@@ -10,6 +10,7 @@
     <string name="key_google_play_services_dismiss_system_update">key_google_play_services_dismiss_system_update</string>
     <string name="key_chrome_incognito_search">key_chrome_incognito_search</string>
     <string name="key_chrome_google_cache">key_chrome_google_cache</string>
+    <string name="key_chrome_archive_is">key_chrome_archive_is</string>
     <string name="key_chrome_wayback">key_chrome_wayback</string>
     <string name="key_chrome_go_top_or_bottom">key_chrome_go_top_or_bottom</string>
     <string name="key_chrome_open_with">key_chrome_open_with</string>

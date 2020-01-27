@@ -31,7 +31,7 @@ public class ChromeOpenWith {
         protected Map<String, MenuInfo> newMenus() {
             Map<String, MenuInfo> infos = new HashMap<>(1);
             String title = ContextUtils.getLString(R.string.chrome_open_with);
-            infos.put(title, new MenuInfo(title, 1006, (activity, url, isCustomTab) -> {
+            infos.put(title, new MenuInfo(title, 1007, (activity, url, isCustomTab) -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 intent.putExtra("ltweaks_activities_without_preferred_filter", true);
