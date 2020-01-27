@@ -28,7 +28,7 @@ public class SolidExplorerReplaceStreamingUrl extends TweakBase {
 
     private static final String MAIN_ACTIVITY = "pl.solidexplorer.SolidExplorer";
     private static final String STREAMING_SERVICE = "pl.solidexplorer.files.stream.MediaStreamingService";
-    private List<View> mHeaderViews;
+    private List<View> mActionBars;
     private Map<String, String> mServerMap;
 
     @Override
@@ -52,8 +52,8 @@ public class SolidExplorerReplaceStreamingUrl extends TweakBase {
                 @Override
                 public void onGlobalLayout() {
                     try {
-                        mHeaderViews = ViewUtils.findAllViewByName(rootView, "smart_header");
-                        if (mHeaderViews.size() == 2) {
+                        mActionBars = ViewUtils.findAllViewByName(rootView, "action_bar_panel");
+                        if (mActionBars.size() == 2) {
                             rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         }
                     } catch (Throwable e) {
@@ -67,7 +67,7 @@ public class SolidExplorerReplaceStreamingUrl extends TweakBase {
     @Override
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
         beforeOnClass(MAIN_ACTIVITY, param, () -> {
-            mHeaderViews = null;
+            mActionBars = null;
             mServerMap = null;
         });
     }
@@ -80,8 +80,8 @@ public class SolidExplorerReplaceStreamingUrl extends TweakBase {
             }
             Intent intent = (Intent) param.args[0];
             if (intent.getBooleanExtra("streaming", false)) {
-                String rootFolder = getCurrentRootFolder();
-                String server = mServerMap.get(rootFolder);
+                String title = getCurrentTitle();
+                String server = mServerMap.get(title);
                 if (server != null) {
                     String url = intent.getDataString();
                     String newUrl = url.replaceFirst("^http:\\/\\/127\\.0\\.0\\.1:\\d+\\/", "http://" + server + "/");
@@ -99,16 +99,15 @@ public class SolidExplorerReplaceStreamingUrl extends TweakBase {
         });
     }
 
-    private String getCurrentRootFolder() {
+    private String getCurrentTitle() {
         int[] location = new int[2];
-        mHeaderViews.get(0).getLocationOnScreen(location);
-        return getRootFolderByPannelId(location[0] == 0  ? 0 : 1);
+        mActionBars.get(0).getLocationOnScreen(location);
+        return getTitleByPannelId(location[0] == 0  ? 0 : 1);
     }
 
-    private String getRootFolderByPannelId(int panelId) {
-        ViewGroup headerView = (ViewGroup) mHeaderViews.get(panelId);
-        View rootSwitchView = ViewUtils.findViewByName(headerView, "root_switch");
-        TextView rootTextView = (TextView) ViewUtils.nextView(rootSwitchView);
-        return rootTextView.getText().toString();
+    private String getTitleByPannelId(int panelId) {
+        ViewGroup actionBar = (ViewGroup) mActionBars.get(panelId);
+        TextView titleView = (TextView) ViewUtils.findViewByName(actionBar, "ab_title");
+        return titleView.getText().toString();
     }
 }
