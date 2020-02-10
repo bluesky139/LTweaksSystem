@@ -195,8 +195,8 @@ public class ViewUtils {
     private static void printChilds(ViewGroup viewGroup, int deep) {
         for (int i = 0; i < viewGroup.getChildCount(); ++i) {
             View view = viewGroup.getChildAt(i);
-            Logger.v(StringUtils.repeat(' ', deep + 1) + "child[" + deep + "] " + view
-                    + (view instanceof TextView ? " " + ((TextView) view).getText() : ""));
+            Logger.v(StringUtils.repeat(' ', deep + 1) + "child[" + deep + "] " + view + " "
+                    + (view instanceof TextView ? ((TextView) view).getText() : view.getContentDescription()));
             if (view instanceof ViewGroup) {
                 printChilds((ViewGroup) view, deep + 1);
             }
@@ -426,6 +426,11 @@ public class ViewUtils {
     public static View.OnClickListener getViewClickListener(View view) throws Throwable {
         Object listenerInfo = ReflectUtils.callMethod(view, "getListenerInfo");
         return (View.OnClickListener) ReflectUtils.getObjectField(listenerInfo, "mOnClickListener");
+    }
+
+    public static View.OnTouchListener getViewTouchListener(View view) throws Throwable {
+        Object listenerInfo = ReflectUtils.callMethod(view, "getListenerInfo");
+        return (View.OnTouchListener) ReflectUtils.getObjectField(listenerInfo, "mOnTouchListener");
     }
 
     public static View.OnCreateContextMenuListener getViewCreateContextMenuListener(View view) throws IllegalAccessException {
