@@ -82,4 +82,19 @@ public class ShareUtils {
         shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
         context.startActivity(Intent.createChooser(shareIntent, "Share with..."));
     }
+
+    public static void shareVideo(Context context, String path) {
+        shareVideo(context, new File(path));
+    }
+
+    public static void shareVideo(Context context, File file) {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("video/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        context.startActivity(Intent.createChooser(shareIntent, "Share with..."));
+    }
 }

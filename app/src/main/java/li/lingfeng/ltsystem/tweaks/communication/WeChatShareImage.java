@@ -32,6 +32,7 @@ public class WeChatShareImage extends TweakBase {
     private static final String MM_VIEW_PAGER = "com.tencent.mm.ui.base.MMViewPager";
     private static final String MULTI_TOUCH_IMAGEVIEW = "com.tencent.mm.ui.base.MultiTouchImageView";
     private static final String SUBSAMPLING_SCALE_IMAGEVIEW = "com.davemorrissey.labs.subscaleview.view.SubsamplingScaleImageView";
+    private static final String VIDEO_PLAYER_TEXTUREVIEW = "com.tencent.mm.pluginsdk.ui.tools.VideoPlayerTextureView";
     private static final int CORNER_DP = 80;
 
     @Override
@@ -67,20 +68,27 @@ public class WeChatShareImage extends TweakBase {
     private void setTouchListeners(Activity activity, ViewGroup viewGroup) throws Throwable {
         setTouchListener(activity, viewGroup, MULTI_TOUCH_IMAGEVIEW);
         setTouchListener(activity, viewGroup, SUBSAMPLING_SCALE_IMAGEVIEW);
+        setTouchListener(activity, viewGroup, VIDEO_PLAYER_TEXTUREVIEW);
     }
 
     private void setTouchListener(Activity activity, ViewGroup viewGroup, String clsName) throws Throwable {
-        View imageView = ViewUtils.findViewByType(viewGroup, findClass(clsName));
-        if (imageView.getVisibility() == View.VISIBLE) {
-            imageView.setOnTouchListener((v, event) -> {
+        View view = ViewUtils.findViewByType(viewGroup, findClass(clsName));
+        if (view != null) {
+            view.setOnTouchListener((v, event) -> {
                 if (event.getX() > v.getWidth() - dp2px(CORNER_DP) && event.getY() < dp2px(CORNER_DP)) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         try {
-                            Logger.i("Share image...");
-                            Bitmap bitmap = v.getClass().getName().equals(MULTI_TOUCH_IMAGEVIEW)
-                                    ? ((BitmapDrawable) ((ImageView) imageView).getDrawable()).getBitmap()
-                                    : (Bitmap) ReflectUtils.callMethod(v, "getFullImageBitmap");
-                            shareBitmap(activity, bitmap);
+                            if (v.getClass().getName().equals(VIDEO_PLAYER_TEXTUREVIEW)) {
+                                String path = (String) ReflectUtils.callMethod(v, "getVideoPath");
+                                Logger.i("Share video " + path);
+                                ShareUtils.shareVideo(activity, path);
+                            } else {
+                                Logger.i("Share image...");
+                                Bitmap bitmap = v.getClass().getName().equals(MULTI_TOUCH_IMAGEVIEW)
+                                        ? ((BitmapDrawable) ((ImageView) view).getDrawable()).getBitmap()
+                                        : (Bitmap) ReflectUtils.callMethod(v, "getFullImageBitmap");
+                                shareBitmap(activity, bitmap);
+                            }
                         } catch (Throwable e) {
                             Logger.e("Share image exception.", e);
                         }
