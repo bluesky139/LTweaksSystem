@@ -5,8 +5,11 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.StrictMode;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ChromeIncognitoActivity;
@@ -67,5 +70,16 @@ public class ShareUtils {
         shareIntent.setClassName(PackageNames.L_TWEAKS, SelectableTextActivity.class.getName());
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(shareIntent);
+    }
+
+    public static void shareImage(Context context, File file) {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        context.startActivity(Intent.createChooser(shareIntent, "Share with..."));
     }
 }

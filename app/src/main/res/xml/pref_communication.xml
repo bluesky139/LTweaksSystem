@@ -36,6 +36,11 @@
             android:defaultValue="false"
             android:key="@string/key_wechat_expand_subscribed_list"
             android:title="@string/pref_wechat_expand_subscribed_list" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_wechat_share_image"
+            android:title="@string/pref_wechat_share_image"
+            android:summary="@string/pref_wechat_share_image_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_qq">

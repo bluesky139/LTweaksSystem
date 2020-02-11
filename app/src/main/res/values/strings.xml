@@ -183,6 +183,8 @@ Open source on github: \n
     <string name="pref_wechat_mute_annoying_notification">Mute annoying notification</string>
     <string name="pref_wechat_mute_annoying_notification_summary">Mute notification if notified 3 times at screen off.\nIt\'s useful for PC chat, why notify me on my phone again and again</string>
     <string name="pref_wechat_expand_subscribed_list">Expand subscribed article list</string>
+    <string name="pref_wechat_share_image">Share image</string>
+    <string name="pref_wechat_share_image_summary">Tap top right corner on image</string>
     <string name="pref_category_qq">QQ (TIM only)</string>
     <string name="pref_qq_outer_browser">Use outer browser</string>
     <string name="pref_qq_clear_background">Set a clear and undistorted chat background</string>

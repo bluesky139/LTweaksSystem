@@ -41,6 +41,7 @@
     <string name="key_wechat_classic_theme">key_wechat_classic_theme</string>
     <string name="key_wechat_mute_annoying_notification">key_wechat_mute_annoying_notification</string>
     <string name="key_wechat_expand_subscribed_list">key_wechat_expand_subscribed_list</string>
+    <string name="key_wechat_share_image">key_wechat_share_image</string>
     <string name="key_qq_outer_browser">key_qq_outer_browser</string>
     <string name="key_qq_clear_background">key_qq_clear_background</string>
     <string name="key_qq_clear_background_path">key_qq_clear_background_path</string>
