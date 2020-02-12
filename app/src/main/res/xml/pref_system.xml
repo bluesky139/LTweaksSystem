@@ -55,10 +55,6 @@
     <PreferenceCategory
         android:title="@string/pref_category_prevent_running">
         <Preference
-            android:key="@string/key_prevent_running_set_list"
-            android:title="@string/pref_prevent_running_set_list"
-            android:summary="@string/pref_prevent_running_set_list_summary" />
-        <Preference
             android:key="@string/key_prevent_process_set_list"
             android:title="@string/pref_prevent_process"
             android:summary="@string/pref_prevent_process_summary" />

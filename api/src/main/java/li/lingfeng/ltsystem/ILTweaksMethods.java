@@ -217,9 +217,6 @@ public abstract class ILTweaksMethods {
     public void com_android_server_am_ActivityManagerService__startProcessLocked__String_ApplicationInfo_boolean_int_String_ComponentName_boolean_boolean_int_boolean_String_String_String$array_Runnable(MethodParam param) {
     }
 
-    public void com_android_server_am_ActivityManagerService__registerReceiver__IApplicationThread_String_IIntentReceiver_IntentFilter_String_int_int(MethodParam param) {
-    }
-
     public void com_android_server_am_ActivityManagerService__handleAppDiedLocked__ProcessRecord_boolean_boolean(MethodParam param) {
     }
 
@@ -241,13 +238,7 @@ public abstract class ILTweaksMethods {
     public void com_android_server_pm_PackageManagerService__queryIntentActivitiesInternal__Intent_String_int_int_int_boolean_boolean(MethodParam param) {
     }
 
-    public void com_android_server_pm_PackageManagerService__setComponentEnabledSetting__ComponentName_int_int_int(MethodParam param) {
-    }
-
     public void com_android_server_pm_PackageDexOptimizer__performDexOptLI__PackageParser$Package_String$array_String$array_CompilerStats$PackageStats_PackageDexUsage$PackageUseInfo_DexoptOptions(MethodParam param) {
-    }
-
-    public void com_android_server_AlarmManagerService__setImpl__int_long_long_long_PendingIntent_IAlarmListener_String_int_WorkSource_AlarmManager$AlarmClockInfo_int_String(MethodParam param) {
     }
 
     public void com_android_server_DeviceIdleController__onStart__(MethodParam param) {

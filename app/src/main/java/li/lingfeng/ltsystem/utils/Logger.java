@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.util.Log;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.reflect.MethodUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -143,6 +145,19 @@ public class Logger {
         for (Field field : fields) {
             field.setAccessible(true);
             Logger.d("  " + field.getName() + ": " + field.get(instance));
+        }
+    }
+
+    public static void clsMethods(Object instance) throws Throwable {
+        Logger.d("clsMethods " + instance);
+        Class cls = instance.getClass();
+        List<Class<?>> classes = (List<Class<?>>) ReflectUtils.callStaticMethod(MethodUtils.class, "getAllSuperclassesAndInterfaces", cls);
+        classes.add(0, cls);
+        for (Class<?> acls : classes) {
+            final Method[] methods = acls.getDeclaredMethods();
+            for (final Method method : methods) {
+                Logger.d(" " + method);
+            }
         }
     }
 

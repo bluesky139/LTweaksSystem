@@ -25,7 +25,6 @@ import li.lingfeng.ltsystem.activities.QrCodeActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
 import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.fragments.sub.system.AppListProvider;
-import li.lingfeng.ltsystem.fragments.sub.system.PreventListDataProvider;
 import li.lingfeng.ltsystem.fragments.sub.system.ShareFilterDataProvider;
 import li.lingfeng.ltsystem.fragments.sub.system.TextActionDataProvider;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
@@ -143,11 +142,6 @@ public class SystemPrefFragment extends BasePrefFragment {
             intent.putExtra("stop", true);
         }
         getActivity().startService(intent);
-    }
-
-    @PreferenceClick(prefs = R.string.key_prevent_running_set_list)
-    private void setPreventList(Preference preference) {
-        ListCheckActivity.create(getActivity(), PreventListDataProvider.class);
     }
 
     @PreferenceClick(prefs = R.string.key_prevent_process_set_list)
