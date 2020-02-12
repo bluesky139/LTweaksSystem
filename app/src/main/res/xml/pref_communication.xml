@@ -77,6 +77,11 @@
             android:key="@string/key_qq_hide_annoying_notification"
             android:title="@string/pref_qq_hide_annoying_notification"
             android:summary="@string/pref_qq_hide_annoying_notification_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_qq_share_image"
+            android:title="@string/pref_qq_share_image"
+            android:summary="@string/pref_qq_share_image_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_push_bullet">

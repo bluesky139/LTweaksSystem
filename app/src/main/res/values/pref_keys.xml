@@ -49,6 +49,7 @@
     <string name="key_qq_use_incoming_ringtone">key_qq_use_incoming_ringtone</string>
     <string name="key_qq_set_incoming_ringtone">key_qq_set_incoming_ringtone</string>
     <string name="key_qq_hide_annoying_notification">key_qq_hide_annoying_notification</string>
+    <string name="key_qq_share_image">key_qq_share_image</string>
     <string name="key_push_bullet_share_to_all">key_push_bullet_share_to_all</string>
     <string name="key_ttrss_disable_article_pager">key_ttrss_disable_article_pager</string>
     <string name="key_ttrss_open_link_in_browser_menu">key_ttrss_open_link_in_browser_menu</string>
