@@ -69,6 +69,7 @@ public class ShareUtils {
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         shareIntent.setClassName(PackageNames.L_TWEAKS, SelectableTextActivity.class.getName());
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(shareIntent);
     }
 
