@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.tweaks.communication;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -18,10 +19,12 @@ public class WeChatExpandSubscribedList extends TweakBase {
 
     private static final String BIZ_TIMELINE_UI = "com.tencent.mm.plugin.brandservice.ui.timeline.BizTimeLineUI";
     private static final String STORY_LIST_VIEW = "com.tencent.mm.plugin.bizui.widget.StoryListView";
+    private Handler mHandler;
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         afterOnClass(BIZ_TIMELINE_UI, param, () -> {
+            mHandler = new Handler();
             Activity activity = (Activity) param.thisObject;
             ViewGroup listView = (ViewGroup) ViewUtils.findViewByType(activity, findClass(STORY_LIST_VIEW));
             for (int i = 0; i < listView.getChildCount(); ++i) {
@@ -46,16 +49,25 @@ public class WeChatExpandSubscribedList extends TweakBase {
                 ViewGroup viewGroup = (ViewGroup) view;
                 view = viewGroup.getChildAt(viewGroup.getChildCount() - 1);
                 if (view instanceof ViewGroup) {
-                    viewGroup = (ViewGroup) view;
-                    TextView textView = ViewUtils.findViewByType(viewGroup, TextView.class);
+                    ViewGroup expandableView = (ViewGroup) view;
+                    TextView textView = ViewUtils.findViewByType(expandableView, TextView.class);
                     if (textView.getText().toString().endsWith(" article(s) remaining")) {
-                        Logger.v("Expand article list.");
-                        viewGroup.performClick();
+                        mHandler.post(() -> {
+                            Logger.v("Expand article list.");
+                            expandableView.performClick();
+                        });
                     }
                 }
             }
         } catch (Throwable e) {
             Logger.e("checkListItem exception.", e);
         }
+    }
+
+    @Override
+    public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
+        afterOnClass(BIZ_TIMELINE_UI, param, () -> {
+            mHandler = null;
+        });
     }
 }
