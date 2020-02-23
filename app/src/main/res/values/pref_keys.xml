@@ -16,7 +16,7 @@
     <string name="key_chrome_open_with">key_chrome_open_with</string>
     <string name="key_chrome_ip_info">key_chrome_ip_info</string>
     <!-- key_chrome_dark_nav_bar -->
-    <string name="key_chrome_darken">key_chrome_darken</string>
+    <!-- key_chrome_darken -->
     <string name="key_youtube_remove_bottom_bar">key_youtube_remove_bottom_bar</string>
     <string name="key_youtube_set_quality">key_youtube_set_quality</string>
 

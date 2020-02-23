@@ -77,8 +77,6 @@ Open source on github: \n
     <string name="pref_chrome_open_with_summary">Open url by other supported apps</string>
     <string name="pref_chrome_ip_info">IP info</string>
     <string name="pref_chrome_ip_info_summary">Menu to lookup ip info of current website</string>
-    <string name="pref_chrome_darken">A more better night mode</string>
-    <string name="pref_chrome_darken_summary">For app start and switching back from low memory kill</string>
     <string name="pref_category_youtube">Youtube</string>
     <string name="pref_youtube_remove_bottom_bar">Remove bottom bar</string>
     <string name="pref_youtube_remove_bottom_bar_summary">Put them into drawer menu</string>
