@@ -84,14 +84,6 @@
             android:summary="@string/pref_qq_share_image_summary" />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/pref_category_push_bullet">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_push_bullet_share_to_all"
-            android:title="@string/pref_push_bullet_share_to_all"
-            android:summary="@string/pref_push_bullet_share_to_all_summary" />
-    </PreferenceCategory>
-    <PreferenceCategory
         android:title="@string/pref_category_ttrss">
         <SwitchPreference
             android:defaultValue="false"
