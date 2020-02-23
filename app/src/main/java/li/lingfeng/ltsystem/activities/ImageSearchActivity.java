@@ -136,7 +136,7 @@ public class ImageSearchActivity extends Activity {
                     byte[] scaledBytes = IOUtils.bitmap2bytes(scaledBitmap, compressFormat);
                     if (scaledBytes != null) {
                         bytes = scaledBytes;
-                        Logger.d("Resized image " + compressFormat);
+                        Logger.d("Resized image " + compressFormat + ", size " + scaledBytes.length);
                     }
                 }
             } catch (Throwable e) {
@@ -165,6 +165,7 @@ public class ImageSearchActivity extends Activity {
                 .build();
         if (sHttpClient == null) {
             sHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(20, TimeUnit.SECONDS)
                     .writeTimeout(30, TimeUnit.SECONDS)
                     .build();
         }
@@ -172,6 +173,7 @@ public class ImageSearchActivity extends Activity {
             @Override
             public void onFailure(Call call, IOException e) {
                 failedUpload("Request failed, " + e.getMessage());
+                Logger.e("e", e);
             }
 
             @Override
