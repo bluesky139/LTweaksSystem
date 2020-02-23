@@ -67,9 +67,6 @@ public abstract class ILTweaksMethods {
     public void android_app_Dialog__show__(MethodParam param) {
     }
 
-    public void android_app_WallpaperColors__WallpaperColors__Color_Color_Color_int(MethodParam param) {
-    }
-
     public void android_app_NotificationManager__notify__String_int_Notification(MethodParam param) {
     }
 
