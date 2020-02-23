@@ -87,10 +87,6 @@
             android:summary="@string/pref_chrome_ip_info_summary" />
         <SwitchPreference
             android:defaultValue="false"
-            android:key="@string/key_chrome_dark_nav_bar"
-            android:title="@string/pref_chrome_dark_nav_bar" />
-        <SwitchPreference
-            android:defaultValue="false"
             android:key="@string/key_chrome_darken"
             android:title="@string/pref_chrome_darken"
             android:summary="@string/pref_chrome_darken_summary" />
