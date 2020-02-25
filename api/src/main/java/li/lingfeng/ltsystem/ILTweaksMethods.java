@@ -2,9 +2,6 @@ package li.lingfeng.ltsystem;
 
 import li.lingfeng.ltsystem.ILTweaks.MethodParam;
 
-/**
- * {@hide}
- */
 public abstract class ILTweaksMethods {
 
     public void java_lang_ProcessBuilder__start__(MethodParam param) {
@@ -16,7 +13,7 @@ public abstract class ILTweaksMethods {
     public void android_os_PowerManager__getMinimumScreenBrightnessSetting__(MethodParam param) {
     }
 
-    public void android_os_SystemVibrator__vibrate__int_String_VibrationEffect_AudioAttributes(MethodParam param) {
+    public void android_os_SystemVibrator__vibrate__int_String_VibrationEffect_String_AudioAttributes(MethodParam param) {
     }
 
     public void android_app_ContextImpl__startActivity__Intent_Bundle(MethodParam param) {
@@ -181,7 +178,7 @@ public abstract class ILTweaksMethods {
     public void com_android_internal_telephony_PhoneFactory__makeDefaultPhone__Context(MethodParam param) {
     }
 
-    public void com_android_systemui_statusbar_phone_StatusBar__makeStatusBarView__(MethodParam param) {
+    public void com_android_systemui_statusbar_phone_StatusBar__makeStatusBarView__RegisterStatusBarResult(MethodParam param) {
     }
 
     public void com_android_systemui_statusbar_phone_StatusBarWindowView__dispatchKeyEvent__KeyEvent(MethodParam param) {
@@ -205,37 +202,37 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_SwipeHelper__dismissChild__View_float_boolean(MethodParam param) {
     }
 
-    public void com_android_server_am_ActivityManagerService__ActivityManagerService__Context(MethodParam param) {
+    public void com_android_server_am_ActivityManagerService__ActivityManagerService__Context_ActivityTaskManagerService(MethodParam param) {
     }
 
     public void com_android_server_am_ActivityManagerService__finishBooting__(MethodParam param) {
     }
 
-    public void com_android_server_am_ActivityManagerService__startProcessLocked__String_ApplicationInfo_boolean_int_String_ComponentName_boolean_boolean_int_boolean_String_String_String$array_Runnable(MethodParam param) {
+    public void com_android_server_am_ProcessList__startProcessLocked__String_ApplicationInfo_boolean_int_HostingRecord_boolean_boolean_int_boolean_String_String_String$array_Runnable(MethodParam param) {
     }
 
     public void com_android_server_am_ActivityManagerService__handleAppDiedLocked__ProcessRecord_boolean_boolean(MethodParam param) {
     }
 
-    public void com_android_server_am_ActivityStackSupervisor__realStartActivityLocked__ActivityRecord_ProcessRecord_boolean_boolean(MethodParam param) {
-    }
-
-    public void com_android_server_am_ActivityStackSupervisor__logIfTransactionTooLarge__Intent_Bundle(MethodParam param) {
-    }
-
-    public void com_android_server_am_ActivityStack__cleanUpActivityLocked__ActivityRecord_boolean_boolean(MethodParam param) {
-    }
-
     public void com_android_server_am_ProcessRecord__kill__String_boolean(MethodParam param) {
     }
 
-    public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(MethodParam param) {
+    public void com_android_server_wm_ActivityStackSupervisor__realStartActivityLocked__ActivityRecord_WindowProcessController_boolean_boolean(MethodParam param) {
+    }
+
+    public void com_android_server_wm_ActivityStackSupervisor__logIfTransactionTooLarge__Intent_Bundle(MethodParam param) {
+    }
+
+    public void com_android_server_wm_ActivityStack__cleanUpActivityLocked__ActivityRecord_boolean_boolean(MethodParam param) {
+    }
+
+    public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List_CrossProfileDomainInfo_int(MethodParam param) {
     }
 
     public void com_android_server_pm_PackageManagerService__queryIntentActivitiesInternal__Intent_String_int_int_int_boolean_boolean(MethodParam param) {
     }
 
-    public void com_android_server_pm_PackageDexOptimizer__performDexOptLI__PackageParser$Package_String$array_String$array_CompilerStats$PackageStats_PackageDexUsage$PackageUseInfo_DexoptOptions(MethodParam param) {
+    public void com_android_server_pm_PackageDexOptimizer__performDexOptLI__PackageParser$Package_String$array_CompilerStats$PackageStats_PackageDexUsage$PackageUseInfo_DexoptOptions(MethodParam param) {
     }
 
     public void com_android_server_DeviceIdleController__onStart__(MethodParam param) {
@@ -253,7 +250,7 @@ public abstract class ILTweaksMethods {
     public void com_android_server_webkit_SystemImpl__SystemImpl__(MethodParam param) {
     }
 
-    public void com_android_server_display_ColorDisplayService__static__(MethodParam param) {
+    public void com_android_server_display_color_ColorDisplayService__static__(MethodParam param) {
     }
 
     public void com_android_server_notification_NotificationManagerService__shouldMuteNotificationLocked__NotificationRecord(MethodParam param) {

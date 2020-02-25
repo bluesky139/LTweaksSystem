@@ -38,7 +38,7 @@ public class QQHideAnnoyingNotification extends TweakBase {
     }
 
     @Override
-    public void android_os_SystemVibrator__vibrate__int_String_VibrationEffect_AudioAttributes(ILTweaks.MethodParam param) {
+    public void android_os_SystemVibrator__vibrate__int_String_VibrationEffect_String_AudioAttributes(ILTweaks.MethodParam param) {
         param.before(() -> {
             if (mNotifyTime > 0 && System.currentTimeMillis() - mNotifyTime < HIDE_IN_MILLISECONDS) {
                 param.setResult(null);

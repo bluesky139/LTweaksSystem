@@ -37,7 +37,6 @@ public class Magisk {
         List<String> list = generateFileList();
         Logger.i("Got " + list.size() + " files/dirs.");
         copySystemFiles(list);
-        replaceFileListInConfig(list);
         zipModule();
         Logger.i("End create magisk module.");
     }
@@ -85,7 +84,8 @@ public class Magisk {
         }
         list.addAll(collectAllFiles.apply(Pair.of(OUT_SYSTEM_PATH, "framework")));
         list.add("etc/boot-image.prof");
-        list.add("priv-app/SystemUI/SystemUI.apk");
+        list.add("apex/com.android.runtime.release/javalib/core-oj.jar");
+        list.add("product/priv-app/SystemUI/SystemUI.apk");
 
         Function<Pair<String, String>, List<String>> collectOatList = (folder) -> {
             File dir = new File(folder.getLeft() + "/" + folder.getRight());
@@ -123,16 +123,6 @@ public class Magisk {
                 FileUtils.copyFile(srcFile, dstFile, true);
             }
         }
-    }
-
-    private void replaceFileListInConfig(List<String> list) throws Throwable {
-        Logger.i("Replace file list in config.");
-        File file = new File(MODULE_CONFIG_PATH);
-        String content = FileUtils.readFileToString(file, "UTF-8");
-        content = content.replace("#REPLACE#", list.stream()
-                .map(path -> "/system/" + path)
-                .reduce((all, path) -> all + '\n' + path).get());
-        FileUtils.writeStringToFile(file, content, "UTF-8");
     }
 
     private void zipModule() throws Throwable {

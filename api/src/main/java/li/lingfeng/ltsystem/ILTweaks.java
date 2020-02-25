@@ -1,8 +1,5 @@
 package li.lingfeng.ltsystem;
 
-/**
- * {@hide}
- */
 public class ILTweaks {
 
     public static abstract class Loader {

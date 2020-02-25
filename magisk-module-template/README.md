@@ -1,2 +1,0 @@
-# Magisk Module LTweaks System
-

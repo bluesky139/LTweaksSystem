@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import dalvik.system.VMRuntime;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.prefs.Prefs;
@@ -24,6 +25,7 @@ public abstract class LoaderBase extends ILTweaks.Loader {
     @Override
     public void initInZygote() throws Throwable {
         Logger.i("LoaderBase initInZygote.");
+        VMRuntime.getRuntime().setHiddenApiExemptions(new String[] { "Lli/lingfeng/ltsystem/" });
         addModules();
         addModulesForAll();
     }

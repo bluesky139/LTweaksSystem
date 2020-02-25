@@ -49,7 +49,7 @@ public class ChromeOpenWith {
         private static final String CHOOSER_ACTIVITY = "com.android.internal.app.ChooserActivity";
 
         @Override
-        public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List$ResolveInfo$_CrossProfileDomainInfo_int(ILTweaks.MethodParam param) {
+        public void com_android_server_pm_PackageManagerService__filterCandidatesWithDomainPreferredActivitiesLPr__Intent_int_List_CrossProfileDomainInfo_int(ILTweaks.MethodParam param) {
             param.before(() -> {
                 Intent intent = (Intent) param.args[0];
                 if (intent.getBooleanExtra("ltweaks_activities_without_preferred_filter", false)) {

@@ -29,7 +29,7 @@ public class VolumeButtonOnBrightness extends TweakBase {
     private boolean mQsFullyExpanded = false;
 
     @Override
-    public void com_android_systemui_statusbar_phone_StatusBar__makeStatusBarView__(ILTweaks.MethodParam param) {
+    public void com_android_systemui_statusbar_phone_StatusBar__makeStatusBarView__RegisterStatusBarResult(ILTweaks.MethodParam param) {
         param.after(() -> {
             try {
                 mBrightnessMirrorController = ReflectUtils.getObjectField(param.thisObject, "mBrightnessMirrorController");

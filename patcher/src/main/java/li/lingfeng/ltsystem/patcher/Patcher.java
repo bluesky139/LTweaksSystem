@@ -21,7 +21,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -149,7 +148,7 @@ public class Patcher {
                     .get();
         }
 
-        List<CallableDeclaration> methods = (List) cls.getMethodsBySignature(info.methodName + "_Original", info.getParamTypes());
+        List<CallableDeclaration> methods = (List) ClassUtils.classGetMethodsBySignature(cls, info.methodName + "_Original", info.getParamTypes());
         if (methods.size() > 0) {
             throw new RuntimeException(info.methodName + "_Original method is already in it, you should revert changes first.");
         }
@@ -157,19 +156,23 @@ public class Patcher {
         BodyDeclaration method;
         if (!info.methodName.equals("static")) {
             String[] paramTypes = Arrays.stream(info.getParamTypes())
-                    .map(type -> Utils.replace$ToAngleBrackets(type))
                     .map(type -> type.replace("$array", "[]"))
                     .map(type -> type.replace('$', '.'))
                     .toArray(String[]::new);
             if (info.getClassSimpleName().equals(info.methodName)) {
-                CallableDeclaration constructor = cls.getConstructorByParameterTypes(paramTypes).get();
+                CallableDeclaration constructor = ClassUtils.classGetConstructorByParameterTypes(cls, paramTypes).get();
                 methods = new ArrayList<>(1);
                 methods.add(constructor);
             } else {
-                methods = (List) cls.getMethodsBySignature(info.methodName, paramTypes);
+                methods = (List) ClassUtils.classGetMethodsBySignature(cls, info.methodName, paramTypes);
             }
 
             if (methods.size() != 1) {
+                if (SIMULATE) {
+                    for (CallableDeclaration m : methods) {
+                        Logger.d(" getMethodsBySignature return method - " + m.getSignature());
+                    }
+                }
                 throw new RuntimeException("getMethodsBySignature return " + methods.size() + " methods, "
                         + info.methodName + "(" + StringUtils.join(paramTypes, ", ") + ")");
             }
@@ -348,7 +351,7 @@ public class Patcher {
 
         CompilationUnit unit = JavaParser.parse(content);
         ClassOrInterfaceDeclaration cls = unit.getClassByName("ZygoteInit").get();
-        List<MethodDeclaration> methods = cls.getMethodsBySignature("main", "String[]");
+        List<MethodDeclaration> methods = ClassUtils.classGetMethodsBySignature(cls, "main", "String[]");
         if (methods.size() != 1) {
             throw new RuntimeException("getMethodsBySignature return " + methods.size() + " methods.");
         }

@@ -26,6 +26,6 @@ This is an advanced implementation on [L Tweaks](https://github.com/bluesky139/L
 
 * Android Studio 3.2.1
 
-* Official AOSP, Android 9.0
+* Official AOSP, Android 10.0
 
-* Device: Pixel
+* Device: Pixel 3

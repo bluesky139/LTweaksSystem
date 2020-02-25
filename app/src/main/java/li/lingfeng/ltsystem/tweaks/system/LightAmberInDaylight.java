@@ -20,7 +20,7 @@ public class LightAmberInDaylight extends TweakBase {
     };
 
     @Override
-    public void com_android_server_display_ColorDisplayService__static__(ILTweaks.MethodParam param) {
+    public void com_android_server_display_color_ColorDisplayService__static__(ILTweaks.MethodParam param) {
         param.after(() -> {
             Logger.i("Set light amber in daylight.");
             ReflectUtils.setStaticObjectField(findClass(NIGHT_DISPLAY_SERVICE), "MATRIX_IDENTITY", MATRIX_LIGHT_AMBER);

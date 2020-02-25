@@ -1,7 +1,6 @@
 package li.lingfeng.ltsystem.tweaks.system;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -139,7 +138,7 @@ public class PreventProcess extends TweakBase {
     }
 
     @Override
-    public void com_android_server_am_ActivityManagerService__ActivityManagerService__Context(ILTweaks.MethodParam param) {
+    public void com_android_server_am_ActivityManagerService__ActivityManagerService__Context_ActivityTaskManagerService(ILTweaks.MethodParam param) {
         param.after(() -> {
             Logger.i("Init PreventProcess.");
             mActivityManagerService = param.thisObject;
@@ -148,7 +147,7 @@ public class PreventProcess extends TweakBase {
     }
 
     @Override
-    public void com_android_server_am_ActivityManagerService__startProcessLocked__String_ApplicationInfo_boolean_int_String_ComponentName_boolean_boolean_int_boolean_String_String_String$array_Runnable(ILTweaks.MethodParam param) {
+    public void com_android_server_am_ProcessList__startProcessLocked__String_ApplicationInfo_boolean_int_HostingRecord_boolean_boolean_int_boolean_String_String_String$array_Runnable(ILTweaks.MethodParam param) {
         param.before(() -> {
             if (mPreventList == null) {
                 return;
@@ -156,16 +155,17 @@ public class PreventProcess extends TweakBase {
             ApplicationInfo info = (ApplicationInfo) param.args[1];
             if (mPreventList.contains(info.packageName)) {
                 String processName = (String) param.args[0];
-                String hostingType = (String) param.args[4];
-                ComponentName componentName = (ComponentName) param.args[5];
-                Logger.d("startProcessLocked " + processName + " " + hostingType + " " + componentName);
+                Object hostingRecord = param.args[4];
+                String hostingType = (String) ReflectUtils.callMethod(hostingRecord, "getType");
+                String hostingName = (String) ReflectUtils.callMethod(hostingRecord, "getName");
+                Logger.d("startProcessLocked " + processName + " " + hostingType + " " + hostingName);
 
                 if (mActivityCounter.get(info.packageName).size() == 0 && mStopRunnables.get(info.packageName) == null) {
                     if ("service".equals(hostingType) || "broadcast".equals(hostingType) || "content provider".equals(hostingType)) {
-                        Logger.v("Prevent " + hostingType + " " + componentName);
+                        Logger.v("Prevent " + hostingType + " " + hostingName);
                         param.setResult(null);
                     } else if (!hostingType.equals("activity")) {
-                        Logger.w("Pass " + hostingType + " " + componentName);
+                        Logger.w("Pass " + hostingType + " " + hostingName);
                     }
                 }
             }
@@ -199,7 +199,7 @@ public class PreventProcess extends TweakBase {
     }
 
     @Override
-    public void com_android_server_am_ActivityStack__cleanUpActivityLocked__ActivityRecord_boolean_boolean(ILTweaks.MethodParam param) {
+    public void com_android_server_wm_ActivityStack__cleanUpActivityLocked__ActivityRecord_boolean_boolean(ILTweaks.MethodParam param) {
         param.after(() -> {
             if (mPreventList == null) {
                 return;
@@ -232,7 +232,7 @@ public class PreventProcess extends TweakBase {
     }
 
     @Override
-    public void com_android_server_am_ActivityStackSupervisor__realStartActivityLocked__ActivityRecord_ProcessRecord_boolean_boolean(ILTweaks.MethodParam param) {
+    public void com_android_server_wm_ActivityStackSupervisor__realStartActivityLocked__ActivityRecord_WindowProcessController_boolean_boolean(ILTweaks.MethodParam param) {
         param.before(() -> {
             mLogIfTransactionTooLarge = false;
         });
@@ -259,7 +259,7 @@ public class PreventProcess extends TweakBase {
     }
 
     @Override
-    public void com_android_server_am_ActivityStackSupervisor__logIfTransactionTooLarge__Intent_Bundle(ILTweaks.MethodParam param) {
+    public void com_android_server_wm_ActivityStackSupervisor__logIfTransactionTooLarge__Intent_Bundle(ILTweaks.MethodParam param) {
         param.before(() -> {
             mLogIfTransactionTooLarge = true;
         });
