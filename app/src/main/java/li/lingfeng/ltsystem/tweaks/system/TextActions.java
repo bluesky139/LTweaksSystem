@@ -27,7 +27,7 @@ import li.lingfeng.ltsystem.utils.Utils;
 
 @MethodsLoad(packages = {}, prefs = {}, excludedPackages = {
         PackageNames.ANDROID, PackageNames.ANDROID_SYSTEM_UI
-})
+}, hiddenApiExemptions = "Lcom/android/internal/widget/FloatingToolbar;")
 public class TextActions extends ILTweaksMethods {
 
     private Comparator<MenuItem> mMenuItemComparator;

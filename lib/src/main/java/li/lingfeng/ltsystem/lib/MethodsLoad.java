@@ -11,4 +11,5 @@ public @interface MethodsLoad {
     String[] packages(); // Load for all packages if empty.
     int[] prefs();  // Always load if empty.
     String[] excludedPackages() default {};
+    String[] hiddenApiExemptions() default {};
 }

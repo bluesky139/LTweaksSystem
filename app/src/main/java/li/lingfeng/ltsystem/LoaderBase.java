@@ -3,11 +3,13 @@ package li.lingfeng.ltsystem;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import dalvik.system.VMRuntime;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
@@ -25,9 +27,21 @@ public abstract class LoaderBase extends ILTweaks.Loader {
     @Override
     public void initInZygote() throws Throwable {
         Logger.i("LoaderBase initInZygote.");
-        VMRuntime.getRuntime().setHiddenApiExemptions(new String[] { "Lli/lingfeng/ltsystem/" });
         addModules();
         addModulesForAll();
+
+        VMRuntime.getRuntime().setHiddenApiExemptions(new String[] { "Lli/lingfeng/ltsystem/" });
+        Set<String> hiddenApis = mModules.values().stream()
+                .flatMap(modules -> modules.stream())
+                .map(module -> module.getAnnotation(MethodsLoad.class).hiddenApiExemptions())
+                .flatMap(apis -> Arrays.stream(apis))
+                .collect(Collectors.toSet());
+        hiddenApis.addAll(mModulesForAll.stream()
+                .map(module -> module.getAnnotation(MethodsLoad.class).hiddenApiExemptions())
+                .flatMap(apis -> Arrays.stream(apis))
+                .collect(Collectors.toSet()));
+        Logger.d("setHiddenApiExemptions:\n  " + String.join("\n  ", hiddenApis));
+        VMRuntime.getRuntime().setHiddenApiExemptions(hiddenApis.toArray(new String[hiddenApis.size()]));
     }
 
     protected void addModule(String packageName, Class<? extends ILTweaksMethods> cls) {
