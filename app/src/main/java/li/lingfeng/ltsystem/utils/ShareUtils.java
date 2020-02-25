@@ -60,7 +60,12 @@ public class ShareUtils {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-        context.startActivity(Intent.createChooser(shareIntent, "Share with..."));
+        Logger.d("context " + context);
+        Intent intent = Intent.createChooser(shareIntent, "Share with...");
+        if (!(context instanceof Activity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(intent);
     }
 
     public static void selectText(Context context, String text) {

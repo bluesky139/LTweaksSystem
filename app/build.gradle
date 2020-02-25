@@ -15,11 +15,11 @@ android {
             keyPassword '123456'
         }
     }
-    compileSdkVersion 27
+    compileSdkVersion 29
     defaultConfig {
         applicationId "li.lingfeng.ltsystem"
-        minSdkVersion 27
-        targetSdkVersion 27
+        minSdkVersion 29
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,6 +37,8 @@ android {
     aaptOptions {
         noCompress "overture/overture", "overture/overture.conf", "overture/china_ip_list.txt",
                 "overture/domain_primary", "overture/domain_alternative", "overture/version.txt"
+    }
+    productFlavors {
     }
 }
 
