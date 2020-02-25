@@ -211,8 +211,8 @@ public class PreventProcess extends TweakBase {
                     if (mPreventList.contains(info.packageName)) {
                         Logger.d("cleanUpActivityLocked " + activityRecord);
                         SparseIntArray counters = mActivityCounter.get(info.packageName);
-                        Object processRecord = ReflectUtils.getObjectField(activityRecord, "app");
-                        int pid = ReflectUtils.getIntField(processRecord, "pid");
+                        Object app = ReflectUtils.getObjectField(activityRecord, "app");
+                        int pid = ReflectUtils.getIntField(app, "mPid");
                         int count = counters.get(pid) - 1;
                         Logger.d("decrease " + info.packageName + "/" + pid + " " + count);
                         if (count > 0) {
@@ -247,8 +247,8 @@ public class PreventProcess extends TweakBase {
                 if (mPreventList.contains(info.packageName)) {
                     Logger.d("realStartActivityLocked " + activityRecord);
                     SparseIntArray counters = mActivityCounter.get(info.packageName);
-                    Object processRecord = ReflectUtils.getObjectField(activityRecord, "app");
-                    int pid = ReflectUtils.getIntField(processRecord, "pid");
+                    Object app = ReflectUtils.getObjectField(activityRecord, "app");
+                    int pid = ReflectUtils.getIntField(app, "mPid");
                     int count = counters.get(pid, 0) + 1;
                     Logger.d("increase " + info.packageName + "/" + pid + " " + count);
                     counters.put(pid, count);
