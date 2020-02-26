@@ -11,7 +11,7 @@ import li.lingfeng.ltsystem.utils.ReflectUtils;
 @MethodsLoad(packages = PackageNames.ANDROID, prefs = R.string.key_display_light_amber_in_daylight)
 public class LightAmberInDaylight extends TweakBase {
 
-    private static final String NIGHT_DISPLAY_SERVICE = "com.android.server.display.ColorDisplayService";
+    private static final String NIGHT_DISPLAY_SERVICE = "com.android.server.display.color.ColorDisplayService";
     private static final float[] MATRIX_LIGHT_AMBER = new float[] { // ~= 5500K
             1,      0,      0, 0,
             0, 0.933f,      0, 0,
