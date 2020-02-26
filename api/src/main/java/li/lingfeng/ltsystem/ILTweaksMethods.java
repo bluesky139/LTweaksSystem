@@ -193,9 +193,6 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_statusbar_phone_NavigationBarView__setNavigationIconHints__int(MethodParam param) {
     }
 
-    public void com_android_systemui_statusbar_policy_MobileSignalController__mapIconSets__(MethodParam param) {
-    }
-
     public void com_android_systemui_qs_external_TileLifecycleManager__setBindService__boolean(MethodParam param) {
     }
 
