@@ -9,8 +9,6 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import li.lingfeng.ltsystem.LTHelper;
-
 public class ReflectUtils {
 
     private static HashMap<String, Field> fieldCache = new HashMap<>();
@@ -30,6 +28,12 @@ public class ReflectUtils {
 
     public static Object callStaticMethod(Class cls, String methodName, Object... args) throws Throwable {
         Method method = findMethod(cls, methodName, Arrays.stream(args).map(Object::getClass).toArray(Class[]::new));
+        method.setAccessible(true);
+        return method.invoke(null, args);
+    }
+
+    public static Object callStaticMethod(Class cls, String methodName, Object[] args, Class[] parameterTypes) throws Throwable {
+        Method method = findMethod(cls, methodName, parameterTypes);
         method.setAccessible(true);
         return method.invoke(null, args);
     }

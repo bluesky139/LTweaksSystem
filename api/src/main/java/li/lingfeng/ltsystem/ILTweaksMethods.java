@@ -187,6 +187,9 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_statusbar_phone_NotificationPanelView__setQsExpansion__float(MethodParam param) {
     }
 
+    public void com_android_systemui_statusbar_phone_NavigationBarInflaterView__createView__String_ViewGroup_LayoutInflater(MethodParam param) {
+    }
+
     public void com_android_systemui_statusbar_phone_NavigationBarView__setDisabledFlags__int(MethodParam param) {
     }
 
