@@ -59,7 +59,7 @@
     <string name="key_telegram_remove_floating_button">key_telegram_remove_floating_button</string>
     <string name="key_telegram_open_url_without_confirmation">key_telegram_open_url_without_confirmation</string>
     <string name="key_telegram_darken">key_telegram_darken</string>
-    <string name="key_telegram_white_instant_view_text">key_telegram_white_instant_view_text</string>
+    <!-- key_telegram_white_instant_view_text -->
     <string name="key_telegram_hide_sticker">key_telegram_hide_sticker</string>
     <string name="key_telegram_edittext_no_focus_first">key_telegram_edittext_no_focus_first</string>
     <string name="key_telegram_swipe_seek_video">key_telegram_swipe_seek_video</string>
