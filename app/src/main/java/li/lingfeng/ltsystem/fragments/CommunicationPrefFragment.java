@@ -38,23 +38,6 @@ public class CommunicationPrefFragment extends BasePrefFragment {
         addPreferencesFromResource(R.xml.pref_communication);
     }
 
-    @PreferenceChange(prefs = R.string.key_wechat_use_incoming_ringtone, refreshAtStart = true)
-    private void enableWeChatIncomingRingtone(SwitchPreference preference, boolean enabled) {
-        Preference setRingtonePref = findPreference(R.string.key_wechat_set_incoming_ringtone);
-        setRingtonePref.setEnabled(enabled);
-    }
-
-    @PreferenceChange(prefs = R.string.key_wechat_set_incoming_ringtone, refreshAtStart = true)
-    private void setWeChatIncomingRingtone(RingtonePreference preference, String path) {
-        if (path.equals("")) {
-            preference.setSummary("");
-        } else {
-            Uri uri = Uri.parse(path);
-            Ringtone ring = RingtoneManager.getRingtone(getActivity(), uri);
-            preference.setSummary(ring.getTitle(getActivity()));
-        }
-    }
-
     @PreferenceChange(prefs = R.string.key_wechat_browser, refreshAtStart = true)
     private void enableWeChatBrowser(SwitchPreference preference, boolean enabled, Extra extra) {
         if (extra.refreshAtStart) {
