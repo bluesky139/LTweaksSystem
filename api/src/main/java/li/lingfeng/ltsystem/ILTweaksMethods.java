@@ -46,12 +46,6 @@ public abstract class ILTweaksMethods {
     public void android_app_Activity__onKeyUp__int_KeyEvent(MethodParam param) {
     }
 
-    public void android_app_Fragment__performCreateOptionsMenu__Menu_MenuInflater(MethodParam param) {
-    }
-
-    public void android_app_Fragment__performOptionsItemSelected__MenuItem(MethodParam param) {
-    }
-
     public void android_app_Service__startForeground__int_Notification(MethodParam param) {
     }
 
@@ -191,6 +185,12 @@ public abstract class ILTweaksMethods {
     }
 
     public void com_android_systemui_SwipeHelper__dismissChild__View_float_boolean(MethodParam param) {
+    }
+
+    public void com_android_settings_applications_appinfo_AppInfoDashboardFragment__onCreateOptionsMenu__Menu_MenuInflater(MethodParam param) {
+    }
+
+    public void com_android_settings_applications_appinfo_AppInfoDashboardFragment__onOptionsItemSelected__MenuItem(MethodParam param) {
     }
 
     public void com_android_server_am_ActivityManagerService__ActivityManagerService__Context_ActivityTaskManagerService(MethodParam param) {

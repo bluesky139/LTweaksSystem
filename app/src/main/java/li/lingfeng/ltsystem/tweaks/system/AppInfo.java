@@ -1,7 +1,6 @@
 package li.lingfeng.ltsystem.tweaks.system;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.pm.ApplicationInfo;
 import android.util.Pair;
 import android.view.Menu;
@@ -15,11 +14,9 @@ import li.lingfeng.ltsystem.utils.Utils;
 
 public abstract class AppInfo extends TweakBase {
 
-    protected static final String APP_INFO_FRAGMENT = "com.android.settings.applications.appinfo.AppInfoDashboardFragment";
-
     @Override
-    public void android_app_Fragment__performCreateOptionsMenu__Menu_MenuInflater(ILTweaks.MethodParam param) {
-        afterOnClass(APP_INFO_FRAGMENT, param, () -> {
+    public void com_android_settings_applications_appinfo_AppInfoDashboardFragment__onCreateOptionsMenu__Menu_MenuInflater(ILTweaks.MethodParam param) {
+        param.after(() -> {
             final Pair[] names = newMenuNames(param);
             if (names == null || names.length == 0) {
                 return;
@@ -36,8 +33,8 @@ public abstract class AppInfo extends TweakBase {
     }
 
     @Override
-    public void android_app_Fragment__performOptionsItemSelected__MenuItem(ILTweaks.MethodParam param) {
-        beforeOnClass(APP_INFO_FRAGMENT, param, () -> {
+    public void com_android_settings_applications_appinfo_AppInfoDashboardFragment__onOptionsItemSelected__MenuItem(ILTweaks.MethodParam param) {
+        param.before(() -> {
             final Pair[] names = newMenuNames(param);
             if (names == null || names.length == 0) {
                 return;
@@ -53,8 +50,8 @@ public abstract class AppInfo extends TweakBase {
         });
     }
 
-    protected Activity getActivity(ILTweaks.MethodParam param) {
-        return ((Fragment) param.thisObject).getActivity();
+    protected Activity getActivity(ILTweaks.MethodParam param) throws Throwable {
+        return (Activity) ReflectUtils.callMethod(param.thisObject, "getActivity");
     }
 
     protected String getPackageName(ILTweaks.MethodParam param) throws Throwable {
