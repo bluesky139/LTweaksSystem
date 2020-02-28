@@ -19,7 +19,9 @@ import li.lingfeng.ltsystem.utils.ReflectUtils;
 public class WeChatMuteAnnoyingNotification extends TweakBase {
 
     private static final int MAX_NOTIFY_COUNT = 3;
+    private static final int MIN_NOTIFY_SECONDS = 5;
     private int mNotifyCount = -1;
+    private long mLastNotifyTime = 0;
 
     @Override
     public void com_android_server_am_ActivityManagerService__finishBooting__(ILTweaks.MethodParam param) {
@@ -36,7 +38,7 @@ public class WeChatMuteAnnoyingNotification extends TweakBase {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                 if (mNotifyCount == MAX_NOTIFY_COUNT) {
-                    Logger.i("Unmute WeChat.");
+                    Logger.i("Unmute WeChat by count.");
                 }
                 mNotifyCount = -1;
             } else {
@@ -54,11 +56,17 @@ public class WeChatMuteAnnoyingNotification extends TweakBase {
                     ++mNotifyCount;
                     Logger.d("WeChat mNotifyCount " + mNotifyCount);
                     if (mNotifyCount == MAX_NOTIFY_COUNT) {
-                        Logger.i("Mute WeChat.");
+                        Logger.i("Mute WeChat by count.");
                     }
                 }
                 if (mNotifyCount == MAX_NOTIFY_COUNT) {
                     param.setResult(true);
+                } else if (mNotifyCount == -1) {
+                    if (System.currentTimeMillis() - mLastNotifyTime < MIN_NOTIFY_SECONDS * 1000) {
+                        param.setResult(true);
+                    } else {
+                        mLastNotifyTime = System.currentTimeMillis();
+                    }
                 }
             }
         });
