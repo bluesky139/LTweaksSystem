@@ -185,26 +185,31 @@ public class Patcher {
                     .get();
         }
 
+        boolean methodNamePassed = false;
+        int leftBracketCount = 0;
+        int rightBracketCount = 0;
         Iterator<JavaToken> it = method.getTokenRange().get().iterator();
         while (it.hasNext()) {
             JavaToken token = it.next();
             if ((token.getCategory() == JavaToken.Category.IDENTIFIER && method instanceof CallableDeclaration)
                     || (token.getCategory() == JavaToken.Category.KEYWORD && method instanceof InitializerDeclaration)) {
                 if (token.getText().equals(info.methodName)) {
+                    methodNamePassed = true;
+                }
+            } else if (methodNamePassed && token.getCategory() == JavaToken.Category.SEPARATOR) {
+                if (token.getText().equals("(")) {
+                    ++leftBracketCount;
+                } else if (token.getText().equals(")")) {
+                    ++rightBracketCount;
+                } else if (token.getText().equals("{") && leftBracketCount == rightBracketCount) {
                     Position lineCol = token.getRange().get().begin;
                     int pos = getPositionFromLineCol(content, lineCol.line, lineCol.column);
-                    String substring = content.substring(pos, pos + token.getText().length());
-                    if (!substring.equals(token.getText())) {
-                        throw new RuntimeException("Expected substring method name " + token.getText() +
-                                ", but " + substring + ", at line " + lineCol.line + ", col " + lineCol.column + ", pos " + pos);
-                    }
-
                     String generatedMethod = method instanceof InitializerDeclaration ?
                             generateClassStaticInitializer(info) : generateHookMethod((CallableDeclaration) method, info);
                     if (SIMULATE) {
                         Logger.v(generatedMethod);
                     }
-                    content = content.substring(0, pos + token.getText().length()) + generatedMethod + content.substring(pos + token.getText().length());
+                    content = content.substring(0, pos) + generatedMethod + content.substring(pos);
                     if (method instanceof ConstructorDeclaration) {
                         content = removeFieldsFinalWord(content);
                     }
@@ -248,7 +253,7 @@ public class Patcher {
         String commaParamsWithType = Utils.joinT(method.getParameters(), ", ",
                 ((param, i) -> ((Parameter) param).getTypeAsString() + ' ' + ((Parameter) param).getNameAsString()));
         String commaThrows = Utils.joinT(method.getThrownExceptions(), ", ", ((type, i) -> ((ReferenceType) type).getElementType().asString()));
-        builder.append("(" + commaParamsWithType + ") " + (method.getThrownExceptions().size() > 0 ? "throws " + commaThrows : "") + " {\n");
+        builder.append( " {\n");
 
         String commaParams = Utils.joinT(method.getParameters(), ", ", ((param, i) -> ((Parameter) param).getNameAsString()));
         String commaModifiedParams = Utils.joinT(method.getParameters(), ", ", ((param, i) -> "(" + ((Parameter) param).getTypeAsString() + ") param.args[" + i + "]"));
@@ -303,7 +308,8 @@ public class Patcher {
         builder.append("            " + callOriginalWithReturn + ";\n");
         builder.append("        }\n");
         builder.append("    }\n");
-        builder.append("    private " + (method.isStatic() ? "static " : "") + (method.isGeneric() ? "<" + method.getTypeParameter(0).asString() + "> " : "") + (method instanceof MethodDeclaration ? ((MethodDeclaration) method).getTypeAsString() : "void") + " " + info.methodName + "_Original");
+        builder.append("    private " + (method.isStatic() ? "static " : "") + (method.isGeneric() ? "<" + method.getTypeParameter(0).asString() + "> " : "") + (method instanceof MethodDeclaration ? ((MethodDeclaration) method).getTypeAsString() : "void") + " " + info.methodName + "_Original\n");
+        builder.append("        (" + commaParamsWithType + ") " + (method.getThrownExceptions().size() > 0 ? "throws " + commaThrows : ""));
 
         return builder.toString();
     }

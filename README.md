@@ -14,7 +14,7 @@ This is an advanced implementation on [L Tweaks](https://github.com/bluesky139/L
 
 * Build AOSP again.
 
-* Run `Magisk` project, it will build out magisk module for modified system frameworks, install it on your device.
+* Flash new system image, or run `Magisk` project, it will build out magisk module for modified system frameworks, install it on your device.
 
 * Use [keytool-importkeypair](https://github.com/getfatday/keytool-importkeypair) to convert your system signature to Android keystore format, create `system_keystore` folder in this project and put keystore into it, run `app` project, it will build out `L Tweaks System` apk, install it.
 

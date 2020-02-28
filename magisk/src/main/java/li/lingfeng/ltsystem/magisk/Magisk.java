@@ -24,12 +24,12 @@ public class Magisk {
         Logger.TAG = "Magisk";
     }
 
-    private static final String OUT_SYSTEM_PATH = Config.ANDROID_SOURCE_DIR + "/out/target/product/" + Config.DEVICE_CODE_NAME + "/system";
+    private static final String OUT_PATH = Config.ANDROID_SOURCE_DIR + "/out/target/product/" + Config.DEVICE_CODE_NAME;
+    private static final String OUT_SYSTEM_PATH = OUT_PATH + "/system";
     private static final String OUT_SYSTEM_OTHER_PATH = OUT_SYSTEM_PATH + "_other";
     private static final String WORKING_DIR = System.getProperty("user.dir").replace('\\', '/');
     private static final String MODULE_TEMPLATE_PATH = WORKING_DIR + "/magisk-module-template";
     private static final String MODULE_PATH = WORKING_DIR + "/magisk-module";
-    private static final String MODULE_CONFIG_PATH = MODULE_PATH + "/config.sh";
 
     public void createModule() throws Throwable {
         Logger.i("Start create magisk module.");
@@ -84,7 +84,11 @@ public class Magisk {
         }
         list.addAll(collectAllFiles.apply(Pair.of(OUT_SYSTEM_PATH, "framework")));
         list.add("etc/boot-image.prof");
-        list.add("apex/com.android.runtime.release/javalib/core-oj.jar");
+        if (new File(OUT_SYSTEM_OTHER_PATH).exists()) {
+            list.add("apex/com.android.runtime.release.apex");
+        } else {
+            list.add("apex/com.android.runtime.release/javalib/core-oj.jar");
+        }
         list.add("product/priv-app/SystemUI/SystemUI.apk");
 
         Function<Pair<String, String>, List<String>> collectOatList = (folder) -> {
@@ -105,6 +109,8 @@ public class Magisk {
         if (new File(OUT_SYSTEM_OTHER_PATH).exists()) {
             list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_OTHER_PATH, "priv-app")));
             list.addAll(collectOatList.apply(Pair.of(OUT_SYSTEM_OTHER_PATH, "app")));
+            list.addAll(collectOatList.apply(Pair.of(OUT_PATH, "product/priv-app")));
+            list.addAll(collectOatList.apply(Pair.of(OUT_PATH, "product/app")));
         }
         return list;
     }
@@ -116,7 +122,12 @@ public class Magisk {
             File srcOtherFile = new File(OUT_SYSTEM_OTHER_PATH + "/" + path);
             File dstFile = new File(MODULE_PATH + "/system/" + path);
             assert !(srcFile.exists() && srcOtherFile.exists()) : "oat exists in both system and system_other.";
-            srcFile = srcFile.exists() ? srcFile : srcOtherFile;
+
+            if (path.startsWith("product/") && new File(OUT_SYSTEM_OTHER_PATH).exists()) {
+                srcFile = new File(OUT_PATH + "/" + path);
+            } else {
+                srcFile = srcFile.exists() ? srcFile : srcOtherFile;
+            }
             if (srcFile.isDirectory()) {
                 FileUtils.copyDirectory(srcFile.exists() ? srcFile : srcOtherFile, dstFile, true);
             } else {
