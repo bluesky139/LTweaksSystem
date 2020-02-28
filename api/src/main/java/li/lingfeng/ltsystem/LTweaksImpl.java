@@ -5,9 +5,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * {@hide}
- */
 public class LTweaksImpl {
 
     private static final String TAG = "LTweaksImpl";

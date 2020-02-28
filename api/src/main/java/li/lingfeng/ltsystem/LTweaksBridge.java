@@ -11,9 +11,6 @@ import java.util.regex.Pattern;
 
 import dalvik.system.PathClassLoader;
 
-/**
- * {@hide}
- */
 public final class LTweaksBridge extends ILTweaksBridge {
 
     private static final String TAG = "LTweaksBridge";

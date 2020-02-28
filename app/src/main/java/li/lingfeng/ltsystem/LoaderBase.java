@@ -30,7 +30,6 @@ public abstract class LoaderBase extends ILTweaks.Loader {
         addModules();
         addModulesForAll();
 
-        VMRuntime.getRuntime().setHiddenApiExemptions(new String[] { "Lli/lingfeng/ltsystem/" });
         Set<String> hiddenApis = mModules.values().stream()
                 .flatMap(modules -> modules.stream())
                 .map(module -> module.getAnnotation(MethodsLoad.class).hiddenApiExemptions())
@@ -40,6 +39,7 @@ public abstract class LoaderBase extends ILTweaks.Loader {
                 .map(module -> module.getAnnotation(MethodsLoad.class).hiddenApiExemptions())
                 .flatMap(apis -> Arrays.stream(apis))
                 .collect(Collectors.toSet()));
+        hiddenApis.add("Lli/lingfeng/ltsystem/");
         Logger.d("setHiddenApiExemptions:\n  " + String.join("\n  ", hiddenApis));
         VMRuntime.getRuntime().setHiddenApiExemptions(hiddenApis.toArray(new String[hiddenApis.size()]));
     }
