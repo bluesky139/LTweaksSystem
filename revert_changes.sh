@@ -12,3 +12,7 @@ pushd frameworks/opt/telephony
 git reset --hard
 popd
 
+pwd
+pushd packages/apps/Settings
+git reset --hard
+popd
