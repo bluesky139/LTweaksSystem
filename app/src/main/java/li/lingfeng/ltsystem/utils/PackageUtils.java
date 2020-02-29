@@ -95,8 +95,9 @@ public class PackageUtils {
 
     public static boolean killPackage(Context context, String packageName) throws Throwable {
         ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, 0);
-        if (info.uid >= Process.FIRST_APPLICATION_UID && info.uid <= Process.LAST_APPLICATION_UID) {
-            Logger.i("Kill " + packageName);
+        if (info.uid >= Process.FIRST_APPLICATION_UID && info.uid <= Process.LAST_APPLICATION_UID
+                && (info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+            Logger.i("Kill " + packageName + ", uid " + info.uid);
             new Shell("su", new String[] {
                     "am force-stop " + packageName
             }, 5000, (isOk, stderr, stdout) -> {
@@ -109,7 +110,7 @@ public class PackageUtils {
             Toast.makeText(context, toastStr, Toast.LENGTH_SHORT).show();
             return true;
         } else {
-            Logger.i("Should not kill system app " + packageName);
+            Logger.i("Should not kill system app " + packageName + ", uid " + info.uid);
             return false;
         }
     }
