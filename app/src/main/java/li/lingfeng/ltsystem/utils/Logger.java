@@ -85,6 +85,11 @@ public class Logger {
         }
     }
 
+    public static void throwException(Throwable e) {
+        e("throwException", e);
+        throw new RuntimeException(e);
+    }
+
     public static void stackTrace() {
         stackTrace("");
     }

@@ -52,6 +52,9 @@ public class Patcher {
     }};
     private static final String PACKAGE_CORE_PATH = "/frameworks/base/core/java/";
 
+    private static final String FRAMEWORK_BASE_DIR = Config.ANDROID_SOURCE_DIR + "/frameworks/base";
+    private static final String SYSTEM_UI_DIR = FRAMEWORK_BASE_DIR + "/packages/SystemUI";
+
     static class MethodInfo {
         String fullClass;
         String methodName;
@@ -107,8 +110,9 @@ public class Patcher {
         for (MethodInfo method : methods) {
             patchMethod(method);
         }
-
         patchZygote();
+
+        useLegacySystemUIIfNecessary();
         copyFiles();
         copyAdditionalFiles();
         Logger.i("End patch.");
@@ -388,6 +392,23 @@ public class Patcher {
             }
         }
         throw new RuntimeException("Can't find '{' after method walk.");
+    }
+
+    private void useLegacySystemUIIfNecessary() throws Throwable {
+        if (!Config.USE_LEGACY_SYSTEM_UI) {
+            return;
+        }
+        Logger.i("Use legacy SystemUI.");
+        File file = new File(SYSTEM_UI_DIR + "/Android.bp");
+        String content = FileUtils.readFileToString(file);
+        content = content.replace("\"SystemUI\"", "\"SystemUI-without-recents\"");
+        content = content.replace("product_specific: true,", "");
+        content = content.replace("\"SystemUIWithLegacyRecents\",", "\"SystemUI\",\n    product_specific: true,");
+        if (SIMULATE) {
+            Logger.v(content);
+        } else {
+            FileUtils.writeStringToFile(file, content);
+        }
     }
 
     private void copyFiles() throws Throwable {

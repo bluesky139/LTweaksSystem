@@ -4,4 +4,7 @@ public class Config {
 
     public static final String ANDROID_SOURCE_DIR = "S:/android_source_ua";
     public static final String DEVICE_CODE_NAME = "hammerhead";
+	
+	// For vertical recents
+    public static final boolean USE_LEGACY_SYSTEM_UI = false;
 }
