@@ -79,6 +79,10 @@
             android:title="@string/pref_shadowsocks_primary_dns"
             android:summary="@string/pref_shadowsocks_primary_dns_summary" />
         <SwitchPreference
+            android:key="@string/key_shadowsocks_linux_kernel_route"
+            android:title="@string/pref_shadowsocks_linux_kernel_route"
+            android:summary="@string/pref_shadowsocks_linux_kernel_route_summary" />
+        <SwitchPreference
             android:key="@string/key_shadowsocks_transproxy"
             android:title="@string/pref_shadowsocks_transproxy"
             android:summary="@string/pref_shadowsocks_transproxy_summary" />

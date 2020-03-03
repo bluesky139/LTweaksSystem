@@ -64,6 +64,9 @@ public abstract class ILTweaksMethods {
     public void android_app_ApplicationPackageManager__getInstalledPackages__int(MethodParam param) {
     }
 
+    public void android_net_VpnService$Builder__establish__(MethodParam param) {
+    }
+
     public void android_widget_TextView__onTouchEvent__MotionEvent(MethodParam param) {
     }
 
@@ -224,6 +227,9 @@ public abstract class ILTweaksMethods {
     }
 
     public void com_android_server_pm_PackageDexOptimizer__performDexOptLI__PackageParser$Package_String$array_CompilerStats$PackageStats_PackageDexUsage$PackageUseInfo_DexoptOptions(MethodParam param) {
+    }
+
+    public void com_android_server_ConnectivityService__updateRoutes__LinkProperties_LinkProperties_int(MethodParam param) {
     }
 
     public void com_android_server_DeviceIdleController__onStart__(MethodParam param) {

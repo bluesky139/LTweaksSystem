@@ -300,6 +300,8 @@ Open source on github: \n
     <string name="pref_category_shadowsocks">Shadowsocks v4.6.5</string>
     <string name="pref_shadowsocks_primary_dns">Primary DNS</string>
     <string name="pref_shadowsocks_primary_dns_summary">Comma seperated ip:port</string>
+    <string name="pref_shadowsocks_linux_kernel_route">Linux kernel route</string>
+    <string name="pref_shadowsocks_linux_kernel_route_summary">Use it with Shadowsocks VPN mode, you can use \"ip route show table tun0\" to check route table.\nTurn this off if you use other VPN.\nNeed reboot</string>
     <string name="pref_shadowsocks_transproxy">Transproxy</string>
     <string name="pref_shadowsocks_transproxy_summary">Use it with Shadowsocks transproxy mode, set route to \"bypass LAN &amp; mainland China\".\nss-local acl will be disabled, IP list will be added by iptables.\nIt will take several minutes at Shadowsocks enabled.\nRoot is required</string>
     <string name="pref_shadowsocks_transproxy_with_ipset">Transproxy with ipset</string>

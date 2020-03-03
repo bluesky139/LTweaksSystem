@@ -190,6 +190,22 @@ public class ReflectUtils {
         return constructor;
     }
 
+    public static Constructor getConstructor(Class cls, Class... parameterTypes) throws NoSuchMethodException {
+        Constructor constructor = cls.getDeclaredConstructor(parameterTypes);
+        constructor.setAccessible(true);
+        return constructor;
+    }
+
+    public static Object newInstance(Class cls, Object... args) throws Throwable {
+        Constructor constructor = getConstructor(cls, Arrays.stream(args).map(Object::getClass).toArray(Class[]::new));
+        return constructor.newInstance(args);
+    }
+
+    public static Object newInstance(Class cls, Object[] args, Class[] parameterTypes) throws Throwable {
+        Constructor constructor = getConstructor(cls, parameterTypes);
+        return constructor.newInstance(args);
+    }
+
     public static Class findClass(String className, ClassLoader classLoader) throws ClassNotFoundException {
         return Class.forName(className, false, classLoader);
     }
