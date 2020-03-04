@@ -21,7 +21,7 @@ public class PackageParser {
     }
 
     public final static class ActivityIntentInfo extends IntentInfo {
-
+        public Activity activity;
     }
 
     public static class Component<II extends IntentInfo> {
