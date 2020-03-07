@@ -91,6 +91,7 @@ public class Magisk {
         }
         list.add("product/priv-app/SystemUI/SystemUI.apk");
         list.add("product/priv-app/Settings/Settings.apk");
+        list.add("priv-app/NetworkStack/NetworkStack.apk");
 
         Function<Pair<String, String>, List<String>> collectOatList = (folder) -> {
             File dir = new File(folder.getLeft() + "/" + folder.getRight());

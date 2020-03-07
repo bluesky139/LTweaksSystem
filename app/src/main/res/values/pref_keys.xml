@@ -111,6 +111,7 @@
     <string name="key_shadowsocks_primary_dns">key_shadowsocks_primary_dns</string>
     <string name="key_shadowsocks_linux_kernel_route">key_shadowsocks_linux_kernel_route</string>
     <string name="key_shadowsocks_hide_vpn_info">key_shadowsocks_hide_vpn_info</string>
+    <string name="key_shadowsocks_network_validate">key_shadowsocks_network_validate</string>
     <string name="key_shadowsocks_transproxy">key_shadowsocks_transproxy</string>
     <string name="key_shadowsocks_transproxy_with_ipset">key_shadowsocks_transproxy_with_ipset</string>
     <string name="key_shadowsocks_ddns_update">key_shadowsocks_ddns_update</string>

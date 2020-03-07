@@ -304,6 +304,8 @@ Open source on github: \n
     <string name="pref_shadowsocks_linux_kernel_route_summary">Use it with Shadowsocks VPN mode, you can use \"ip route show table tun0\" to check route table.\nTurn this off if you use other VPN.\nNeed reboot</string>
     <string name="pref_shadowsocks_hide_vpn_info">Hide VPN info</string>
     <string name="pref_shadowsocks_hide_vpn_info_summary">From SystemUI</string>
+    <string name="pref_shadowsocks_network_validate">Network validate through Shadowsocks</string>
+    <string name="pref_shadowsocks_network_validate_summary">By http://www.google.com/generate_204 through SOCKS @ /127.0.0.1:1080</string>
     <string name="pref_shadowsocks_transproxy">Transproxy</string>
     <string name="pref_shadowsocks_transproxy_summary">Use it with Shadowsocks transproxy mode, set route to \"bypass LAN &amp; mainland China\".\nss-local acl will be disabled, IP list will be added by iptables.\nIt will take several minutes at Shadowsocks enabled.\nRoot is required</string>
     <string name="pref_shadowsocks_transproxy_with_ipset">Transproxy with ipset</string>

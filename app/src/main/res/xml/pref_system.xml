@@ -87,6 +87,10 @@
             android:title="@string/pref_shadowsocks_hide_vpn_info"
             android:summary="@string/pref_shadowsocks_hide_vpn_info_summary" />
         <SwitchPreference
+            android:key="@string/key_shadowsocks_network_validate"
+            android:title="@string/pref_shadowsocks_network_validate"
+            android:summary="@string/pref_shadowsocks_network_validate_summary" />
+        <SwitchPreference
             android:key="@string/key_shadowsocks_transproxy"
             android:title="@string/pref_shadowsocks_transproxy"
             android:summary="@string/pref_shadowsocks_transproxy_summary" />

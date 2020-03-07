@@ -49,6 +49,7 @@ public class Patcher {
         put("com.android.internal.telephony", "/frameworks/opt/telephony/src/java/");
         put("com.android.systemui", "/frameworks/base/packages/SystemUI/src/");
         put("com.android.settings", "/packages/apps/Settings/src/");
+        put("com.android.server.connectivity.NetworkMonitor", "/packages/modules/NetworkStack/src/");
     }};
     private static final String PACKAGE_CORE_PATH = "/frameworks/base/core/java/";
 
@@ -83,11 +84,11 @@ public class Patcher {
             String name = getClassFullName();
             String path = null;
             while (name.contains(".")) {
-                name = Utils.removeEndWithRIndexOf(name, '.');
                 path = PACKAGE_PATH_MAP.get(name);
                 if (path != null) {
                     break;
                 }
+                name = Utils.removeEndWithRIndexOf(name, '.');
             }
             if (path == null) {
                 path = PACKAGE_CORE_PATH;

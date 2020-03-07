@@ -64,6 +64,9 @@ public abstract class ILTweaksMethods {
     public void android_app_ApplicationPackageManager__getInstalledPackages__int(MethodParam param) {
     }
 
+    public void android_net_Network__openConnection__URL(MethodParam param) {
+    }
+
     public void android_net_VpnService$Builder__establish__(MethodParam param) {
     }
 
@@ -230,6 +233,18 @@ public abstract class ILTweaksMethods {
     }
 
     public void com_android_server_pm_PackageDexOptimizer__performDexOptLI__PackageParser$Package_String$array_CompilerStats$PackageStats_PackageDexUsage$PackageUseInfo_DexoptOptions(MethodParam param) {
+    }
+
+    public void com_android_server_connectivity_NetworkMonitor__getUseHttpsValidation__(MethodParam param) {
+    }
+
+    public void com_android_server_connectivity_NetworkMonitor__getCaptivePortalServerHttpUrl__(MethodParam param) {
+    }
+
+    public void com_android_server_connectivity_NetworkMonitor__sendDnsProbe__String(MethodParam param) {
+    }
+
+    public void com_android_server_connectivity_NetworkMonitor__sendHttpProbe__URL_int_CaptivePortalProbeSpec(MethodParam param) {
     }
 
     public void com_android_server_ConnectivityService__updateRoutes__LinkProperties_LinkProperties_int(MethodParam param) {
