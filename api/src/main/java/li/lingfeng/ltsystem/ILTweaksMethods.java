@@ -145,6 +145,21 @@ public abstract class ILTweaksMethods {
     public void android_telephony_SubscriptionInfo__getNumber__(MethodParam param) {
     }
 
+    public void com_android_internal_app_ChooserActivity__getAppPredictorForDirectShareIfEnabled__(MethodParam param) {
+    }
+
+    public void com_android_internal_app_ChooserActivity__queryDirectShareTargets__ChooserListAdapter_boolean(MethodParam param) {
+    }
+
+    public void com_android_internal_app_ChooserActivity__queryTargetServices__ChooserListAdapter(MethodParam param) {
+    }
+
+    public void com_android_internal_app_ChooserActivity$ChooserListAdapter__getServiceTargetCount__(MethodParam param) {
+    }
+
+    public void com_android_internal_app_ChooserActivity$ChooserListAdapter__getServiceTargetRowCount__(MethodParam param) {
+    }
+
     public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(MethodParam param) {
     }
 

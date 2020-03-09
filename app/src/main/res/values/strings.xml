@@ -289,6 +289,7 @@ Open source on github: \n
     <string name="pref_system_share_filter">Hide share menu items</string>
     <string name="pref_system_share_copy_to_share">Copy to share</string>
     <string name="pref_system_share_copy_to_share_summary">When you copy text, a button will appear for you to trigger share action.\nMay not work in some app</string>
+    <string name="pref_system_share_direct_share_disable">Disable direct share</string>
     <string name="pref_category_prevent_running">Prevent Running</string>
     <string name="pref_prevent_process">Prevent process</string>
     <string name="pref_prevent_process_summary">If no any activity exist, kill app in 2 minutes, prevent process to be created</string>
