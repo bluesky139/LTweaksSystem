@@ -55,6 +55,7 @@ public class Patcher {
 
     private static final String FRAMEWORK_BASE_DIR = Config.ANDROID_SOURCE_DIR + "/frameworks/base";
     private static final String SYSTEM_UI_DIR = FRAMEWORK_BASE_DIR + "/packages/SystemUI";
+    private static final String BUILD_DIR = Config.ANDROID_SOURCE_DIR + "/build";
 
     static class MethodInfo {
         String fullClass;
@@ -116,6 +117,7 @@ public class Patcher {
         useLegacySystemUIIfNecessary();
         copyFiles();
         copyAdditionalFiles();
+        patchBuildScript();
         Logger.i("End patch.");
     }
 
@@ -463,6 +465,19 @@ public class Patcher {
         Logger.i("Copy additional files.");
         String srcDir = "./additional_files";
         FileUtils.copyDirectory(new File(srcDir), new File(Config.ANDROID_SOURCE_DIR), false);
+    }
+
+    private void patchBuildScript() throws Throwable {
+        if (SIMULATE) {
+            return;
+        }
+        Logger.i("Patch build script.");
+        File file = new File(BUILD_DIR + "/soong/java/droiddoc.go");
+        String content = FileUtils.readFileToString(file);
+        int pos = content.indexOf("func apiCheckEnabled(");
+        pos = content.indexOf("\n", pos) + 1;
+        content = content.substring(0, pos) + "\treturn false\n" + content.substring(pos);
+        FileUtils.writeStringToFile(file, content);
     }
 
     private int getPositionFromLineCol(String content, int line, int col) {

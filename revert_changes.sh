@@ -1,23 +1,17 @@
-pushd libcore
-git reset --hard
-popd
+#!/bin/bash
 
-pwd
-pushd frameworks/base
-git reset --hard
-popd
+revert() {
+  echo ""
+  pushd $1
+  pwd
+  git reset --hard
+  popd
+}
 
-pwd
-pushd frameworks/opt/telephony
-git reset --hard
-popd
+revert build/soong
+revert libcore
+revert frameworks/base
+revert frameworks/opt/telephony
+revert packages/apps/Settings
+revert packages/modules/NetworkStack
 
-pwd
-pushd packages/apps/Settings
-git reset --hard
-popd
-
-pwd
-pushd packages/modules/NetworkStack
-git reset --hard
-popd
