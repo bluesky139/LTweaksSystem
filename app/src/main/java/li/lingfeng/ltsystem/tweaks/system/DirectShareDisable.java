@@ -5,6 +5,7 @@ import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
+import li.lingfeng.ltsystem.utils.Logger;
 
 @MethodsLoad(packages = PackageNames.ANDROID, prefs = R.string.key_system_share_direct_share_disable)
 public class DirectShareDisable extends TweakBase {
@@ -12,6 +13,7 @@ public class DirectShareDisable extends TweakBase {
     @Override
     public void com_android_internal_app_ChooserActivity__getAppPredictorForDirectShareIfEnabled__(ILTweaks.MethodParam param) {
         param.before(() -> {
+            Logger.v("Disable direct share.");
             param.setResult(null);
         });
     }
@@ -38,7 +40,7 @@ public class DirectShareDisable extends TweakBase {
     }
 
     @Override
-    public void com_android_internal_app_ChooserActivity$ChooserListAdapter__getServiceTargetRowCount__(ILTweaks.MethodParam param) {
+    public void com_android_internal_app_ChooserActivity$ChooserRowAdapter__getServiceTargetRowCount__(ILTweaks.MethodParam param) {
         param.before(() -> {
             param.setResult(0);
         });

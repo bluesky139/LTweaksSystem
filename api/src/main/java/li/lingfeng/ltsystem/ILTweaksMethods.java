@@ -145,7 +145,7 @@ public abstract class ILTweaksMethods {
     public void com_android_internal_app_ChooserActivity$ChooserListAdapter__getServiceTargetCount__(MethodParam param) {
     }
 
-    public void com_android_internal_app_ChooserActivity$ChooserListAdapter__getServiceTargetRowCount__(MethodParam param) {
+    public void com_android_internal_app_ChooserActivity$ChooserRowAdapter__getServiceTargetRowCount__(MethodParam param) {
     }
 
     public void com_android_internal_app_ResolverActivity__shouldAutoLaunchSingleChoice__TargetInfo(MethodParam param) {
