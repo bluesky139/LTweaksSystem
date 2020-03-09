@@ -31,7 +31,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 @MethodsLoad(packages = { PackageNames.ALIPAY, PackageNames.TAOBAO }, prefs = R.string.key_alipay_fingerprint)
 public class AlipayFingerprint extends TweakBase {
 
-    private static final String MSP_CONTAINER_ACTIVITY = "com.alipay.android.msp.ui.views.MspContainerActivity";
+    private static final String MSP_CONTAINER_ACTIVITY = "com.alipay.mobile.verifyidentity.module.password.pay.ui.PayPwdDialogActivity";
     private static final String FLY_BIRD_WINDOW_ACTIVITY = "com.alipay.android.app.flybird.ui.window.FlyBirdWindowActivity";
     private static final String PAY_PWD_HALF_ACTIVITY = "com.alipay.mobile.verifyidentity.module.password.pay.ui.PayPwdHalfActivity";
     private CancellationSignal mCancellationSignal;
