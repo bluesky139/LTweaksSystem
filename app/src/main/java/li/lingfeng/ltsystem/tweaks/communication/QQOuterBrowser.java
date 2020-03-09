@@ -12,7 +12,7 @@ import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.Utils;
 
-@MethodsLoad(packages = PackageNames.TIM, prefs = R.string.key_qq_outer_browser)
+@MethodsLoad(packages = PackageNames.QQ_LITE, prefs = R.string.key_qq_outer_browser)
 public class QQOuterBrowser extends TweakBase {
 
     private static final String BROWSER_DELEGATED_ACTIVITY = "com.tencent.mobileqq.activity.QQBrowserDelegationActivity";

@@ -25,7 +25,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 
 import static li.lingfeng.ltsystem.utils.ContextUtils.dp2px;
 
-@MethodsLoad(packages = PackageNames.TIM, prefs = R.string.key_qq_share_image)
+@MethodsLoad(packages = PackageNames.QQ_LITE, prefs = R.string.key_qq_share_image)
 public class QQShareImage extends TweakBase {
 
     private static final String GALLERY_ACTIVITY = "com.tencent.mobileqq.activity.aio.photo.AIOGalleryActivity";
@@ -40,10 +40,10 @@ public class QQShareImage extends TweakBase {
             viewGroup.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                 @Override
                 public void onChildViewAdded(View parent, View child) {
-                    try {
-                        mImageView = (ImageView) ViewUtils.findViewByName((ViewGroup) child, "image");
-                    } catch (Throwable e) {
-                        Logger.e("Get mImageView exception.", e);
+                    if (child instanceof ImageView) {
+                        mImageView = (ImageView) child;
+                    } else {
+                        Logger.w("gallery child is not ImageView.");
                     }
                 }
 

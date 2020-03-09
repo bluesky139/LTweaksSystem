@@ -174,6 +174,11 @@ public class ViewUtils {
         return id > 0 ? rootView.findViewById(id) : null;
     }
 
+    public static View findViewByAndroidName(ViewGroup rootView, String name) {
+        int id = ContextUtils.getAndroidIdId(name);
+        return id > 0 ? rootView.findViewById(id) : null;
+    }
+
     public static void printChilds(Activity activity) {
         printChilds((ViewGroup) activity.getWindow().getDecorView());
     }

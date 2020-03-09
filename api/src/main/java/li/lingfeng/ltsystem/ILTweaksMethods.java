@@ -10,9 +10,6 @@ public abstract class ILTweaksMethods {
     public void java_util_concurrent_AbstractExecutorService__submit__Runnable(MethodParam param) {
     }
 
-    public void android_os_SystemVibrator__vibrate__int_String_VibrationEffect_String_AudioAttributes(MethodParam param) {
-    }
-
     public void android_app_ContextImpl__startActivity__Intent_Bundle(MethodParam param) {
     }
 
@@ -53,9 +50,6 @@ public abstract class ILTweaksMethods {
     }
 
     public void android_app_Dialog__show__(MethodParam param) {
-    }
-
-    public void android_app_NotificationManager__notify__String_int_Notification(MethodParam param) {
     }
 
     public void android_app_ApplicationPackageManager__getInstalledApplications__int(MethodParam param) {
@@ -131,12 +125,6 @@ public abstract class ILTweaksMethods {
     }
 
     public void android_content_pm_PackageParser__parsePackage__File_int_boolean(MethodParam param) {
-    }
-
-    public void android_media_MediaPlayer__setDataSource__FileDescriptor_long_long(MethodParam param) {
-    }
-
-    public void android_media_MediaPlayer__start__(MethodParam param) {
     }
 
     public void android_telephony_TelephonyManager__getLine1Number__int(MethodParam param) {

@@ -102,6 +102,10 @@ public class ContextUtils {
         return getResId(name, "id", packageName);
     }
 
+    public static int getAndroidIdId(String name) {
+        return getResId(name, "id", "android");
+    }
+
     public static int getStringId(String name) {
         return getStringId(name, LTHelper.currentApplication());
     }
