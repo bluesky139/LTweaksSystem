@@ -172,6 +172,8 @@ Open source on github: \n
     <string name="pref_wechat_remove_bottom_bar_summary">Put them into drawer menu\nNote: If WeChat can\'t be launched, try delete /data/data/com.tencent.mm/tinker folder, and create a same one with 000 permission.</string>
     <string name="pref_wechat_browser">Open article page in WeChat from other browsers</string>
     <string name="pref_wechat_browser_summary">Url like https://mp.weixin.qq.com/...</string>
+    <string name="pref_wechat_external_browser">Open some link in external app/browser</string>
+    <string name="pref_wechat_external_browser_summary">Bilibili, Douban</string>
     <string name="pref_wechat_classic_theme">Classic theme</string>
     <string name="pref_wechat_classic_theme_summary">Instead of the whole white theme</string>
     <string name="pref_wechat_mute_annoying_notification">Mute annoying notification</string>

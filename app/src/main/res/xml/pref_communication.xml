@@ -13,6 +13,11 @@
             android:summary="@string/pref_wechat_browser_summary" />
         <SwitchPreference
             android:defaultValue="false"
+            android:key="@string/key_wechat_external_browser"
+            android:title="@string/pref_wechat_external_browser"
+            android:summary="@string/pref_wechat_external_browser_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
             android:key="@string/key_wechat_classic_theme"
             android:title="@string/pref_wechat_classic_theme"
             android:summary="@string/pref_wechat_classic_theme_summary" />

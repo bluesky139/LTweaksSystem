@@ -15,7 +15,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 @MethodsLoad(packages = PackageNames.WE_CHAT, prefs = R.string.key_wechat_browser)
 public class WeChatBrowser extends TweakBase {
 
-    private static final String WEBVIEW_MP_UI = "com.tencent.mm.plugin.webview.ui.tools.WebviewMpUI";
+    private static final String WEBVIEW_MP_UI = "com.tencent.mm.plugin.webview.ui.tools.WebViewUI";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
