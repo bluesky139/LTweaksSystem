@@ -226,7 +226,7 @@ Open source on github: \n
     <string name="pref_bilibili_search">Search in Bilibili with selected text</string>
     <string name="pref_bilibili_search_summary">Use floating menu with text selection\nFor Android 6.0+</string>
     <string name="pref_bilibili_open_link_in_app">Open link in app</string>
-    <string name="pref_bilibili_open_link_in_app_summary">eg. http://m.bilibili.com/video/av123.html</string>
+    <string name="pref_bilibili_open_link_in_app_summary">eg. http://m.bilibili.com/video/av123.html\nhttps://b23.tv/av123</string>
     <string name="pref_bilibili_remove_bottom_bar">Remove bottom bar</string>
     <string name="pref_bilibili_remove_bottom_bar_summary">Put them into drawer menu</string>
     <string name="pref_bilibili_get_cover">Get cover</string>

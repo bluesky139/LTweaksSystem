@@ -26,17 +26,25 @@ public class BilibiliActivity extends Activity {
         Logger.i("Bilibili url " + url);
 
         // http://m.bilibili.com/video/av123.html
-        Pattern pattern = Pattern.compile("https?://m\\.bilibili\\.com/video/av(\\d+)\\.html");
-        Matcher matcher = pattern.matcher(url);
-        if (matcher.find()) {
-            Logger.i("Got video id " + matcher.group(1));
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("bilibili://video/" + matcher.group(1)));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show();
+        // https://b23.tv/av123
+        String[] regs = new String[] {
+                "https?://m\\.bilibili\\.com/video/av(\\d+)\\.html",
+                "https?://b23\\.tv/av(\\d+)"
+        };
+        for (String reg : regs) {
+            Pattern pattern = Pattern.compile(reg);
+            Matcher matcher = pattern.matcher(url);
+            if (matcher.find()) {
+                Logger.i("Got video id " + matcher.group(1));
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("bilibili://video/" + matcher.group(1)));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                finish();
+                return;
+            }
         }
+        Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show();
         finish();
     }
 }

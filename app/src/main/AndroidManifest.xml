@@ -165,6 +165,8 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:host="m.bilibili.com" android:pathPattern="/video/av.*\\.html" android:scheme="http"/>
                 <data android:host="m.bilibili.com" android:pathPattern="/video/av.*\\.html" android:scheme="https"/>
+                <data android:host="b23.tv" android:pathPattern="/av.*" android:scheme="http"/>
+                <data android:host="b23.tv" android:pathPattern="/av.*" android:scheme="https"/>
             </intent-filter>
         </activity>
 
