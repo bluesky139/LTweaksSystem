@@ -256,13 +256,10 @@ public abstract class ILTweaksMethods {
     public void com_android_server_DeviceIdleController__onStart__(MethodParam param) {
     }
 
-    public void com_android_server_DeviceIdleController__startMonitoringMotionLocked__(MethodParam param) {
+    public void com_android_server_DeviceIdleController$Injector__useMotionSensor__(MethodParam param) {
     }
 
-    public void com_android_server_DeviceIdleController__stopMonitoringMotionLocked__(MethodParam param) {
-    }
-
-    public void com_android_server_DeviceIdleController__motionLocked__(MethodParam param) {
+    public void com_android_server_location_GnssLocationProvider$ProviderHandler__handleInitialize__(MethodParam param) {
     }
 
     public void com_android_server_display_color_ColorDisplayService__static__(MethodParam param) {
