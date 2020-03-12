@@ -406,7 +406,7 @@ public class Patcher {
         String content = FileUtils.readFileToString(file);
         content = content.replace("\"SystemUI\"", "\"SystemUI-without-recents\"");
         content = content.replace("product_specific: true,", "");
-        content = content.replace("\"SystemUIWithLegacyRecents\",", "\"SystemUI\",\n    product_specific: true,");
+        content = content.replace("\"SystemUIWithLegacyRecents\",", "\"SystemUI\",\n    product_specific: true,\n    required: [\"privapp_whitelist_com.android.systemui\"],");
         if (SIMULATE) {
             Logger.v(content);
         } else {
