@@ -142,6 +142,10 @@ public class SolidExplorerHighlightVisitedFile extends TweakBase {
             try {
                 ViewGroup parent = (ViewGroup) titleView.getParent();
                 TextView subtitleView = (TextView) ViewUtils.findViewByName(parent, "subtitle1");
+                if (subtitleView == null) {
+                    Logger.w("No subtitle1, must not be list view, ignore.");
+                    return;
+                }
                 String subtitle = subtitleView.getText().toString();
                 if (subtitle.endsWith("B") && !subtitle.contains("/")) {
                     String title = titleView.getText().toString();
@@ -166,6 +170,10 @@ public class SolidExplorerHighlightVisitedFile extends TweakBase {
             if (view.getClass().getName().equals(CHECKABLE_RELATIVE_LAYOUT)) {
                 TextView titleView = (TextView) ViewUtils.findViewByName((ViewGroup) view, "title");
                 TextView subtitleView = (TextView) ViewUtils.findViewByName((ViewGroup) view, "subtitle1");
+                if (subtitleView == null) {
+                    Logger.w("No subtitle1, must not be list view, ignore.");
+                    return;
+                }
                 String subtitle = subtitleView.getText().toString();
                 if (subtitle.endsWith("B") && !subtitle.contains("/")) {
                     String title = titleView.getText().toString();
