@@ -171,6 +171,10 @@
             android:defaultValue="false"
             android:key="@string/key_app_info_settings_expand_all"
             android:title="@string/pref_app_info_settings_expand_all" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_app_info_settings_suggestion_disable"
+            android:title="@string/pref_app_info_settings_suggestion_disable" />
     </PreferenceCategory>
 
     <!--<PreferenceCategory

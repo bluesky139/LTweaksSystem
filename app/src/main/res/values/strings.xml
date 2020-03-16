@@ -340,6 +340,7 @@ Open source on github: \n
     <string name="pref_app_info_app_ops">Go to App Ops</string>
     <string name="pref_app_info_app_ops_summary">For Lineage OS</string>
     <string name="pref_app_info_settings_expand_all">Settings expand all</string>
+    <string name="pref_app_info_settings_suggestion_disable">Settings disable suggestion</string>
     <string name="pref_category_lineage_os">Lineage OS (Android 7.0+)</string>
     <string name="pref_lineage_os_live_display_time">Customize Live Display time</string>
     <string name="pref_lineage_os_live_display_time_summary">Manually set Live Display time, not calculate sunrise/sunset from location</string>
