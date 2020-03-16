@@ -62,6 +62,7 @@
     <string name="key_telegram_darken">key_telegram_darken</string>
     <!-- key_telegram_white_instant_view_text -->
     <string name="key_telegram_hide_sticker">key_telegram_hide_sticker</string>
+    <string name="key_telegram_message_filter">key_telegram_message_filter</string>
     <string name="key_telegram_edittext_no_focus_first">key_telegram_edittext_no_focus_first</string>
     <string name="key_telegram_swipe_seek_video">key_telegram_swipe_seek_video</string>
 

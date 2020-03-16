@@ -101,6 +101,11 @@
             android:key="@string/key_telegram_hide_sticker"
             android:title="@string/pref_telegram_hide_sticker"
             android:summary="@string/pref_telegram_hide_sticker_summary" />
+        <EditTextPreference
+            android:persistent="false"
+            android:key="@string/key_telegram_message_filter"
+            android:title="@string/pref_telegram_message_filter"
+            android:summary="@string/pref_telegram_message_filter_summary" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_telegram_edittext_no_focus_first"

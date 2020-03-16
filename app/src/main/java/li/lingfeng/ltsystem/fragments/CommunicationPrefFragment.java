@@ -6,11 +6,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.WeChatBrowserActivity;
@@ -18,6 +23,7 @@ import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.lib.PreferenceClick;
 import li.lingfeng.ltsystem.prefs.ActivityRequestCode;
+import li.lingfeng.ltsystem.prefs.Prefs;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
 import li.lingfeng.ltsystem.utils.IOUtils;
 import li.lingfeng.ltsystem.utils.Logger;
@@ -110,5 +116,16 @@ public class CommunicationPrefFragment extends BasePrefFragment {
         if (file.exists()) {
             preference.setSummary(getString(R.string.pref_qq_clear_background_path_summary, filepath));
         }
+    }
+
+    @PreferenceClick(prefs = R.string.key_telegram_message_filter)
+    private void telegramMessageFilter(EditTextPreference preference) {
+        List<String> words = Prefs.large().getStringList(R.string.key_telegram_message_filter, new ArrayList<>(), false);
+        preference.getEditText().setText(String.join("\n", words));
+        preference.setOnPreferenceChangeListener((_preference, newValue) -> {
+            Prefs.large().putStringList(R.string.key_telegram_message_filter,
+                    StringUtils.split(newValue.toString(), '\n'));
+            return false;
+        });
     }
 }

@@ -2,13 +2,14 @@ package li.lingfeng.ltsystem.prefs;
 
 import android.os.RemoteException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import li.lingfeng.ltsystem.ILTPrefListener;
 import li.lingfeng.ltsystem.LTPref;
-import li.lingfeng.ltsystem.utils.Logger;
 
 public class Prefs {
 
@@ -44,10 +45,12 @@ public class Prefs {
         public List<String> getStringList(String key, List<String> defValue, boolean listenForCache) {
             List<String> result;
             if (listenForCache) {
-                if (mValues.containsKey(key)) {
-                    result = (List<String>) mValues.get(key);
-                } else {
+                result = (List<String>) mValues.get(key);
+                if (result == null) {
                     result = LTPref.instance().getStringList(key);
+                    if (result == null) {
+                        result = new ArrayList<>();
+                    }
                     mValues.put(key, result);
                     addListener(key, new ILTPrefListener.Stub() {
                         @Override
@@ -60,7 +63,11 @@ public class Prefs {
             } else {
                 result = LTPref.instance().getStringList(key);
             }
-            return result != null ? result : defValue;
+            return result != null && result.size() > 0 ? result : defValue;
+        }
+
+        public void putStringList(int key, String[] value) {
+            putStringList(getKeyById(key), Arrays.asList(value));
         }
 
         public void putStringList(int key, List<String> value) {
