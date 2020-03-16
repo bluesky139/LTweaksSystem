@@ -29,7 +29,7 @@ public class DenyAccessPhoneNumber extends TweakBase {
             if (appInfo.uid < Process.FIRST_APPLICATION_UID || appInfo.uid > Process.LAST_APPLICATION_UID) {
                 return;
             }
-            Logger.d("Deny access phone number from " + methodName);
+            Logger.d("Deny access phone number from " + methodName + " by " + appInfo.packageName);
             param.setResult(null);
         });
     }
