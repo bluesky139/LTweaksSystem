@@ -14,9 +14,6 @@ import android.preference.SwitchPreference;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ImageSearchActivity;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
@@ -37,6 +34,7 @@ import li.lingfeng.ltsystem.utils.ComponentUtils;
 import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.PermissionUtils;
+import li.lingfeng.ltsystem.utils.ReflectUtils;
 
 /**
  * Created by smallville on 2017/1/4.
@@ -190,9 +188,16 @@ public class SystemPrefFragment extends BasePrefFragment {
         try {
             Context context = getActivity().createPackageContext(PackageNames.ANDROID_SETTINGS, Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE);
             Class cls = Class.forName(ClassNames.RADIO_INFO, true, context.getClassLoader());
-            Field field = cls.getDeclaredField("mPreferredNetworkLabels");
-            field.setAccessible(true);
-            String[] types = (String[]) field.get(Modifier.isStatic(field.getModifiers()) ? null : cls.newInstance());
+            String[] fieldNames = new String[] { "PREFERRED_NETWORK_LABELS_MAX_LTE", "mPreferredNetworkLabels" };
+            String[] types = null;
+            for (String fieldName : fieldNames) {
+                try {
+                    types = (String[]) ReflectUtils.getStaticObjectField(cls, fieldName);
+                } catch (Throwable e) {}
+                if (types != null) {
+                    break;
+                }
+            }
             setTypesForListPreference(types, pref4g);
             setTypesForListPreference(types, pref3g);
         } catch (Throwable e) {
