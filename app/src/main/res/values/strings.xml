@@ -327,7 +327,7 @@ Open source on github: \n
     <string name="pref_category_nav_bar">Navigation Bar</string>
     <string name="pref_nav_bar_input_cursor_control">Input cursor control</string>
     <string name="pref_nav_bar_input_cursor_control_summary">Add left / right buttons on navigation bar to control cursor at inputting\nFor Android 7.0+</string>
-    <string name="pref_category_app_info">App Info</string>
+    <string name="pref_category_app_info">App Info / Settings</string>
     <string name="pref_app_info_package_name">Add package name as menu item</string>
     <string name="pref_app_info_package_name_summary">Package name will be copied at menu item selected</string>
     <string name="pref_app_info_open_app_data_folder">Open App Data/APK Folder</string>
@@ -339,6 +339,7 @@ Open source on github: \n
 \"DISABLE\" button will become red to warn you</string>
     <string name="pref_app_info_app_ops">Go to App Ops</string>
     <string name="pref_app_info_app_ops_summary">For Lineage OS</string>
+    <string name="pref_app_info_settings_expand_all">Settings expand all</string>
     <string name="pref_category_lineage_os">Lineage OS (Android 7.0+)</string>
     <string name="pref_lineage_os_live_display_time">Customize Live Display time</string>
     <string name="pref_lineage_os_live_display_time_summary">Manually set Live Display time, not calculate sunrise/sunset from location</string>

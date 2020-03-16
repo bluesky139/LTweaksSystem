@@ -202,6 +202,9 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_SwipeHelper__dismissChild__View_float_boolean(MethodParam param) {
     }
 
+    public void com_android_settings_widget_HighlightablePreferenceGroupAdapter__adjustInitialExpandedChildCount__SettingsPreferenceFragment(MethodParam param) {
+    }
+
     public void com_android_settings_applications_appinfo_AppInfoDashboardFragment__onCreateOptionsMenu__Menu_MenuInflater(MethodParam param) {
     }
 
