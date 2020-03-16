@@ -112,6 +112,9 @@ public abstract class ILTweaksMethods {
     public void android_view_View__startAnimation__Animation(MethodParam param) {
     }
 
+    public void android_view_Window__setWindowManager__WindowManager_IBinder_String_boolean(MethodParam param) {
+    }
+
     public void android_view_WindowManagerImpl__addView__View_ViewGroup$LayoutParams(MethodParam param) {
     }
 

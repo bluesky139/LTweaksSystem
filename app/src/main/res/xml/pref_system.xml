@@ -221,6 +221,11 @@
             android:key="@string/key_display_light_amber_in_daylight"
             android:title="@string/pref_display_light_amber_in_daylight"
             android:summary="@string/pref_display_light_amber_in_daylight_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_display_force_gpu_rendering"
+            android:title="@string/pref_display_force_gpu_rendering"
+            android:summary="@string/pref_display_force_gpu_rendering_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory
