@@ -31,22 +31,31 @@ public class TelegramMessageFilter extends TweakBase {
 
             boolean contains = false;
             CharSequence messageText = (CharSequence) ReflectUtils.getObjectField(messageObject, "messageText");
-            if (containsWords(messageText.toString())) {
+            //Logger.d("messageText " + messageText);
+            if (containsWords(messageText)) {
                 contains = true;
             } else {
-                CharSequence linkDescription = (CharSequence) ReflectUtils.getObjectField(messageObject, "linkDescription");
-                if (linkDescription != null) {
-                    if (containsWords(linkDescription.toString())) {
-                        contains = true;
-                    } else {
-                        Object messageOwner = ReflectUtils.getObjectField(messageObject, "messageOwner");
-                        Object media = ReflectUtils.getObjectField(messageOwner, "media");
-                        if (media != null) {
-                            Object webpage = ReflectUtils.getObjectField(media, "webpage");
-                            if (webpage != null) {
-                                String siteName = (String) ReflectUtils.getObjectField(webpage, "site_name");
-                                if (containsWords(siteName)) {
-                                    contains = true;
+                CharSequence caption = (CharSequence) ReflectUtils.getObjectField(messageObject, "caption");
+                //Logger.d("caption " + caption);
+                if (containsWords(caption)) {
+                    contains = true;
+                } else {
+                    CharSequence linkDescription = (CharSequence) ReflectUtils.getObjectField(messageObject, "linkDescription");
+                    if (linkDescription != null) {
+                        //Logger.d("linkDescription " + linkDescription);
+                        if (containsWords(linkDescription.toString())) {
+                            contains = true;
+                        } else {
+                            Object messageOwner = ReflectUtils.getObjectField(messageObject, "messageOwner");
+                            Object media = ReflectUtils.getObjectField(messageOwner, "media");
+                            if (media != null) {
+                                Object webpage = ReflectUtils.getObjectField(media, "webpage");
+                                if (webpage != null) {
+                                    String siteName = (String) ReflectUtils.getObjectField(webpage, "site_name");
+                                    //Logger.d("siteName " + siteName);
+                                    if (containsWords(siteName)) {
+                                        contains = true;
+                                    }
                                 }
                             }
                         }
@@ -65,9 +74,12 @@ public class TelegramMessageFilter extends TweakBase {
         return mWords != null && mWords.size() > 0;
     }
 
-    private boolean containsWords(String text) {
+    private boolean containsWords(CharSequence text) {
+        if (text == null) {
+            return false;
+        }
         for (String word : mWords) {
-            if (text.contains(word)) {
+            if (text.toString().contains(word)) {
                 return true;
             }
         }
