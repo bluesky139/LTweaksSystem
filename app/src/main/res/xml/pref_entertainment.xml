@@ -68,6 +68,11 @@
             android:defaultValue="false"
             android:key="@string/key_bilibili_hide_toolbar_at_play"
             android:title="@string/pref_bilibili_hide_toolbar_at_play" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_bilibili_danmaku_off"
+            android:title="@string/pref_bilibili_danmaku_off"
+            android:summary="@string/pref_bilibili_danmaku_off_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_steam">

@@ -81,6 +81,7 @@
     <string name="key_bilibili_disable_teen_mode_hint">key_bilibili_disable_teen_mode_hint</string>
     <string name="key_bilibili_disable_splash">key_bilibili_disable_splash</string>
     <string name="key_bilibili_hide_toolbar_at_play">key_bilibili_hide_toolbar_at_play</string>
+    <string name="key_bilibili_danmaku_off">key_bilibili_danmaku_off</string>
     <string name="key_steam_share_url">key_steam_share_url</string>
     <string name="key_steam_database">key_steam_database</string>
     <string name="key_steam_go_top">key_steam_go_top</string>
