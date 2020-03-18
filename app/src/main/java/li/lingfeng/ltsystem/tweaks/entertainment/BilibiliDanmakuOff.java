@@ -25,4 +25,14 @@ public class BilibiliDanmakuOff extends TweakBase {
                     .commit();
         });
     }
+
+    @Override
+    public void android_app_SharedPreferencesImpl$EditorImpl__putBoolean__String_boolean(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            if ("danmaku_switch".equals(param.args[0]) && (boolean) param.args[1]) {
+                Logger.d("Put danmaku_switch false.");
+                param.setArg(1, false);
+            }
+        });
+    }
 }

@@ -58,6 +58,9 @@ public abstract class ILTweaksMethods {
     public void android_app_ApplicationPackageManager__getInstalledPackages__int(MethodParam param) {
     }
 
+    public void android_app_SharedPreferencesImpl$EditorImpl__putBoolean__String_boolean(MethodParam param) {
+    }
+
     public void android_net_Network__openConnection__URL(MethodParam param) {
     }
 
