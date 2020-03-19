@@ -1,7 +1,9 @@
 package li.lingfeng.ltsystem.tweaks.entertainment;
 
-import android.app.Activity;
-import android.preference.PreferenceManager;
+import android.content.SharedPreferences;
+
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
@@ -9,29 +11,35 @@ import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.ReflectUtils;
 
 @MethodsLoad(packages = PackageNames.BILIBILI, prefs = R.string.key_bilibili_danmaku_off)
 public class BilibiliDanmakuOff extends TweakBase {
 
-    private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
+    private WeakHashMap<SharedPreferences, Void> mModified = new WeakHashMap<>();
 
     @Override
-    public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
-        beforeOnClass(VIDEO_DETAILS_ACTIVITY, param, () -> {
-            Logger.v("Set danmaku off by default.");
-            Activity activity = (Activity) param.thisObject;
-            PreferenceManager.getDefaultSharedPreferences(activity).edit()
-                    .putBoolean("danmaku_switch", false)
-                    .commit();
+    public void android_app_SharedPreferencesImpl__awaitLoadedLocked__(ILTweaks.MethodParam param) {
+        param.after(() -> {
+            SharedPreferences preferences = (SharedPreferences) param.thisObject;
+            if (!mModified.containsKey(preferences)) {
+                Map<String, Object> map = (Map<String, Object>) ReflectUtils.getObjectField(preferences, "mMap");
+                if (map.containsKey("danmaku_switch")) {
+                    Logger.d("has danmaku_switch in map.");
+                    map.put("danmaku_switch", false);
+                }
+                mModified.put(preferences, null);
+            }
         });
     }
 
     @Override
-    public void android_app_SharedPreferencesImpl$EditorImpl__putBoolean__String_boolean(ILTweaks.MethodParam param) {
+    public void android_app_SharedPreferencesImpl$EditorImpl__commitToMemory__(ILTweaks.MethodParam param) {
         param.before(() -> {
-            if ("danmaku_switch".equals(param.args[0]) && (boolean) param.args[1]) {
-                Logger.d("Put danmaku_switch false.");
-                param.setArg(1, false);
+            Map<String, Object> map = (Map<String, Object>) ReflectUtils.getObjectField(param.thisObject, "mModified");
+            if (map.containsKey("danmaku_switch")) {
+                Logger.d("has danmaku_switch in map before commit to memory.");
+                map.put("danmaku_switch", false);
             }
         });
     }
