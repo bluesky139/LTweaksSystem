@@ -28,8 +28,10 @@ public class BilibiliActivity extends Activity {
         // http://m.bilibili.com/video/av123.html
         // https://b23.tv/av123
         String[] regs = new String[] {
-                "https?://m\\.bilibili\\.com/video/av(\\d+)\\.html",
-                "https?://b23\\.tv/av(\\d+)"
+                "https?://m\\.bilibili\\.com/video/(av\\d+)(\\.html)?(\\?p=(\\d+))?",
+                "https?://m\\.bilibili\\.com/video/(BV\\w+)(\\.html)?(\\?p=(\\d+))?",
+                "https?://b23\\.tv/(av\\d+)(/p(\\d+))?",
+                "https?://b23\\.tv/(BV\\w+)(/p(\\d+))?"
         };
         for (String reg : regs) {
             Pattern pattern = Pattern.compile(reg);
@@ -37,7 +39,13 @@ public class BilibiliActivity extends Activity {
             if (matcher.find()) {
                 Logger.i("Got video id " + matcher.group(1));
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("bilibili://video/" + matcher.group(1)));
+                url = "https://www.bilibili.com/video/" + matcher.group(1);
+                String page = matcher.group(matcher.groupCount());
+                if (page != null) {
+                    Logger.i("Got page " + page);
+                    url += "?p=" + page;
+                }
+                intent.setData(Uri.parse(url));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
