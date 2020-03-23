@@ -14,7 +14,8 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_douban_remove_ads"
-            android:title="@string/pref_douban_remove_ads" />
+            android:title="@string/pref_douban_remove_ads"
+            android:summary="@string/pref_douban_remove_ads_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_bilibili">
