@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.tweaks.entertainment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 
 import com.alibaba.fastjson.JSON;
@@ -18,6 +19,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 public class BilibiliBestQuality extends TweakBase {
 
     private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
+    private static final String LIVE_ROOM_ACTIVITY = "com.bilibili.bililive.videoliveplayer.ui.roomv3.LiveRoomActivityV3";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
@@ -59,6 +61,18 @@ public class BilibiliBestQuality extends TweakBase {
                 uri = builder.build();
                 //Logger.d("new uri: " + uri);
                 activity.getIntent().setData(uri);
+            }
+        });
+        beforeOnClass(LIVE_ROOM_ACTIVITY, param, () -> {
+            Activity activity = (Activity) param.thisObject;
+            Intent intent = activity.getIntent();
+            String qualities = intent.getStringExtra("quality_description");
+            if (qualities != null) {
+                Logger.d("quality_description " + qualities);
+                JSONArray jArray = JSON.parseArray(qualities);
+                String maxQuality = jArray.getJSONObject(0).getString("qn");
+                Logger.d("best quality " + maxQuality);
+                intent.putExtra("current_qn", maxQuality);
             }
         });
     }
