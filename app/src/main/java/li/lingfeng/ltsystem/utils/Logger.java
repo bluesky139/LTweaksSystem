@@ -120,6 +120,7 @@ public class Logger {
             return;
         }
         Logger.d(" intent action: " + intent.getAction());
+        Logger.d(" intent package: " + intent.getPackage());
         Logger.d(" intent component: " + (intent.getComponent() != null ? intent.getComponent().toShortString() : ""));
         Logger.d(" intent type: " + intent.getType());
         Logger.d(" intent flag: 0x" + Integer.toHexString(intent.getFlags()));

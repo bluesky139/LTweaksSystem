@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.util.Pair;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,39 +34,46 @@ public class WeChatExternalBrowser extends TweakBase {
                 if (intent.getComponent().getClassName().equals(WEBVIEW_UI)) {
                     String url = intent.getStringExtra("rawUrl");
                     if (url != null) {
-                        Pair<String, String>[] components = new Pair[] {
-                                Pair.create(PackageNames.BILIBILI, null),
-                                Pair.create(PackageNames.DOUBAN, null),
-                                Pair.create(PackageNames.L_TWEAKS, BilibiliActivity.class.getName())
+                        if (BilibiliActivity.start(activity, url)) {
+                            param.setResult(null);
+                            return;
+                        }
+                        String[] packageNames = new String[] {
+                                PackageNames.BILIBILI,
+                                PackageNames.DOUBAN
                         };
-                        for (Pair<String, String> component : components) {
+                        for (String packageName : packageNames) {
                             Intent intentToResolve = new Intent(Intent.ACTION_VIEW);
-                            intentToResolve.setPackage(component.first);
-                            if (component.second != null) {
-                                intentToResolve.setClassName(component.first, component.second);
-                            }
+                            intentToResolve.setPackage(packageName);
                             intentToResolve.setData(Uri.parse(url));
                             ResolveInfo resolveInfo = activity.getPackageManager().resolveActivity(intentToResolve, 0);
                             if (resolveInfo != null) {
-                                Logger.v("Url " + url + " resolved by " + component);
+                                Logger.v("Url " + url + " resolved by " + resolveInfo);
                                 intentToResolve.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intentToResolve.putExtra("from_ltweaks", true);
                                 activity.startActivity(intentToResolve);
                                 param.setResult(null);
-                                break;
+                                return;
                             }
                         }
                     }
                 } else if (intent.getComponent().getClassName().startsWith(APP_BRAND_UI)) {
                     String config = intent.getExtras().get("key_appbrand_init_config").toString();
-                    Pattern pattern = Pattern.compile("appId='wx7564fd5313d24844'.+enterPath='pages\\/video\\/video\\.html\\?avid=(\\d+)'");
+                    Pattern pattern = Pattern.compile("appId='wx7564fd5313d24844'.+enterPath='pages\\/video\\/video\\.html\\?avid=(\\d+).*?(&page=(\\d+))?");
                     Matcher matcher = pattern.matcher(config);
                     if (matcher.find()) {
                         String videoId = matcher.group(1);
                         Logger.v("Got bilibili video id " + videoId + " from app brand.");
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setPackage(PackageNames.BILIBILI);
-                        intent.setData(Uri.parse("https://www.bilibili.com/video/av" + videoId));
+                        String url = "https://www.bilibili.com/video/av" + videoId;
+                        String page = matcher.group(3);
+                        if (page != null) {
+                            page = String.valueOf(Integer.parseInt(page) + 1);
+                            Logger.v("Got page " + page);
+                            url += "?p=" + page;
+                        }
+                        intent.setData(Uri.parse(url));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("from_ltweaks", true);
                         activity.startActivity(intent);
