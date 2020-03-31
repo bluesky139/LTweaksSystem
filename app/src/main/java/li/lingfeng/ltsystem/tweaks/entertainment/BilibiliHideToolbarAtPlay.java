@@ -16,7 +16,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 public class BilibiliHideToolbarAtPlay extends TweakBase {
 
     private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
-    private static final String SHARE_ICON_VIEW = "tv.danmaku.biliplayer.features.share.ShareIconView";
+    private static final String SHARE_ICON_VIEW = "tv.danmaku.bili.ui.video.section.DetailsShareAnimView";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {

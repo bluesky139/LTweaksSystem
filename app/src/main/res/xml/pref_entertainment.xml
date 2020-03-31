@@ -68,7 +68,8 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_bilibili_hide_toolbar_at_play"
-            android:title="@string/pref_bilibili_hide_toolbar_at_play" />
+            android:title="@string/pref_bilibili_hide_toolbar_at_play"
+            android:summary="@string/pref_bilibili_hide_toolbar_at_play_summary" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_bilibili_danmaku_off"

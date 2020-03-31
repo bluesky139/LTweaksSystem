@@ -245,6 +245,7 @@ Open source on github: \n
     <string name="pref_bilibili_disable_teen_mode_hint">Disable teen mode hint</string>
     <string name="pref_bilibili_disable_splash">Disable splash</string>
     <string name="pref_bilibili_hide_toolbar_at_play">Hide toolbar at play</string>
+    <string name="pref_bilibili_hide_toolbar_at_play_summary">And stop share icon animation</string>
     <string name="pref_bilibili_danmaku_off">Danmaku off by default</string>
     <string name="pref_bilibili_danmaku_off_summary">You need toggle \"remember danmaku state\" on</string>
     <string name="pref_category_steam">Steam</string>
