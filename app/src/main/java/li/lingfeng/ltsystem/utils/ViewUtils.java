@@ -72,6 +72,10 @@ public class ViewUtils {
         return null;
     }
 
+    public static List<View> findAllViewByName(Activity activity, final String name) {
+        return findAllViewByName((ViewGroup) activity.getWindow().getDecorView(), name);
+    }
+
     public static List<View> findAllViewByName(ViewGroup rootView, final String name) {
         return traverseViews(rootView, false, new ViewTraverseCallback() {
             @SuppressLint("ResourceType")
