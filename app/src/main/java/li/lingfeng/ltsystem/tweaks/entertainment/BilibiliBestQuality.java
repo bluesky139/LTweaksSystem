@@ -39,7 +39,11 @@ public class BilibiliBestQuality extends TweakBase {
             }
             int quality = jPreload.getIntValue("quality");
             int bestQuality = quality;
-            JSONArray jVideos = jPreload.getJSONObject("dash").getJSONArray("video");
+            JSONObject jDash = jPreload.getJSONObject("dash");
+            if (jDash == null) {
+                return;
+            }
+            JSONArray jVideos = jDash.getJSONArray("video");
             for (Object _jVideo : jVideos) {
                 JSONObject jVideo = (JSONObject) _jVideo;
                 bestQuality = Math.max(bestQuality, jVideo.getIntValue("id"));
