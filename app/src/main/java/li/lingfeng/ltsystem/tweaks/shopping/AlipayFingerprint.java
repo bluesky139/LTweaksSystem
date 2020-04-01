@@ -42,43 +42,11 @@ public class AlipayFingerprint extends TweakBase {
         afterOnClass(MSP_CONTAINER_ACTIVITY, param, () -> {
             handleMspContainerActivity(param);
         });
-
         afterOnClass(FLY_BIRD_WINDOW_ACTIVITY, param, () -> {
             handleMspContainerActivity(param);
         });
-
         afterOnClass(PAY_PWD_HALF_ACTIVITY, param, () -> {
-            Activity activity = (Activity) param.thisObject;
-            activity.getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    try {
-                        Logger.d("In PAY_PWD_HALF_ACTIVITY");
-                        if (activity.isFinishing() || activity.isDestroyed()) {
-                            return;
-                        }
-                        int id1 = ContextUtils.getIdId("key_num_1",
-                                isAlipay() ? "com.alipay.android.phone.safepaybase" : "com.taobao.taobao");
-                        if (id1 == 0) {
-                            return;
-                        }
-                        View view1 = activity.findViewById(id1);
-                        if (view1 == null) {
-                            return;
-                        }
-
-                        String password = getPassword(activity);
-                        if (password == null) { // Save password at first time.
-                            savePassword(activity);
-                        } else {
-                            authWithFingerprint(activity, password);
-                        }
-                        activity.getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    } catch (Throwable e) {
-                        Logger.e("onGlobalLayout exception.", e);
-                    }
-                }
-            });
+            handleMspContainerActivity(param);
         });
     }
 
@@ -92,18 +60,9 @@ public class AlipayFingerprint extends TweakBase {
                     if (activity.isFinishing() || activity.isDestroyed()) {
                         return;
                     }
-                    int id1 = isAlipay() ?
-                            ContextUtils.getIdId("simplePwdLayout", "com.alipay.android.app") :
-                            ContextUtils.getIdId("simplePwdLayout", "com.taobao.taobao");
-                    int id2 = isAlipay() ?
-                            ContextUtils.getIdId("mini_linSimplePwdComponent", "com.alipay.android.phone.safepaybase") :
-                            ContextUtils.getIdId("mini_spwd_input", "com.taobao.taobao");
-                    if (id1 == 0 && id2 == 0) {
-                        return;
-                    }
-                    View view1 = activity.findViewById(id1);
-                    View view2 = activity.findViewById(id2);
-                    if (view1 == null && view2 == null) {
+                    if (getPasswordView(activity) == null) {
+                        Logger.w("getPasswordView null.");
+                        ViewUtils.printChilds(activity);
                         return;
                     }
 
@@ -156,11 +115,13 @@ public class AlipayFingerprint extends TweakBase {
             Logger.i("Save password.");
             try {
                 putPassword(activity, passwordEditText.getText().toString());
+                Toast.makeText(activity, "Scan fingerprint at next time.", Toast.LENGTH_SHORT).show();
             } catch (Throwable e) {
                 Logger.e("Put password exception.", e);
             }
             originalListener.onClick(v);
         });
+        Toast.makeText(activity, "Preparing fingerprint scan for next time.", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressLint("MissingPermission")
@@ -230,7 +191,7 @@ public class AlipayFingerprint extends TweakBase {
 
     private EditText getPasswordView(Activity activity) {
         int id = ContextUtils.getIdId("input_et_password",
-                isAlipay() ? "com.alipay.android.phone.safepaybase" : "com.taobao.taobao");
+                isAlipay() ? "com.alipay.android.phone.mobilecommon.verifyidentity" : "com.taobao.taobao");
         EditText passwordEditText = null;
         if (id > 0) {
             View view = activity.findViewById(id);
@@ -252,7 +213,7 @@ public class AlipayFingerprint extends TweakBase {
 
     private View getPayButton(Activity activity) {
         int id = ContextUtils.getIdId("button_ok",
-                isAlipay() ? "com.alipay.android.phone.safepaybase" : "com.taobao.taobao");
+                isAlipay() ? "com.alipay.android.phone.mobilecommon.verifyidentity" : "com.taobao.taobao");
         View payButton = null;
         if (id > 0) {
             View view = activity.findViewById(id);
