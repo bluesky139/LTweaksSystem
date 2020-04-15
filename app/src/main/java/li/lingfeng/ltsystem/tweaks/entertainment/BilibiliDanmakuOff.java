@@ -19,6 +19,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 public class BilibiliDanmakuOff extends TweakBase {
 
     private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
+    private static final String BANGUMI_DETAIL_ACTIVITY = "com.bilibili.bangumi.ui.page.detail.BangumiDetailActivityV3";
     private Handler mHandler;
     private SharedPreferences mSharedPreferences;
     private int mTryCount;
@@ -26,50 +27,59 @@ public class BilibiliDanmakuOff extends TweakBase {
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         afterOnClass(VIDEO_DETAILS_ACTIVITY, param, () -> {
-            final Activity activity = (Activity) param.thisObject;
-            ViewGroup appbar = (ViewGroup) ViewUtils.findViewByName(activity, "appbar");
-            View coverView = ViewUtils.findViewByName(appbar, "cover");
-            View playButton = ViewUtils.findViewByName(appbar, "play");
-            View.OnClickListener originalClickListener = ViewUtils.getViewClickListener(coverView);
-            if (coverView == null || playButton == null || originalClickListener == null) {
-                Logger.e("coverView " + coverView + ", playButton " + playButton + ", originalClickListener " + originalClickListener);
-                return;
-            }
-            if (mSharedPreferences == null) {
-                mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplication());
-                mHandler = new Handler();
-            }
-
-            View.OnClickListener listener = v -> {
-                originalClickListener.onClick(v);
-                coverView.setOnClickListener(originalClickListener);
-                mTryCount = 0;
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            boolean danmakuOn = mSharedPreferences.getBoolean("danmaku_switch", true);
-                            if (danmakuOn) {
-                                Logger.v("Danmaku is on, try off, retry " + mTryCount);
-                                View danmakuSwitch = ViewUtils.findViewByName(activity, "new_danmaku_switch");
-                                danmakuSwitch.performClick();
-                            } else {
-                                return;
-                            }
-                            ++mTryCount;
-                            if (mTryCount > 20) {
-                                Logger.e("Reach max try count.");
-                                return;
-                            }
-                            mHandler.postDelayed(this, 200);
-                        } catch (Throwable e) {
-                            Logger.e("Danmaku off exception.", e);
-                        }
-                    }
-                }, 200);
-            };
-            coverView.setOnClickListener(listener);
-            playButton.setOnClickListener(listener);
+            handleActivity(param, false);
         });
+        afterOnClass(BANGUMI_DETAIL_ACTIVITY, param, () -> {
+            handleActivity(param, true);
+        });
+    }
+
+    private void handleActivity(ILTweaks.MethodParam param, boolean isCoverLayout) throws Throwable {
+        final Activity activity = (Activity) param.thisObject;
+        ViewGroup appbar = (ViewGroup) ViewUtils.findViewByName(activity, "appbar");
+        View coverView = ViewUtils.findViewByName(appbar, isCoverLayout ? "cover_layout" : "cover");
+        View playButton = ViewUtils.findViewByName(appbar, "play");
+        View.OnClickListener originalClickListener = ViewUtils.getViewClickListener(coverView);
+        if (coverView == null || playButton == null || originalClickListener == null) {
+            Logger.e("coverView " + coverView + ", playButton " + playButton + ", originalClickListener " + originalClickListener);
+            return;
+        }
+        if (mSharedPreferences == null) {
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplication());
+            mHandler = new Handler();
+        }
+
+        View.OnClickListener listener = v -> {
+            originalClickListener.onClick(v);
+            coverView.setOnClickListener(originalClickListener);
+            mTryCount = 0;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        boolean danmakuOn = mSharedPreferences.getBoolean("danmaku_switch", true);
+                        if (danmakuOn) {
+                            Logger.v("Danmaku is on, try off, retry " + mTryCount);
+                            View danmakuSwitch = ViewUtils.findViewByName(activity, "new_danmaku_switch");
+                            danmakuSwitch.performClick();
+                        } else {
+                            return;
+                        }
+                        ++mTryCount;
+                        if (mTryCount > 20) {
+                            Logger.e("Reach max try count.");
+                            return;
+                        }
+                        mHandler.postDelayed(this, 200);
+                    } catch (Throwable e) {
+                        Logger.e("Danmaku off exception.", e);
+                    }
+                }
+            }, 200);
+        };
+        coverView.setOnClickListener(listener);
+        if (!isCoverLayout) {
+            playButton.setOnClickListener(listener);
+        }
     }
 }
