@@ -20,7 +20,9 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -154,17 +156,27 @@ public class ShadowsocksDdnsUpdate extends TweakBase {
         @SuppressLint("MissingPermission")
         @Override
         public void run() {
-            NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
-            Network network = mConnectivityManager.getActiveNetwork();
-            if (networkInfo != null && network != null && networkInfo.isConnected()) {
-                NetworkCapabilities networkCapabilities = mConnectivityManager.getNetworkCapabilities(network);
-                if (networkCapabilities != null) {
-                    if (!networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
-                        new UpdateTask().execute(mRetry);
-                    } else {
-                        Logger.d("Network is validated.");
+            try {
+                Network[] networks = mConnectivityManager.getAllNetworks();
+                Optional<Network> networkOpt = Arrays.stream(networks)
+                        .filter(net -> !mConnectivityManager.getNetworkCapabilities(net).hasTransport(NetworkCapabilities.TRANSPORT_VPN))
+                        .sorted((net1, net2) ->
+                                mConnectivityManager.getNetworkCapabilities(net1).hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ? -1 : 0
+                        )
+                        .findFirst();
+                if (networkOpt.isPresent()) {
+                    Network network = networkOpt.get();
+                    NetworkCapabilities networkCapabilities = mConnectivityManager.getNetworkCapabilities(network);
+                    if (networkCapabilities != null) {
+                        if (!networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
+                            new UpdateTask().execute(mRetry);
+                        } else {
+                            Logger.d("Network is validated.");
+                        }
                     }
                 }
+            } catch (Throwable e) {
+                Logger.e("Network validate exception.", e);
             }
         }
     };
