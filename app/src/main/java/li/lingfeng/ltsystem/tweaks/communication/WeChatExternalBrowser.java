@@ -59,15 +59,17 @@ public class WeChatExternalBrowser extends TweakBase {
                     }
                 } else if (intent.getComponent().getClassName().startsWith(APP_BRAND_UI)) {
                     String config = intent.getExtras().get("key_appbrand_init_config").toString();
-                    Pattern pattern = Pattern.compile("appId='wx7564fd5313d24844'.+enterPath='pages\\/video\\/video\\.html\\?avid=(\\d+).*?(&page=(\\d+))?");
+                    Pattern pattern = Pattern.compile("appId='wx7564fd5313d24844'.+enterPath='pages\\/.+\\.html\\?((av)?(ep)?)id=(\\d+).*?(&page=(\\d+))?");
                     Matcher matcher = pattern.matcher(config);
                     if (matcher.find()) {
-                        String videoId = matcher.group(1);
-                        Logger.v("Got bilibili video id " + videoId + " from app brand.");
+                        String category = matcher.group(1);
+                        String videoId = matcher.group(4);
+                        Logger.v("Got bilibili " + category + "id " + videoId + " from app brand.");
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setPackage(PackageNames.BILIBILI);
-                        String url = "https://www.bilibili.com/video/av" + videoId;
-                        String page = matcher.group(3);
+                        String url = category.equals("av") ? "https://www.bilibili.com/video/av" + videoId
+                                : "https://www.bilibili.com/bangumi/play/ep" + videoId;
+                        String page = matcher.group(6);
                         if (page != null) {
                             page = String.valueOf(Integer.parseInt(page) + 1);
                             Logger.v("Got page " + page);
