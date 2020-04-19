@@ -3,6 +3,17 @@
         android:title="@string/pref_category_wechat">
         <SwitchPreference
             android:defaultValue="false"
+            android:key="@string/key_wechat_use_incoming_ringtone"
+            android:title="@string/pref_wechat_use_incoming_ringtone"
+            android:summary="@string/pref_wechat_use_incoming_ringtone_summary" />
+        <RingtonePreference
+            android:key="@string/key_wechat_set_incoming_ringtone"
+            android:title="@string/pref_wechat_set_incoming_ringtone"
+            android:showDefault="true"
+            android:showSilent="true"
+            android:ringtoneType="ringtone" />
+        <SwitchPreference
+            android:defaultValue="false"
             android:key="@string/key_wechat_remove_bottom_bar"
             android:title="@string/pref_wechat_remove_bottom_bar"
             android:summary="@string/pref_wechat_remove_bottom_bar_summary" />

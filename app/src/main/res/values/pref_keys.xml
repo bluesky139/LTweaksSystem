@@ -34,8 +34,8 @@
     <string name="key_ele_address_map">key_ele_address_map</string>
 
     <!--Communication-->
-    <!-- key_wechat_use_incoming_ringtone -->
-    <!-- key_wechat_set_incoming_ringtone -->
+    <string name="key_wechat_use_incoming_ringtone">key_wechat_use_incoming_ringtone</string>
+    <string name="key_wechat_set_incoming_ringtone">key_wechat_set_incoming_ringtone</string>
     <string name="key_wechat_remove_bottom_bar">key_wechat_remove_bottom_bar</string>
     <string name="key_wechat_browser">key_wechat_browser</string>
     <string name="key_wechat_external_browser">key_wechat_external_browser</string>

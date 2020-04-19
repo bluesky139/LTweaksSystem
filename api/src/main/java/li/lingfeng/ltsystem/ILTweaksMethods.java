@@ -130,6 +130,9 @@ public abstract class ILTweaksMethods {
     public void android_content_pm_PackageParser__parsePackage__File_int_boolean(MethodParam param) {
     }
 
+    public void android_media_MediaPlayer__setDataSource__FileDescriptor_long_long(MethodParam param) {
+    }
+
     public void android_telephony_TelephonyManager__getLine1Number__int(MethodParam param) {
     }
 
