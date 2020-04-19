@@ -121,6 +121,9 @@ public abstract class ILTweaksMethods {
     public void android_view_inputmethod_InputMethodManager__showSoftInput__View_int_ResultReceiver(MethodParam param) {
     }
 
+    public void android_animation_ValueAnimator__start__(MethodParam param) {
+    }
+
     public void android_content_ContextWrapper__attachBaseContext__Context(MethodParam param) {
     }
 

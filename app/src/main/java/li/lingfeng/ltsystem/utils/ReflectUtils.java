@@ -151,14 +151,20 @@ public class ReflectUtils {
     }
 
     public static Field findFirstFieldByExactType(Class cls, Class type) throws Throwable {
-        Field[] fields = cls.getDeclaredFields();
-        for (Field field : fields) {
-            if (field.getType() == type) {
-                field.setAccessible(true);
-                return field;
+        Class _cls = cls;
+        do {
+            Field[] fields = _cls.getDeclaredFields();
+            for (Field field : fields) {
+                if (field.getType() == type) {
+                    field.setAccessible(true);
+                    return field;
+                }
             }
-        }
-        throw new NoSuchFieldError("findFirstFieldByExactType " + type + " in " + cls);
+            _cls = _cls.getSuperclass();
+            if (_cls == null || _cls.equals(Object.class)) {
+                throw new NoSuchFieldError("findFirstFieldByExactType " + type + " in " + cls);
+            }
+        } while (true);
     }
 
     public static void printFields(Object obj) throws Throwable {
