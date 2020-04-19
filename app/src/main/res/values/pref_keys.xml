@@ -149,7 +149,7 @@
     <!-- key_display_hspap_signal -->
     <string name="key_display_force_gpu_rendering">key_display_force_gpu_rendering</string>
     <string name="key_web_search_to_browser">key_web_search_to_browser</string>
-    <!-- key_web_chrome_webview_provider -->
+    <string name="key_web_chrome_webview_provider">key_web_chrome_webview_provider</string>
     <string name="key_mixplorer_ignore_cpu_usage_kill">key_mixplorer_ignore_cpu_usage_kill</string>
     <string name="key_mixplorer_highlight_visited_files">key_mixplorer_highlight_visited_files</string>
     <string name="key_solid_explorer_darken">key_solid_explorer_darken</string>

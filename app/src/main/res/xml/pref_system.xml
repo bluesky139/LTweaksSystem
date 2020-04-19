@@ -243,6 +243,10 @@
             android:key="@string/key_web_search_to_browser"
             android:title="@string/pref_web_search_to_browser"
             android:summary="@string/pref_web_search_to_browser_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_web_chrome_webview_provider"
+            android:title="@string/pref_web_chrome_webview_provider" />
     </PreferenceCategory>
 
     <PreferenceCategory

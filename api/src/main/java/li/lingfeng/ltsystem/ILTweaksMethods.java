@@ -274,6 +274,9 @@ public abstract class ILTweaksMethods {
     public void com_android_server_location_GnssLocationProvider$ProviderHandler__handleInitialize__(MethodParam param) {
     }
 
+    public void com_android_server_webkit_SystemImpl__SystemImpl__(MethodParam param) {
+    }
+
     public void com_android_server_display_color_ColorDisplayService__static__(MethodParam param) {
     }
 
