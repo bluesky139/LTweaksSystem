@@ -15,7 +15,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 public class WeChatIncomingRingtone extends TweakBase {
 
     @Override
-    public void android_media_MediaPlayer__setDataSource__Context_Uri(ILTweaks.MethodParam param) {
+    public void android_media_MediaPlayer__setDataSource__Context_Uri_Map_List(ILTweaks.MethodParam param) {
         param.before(() -> {
             Context context = (Context) param.args[0];
             Uri uri = (Uri) param.args[1];
