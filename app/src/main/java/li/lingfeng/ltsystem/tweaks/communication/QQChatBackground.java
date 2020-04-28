@@ -92,6 +92,10 @@ public class QQChatBackground extends TweakBase {
                                 break;
                             }
                         }
+                        View statusBar = ViewUtils.findViewByName(rootView, "title_top_bar");
+                        if (statusBar != null) {
+                            statusBar.setBackgroundColor(TITLE_COLOR);
+                        }
                     }
                 } catch (Throwable e) {
                     Logger.e("onGlobalLayout exception.", e);
