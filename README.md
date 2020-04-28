@@ -24,7 +24,7 @@ This is an advanced implementation on [L Tweaks](https://github.com/bluesky139/L
 
 ## My working environment
 
-* Android Studio 3.2.1
+* Android Studio 3.3.2
 
 * Official AOSP, Android 10.0
 
