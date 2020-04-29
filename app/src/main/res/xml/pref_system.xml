@@ -301,6 +301,11 @@
 
     <PreferenceCategory
         android:title="@string/pref_category_debug">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_debug_hidden_api_no_exemptions"
+            android:title="@string/pref_debug_hidden_api_no_exemptions"
+            android:summary="@string/pref_debug_hidden_api_no_exemptions_summary" />
         <!--<SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_debug_app_crash_info"

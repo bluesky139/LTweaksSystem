@@ -391,6 +391,8 @@ Open source on github: \n
     <string name="pref_nova_launcher_search_go_chrome">Open chrome search activity on search bar click</string>
     <string name="pref_nova_launcher_search_go_chrome_summary">Instead of Google Search App</string>
     <string name="pref_category_debug">Debug / Misc</string>
+    <string name="pref_debug_hidden_api_no_exemptions">Hidden API no exemptions</string>
+    <string name="pref_debug_hidden_api_no_exemptions_summary">For user installed apps</string>
     <string name="pref_debug_app_crash_info">Show app crash info</string>
     <string name="pref_debug_app_crash_info_summary">Show crash info in app crash dialog.\nAll exception handlers from user installed apps will be disabled.\nFor Android 7.0+</string>
     <string name="pref_debug_debuggable">Enable debuggable for all apps</string>

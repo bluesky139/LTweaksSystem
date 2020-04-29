@@ -10,6 +10,9 @@ public abstract class ILTweaksMethods {
     public void java_util_concurrent_AbstractExecutorService__submit__Runnable(MethodParam param) {
     }
 
+    public void dalvik_system_VMRuntime__setHiddenApiExemptions__String$array(MethodParam param) {
+    }
+
     public void android_app_ContextImpl__startActivity__Intent_Bundle(MethodParam param) {
     }
 

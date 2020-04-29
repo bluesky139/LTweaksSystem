@@ -4,6 +4,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.JavaToken;
 import com.github.javaparser.Position;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -26,6 +27,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import li.lingfeng.ltsystem.ILTweaksMethods;
 import li.lingfeng.ltsystem.common.Config;
@@ -43,6 +46,7 @@ public class Patcher {
     private static final Map<String, String> PACKAGE_PATH_MAP = new HashMap<String, String>() {{
         put("java.lang", "/libcore/ojluni/src/main/java/");
         put("java.util", "/libcore/ojluni/src/main/java/");
+        put("dalvik.system", "/libcore/libart/src/main/java/");
         put("android.telephony", "/frameworks/base/telephony/java/");
         put("android.media", "/frameworks/base/media/java/");
         put("com.android.server", "/frameworks/base/services/core/java/");
@@ -52,6 +56,10 @@ public class Patcher {
         put("com.android.server.connectivity.NetworkMonitor", "/packages/modules/NetworkStack/src/");
     }};
     private static final String PACKAGE_CORE_PATH = "/frameworks/base/core/java/";
+
+    private static final Map<String, String> JNI_CPP_MAP = new HashMap<String, String>() {{
+        put("dalvik.system.VMRuntime", "/art/runtime/native/dalvik_system_VMRuntime.cc");
+    }};
 
     private static final String FRAMEWORK_BASE_DIR = Config.ANDROID_SOURCE_DIR + "/frameworks/base";
     private static final String SYSTEM_UI_DIR = FRAMEWORK_BASE_DIR + "/packages/SystemUI";
@@ -193,13 +201,16 @@ public class Patcher {
                     .get();
         }
 
+        int nativePos = 0;
         boolean methodNamePassed = false;
         int leftBracketCount = 0;
         int rightBracketCount = 0;
         Iterator<JavaToken> it = method.getTokenRange().get().iterator();
         while (it.hasNext()) {
             JavaToken token = it.next();
-            if ((token.getCategory() == JavaToken.Category.IDENTIFIER && method instanceof CallableDeclaration)
+            if (token.getCategory() == JavaToken.Category.KEYWORD && token.getText().equals("native")) {
+                nativePos = getPositionFromTokenBegin(content, token);
+            } else if ((token.getCategory() == JavaToken.Category.IDENTIFIER && method instanceof CallableDeclaration)
                     || (token.getCategory() == JavaToken.Category.KEYWORD && method instanceof InitializerDeclaration)) {
                 if (token.getText().equals(info.methodName)) {
                     methodNamePassed = true;
@@ -209,20 +220,52 @@ public class Patcher {
                     ++leftBracketCount;
                 } else if (token.getText().equals(")")) {
                     ++rightBracketCount;
-                } else if (token.getText().equals("{") && leftBracketCount == rightBracketCount) {
-                    Position lineCol = token.getRange().get().begin;
-                    int pos = getPositionFromLineCol(content, lineCol.line, lineCol.column);
+                } else if (leftBracketCount == rightBracketCount && ((token.getText().equals("{") || token.getText().equals(";")))) {
+                    int pos = getPositionFromTokenBegin(content, token);
                     String generatedMethod = method instanceof InitializerDeclaration ?
                             generateClassStaticInitializer(info) : generateHookMethod((CallableDeclaration) method, info);
                     if (SIMULATE) {
                         Logger.v(generatedMethod);
                     }
                     content = content.substring(0, pos) + generatedMethod + content.substring(pos);
+                    if (nativePos > 0) {
+                        content = content.substring(0, nativePos) + content.substring(nativePos + 6);
+                    }
                     if (method instanceof ConstructorDeclaration) {
                         content = removeFieldsFinalWord(content);
                     }
                     if (!SIMULATE) {
                         FileUtils.writeStringToFile(file, content);
+                    }
+
+                    if (nativePos > 0) {
+                        String cppPath = Config.ANDROID_SOURCE_DIR + JNI_CPP_MAP.get(info.getClassFullName());
+                        Logger.i("Patching " + cppPath);
+                        file = new File(cppPath);
+                        content = FileUtils.readFileToString(file);
+                        Pattern pattern = Pattern.compile(" (NATIVE_METHOD)(\\(\\w+, " + info.methodName + ", )");
+                        Matcher matcher = pattern.matcher(content);
+                        int count = 0;
+                        while (matcher.find()) {
+                            if (SIMULATE) {
+                                Logger.d(matcher.group());
+                            }
+                            ++count;
+                        }
+                        if (count != 1) {
+                            throw new RuntimeException("NATIVE_METHOD pattern match fail, count " + count);
+                        }
+                        content = matcher.replaceFirst(" LTWEAKS_NATIVE_METHOD$2");
+
+                        String macro =
+                                "#define LTWEAKS_NATIVE_METHOD(className, functionName, signature)                \\\n" +
+                                "  LTWEAKS_NATIVE_METHOD2(functionName ## _Original, signature, className ## _ ## functionName)\n" +
+                                "#define LTWEAKS_NATIVE_METHOD2(name, signature, function)                \\\n" +
+                                "  MAKE_JNI_NATIVE_METHOD(#name, signature, function)\n";
+                        content = macro + content;
+                        if (!SIMULATE) {
+                            FileUtils.writeStringToFile(file, content);
+                        }
                     }
                     return;
                 }
@@ -316,7 +359,9 @@ public class Patcher {
         builder.append("            " + callOriginalWithReturn + ";\n");
         builder.append("        }\n");
         builder.append("    }\n");
-        builder.append("    private " + (method.isStatic() ? "static " : "") + (method.isGeneric() ? "<" + method.getTypeParameter(0).asString() + "> " : "") + (method instanceof MethodDeclaration ? ((MethodDeclaration) method).getTypeAsString() : "void") + " " + info.methodName + "_Original\n");
+
+        boolean isNative = method.getModifiers().contains(Modifier.NATIVE);
+        builder.append("    private " + (method.isStatic() ? "static " : "") + (isNative ? "native " : "") + (method.isGeneric() ? "<" + method.getTypeParameter(0).asString() + "> " : "") + (method instanceof MethodDeclaration ? ((MethodDeclaration) method).getTypeAsString() : "void") + " " + info.methodName + "_Original\n");
         builder.append("        (" + commaParamsWithType + ") " + (method.getThrownExceptions().size() > 0 ? "throws " + commaThrows : ""));
 
         return builder.toString();
@@ -478,6 +523,11 @@ public class Patcher {
         pos = content.indexOf("\n", pos) + 1;
         content = content.substring(0, pos) + "\treturn false\n" + content.substring(pos);
         FileUtils.writeStringToFile(file, content);
+    }
+
+    private int getPositionFromTokenBegin(String content, JavaToken token) {
+        Position lineCol = token.getRange().get().begin;
+        return getPositionFromLineCol(content, lineCol.line, lineCol.column);
     }
 
     private int getPositionFromLineCol(String content, int line, int col) {

@@ -14,4 +14,4 @@ revert frameworks/base
 revert frameworks/opt/telephony
 revert packages/apps/Settings
 revert packages/modules/NetworkStack
-
+revert art

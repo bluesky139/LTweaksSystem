@@ -71,6 +71,12 @@ public class PackageUtils {
         return false;
     }
 
+    public static boolean isUserInstalledPackage(String packageName) throws PackageManager.NameNotFoundException {
+        ApplicationInfo info = LTHelper.currentApplication().getPackageManager().getApplicationInfo(packageName, 0);
+        return info.uid >= Process.FIRST_APPLICATION_UID && info.uid <= Process.LAST_APPLICATION_UID
+                && (info.flags & ApplicationInfo.FLAG_SYSTEM) == 0;
+    }
+
     public static void uninstallPackage(String packageName) {
         Uri uri = Uri.parse("package:" + packageName);
         Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE, uri);
@@ -95,8 +101,7 @@ public class PackageUtils {
 
     public static boolean killPackage(Context context, String packageName) throws Throwable {
         ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, 0);
-        if (info.uid >= Process.FIRST_APPLICATION_UID && info.uid <= Process.LAST_APPLICATION_UID
-                && (info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+        if (isUserInstalledPackage(packageName)) {
             Logger.i("Kill " + packageName + ", uid " + info.uid);
             new Shell("su", new String[] {
                     "am force-stop " + packageName
