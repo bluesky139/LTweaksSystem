@@ -181,6 +181,9 @@ public abstract class ILTweaksMethods {
     public void com_android_internal_policy_PhoneWindow__setNavigationBarColor__int(MethodParam param) {
     }
 
+    public void com_android_internal_policy_PhoneWindow__setAttributes__WindowManager$LayoutParams(MethodParam param) {
+    }
+
     public void com_android_internal_telephony_PhoneFactory__makeDefaultPhone__Context(MethodParam param) {
     }
 
