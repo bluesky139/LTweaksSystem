@@ -87,6 +87,9 @@ public class WeChatExternalBrowser extends TweakBase {
                             String type = matcher.group(1);
                             String id = matcher.group(2);
                             Logger.v("Got douban " + type + " id " + id + " from app brand.");
+                            if (type.equals("tv")) {
+                                type = "movie";
+                            }
                             intent = new Intent(Intent.ACTION_VIEW);
                             intent.setPackage(PackageNames.DOUBAN);
                             intent.setData(Uri.parse("https://" + type + ".douban.com/subject/" + id + "/"));
