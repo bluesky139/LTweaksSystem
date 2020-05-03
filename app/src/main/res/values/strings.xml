@@ -230,6 +230,8 @@ Open source on github: \n
     <string name="pref_douban_remove_bottom_bar_summary">Put them into drawer menu</string>
     <string name="pref_douban_remove_ads">Remove ads</string>
     <string name="pref_douban_remove_ads_summary">Splash ads, movie review list ads</string>
+    <string name="pref_douban_move_task_to_back">Back to previous app</string>
+    <string name="pref_douban_move_task_to_back_summary">If open Douban from other app</string>
     <string name="pref_category_bilibili">Bilibili</string>
     <string name="pref_bilibili_search">Search in Bilibili with selected text</string>
     <string name="pref_bilibili_search_summary">Use floating menu with text selection\nFor Android 6.0+</string>

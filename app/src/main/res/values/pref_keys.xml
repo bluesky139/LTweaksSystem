@@ -70,6 +70,7 @@
     <string name="key_douban_search">key_douban_search</string>
     <string name="key_douban_remove_bottom_bar">key_douban_remove_bottom_bar</string>
     <string name="key_douban_remove_ads">key_douban_remove_ads</string>
+    <string name="key_douban_move_task_to_back">key_douban_move_task_to_back</string>
     <string name="key_bilibili_search">key_bilibili_search</string>
     <string name="key_bilibili_open_link_in_app">key_bilibili_open_link_in_app</string>
     <string name="key_bilibili_remove_bottom_bar">key_bilibili_remove_bottom_bar</string>

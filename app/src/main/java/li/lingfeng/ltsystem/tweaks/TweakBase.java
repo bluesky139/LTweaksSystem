@@ -1,13 +1,12 @@
 package li.lingfeng.ltsystem.tweaks;
 
 import android.app.Activity;
-import android.app.Service;
 import android.view.KeyEvent;
 import android.view.Window;
 
 import li.lingfeng.ltsystem.ILTweaks;
-import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.ILTweaksMethods;
+import li.lingfeng.ltsystem.LTHelper;
 
 public class TweakBase extends ILTweaksMethods {
 
@@ -35,6 +34,14 @@ public class TweakBase extends ILTweaksMethods {
         }
     }
 
+    protected void beforeOnBackPressed(ILTweaks.MethodParam param, ILTweaks.Before before) {
+        int keyCode = (int) param.args[0];
+        KeyEvent event = (KeyEvent) param.args[1];
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
+            param.before(before);
+        }
+    }
+
     protected void beforeOnBackPressed(String className, ILTweaks.MethodParam param, ILTweaks.Before before) {
         if (param.thisObject.getClass().getName().equals(className)) {
             int keyCode = (int) param.args[0];
@@ -42,6 +49,14 @@ public class TweakBase extends ILTweaksMethods {
             if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
                 param.before(before);
             }
+        }
+    }
+
+    protected void afterOnBackPressed(ILTweaks.MethodParam param, ILTweaks.After after) {
+        int keyCode = (int) param.args[0];
+        KeyEvent event = (KeyEvent) param.args[1];
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
+            param.after(after);
         }
     }
 
