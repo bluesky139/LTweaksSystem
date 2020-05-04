@@ -34,6 +34,9 @@ public abstract class ILTweaksMethods {
     public void android_app_Activity__startActivityForResult__Intent_int_Bundle(MethodParam param) {
     }
 
+    public void android_app_Activity__startActivities__Intent$array_Bundle(MethodParam param) {
+    }
+
     public void android_app_Activity__onCreatePanelMenu__int_Menu(MethodParam param) {
     }
 
