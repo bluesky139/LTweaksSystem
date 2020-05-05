@@ -2,6 +2,7 @@ package li.lingfeng.ltsystem.tweaks.entertainment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageParser;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -71,6 +72,7 @@ public class BilibiliDisableSplash extends TweakBase {
                 intent.activity = mainActivity;
                 mainActivity.intents.add(intent);
                 mainActivity.info.exported = true;
+                mainActivity.info.launchMode = ActivityInfo.LAUNCH_SINGLE_TOP;
                 splashActivity.intents.remove(0);
             });
         }
