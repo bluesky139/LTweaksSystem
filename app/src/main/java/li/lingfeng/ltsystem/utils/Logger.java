@@ -3,6 +3,7 @@ package li.lingfeng.ltsystem.utils;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -129,6 +130,16 @@ public class Logger {
             for (String key : intent.getExtras().keySet()) {
                 Logger.d(" intent extra: " + key + " -> " + intent.getExtras().get(key));
             }
+        }
+    }
+
+    public static void bundle(Bundle bundle) {
+        if (bundle == null) {
+            Logger.d(" bundle is null.");
+            return;
+        }
+        for (String key : bundle.keySet()) {
+            Logger.d(" bundle: " + key + " -> " + bundle.get(key));
         }
     }
 

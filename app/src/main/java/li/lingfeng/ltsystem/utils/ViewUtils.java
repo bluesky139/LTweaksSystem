@@ -168,17 +168,17 @@ public class ViewUtils {
         return results;
     }
 
-    public static View findViewByName(Activity activity, String name) {
+    public static <T extends View> T findViewByName(Activity activity, String name) {
         int id = ContextUtils.getIdId(name);
         return id > 0 ? activity.findViewById(id) : null;
     }
 
-    public static View findViewByName(ViewGroup rootView, String name) {
+    public static <T extends View> T findViewByName(ViewGroup rootView, String name) {
         int id = ContextUtils.getIdId(name);
         return id > 0 ? rootView.findViewById(id) : null;
     }
 
-    public static View findViewByAndroidName(ViewGroup rootView, String name) {
+    public static <T extends View> T findViewByAndroidName(ViewGroup rootView, String name) {
         int id = ContextUtils.getAndroidIdId(name);
         return id > 0 ? rootView.findViewById(id) : null;
     }

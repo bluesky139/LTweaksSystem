@@ -14,7 +14,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 @MethodsLoad(packages = PackageNames.BILIBILI, prefs = R.string.key_bilibili_hide_follow)
 public class BilibiliHideFollow extends TweakBase {
 
-    private static final String AUTHOR_SPACE_ACTIVITY = "tv.danmaku.bili.ui.author.AuthorSpaceActivity";
+    private static final String AUTHOR_SPACE_ACTIVITY = "com.bilibili.app.authorspace.ui.AuthorSpaceActivity";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
