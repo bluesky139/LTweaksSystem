@@ -6,7 +6,6 @@ import android.net.Uri;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
@@ -25,47 +24,24 @@ public class BilibiliBestQuality extends TweakBase {
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         beforeOnClass(VIDEO_DETAILS_ACTIVITY, param, () -> {
             Activity activity = (Activity) param.thisObject;
+            Intent intent = activity.getIntent();
             Uri uri = activity.getIntent().getData();
-            //Logger.d("uri " + uri);
             if (uri == null) {
                 return;
             }
 
-            String preload = uri.getQueryParameter("player_preload");
-            preload = Uri.decode(preload);
-            JSONObject jPreload = JSON.parseObject(preload);
-            if (jPreload == null) {
-                return;
-            }
-            int quality = jPreload.getIntValue("quality");
-            int bestQuality = quality;
-            JSONObject jDash = jPreload.getJSONObject("dash");
-            if (jDash == null) {
-                return;
-            }
-            JSONArray jVideos = jDash.getJSONArray("video");
-            for (Object _jVideo : jVideos) {
-                JSONObject jVideo = (JSONObject) _jVideo;
-                bestQuality = Math.max(bestQuality, jVideo.getIntValue("id"));
-            }
-
-            if (bestQuality != quality) {
-                Logger.v("Change default quality for half screen play " + quality + " -> " + bestQuality);
-                jPreload.put("quality", bestQuality);
-                preload = Uri.encode(jPreload.toString());
-
-                Uri.Builder builder = uri.buildUpon().clearQuery();
-                for (String key : uri.getQueryParameterNames()) {
-                    if (key.equals("player_preload")) {
-                        builder.appendQueryParameter("player_preload", preload);
-                    } else {
-                        builder.appendQueryParameter(key, uri.getQueryParameter(key));
-                    }
+            Uri.Builder builder = uri.buildUpon().clearQuery();
+            for (String key : uri.getQueryParameterNames()) {
+                if (key.equals("player_preload")) {
+                    Logger.d("Remove player_preload.");
+                } else {
+                    builder.appendQueryParameter(key, uri.getQueryParameter(key));
                 }
-                uri = builder.build();
-                //Logger.d("new uri: " + uri);
-                activity.getIntent().setData(uri);
             }
+            uri = builder.build();
+            //Logger.d("new uri: " + uri);
+            intent.setData(uri);
+            intent.removeExtra("player_preload");
         });
         beforeOnClass(LIVE_ROOM_ACTIVITY, param, () -> {
             Activity activity = (Activity) param.thisObject;
