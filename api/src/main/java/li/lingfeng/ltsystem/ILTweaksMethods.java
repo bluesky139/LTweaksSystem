@@ -294,4 +294,7 @@ public abstract class ILTweaksMethods {
 
     public void com_android_server_notification_NotificationManagerService__shouldMuteNotificationLocked__NotificationRecord(MethodParam param) {
     }
+
+    public void com_android_server_clipboard_ClipboardService__setPrimaryClipInternal__PerUserClipboard_ClipData_int(MethodParam param) {
+    }
 }

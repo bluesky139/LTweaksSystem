@@ -56,6 +56,16 @@ public class ProcessTextActivity extends Activity {
         finish();
     }
 
+    @Nullable
+    @Override
+    public Uri getReferrer() {
+        int clipUid = getIntent().getIntExtra("ltweaks_clip_uid", 0);
+        if (clipUid > 0) {
+            return Uri.parse("android-app://" + getPackageManager().getNameForUid(clipUid));
+        }
+        return super.getReferrer();
+    }
+
     private void douban(String text) {
         Intent intent = new Intent();
         intent.setClassName(PackageNames.DOUBAN, ClassNames.DOUBAN_SEARCH_ACTIVITY);
@@ -64,6 +74,7 @@ public class ProcessTextActivity extends Activity {
         //intent.putExtra("search_show_result", true);
         intent.putExtra("from_ltweaks", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Intent.EXTRA_REFERRER, getReferrer());
         startActivity(intent);
     }
 
@@ -73,6 +84,7 @@ public class ProcessTextActivity extends Activity {
                 ? PackageNames.BILIBILI_IN : PackageNames.BILIBILI, ClassNames.BILIBILI_SEARCH_ACTIVITY);
         intent.putExtra("query", text);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Intent.EXTRA_REFERRER, getReferrer());
         startActivity(intent);
     }
 

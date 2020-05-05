@@ -1,9 +1,5 @@
 package li.lingfeng.ltsystem.tweaks.system;
 
-import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.os.Build;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import org.apache.commons.lang3.StringUtils;
@@ -131,29 +127,6 @@ public class TextActions extends ILTweaksMethods {
             /*for (MenuItem item : items) {
                 Logger.d("final item " + item.getTitle());
             }*/
-        });
-    }
-
-    @Override
-    public void android_widget_Editor$ProcessTextIntentActionsHandler__onInitializeMenu__Menu(ILTweaks.MethodParam param) {
-        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O_MR1) {
-           return;
-        }
-        param.before(() -> {
-            ReflectUtils.callMethod(param.thisObject, "loadSupportedActivities");
-            List<ResolveInfo> supportedActivities = (List<ResolveInfo>) ReflectUtils.getObjectField(param.thisObject, "mSupportedActivities");
-            int start = 100; // MENU_ITEM_ORDER_PROCESS_TEXT_INTENT_ACTIONS_START
-            Menu menu = (Menu) param.args[0];
-            for (int i = 0; i < supportedActivities.size(); ++i) {
-                final ResolveInfo resolveInfo = supportedActivities.get(i);
-                Logger.d("Text action supported activity " + resolveInfo.activityInfo.name);
-                menu.add(Menu.NONE, Menu.NONE,
-                        start + i,
-                        (CharSequence) ReflectUtils.callMethod(param.thisObject, "getLabel", resolveInfo))
-                        .setIntent((Intent) ReflectUtils.callMethod(param.thisObject, "createProcessTextIntentForResolveInfo", resolveInfo))
-                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-            }
-            param.setResult(null);
         });
     }
 }

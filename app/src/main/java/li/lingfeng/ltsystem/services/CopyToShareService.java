@@ -113,11 +113,12 @@ public class CopyToShareService extends Service implements ClipboardManager.OnPr
             }
             Logger.v("Text from clip: " + text);
             dismiss();
+            int referrer = clipData.getDescription() == null ? 0 : clipData.getDescription().getExtras().getInt("ltweaks_clip_uid");
             mSnackbar = SimpleSnackbar.make(this, "Got text", SimpleSnackbar.LENGTH_LONG)
                     .setAction(ContextUtils.getLDrawable(R.drawable.ic_search), (v) -> ShareUtils.searchText(this, text.toString()))
                     .setAction(ContextUtils.getLDrawable(R.drawable.ic_incognito), (v) -> ShareUtils.incognitoText(this, text.toString()))
-                    .setAction(ContextUtils.getLDrawable(R.drawable.ic_edit), (v) -> ShareUtils.selectText(this, text.toString()))
-                    .setAction(ContextUtils.getLDrawable(R.drawable.abc_ic_menu_share_mtrl_alpha), (v) -> ShareUtils.shareText(this, text.toString()));
+                    .setAction(ContextUtils.getLDrawable(R.drawable.ic_edit), (v) -> ShareUtils.selectText(this, text.toString(), referrer))
+                    .setAction(ContextUtils.getLDrawable(R.drawable.abc_ic_menu_share_mtrl_alpha), (v) -> ShareUtils.shareText(this, text.toString(), referrer));
             mWindowManager.addView(mSnackbar, mLayoutParams);
             mSnackbar.setAlpha(0f);
             mHandler.post(() -> {
