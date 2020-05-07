@@ -203,6 +203,15 @@ public class AlipayFingerprint extends TweakBase {
                 passwordEditText = (EditText) view;
             }
         }
+        if (passwordEditText == null && isAlipay()) {
+            id = ContextUtils.getIdId("input_et_password", "com.alipay.android.phone.safepaybase");
+            if (id > 0) {
+                View view = activity.findViewById(id);
+                if (view instanceof EditText && view.isShown()) {
+                    passwordEditText = (EditText) view;
+                }
+            }
+        }
         if (passwordEditText == null) {
             List<EditText> editTexts = ViewUtils.findAllViewByType((ViewGroup) activity.getWindow().getDecorView(), EditText.class);
             for (EditText editText : editTexts) {
@@ -223,6 +232,15 @@ public class AlipayFingerprint extends TweakBase {
             View view = activity.findViewById(id);
             if (view != null && view.isShown()) {
                 payButton = view;
+            }
+        }
+        if (payButton == null && isAlipay()) {
+            id = ContextUtils.getIdId("button_ok", "com.alipay.android.phone.safepaybase");
+            if (id > 0) {
+                View view = activity.findViewById(id);
+                if (view != null && view.isShown()) {
+                    payButton = view;
+                }
             }
         }
         if (payButton == null) {
