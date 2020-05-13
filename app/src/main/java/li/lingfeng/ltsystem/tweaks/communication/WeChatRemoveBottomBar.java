@@ -167,7 +167,9 @@ public class WeChatRemoveBottomBar extends TweakBase {
 
             FrameLayout allView = ViewUtils.rootChildsIntoOneLayout(activity);
             mDrawerLayout = new SimpleDrawer(activity, allView, navItems, headerItem);
-            mDrawerLayout.updateHeaderBackground(Color.parseColor("#393A3F"));
+            mDrawerLayout.updateHeaderBackground(0xFF191919);
+            mDrawerLayout.updateNavListBackground(0xFF191919);
+            mDrawerLayout.updateNavListTextColor(0xFFD3D3D3);
             rootView.addView(mDrawerLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
             Logger.i("Drawer is created.");
