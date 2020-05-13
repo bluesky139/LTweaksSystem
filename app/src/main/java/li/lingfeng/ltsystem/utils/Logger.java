@@ -128,7 +128,8 @@ public class Logger {
         Logger.d(" intent data: " + intent.getData());
         if (intent.getExtras() != null) {
             for (String key : intent.getExtras().keySet()) {
-                Logger.d(" intent extra: " + key + " -> " + intent.getExtras().get(key));
+                Object value = intent.getExtras().get(key);
+                Logger.d(" intent extra: " + key + " -> " + value + " (" + value.getClass().getName() + ")");
             }
         }
     }

@@ -311,7 +311,7 @@ public class SimpleDrawer extends DrawerLayout implements DrawerLayout.DrawerLis
                 throw new Exception("NavItem icon " + icon + ", text " + text);
             }
             if (clickObj == null) {
-                Logger.w("NavITem " + text + " clickObj is null.");
+                Logger.w("NavItem " + text + " clickObj is null.");
             }
             mIcon = icon;
             mText = text;
