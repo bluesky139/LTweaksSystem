@@ -96,6 +96,14 @@
             android:summary="@string/pref_bilibili_move_task_to_back_summary" />
     </PreferenceCategory>
     <PreferenceCategory
+        android:title="@string/pref_category_mxplayer">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_mxplayer_danmaku"
+            android:title="@string/pref_mxplayer_danmaku"
+            android:summary="@string/pref_mxplayer_danmaku_summary" />
+    </PreferenceCategory>
+    <PreferenceCategory
         android:title="@string/pref_category_steam">
         <SwitchPreference
             android:defaultValue="false"

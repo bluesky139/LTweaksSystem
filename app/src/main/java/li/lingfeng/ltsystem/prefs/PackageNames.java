@@ -48,6 +48,8 @@ public class PackageNames {
     public static final String DOUBAN = "com.douban.frodo";
     public static final String BILIBILI = "tv.danmaku.bili";
     public static final String BILIBILI_IN = "com.bilibili.app.in";
+    public static final String MX_PLAYER_PRO = "com.mxtech.videoplayer.pro";
+    public static final String MX_PLAYER_FREE = "com.mxtech.videoplayer.ad";
     public static final String STEAM = "com.valvesoftware.android.steam.community";
     public static final String COMIC_SCREEN = "com.viewer.comicscreen";
     public static final String TACHIYOMI = "eu.kanade.tachiyomi";

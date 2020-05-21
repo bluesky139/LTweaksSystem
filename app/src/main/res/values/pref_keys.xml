@@ -86,6 +86,7 @@
     <string name="key_bilibili_keep_brightness">key_bilibili_keep_brightness</string>
     <string name="key_bilibili_hide_follow">key_bilibili_hide_follow</string>
     <string name="key_bilibili_move_task_to_back">key_bilibili_move_task_to_back</string>
+    <string name="key_mxplayer_danmaku">key_mxplayer_danmaku</string>
     <string name="key_steam_share_url">key_steam_share_url</string>
     <string name="key_steam_database">key_steam_database</string>
     <string name="key_steam_go_top">key_steam_go_top</string>
