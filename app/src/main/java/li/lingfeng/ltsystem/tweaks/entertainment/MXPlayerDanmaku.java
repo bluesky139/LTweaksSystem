@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.StringUtils;
-
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.R;
@@ -19,6 +17,7 @@ import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.Utils;
 import li.lingfeng.ltsystem.utils.ViewUtils;
 
 @MethodsLoad(packages = { PackageNames.MX_PLAYER_PRO, PackageNames.MX_PLAYER_FREE }, prefs = R.string.key_mxplayer_danmaku)
@@ -45,12 +44,31 @@ public class MXPlayerDanmaku extends TweakBase {
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         afterOnClass(getActivityString(), param, () -> {
             Activity activity = (Activity) param.thisObject;
-            ContentValues values = new ContentValues(2);
-            values.put("file_path", "file:///sdcard/みなみけ ただいま (Creditless OP) BDrip x264-ank [XV");
-            values.put("video_duration", 92);
-            sendCommand(OP_CREATE, values);
             mPlaying = true;
             mControllerId = ContextUtils.getIdId("controller");
+
+            TextView durationText = ViewUtils.findViewByName(activity, "durationText");
+            durationText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    int duration = Utils.stringTimeToSeconds(s.toString());
+                    if (duration > 0) {
+                        ContentValues values = new ContentValues(2);
+                        values.put("file_path", activity.getIntent().getDataString());
+                        values.put("video_duration", duration);
+                        sendCommand(OP_CREATE, values);
+                        durationText.removeTextChangedListener(this);
+                    }
+                }
+            });
 
             TextView posText = ViewUtils.findViewByName(activity, "posText");
             posText.addTextChangedListener(new TextWatcher() {
@@ -66,11 +84,8 @@ public class MXPlayerDanmaku extends TweakBase {
                 public void afterTextChanged(Editable s) {
                     String pos = s.toString();
                     Logger.v("Update pos " + pos);
-                    String[] strings = StringUtils.split(pos, ':');
-                    int seconds = Integer.parseInt(strings[strings.length - 1]) + Integer.parseInt(strings[strings.length - 2]) * 60
-                            + (strings.length == 3 ? Integer.parseInt(strings[0]) * 3600 : 0);
                     ContentValues values = new ContentValues(1);
-                    values.put("seconds", seconds);
+                    values.put("seconds", Utils.stringTimeToSeconds(pos));
                     sendCommand(OP_SEEK_TO, values);
                 }
             });

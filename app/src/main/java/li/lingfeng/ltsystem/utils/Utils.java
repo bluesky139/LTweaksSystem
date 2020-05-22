@@ -62,6 +62,12 @@ public class Utils {
         return new String[] { str.substring(0, pos), str.substring(pos + 1) };
     }
 
+    public static int stringTimeToSeconds(String time) {
+        String[] strings = StringUtils.split(time, ':');
+        return Integer.parseInt(strings[strings.length - 1]) + Integer.parseInt(strings[strings.length - 2]) * 60
+                + (strings.length == 3 ? Integer.parseInt(strings[0]) * 3600 : 0);
+    }
+
     public static boolean pairContains(Pair[] pairs, Object o, boolean isFirst) {
         for (Pair pair : pairs) {
             if (isFirst ? pair.first.equals(o) : pair.second.equals(o)) {
