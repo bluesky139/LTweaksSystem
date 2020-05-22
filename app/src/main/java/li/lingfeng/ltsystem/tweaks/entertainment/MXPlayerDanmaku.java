@@ -143,6 +143,13 @@ public class MXPlayerDanmaku extends TweakBase {
         });
     }
 
+    @Override
+    public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
+        beforeOnClass(getActivityString(), param, () -> {
+            sendCommand(OP_DESTROY);
+        });
+    }
+
     private String getActivityString() {
         return PackageNames.MX_PLAYER_PRO.equals(getPackageName()) ? ACTIVITY_SCREEN_PRO : ACTIVITY_SCREEN_FREE;
     }
