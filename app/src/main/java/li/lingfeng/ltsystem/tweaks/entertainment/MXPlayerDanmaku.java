@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -36,9 +37,10 @@ public class MXPlayerDanmaku extends TweakBase {
     private static final String ACTIVITY_SCREEN_PRO = "com.mxtech.videoplayer.ActivityScreen";
     private static final String ACTIVITY_SCREEN_FREE = "com.mxtech.videoplayer.ad.ActivityScreen";
 
+    private boolean mCreated = false;
     private boolean mPlaying;
     private boolean mInMXPLayer = false;
-    private int mControllerId = -1;
+    private int mControllerId = 0;
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
@@ -59,13 +61,10 @@ public class MXPlayerDanmaku extends TweakBase {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    int duration = Utils.stringTimeToSeconds(s.toString());
-                    if (duration > 0) {
-                        ContentValues values = new ContentValues(2);
-                        values.put("file_path", activity.getIntent().getDataString());
-                        values.put("video_duration", duration);
-                        sendCommand(OP_CREATE, values);
-                        durationText.removeTextChangedListener(this);
+                    if (!mCreated && activity.findViewById(mControllerId).getVisibility() == View.VISIBLE) {
+                        if (createControlIfNot(activity, s.toString())) {
+                            durationText.removeTextChangedListener(this);
+                        }
                     }
                 }
             });
@@ -111,12 +110,30 @@ public class MXPlayerDanmaku extends TweakBase {
             if (view.getId() == mControllerId) {
                 int visibility = (int) param.args[0];
                 if (visibility == View.VISIBLE) {
+                    if (!mCreated) {
+                        TextView durationText = ViewUtils.findViewByName((ViewGroup) view, "durationText");
+                        createControlIfNot((Activity) view.getContext(), durationText.getText().toString());
+                    }
                     sendCommand(OP_SHOW_CONTROL);
                 } else {
                     sendCommand(OP_HIDE_CONTROL);
                 }
             }
         });
+    }
+
+    private boolean createControlIfNot(Activity activity, String durationString) {
+        if (!mCreated) {
+            int duration = Utils.stringTimeToSeconds(durationString);
+            if (duration > 0) {
+                mCreated = true;
+                ContentValues values = new ContentValues(2);
+                values.put("file_path", activity.getIntent().getDataString());
+                values.put("video_duration", duration);
+                sendCommand(OP_CREATE, values);
+            }
+        }
+        return mCreated;
     }
 
     @Override
@@ -147,6 +164,7 @@ public class MXPlayerDanmaku extends TweakBase {
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
         beforeOnClass(getActivityString(), param, () -> {
             sendCommand(OP_DESTROY);
+            mCreated = false;
         });
     }
 
