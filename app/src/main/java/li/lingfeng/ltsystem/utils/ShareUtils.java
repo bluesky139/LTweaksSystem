@@ -18,9 +18,13 @@ import li.lingfeng.ltsystem.prefs.PackageNames;
 
 public class ShareUtils {
 
-    public static void searchText(Context context, String text) {
+    public static void searchText(Context context, String text, int referrerUid) {
         String url = Utils.isUrl(text) ? text : "https://www.google.com/search?gws_rd=cr&q=" + Uri.encode(text);
-        ContextUtils.startBrowser(context, url);
+        boolean fromChrome = false;
+        if (referrerUid > 0) {
+            fromChrome = PackageNames.CHROME.equals(context.getPackageManager().getNameForUid(referrerUid));
+        }
+        ContextUtils.startBrowser(context, url, fromChrome);
     }
 
     public static void incognitoText(Context context, String text) {

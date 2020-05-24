@@ -90,6 +90,11 @@ public class ProcessTextActivity extends Activity {
 
     private void webSearch(String text) {
         String url = "https://www.google.com/search?q=" + Uri.encode(text);
-        ContextUtils.startBrowser(this, url);
+        boolean fromChrome = false;
+        int clipUid = getIntent().getIntExtra("ltweaks_clip_uid", 0);
+        if (clipUid > 0 && PackageNames.CHROME.equals(getPackageManager().getNameForUid(clipUid))) {
+            fromChrome = true;
+        }
+        ContextUtils.startBrowser(this, url, fromChrome);
     }
 }

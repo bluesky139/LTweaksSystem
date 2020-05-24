@@ -416,10 +416,18 @@ public class ContextUtils {
     }
 
     public static void startBrowser(Context context, String url) {
+        startBrowser(context, url, false);
+    }
+
+    public static void startBrowser(Context context, String url, boolean fromChrome) {
         Logger.v("startBrowser " + url);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (fromChrome) {
+            intent.putExtra("com.android.browser.application_id", PackageNames.CHROME);
+            intent.putExtra("create_new_tab", true);
+        }
         context.startActivity(intent);
     }
 
