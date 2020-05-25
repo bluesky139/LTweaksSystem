@@ -5,6 +5,7 @@
     <string name="key_google_overlay_search_to_browser">key_google_overlay_search_to_browser</string>
     <string name="key_google_photos_remove_bottom_bar">key_google_photos_remove_bottom_bar</string>
     <string name="key_google_photos_hide_suggestion">key_google_photos_hide_suggestion</string>
+    <string name="key_google_photos_share_fix">key_google_photos_share_fix</string>
     <string name="key_google_map_chinese">key_google_map_chinese</string>
     <string name="key_google_play_view_in_coolapk">key_google_play_view_in_coolapk</string>
     <string name="key_google_play_services_dismiss_system_update">key_google_play_services_dismiss_system_update</string>

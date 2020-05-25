@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 
@@ -116,20 +117,29 @@ public class Logger {
     }
 
     public static void intent(Intent intent) {
+        intent(intent, 1);
+    }
+
+    public static void intent(Intent intent, int deep) {
+        String space = StringUtils.repeat(' ', deep);
         if (intent == null) {
-            Logger.d(" intent is null.");
+            Logger.d(space + "intent is null.");
             return;
         }
-        Logger.d(" intent action: " + intent.getAction());
-        Logger.d(" intent package: " + intent.getPackage());
-        Logger.d(" intent component: " + (intent.getComponent() != null ? intent.getComponent().toShortString() : ""));
-        Logger.d(" intent type: " + intent.getType());
-        Logger.d(" intent flag: 0x" + Integer.toHexString(intent.getFlags()));
-        Logger.d(" intent data: " + intent.getData());
+        Logger.d(space + "intent action: " + intent.getAction());
+        Logger.d(space + "intent package: " + intent.getPackage());
+        Logger.d(space + "intent component: " + (intent.getComponent() != null ? intent.getComponent().toShortString() : ""));
+        Logger.d(space + "intent type: " + intent.getType());
+        Logger.d(space + "intent flag: 0x" + Integer.toHexString(intent.getFlags()));
+        Logger.d(space + "intent data: " + intent.getData());
         if (intent.getExtras() != null) {
             for (String key : intent.getExtras().keySet()) {
                 Object value = intent.getExtras().get(key);
-                Logger.d(" intent extra: " + key + " -> " + value + " (" + value.getClass().getName() + ")");
+                Logger.d(space + "intent extra: " + key + " -> " + value
+                        + " (" + (value != null ? value.getClass().getName() : "") + ")");
+                if (value != null && value.getClass() == Intent.class) {
+                    Logger.intent((Intent) value, deep + 1);
+                }
             }
         }
     }

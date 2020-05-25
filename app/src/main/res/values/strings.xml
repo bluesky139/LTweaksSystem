@@ -54,6 +54,8 @@ Open source on github: \n
     <string name="pref_google_photos_remove_bottom_bar_summary">Put them into drawer menu</string>
     <string name="pref_google_photos_hide_suggestion">Hide suggestion</string>
     <string name="pref_google_photos_hide_suggestion_summary">Hide \"Fix lighting\", \"Move to archives\", ...</string>
+    <string name="pref_google_photos_share_fix">Fix image share</string>
+    <string name="pref_google_photos_share_fix_summary">Sharing to WeChat is not work in some cases</string>
     <string name="pref_category_google_map">Google Map</string>
     <string name="pref_google_map_chinese">Chinese place name</string>
     <string name="pref_google_map_chinese_summary">For English system</string>
