@@ -3,6 +3,7 @@ package li.lingfeng.ltsystem.tweaks.entertainment;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.net.Uri;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -41,6 +42,8 @@ public class MXPlayerDanmaku extends TweakBase {
     private boolean mPlaying;
     private boolean mInMXPLayer = false;
     private int mControllerId = 0;
+    private ImageButton mPlayButton;
+    private Handler mHandler;
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
@@ -48,6 +51,7 @@ public class MXPlayerDanmaku extends TweakBase {
             Activity activity = (Activity) param.thisObject;
             mPlaying = true;
             mControllerId = ContextUtils.getIdId("controller");
+            mHandler = new Handler();
 
             TextView durationText = ViewUtils.findViewByName(activity, "durationText");
             durationText.addTextChangedListener(new TextWatcher() {
@@ -89,13 +93,11 @@ public class MXPlayerDanmaku extends TweakBase {
                 }
             });
 
-            ImageButton playButton = ViewUtils.findViewByName(activity, "playpause");
-            View.OnClickListener originalListener = ViewUtils.getViewClickListener(playButton);
-            playButton.setOnClickListener(v -> {
+            mPlayButton = ViewUtils.findViewByName(activity, "playpause");
+            View.OnClickListener originalListener = ViewUtils.getViewClickListener(mPlayButton);
+            mPlayButton.setOnClickListener(v -> {
                 originalListener.onClick(v);
-                mPlaying = !mPlaying;
-                Logger.v("Play/Pause button clicked, mPlaying " + mPlaying);
-                sendCommand(mPlaying ? OP_RESUME : OP_PAUSE);
+                checkPlaying();
             });
         });
     }
@@ -118,6 +120,10 @@ public class MXPlayerDanmaku extends TweakBase {
                 } else {
                     sendCommand(OP_HIDE_CONTROL);
                 }
+
+                mHandler.postDelayed(() -> {
+                    checkPlaying();
+                }, 500);
             }
         });
     }
@@ -134,6 +140,15 @@ public class MXPlayerDanmaku extends TweakBase {
             }
         }
         return mCreated;
+    }
+
+    private void checkPlaying() {
+        boolean playing = mPlayButton.getDrawable().getLevel() == 2;
+        if (mPlaying != playing) {
+            mPlaying = playing;
+            Logger.v("Play/Pause changed, mPlaying " + mPlaying);
+            sendCommand(mPlaying ? OP_RESUME : OP_PAUSE);
+        }
     }
 
     @Override
@@ -165,6 +180,8 @@ public class MXPlayerDanmaku extends TweakBase {
         beforeOnClass(getActivityString(), param, () -> {
             sendCommand(OP_DESTROY);
             mCreated = false;
+            mPlayButton = null;
+            mHandler = null;
         });
     }
 
