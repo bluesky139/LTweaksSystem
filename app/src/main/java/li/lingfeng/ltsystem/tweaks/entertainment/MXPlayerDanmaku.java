@@ -34,7 +34,7 @@ public class MXPlayerDanmaku extends TweakBase {
     public static final int OP_PAUSE        = 7;
     public static final int OP_DESTROY      = 8;
 
-    private static final String ACTIVITY_SCREEN_PRO = "com.mxtech.videoplayer.ActivityScreen";
+    private static final String ACTIVITY_SCREEN_PRO = "com.mxtech.videoplayer.pro.ActivityScreen";
     private static final String ACTIVITY_SCREEN_FREE = "com.mxtech.videoplayer.ad.ActivityScreen";
 
     private boolean mCreated = false;
