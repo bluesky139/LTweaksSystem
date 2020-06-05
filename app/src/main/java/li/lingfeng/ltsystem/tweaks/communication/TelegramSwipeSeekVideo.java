@@ -121,6 +121,8 @@ public class TelegramSwipeSeekVideo extends TweakBase {
             }
             return true;
         });
+
+        ReflectUtils.callMethod(videoPlayer, "setLooping", new Object[] { false }, new Class[] { boolean.class });
     }
 
     private void showSeekText(View view) throws Throwable {
