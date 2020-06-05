@@ -31,19 +31,18 @@ public class BilibiliHideToolbarAtPlay extends TweakBase {
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         afterOnClass(VIDEO_DETAILS_ACTIVITY, param, () -> {
             final Activity activity = (Activity) param.thisObject;
-            ViewGroup appbar = (ViewGroup) ViewUtils.findViewByName(activity, "appbar");
-            ViewGroup toolbar = (ViewGroup) ViewUtils.findViewByName(appbar, "nav_top_bar");
-            View coverView = ViewUtils.findViewByName(appbar, "cover");
-            View playButton = ViewUtils.findViewByName(appbar, "play");
-            View.OnClickListener originalClickListener = ViewUtils.getViewClickListener(coverView);
-            if (coverView == null || playButton == null || originalClickListener == null) {
-                Logger.e("coverView " + coverView + ", playButton " + playButton + ", originalClickListener " + originalClickListener);
+            ViewGroup appbar = ViewUtils.findViewByName(activity, "appbar");
+            ViewGroup toolbar = ViewUtils.findViewByName(appbar, "nav_top_bar");
+            View videoView = (View) ViewUtils.findViewByName(activity, "play").getParent();
+            View.OnClickListener originalClickListener = ViewUtils.getViewClickListener(videoView);
+            if (videoView == null || originalClickListener == null) {
+                Logger.e("videoView " + videoView + ", originalClickListener " + originalClickListener);
                 return;
             }
-            
+
             View.OnClickListener listener = v -> {
+                videoView.setOnClickListener(originalClickListener);
                 originalClickListener.onClick(v);
-                coverView.setOnClickListener(originalClickListener);
                 try {
                     if (toolbar.getVisibility() == View.VISIBLE) {
                         Logger.v("Hide toolbar at play.");
@@ -61,8 +60,7 @@ public class BilibiliHideToolbarAtPlay extends TweakBase {
                     Logger.e("coverView click exception.", e);
                 }
             };
-            coverView.setOnClickListener(listener);
-            playButton.setOnClickListener(listener);
+            videoView.setOnClickListener(listener);
         });
     }
 

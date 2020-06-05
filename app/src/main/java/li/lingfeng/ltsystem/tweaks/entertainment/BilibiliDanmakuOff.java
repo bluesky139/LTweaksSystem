@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
@@ -27,21 +26,19 @@ public class BilibiliDanmakuOff extends TweakBase {
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         afterOnClass(VIDEO_DETAILS_ACTIVITY, param, () -> {
-            handleActivity(param, false);
+            handleActivity(param);
         });
         afterOnClass(BANGUMI_DETAIL_ACTIVITY, param, () -> {
-            handleActivity(param, true);
+            handleActivity(param);
         });
     }
 
-    private void handleActivity(ILTweaks.MethodParam param, boolean isCoverLayout) throws Throwable {
+    private void handleActivity(ILTweaks.MethodParam param) throws Throwable {
         final Activity activity = (Activity) param.thisObject;
-        ViewGroup appbar = (ViewGroup) ViewUtils.findViewByName(activity, "appbar");
-        View coverView = ViewUtils.findViewByName(appbar, isCoverLayout ? "cover_layout" : "cover");
-        View playButton = ViewUtils.findViewByName(appbar, "play");
-        View.OnClickListener originalClickListener = ViewUtils.getViewClickListener(coverView);
-        if (coverView == null || playButton == null || originalClickListener == null) {
-            Logger.e("coverView " + coverView + ", playButton " + playButton + ", originalClickListener " + originalClickListener);
+        View videoView = (View) ViewUtils.findViewByName(activity, "play").getParent();
+        View.OnClickListener originalClickListener = ViewUtils.getViewClickListener(videoView);
+        if (videoView == null || originalClickListener == null) {
+            Logger.e("videoView " + videoView + ", originalClickListener " + originalClickListener);
             return;
         }
         if (mSharedPreferences == null) {
@@ -50,8 +47,8 @@ public class BilibiliDanmakuOff extends TweakBase {
         }
 
         View.OnClickListener listener = v -> {
+            videoView.setOnClickListener(originalClickListener);
             originalClickListener.onClick(v);
-            coverView.setOnClickListener(originalClickListener);
             mTryCount = 0;
             mHandler.postDelayed(new Runnable() {
                 @Override
@@ -77,9 +74,6 @@ public class BilibiliDanmakuOff extends TweakBase {
                 }
             }, 200);
         };
-        coverView.setOnClickListener(listener);
-        if (!isCoverLayout) {
-            playButton.setOnClickListener(listener);
-        }
+        videoView.setOnClickListener(listener);
     }
 }
