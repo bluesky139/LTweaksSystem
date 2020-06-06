@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.utils;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -71,10 +72,22 @@ public class ShareUtils {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
+        shareImage(context, Uri.fromFile(file));
+    }
 
+    public static void shareImage(Context context, byte[] bytes) {
+        Uri uri = Uri.parse("content://li.lingfeng.ltsystem.resourceProvider/tmp/"
+                + context.getPackageName() + "_" + System.currentTimeMillis() + ".jpg");
+        ContentValues values = new ContentValues(1);
+        values.put("bytes", bytes);
+        context.getContentResolver().insert(uri, values);
+        shareImage(context, uri);
+    }
+
+    public static void shareImage(Context context, Uri uri) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("image/*");
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         context.startActivity(Intent.createChooser(shareIntent, "Share with..."));
     }
 

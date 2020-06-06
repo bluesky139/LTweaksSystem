@@ -214,7 +214,7 @@ Open source on github: \n
     <string name="pref_telegram_edittext_no_focus_first">No focus on message enter view first</string>
     <string name="pref_telegram_edittext_no_focus_first_summary">To stop cursor blink</string>
     <string name="pref_telegram_swipe_seek_video">Swipe left/right to seek video</string>
-    <string name="pref_telegram_swipe_seek_video_summary">Double tap to play/pause.\nAnd stop loop</string>
+    <string name="pref_telegram_swipe_seek_video_summary">Double tap to play/pause.\nStop loop.\nTap top right corner on video to share image</string>
 
     <!-- TTRss -->
     <string name="ttrss_open_in_browser">Open In Browser</string>

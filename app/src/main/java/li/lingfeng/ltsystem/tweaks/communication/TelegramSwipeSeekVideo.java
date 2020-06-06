@@ -1,14 +1,18 @@
 package li.lingfeng.ltsystem.tweaks.communication;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import java.io.ByteArrayOutputStream;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
@@ -17,6 +21,7 @@ import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ReflectUtils;
+import li.lingfeng.ltsystem.utils.ShareUtils;
 import li.lingfeng.ltsystem.utils.ViewUtils;
 
 import static li.lingfeng.ltsystem.utils.ContextUtils.dp2px;
@@ -26,6 +31,7 @@ public class TelegramSwipeSeekVideo extends TweakBase {
 
     private static final String PHOTO_VIEWER = "org.telegram.ui.PhotoViewer";
     private static final String PHOTO_VIEWER_FRAMELAYOUT = PHOTO_VIEWER + "$FrameLayoutDrawer";
+    private static final int CORNER_DP = 80;
     private float mScrollDistance = 0f;
     private TextView mSeekTextView;
 
@@ -85,6 +91,16 @@ public class TelegramSwipeSeekVideo extends TweakBase {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent event) {
                 try {
+                    if (event.getX() > view.getWidth() - dp2px(CORNER_DP) && event.getY() < dp2px(CORNER_DP)) {
+                        Logger.i("Share image from video.");
+                        TextureView videoTextureView = (TextureView) ReflectUtils.getObjectField(photoViewer, "videoTextureView");
+                        Bitmap bitmap = videoTextureView.getBitmap();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        ShareUtils.shareImage(view.getContext(), stream.toByteArray());
+                        return true;
+                    }
+
                     boolean isActionBarVisible = ReflectUtils.getBooleanField(photoViewer, "isActionBarVisible");
                     Logger.v("toggleActionBar " + !isActionBarVisible);
                     ReflectUtils.callMethod(photoViewer, "toggleActionBar",
