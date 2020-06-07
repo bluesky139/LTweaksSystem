@@ -14,6 +14,7 @@ import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
@@ -25,6 +26,7 @@ import li.lingfeng.ltsystem.LTHelper;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.ReflectUtils;
 import li.lingfeng.ltsystem.utils.Utils;
 import li.lingfeng.ltsystem.utils.ViewUtils;
 
@@ -207,7 +209,9 @@ public abstract class ChromeBase extends TweakBase {
 
     protected String getCurrentUrl(Activity activity) throws Throwable {
         Object activityTab = getCurrentTab(activity);
-        return (String) MethodUtils.invokeMethod(activityTab, "getUrl");
+        Object gurl = MethodUtils.invokeMethod(activityTab, "getUrl");
+        Field field = ReflectUtils.findFirstFieldByExactType(gurl.getClass(), String.class);
+        return (String) field.get(gurl);
     }
 
     protected boolean isCustomTab(Activity activity) {
