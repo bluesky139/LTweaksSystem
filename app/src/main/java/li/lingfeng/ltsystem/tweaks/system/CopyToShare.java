@@ -3,6 +3,7 @@ package li.lingfeng.ltsystem.tweaks.system;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.PersistableBundle;
@@ -13,6 +14,7 @@ import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
+import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ReflectUtils;
 
@@ -56,7 +58,8 @@ public class CopyToShare extends TweakBase {
         @Override
         public void android_widget_Editor$ProcessTextIntentActionsHandler__onInitializeMenu__Menu(ILTweaks.MethodParam param) {
             param.after(() -> {
-                Activity activity = (Activity) ReflectUtils.getObjectField(param.thisObject, "mContext");
+                Context context = (Context) ReflectUtils.getObjectField(param.thisObject, "mContext");
+                Activity activity = ContextUtils.getActivityFromContext(context);
                 int clipUid = activity.getIntent().getIntExtra("ltweaks_clip_uid", 0);
                 if (clipUid > 0) {
                     Menu menu = (Menu) param.args[0];

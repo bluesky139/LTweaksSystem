@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v4.app.Fragment;
@@ -451,17 +450,6 @@ public class ViewUtils {
         View rootView = view.getRootView();
         rootView.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
         rootView.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
-    }
-
-    public static Activity getActivityFromView(View view) {
-        Context context = view.getContext();
-        while (context instanceof ContextWrapper) {
-            if (context instanceof Activity) {
-                return (Activity) context;
-            }
-            context = ((ContextWrapper) context).getBaseContext();
-        }
-        return null;
     }
 
     public static boolean isVisibleWithParent(View view) {

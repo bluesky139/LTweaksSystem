@@ -2,6 +2,7 @@ package li.lingfeng.ltsystem.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.StrictMode;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -412,6 +414,21 @@ public class ContextUtils {
             int uid = Binder.getCallingUid();
             return LTHelper.currentApplication().getPackageManager().getNameForUid(uid);
         } catch (Exception e) {}
+        return null;
+    }
+
+    public static Activity getActivityFromView(View view) {
+        Context context = view.getContext();
+        return getActivityFromContext(context);
+    }
+
+    public static Activity getActivityFromContext(Context context) {
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
         return null;
     }
 
