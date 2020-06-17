@@ -8,11 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
@@ -60,7 +55,7 @@ public class QQShareImage extends TweakBase {
                             Drawable drawable = mImageView.getDrawable();
                             drawable = (Drawable) ReflectUtils.callMethod(drawable, "getCurrDrawable");
                             Bitmap bitmap = (Bitmap) ReflectUtils.callMethod(drawable, "getBitmap");
-                            shareBitmap(activity, bitmap);
+                            ShareUtils.shareImage(activity, bitmap);
                         } catch (Throwable e) {
                             Logger.e("Share image exception.", e);
                         }
@@ -70,14 +65,6 @@ public class QQShareImage extends TweakBase {
                 return false;
             });
         });
-    }
-
-    private void shareBitmap(Activity activity, Bitmap bitmap) throws Throwable {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        File file = new File("/sdcard/Tencent/ltweaks_share_image.png");
-        FileUtils.writeByteArrayToFile(file, stream.toByteArray());
-        ShareUtils.shareImage(activity, file);
     }
 
     @Override

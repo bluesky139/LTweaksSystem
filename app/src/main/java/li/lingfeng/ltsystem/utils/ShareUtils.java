@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.StrictMode;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import li.lingfeng.ltsystem.activities.ChromeIncognitoActivity;
@@ -73,6 +75,12 @@ public class ShareUtils {
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
         shareImage(context, Uri.fromFile(file));
+    }
+
+    public static void shareImage(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        shareImage(context, stream.toByteArray());
     }
 
     public static void shareImage(Context context, byte[] bytes) {
