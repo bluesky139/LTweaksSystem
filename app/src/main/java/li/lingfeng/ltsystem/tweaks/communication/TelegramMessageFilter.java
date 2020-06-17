@@ -1,5 +1,7 @@
 package li.lingfeng.ltsystem.tweaks.communication;
 
+import android.view.View;
+
 import java.util.List;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -20,12 +22,15 @@ public class TelegramMessageFilter extends TweakBase {
     @Override
     public void android_view_View__setMeasuredDimension__int_int(ILTweaks.MethodParam param) {
         beforeOnClass(CHAT_MESSAGE_CALL, param, () -> {
+            View view = (View) param.thisObject;
             if (!loadWords()) {
+                setVisible(view, true);
                 return;
             }
             Object messageObject = ReflectUtils.getObjectField(param.thisObject, "currentMessageObject");
             if (messageObject == null) {
                 Logger.w("currentMessageObject is null.");
+                setVisible(view, true);
                 return;
             }
 
@@ -66,6 +71,7 @@ public class TelegramMessageFilter extends TweakBase {
                 Logger.v("Hide annoying message " + messageObject.hashCode());
                 param.setArg(1, 1);
             }
+            setVisible(view, !contains);
         });
     }
 
@@ -84,5 +90,12 @@ public class TelegramMessageFilter extends TweakBase {
             }
         }
         return false;
+    }
+
+    private void setVisible(View view, boolean visible) {
+        if (view.getVisibility() == View.VISIBLE && !visible
+                || view.getVisibility() == View.INVISIBLE && visible) {
+            view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }
