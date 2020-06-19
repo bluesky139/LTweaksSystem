@@ -71,6 +71,13 @@ public class ResourceProvider extends ContentProvider {
             MatrixCursor cursor = new MatrixCursor(new String[] { "_display_name", "_size" }, 1);
             cursor.addRow(new Object[] { pathSegments.get(1), getTmpFile().length() });
             return cursor;
+        } else if (type.equals("transit")) {
+            MatrixCursor cursor = new MatrixCursor(new String[] { "_display_name", "_size" }, 1);
+            String path = uri.getQueryParameter("path");
+            String name = uri.getQueryParameter("name");
+            Logger.d("ResourceProvider query transit data, " + path);
+            cursor.addRow(new Object[] { name, new File(path).length() });
+            return cursor;
         } else {
             throw new NotImplementedException("ResourceProvider query");
         }
@@ -91,6 +98,11 @@ public class ResourceProvider extends ContentProvider {
             Logger.d("ResourceProvider openTypedAssetFile tmp data, " + pathSegments.get(1));
             File file = getTmpFile();
             ParcelFileDescriptor fd = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
+            return new AssetFileDescriptor(fd, 0, -1);
+        } else if (type.equals("transit")) {
+            String path = uri.getQueryParameter("path");
+            Logger.d("ResourceProvider openTypedAssetFile transit data, " + path);
+            ParcelFileDescriptor fd = ParcelFileDescriptor.open(new File(path), ParcelFileDescriptor.MODE_READ_ONLY);
             return new AssetFileDescriptor(fd, 0, -1);
         } else {
             return super.openTypedAssetFile(uri, mimeTypeFilter, opts);

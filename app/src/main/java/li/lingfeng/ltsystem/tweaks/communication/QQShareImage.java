@@ -55,7 +55,7 @@ public class QQShareImage extends TweakBase {
                             Drawable drawable = mImageView.getDrawable();
                             drawable = (Drawable) ReflectUtils.callMethod(drawable, "getCurrDrawable");
                             Bitmap bitmap = (Bitmap) ReflectUtils.callMethod(drawable, "getBitmap");
-                            ShareUtils.shareImage(activity, bitmap);
+                            ShareUtils.shareImage(activity, bitmap, "/sdcard/Tencent/ltweaks_share_image.png");
                         } catch (Throwable e) {
                             Logger.e("Share image exception.", e);
                         }

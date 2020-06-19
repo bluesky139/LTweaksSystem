@@ -1,15 +1,17 @@
 package li.lingfeng.ltsystem.utils;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.StrictMode;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 import li.lingfeng.ltsystem.activities.ChromeIncognitoActivity;
 import li.lingfeng.ltsystem.activities.SelectableTextActivity;
@@ -70,25 +72,21 @@ public class ShareUtils {
         context.startActivity(shareIntent);
     }
 
-    public static void shareImage(Context context, File file) {
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-        builder.detectFileUriExposure();
-        shareImage(context, Uri.fromFile(file));
+    public static void shareImage(Context context, Bitmap bitmap) throws IOException {
+        String path = context.getExternalCacheDir().getPath() + "/ltweaks_transit_file";
+        shareImage(context, bitmap, path);
     }
 
-    public static void shareImage(Context context, Bitmap bitmap) {
+    public static void shareImage(Context context, Bitmap bitmap, String pathToSave) throws IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        shareImage(context, stream.toByteArray());
+        FileUtils.writeByteArrayToFile(new File(pathToSave), stream.toByteArray());
+        shareImage(context, pathToSave);
     }
 
-    public static void shareImage(Context context, byte[] bytes) {
-        Uri uri = Uri.parse("content://li.lingfeng.ltsystem.resourceProvider/tmp/"
-                + context.getPackageName() + "_" + System.currentTimeMillis() + ".jpg");
-        ContentValues values = new ContentValues(1);
-        values.put("bytes", bytes);
-        context.getContentResolver().insert(uri, values);
+    public static void shareImage(Context context, String path) {
+        String name = context.getPackageName() + "_" + System.currentTimeMillis() + ".png";
+        Uri uri = Uri.parse("content://li.lingfeng.ltsystem.resourceProvider/transit?path=" + path + "&name=" + name);
         shareImage(context, uri);
     }
 

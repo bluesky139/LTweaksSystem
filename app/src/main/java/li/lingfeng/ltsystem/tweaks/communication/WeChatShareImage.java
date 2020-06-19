@@ -82,7 +82,7 @@ public class WeChatShareImage extends TweakBase {
                                 Bitmap bitmap = v.getClass().getName().equals(MULTI_TOUCH_IMAGEVIEW)
                                         ? ((BitmapDrawable) ((ImageView) view).getDrawable()).getBitmap()
                                         : (Bitmap) ReflectUtils.callMethod(v, "getFullImageBitmap");
-                                ShareUtils.shareImage(activity, bitmap);
+                                ShareUtils.shareImage(activity, bitmap, "/sdcard/Tencent/ltweaks_share_image.png");
                             }
                         } catch (Throwable e) {
                             Logger.e("Share image exception.", e);
