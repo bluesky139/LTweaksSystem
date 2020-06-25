@@ -72,6 +72,7 @@ public class PackageNames {
     public static final String GALLERY = "com.android.gallery3d";
     public static final String XPOSED_INSTALLER = "de.robv.android.xposed.installer";
     public static final String SUPER_SU = "eu.chainfire.supersu";
+    public static final String AUTOMATE = "com.llamalab.automate";
     public static final String NOVA_LAUNCHER = "com.teslacoilsw.launcher";
     public static final String MIXPLORER = "com.mixplorer";
     public static final String QUICK_EDIT = "com.rhmsoft.edit";

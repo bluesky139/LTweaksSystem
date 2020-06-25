@@ -1,19 +1,10 @@
 package li.lingfeng.ltsystem.services;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Handler;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
 import android.view.Gravity;
@@ -24,15 +15,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.prefs.NotificationId;
+import li.lingfeng.ltsystem.services.base.ForegroundService;
 import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
-import li.lingfeng.ltsystem.utils.ReflectUtils;
 import li.lingfeng.ltsystem.utils.ShareUtils;
 import li.lingfeng.ltsystem.utils.SimpleSnackbar;
 
 import static li.lingfeng.ltsystem.utils.SimpleSnackbar.FAST_OUT_SLOW_IN_INTERPOLATOR;
 
-public class CopyToShareService extends Service implements ClipboardManager.OnPrimaryClipChangedListener {
+public class CopyToShareService extends ForegroundService implements ClipboardManager.OnPrimaryClipChangedListener {
 
     private Handler mHandler;
     private WindowManager.LayoutParams mLayoutParams;
@@ -54,46 +45,12 @@ public class CopyToShareService extends Service implements ClipboardManager.OnPr
         mLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         mLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         mClipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
-        setupNotification();
         prepareClipboardListener();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && intent.getBooleanExtra("stop", false)) {
-            stopSelf();
-        }
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-    private void setupNotification() {
-        try {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            Intent intent = new Intent(getClass().getName());
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            String title = getString(R.string.copy_to_share_service);
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.mipmap.ic_launcher_round)
-                    .setWhen(0)
-                    .setOngoing(true)
-                    .setTicker("Copy to share service")
-                    .setDefaults(0)
-                    .setPriority(Notification.PRIORITY_LOW)
-                    .setContentTitle(title)
-                    .setContentText(getString(R.string.copy_to_share_service))
-                    .setContentIntent(pendingIntent)
-                    .setChannelId(title)
-                    .setVisibility(Notification.VISIBILITY_PUBLIC);
-            NotificationChannel channel = new NotificationChannel(title, title, NotificationManager.IMPORTANCE_LOW);
-            ReflectUtils.setBooleanField(channel, "mBlockableSystem", true);
-            notificationManager.createNotificationChannel(channel);
-            Notification notification = builder.build();
-            startForeground(NotificationId.COPY_TO_SHARE_SERVICE, notification);
-        } catch (Throwable e) {
-            Logger.e("Can't set notification for " + getClass().getSimpleName(), e);
-        }
+    protected int getNotificationId() {
+        return NotificationId.COPY_TO_SHARE_SERVICE;
     }
 
     private void prepareClipboardListener() {
@@ -166,11 +123,5 @@ public class CopyToShareService extends Service implements ClipboardManager.OnPr
         super.onDestroy();
         Logger.i("CopyToShareService onDestroy.");
         mClipboardManager.removePrimaryClipChangedListener(this);
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 }

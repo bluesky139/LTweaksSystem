@@ -225,6 +225,11 @@
             android:key="@string/key_phone_doze_on_the_go"
             android:title="@string/pref_phone_doze_on_the_go"
             android:summary="@string/pref_phone_doze_on_the_go_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_phone_broadcast_cell_location_change"
+            android:title="@string/pref_phone_broadcast_cell_location_change"
+            android:summary="@string/pref_phone_broadcast_cell_location_change_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -16,5 +16,9 @@ public class BootReceiver extends BroadcastReceiver {
             intent = new Intent(context, CopyToShareService.class);
             context.startService(intent);
         }
+        if (Prefs.instance().getBoolean(R.string.key_phone_broadcast_cell_location_change, false)) {
+            intent = new Intent(context, CellLocationService.class);
+            context.startService(intent);
+        }
     }
 }

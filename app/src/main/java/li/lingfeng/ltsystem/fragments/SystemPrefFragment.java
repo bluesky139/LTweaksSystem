@@ -29,6 +29,7 @@ import li.lingfeng.ltsystem.lib.PreferenceClick;
 import li.lingfeng.ltsystem.lib.PreferenceLoad;
 import li.lingfeng.ltsystem.prefs.ClassNames;
 import li.lingfeng.ltsystem.prefs.PackageNames;
+import li.lingfeng.ltsystem.services.CellLocationService;
 import li.lingfeng.ltsystem.services.CopyToShareService;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
 import li.lingfeng.ltsystem.utils.ContextUtils;
@@ -231,6 +232,15 @@ public class SystemPrefFragment extends BasePrefFragment {
         } else {
             return false;
         }
+    }
+
+    @PreferenceClick(prefs = R.string.key_phone_broadcast_cell_location_change)
+    private void phoneBroadcastCellLocationChange(SwitchPreference preference) {
+        Intent intent = new Intent(getActivity(), CellLocationService.class);
+        if (!preference.isChecked()) {
+            intent.putExtra("stop", true);
+        }
+        getActivity().startService(intent);
     }
 
   /*  @PreferenceClick(prefs = R.string.key_trust_agent_wifi_aps)
