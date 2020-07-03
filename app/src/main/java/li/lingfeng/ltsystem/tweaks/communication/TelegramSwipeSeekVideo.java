@@ -2,6 +2,9 @@ package li.lingfeng.ltsystem.tweaks.communication;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LevelListDrawable;
 import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -10,6 +13,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -29,9 +33,12 @@ public class TelegramSwipeSeekVideo extends TweakBase {
 
     private static final String PHOTO_VIEWER = "org.telegram.ui.PhotoViewer";
     private static final String PHOTO_VIEWER_FRAMELAYOUT = PHOTO_VIEWER + "$FrameLayoutDrawer";
+    private static final String ACTION_BAR_MENU = "org.telegram.ui.ActionBar.ActionBarMenu";
     private static final int CORNER_DP = 80;
     private float mScrollDistance = 0f;
     private TextView mSeekTextView;
+    private ImageButton mPlayButton;
+    private boolean mInVideoViewer = false;
 
     @Override
     public void android_view_WindowManagerImpl__addView__View_ViewGroup$LayoutParams(ILTweaks.MethodParam param) {
@@ -72,17 +79,7 @@ public class TelegramSwipeSeekVideo extends TweakBase {
 
             @Override
             public boolean onDoubleTap(MotionEvent event) {
-                try {
-                    if ((boolean) ReflectUtils.callMethod(videoPlayer, "isPlaying")) {
-                        Logger.v("Pause.");
-                        ReflectUtils.callMethod(videoPlayer, "pause");
-                    } else {
-                        Logger.v("Play.");
-                        ReflectUtils.callMethod(videoPlayer, "play");
-                    }
-                } catch (Throwable e) {
-                    Logger.e("Play/Pause exception.", e);
-                }
+                playPause(videoPlayer);
                 return true;
             }
 
@@ -135,6 +132,49 @@ public class TelegramSwipeSeekVideo extends TweakBase {
         });
 
         ReflectUtils.callMethod(videoPlayer, "setLooping", new Object[] { false }, new Class[] { boolean.class });
+
+        if (mPlayButton == null) {
+            Drawable[] progressDrawables = (Drawable[]) ReflectUtils.getObjectField(photoViewer, "progressDrawables");
+            Drawable playDrawable = progressDrawables[3];
+            Drawable pauseDrawable = progressDrawables[4];
+            progressDrawables[3] = new ColorDrawable(Color.TRANSPARENT);
+            progressDrawables[4] = progressDrawables[3];
+
+            LevelListDrawable levelDrawable = new LevelListDrawable();
+            levelDrawable.addLevel(3, 3, playDrawable);
+            levelDrawable.addLevel(4, 4, pauseDrawable);
+
+            mPlayButton = new ImageButton(view.getContext());
+            mPlayButton.setBackgroundColor(Color.TRANSPARENT);
+            mPlayButton.setImageDrawable(levelDrawable);
+
+            View controlLayout = (View) ReflectUtils.getObjectField(photoViewer, "videoPlayerControlFrameLayout");
+            int height = controlLayout.getHeight();
+            ((FrameLayout.LayoutParams) controlLayout.getLayoutParams()).leftMargin = height;
+            ((ViewGroup) controlLayout.getParent()).addView(mPlayButton, new FrameLayout.LayoutParams(height, height, Gravity.LEFT | Gravity.BOTTOM));
+        } else {
+            mPlayButton.setVisibility(View.VISIBLE);
+        }
+        mPlayButton.setImageLevel(4);
+        mPlayButton.setOnClickListener(v -> {
+            playPause(videoPlayer);
+        });
+        mInVideoViewer = true;
+
+        view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View view) {
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View view) {
+                mPlayButton.setVisibility(View.INVISIBLE);
+                mPlayButton.setOnClickListener(null);
+                mInVideoViewer = false;
+                view.setOnTouchListener(null);
+                view.removeOnAttachStateChangeListener(this);
+            }
+        });
     }
 
     private void showSeekText(View view) throws Throwable {
@@ -156,5 +196,47 @@ public class TelegramSwipeSeekVideo extends TweakBase {
             ViewUtils.removeView(mSeekTextView);
             mSeekTextView = null;
         }
+    }
+
+    private void playPause(Object videoPlayer) {
+        try {
+            if ((boolean) ReflectUtils.callMethod(videoPlayer, "isPlaying")) {
+                Logger.v("Pause.");
+                ReflectUtils.callMethod(videoPlayer, "pause");
+                mPlayButton.setImageLevel(3);
+            } else {
+                Logger.v("Play.");
+                ReflectUtils.callMethod(videoPlayer, "play");
+                mPlayButton.setImageLevel(4);
+            }
+        } catch (Throwable e) {
+            Logger.e("Play/Pause exception.", e);
+        }
+    }
+
+    @Override
+    public void android_view_View__setVisibility__int(ILTweaks.MethodParam param) {
+        param.after(() -> {
+            if (mInVideoViewer && mPlayButton != null && param.thisObject instanceof ViewGroup
+                    && param.thisObject.getClass().getName().startsWith(PHOTO_VIEWER)) {
+                ViewGroup viewGroup = (ViewGroup) param.thisObject;
+                if (viewGroup.getChildCount() > 0 && viewGroup.getChildAt(0).getClass().getName().equals(ACTION_BAR_MENU)) {
+                    int visibility = (int) param.args[0];
+                    mPlayButton.setVisibility(visibility);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            if (mPlayButton != null && mPlayButton.getContext() == param.thisObject) {
+                Logger.d("Destroy mPlayButton");
+                mPlayButton = null;
+                mInVideoViewer = false;
+                ReflectUtils.setStaticObjectField(findClass(PHOTO_VIEWER), "progressDrawables", null);
+            }
+        });
     }
 }
