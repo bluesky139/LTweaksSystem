@@ -43,7 +43,7 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
     }
 
     private void hookBottomBar(Activity activity) throws Throwable {
-        ViewGroup rootView = (ViewGroup) activity.getWindow().getDecorView();
+        ViewGroup rootView = activity.findViewById(android.R.id.content);
         ViewGroup tabBar = ViewUtils.findViewByName(rootView, "tab_bar");
         Object[] buttons = ViewUtils.findAllViewByTypeInSameHierarchy(tabBar, findClass(TAB_BAR_BUTTON), 3)
                 .stream().filter(v -> ((View) v).getVisibility() == View.VISIBLE).toArray();
@@ -76,8 +76,8 @@ public class GooglePhotosRemoveBottomBar extends TweakBase {
                 if (oldHeight > 0 && newHeight > 0) {
                     Logger.d("Set recycler view height " + newHeight);
                     recyclerView.getLayoutParams().height = newHeight;
+                    recyclerView.requestLayout();
                 }
-                recyclerView.requestLayout();
             } catch (Throwable e) {
                 Logger.e("Hide tabBar exception.", e);
             }
