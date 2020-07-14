@@ -69,7 +69,20 @@ public class QQChatBackground extends TweakBase {
 
             final Activity activity = (Activity) param.thisObject;
             final ViewGroup rootView = (ViewGroup) activity.getWindow().getDecorView();
-            handleLayoutChanged(rootView);
+            rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    boolean end = true;
+                    try {
+                        end = handleLayoutChanged(rootView);
+                    } catch (Throwable e) {
+                        Logger.e("handleLayoutChanged exception.", e);
+                    }
+                    if (end) {
+                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                }
+            });
             activity.getWindow().setStatusBarColor(TITLE_COLOR);
         });
     }
@@ -104,11 +117,11 @@ public class QQChatBackground extends TweakBase {
         });
     }
 
-    private void handleLayoutChanged(ViewGroup rootView) throws Throwable {
+    private boolean handleLayoutChanged(ViewGroup rootView) throws Throwable {
         //Logger.d("rootView handleLayoutChanged");
         ViewGroup chatContent = (ViewGroup) ViewUtils.findViewByName(rootView, "chat_content");
         if (chatContent == null) {
-            return;
+            return false;
         }
 
         mBackgroundView = chatContent;
@@ -156,6 +169,7 @@ public class QQChatBackground extends TweakBase {
                 }
             }
         });
+        return true;
     }
 
     private void updateChatBackground(int width, int height) {
