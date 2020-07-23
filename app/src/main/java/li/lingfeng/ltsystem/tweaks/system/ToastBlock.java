@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.tweaks.system;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.prefs.Prefs;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
 import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.ViewUtils;
 
 @MethodsLoad(packages = {}, prefs = {}, excludedPackages = PackageNames.ANDROID)
 public class ToastBlock extends TweakBase {
@@ -21,7 +23,7 @@ public class ToastBlock extends TweakBase {
     public void android_widget_Toast__show__(ILTweaks.MethodParam param) {
         param.before(() -> {
             View nextView = ((Toast) param.thisObject).getView();
-            TextView textView = nextView.findViewById(android.R.id.message);
+            TextView textView = ViewUtils.findViewByType((ViewGroup) nextView, TextView.class);
             String text = textView.getText().toString();
 
             boolean block = false;
