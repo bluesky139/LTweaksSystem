@@ -408,6 +408,8 @@ Open source on github: \n
     <string name="pref_category_nova_launcher">Nova Launcher</string>
     <string name="pref_nova_launcher_search_go_chrome">Open chrome search activity on search bar click</string>
     <string name="pref_nova_launcher_search_go_chrome_summary">Instead of Google Search App</string>
+    <string name="pref_category_text_scanner">Text Scanner</string>
+    <string name="pref_text_scanner_no_camera">Don\'t open camera if scan shared image</string>
     <string name="pref_category_debug">Debug / Misc</string>
     <string name="pref_debug_hidden_api_no_exemptions">Hidden API no exemptions</string>
     <string name="pref_debug_hidden_api_no_exemptions_summary">For user installed apps</string>

@@ -148,6 +148,9 @@ public abstract class ILTweaksMethods {
     public void android_telephony_SubscriptionInfo__getNumber__(MethodParam param) {
     }
 
+    public void android_hardware_Camera__open__int(MethodParam param) {
+    }
+
     public void com_android_internal_app_ChooserActivity__getAppPredictorForDirectShareIfEnabled__(MethodParam param) {
     }
 

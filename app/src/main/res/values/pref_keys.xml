@@ -165,6 +165,7 @@
     <string name="key_solid_explorer_replace_streaming_url">key_solid_explorer_replace_streaming_url</string>
     <string name="key_quick_edit_darken">key_quick_edit_darken</string>
     <string name="key_nova_launcher_search_go_chrome">key_nova_launcher_search_go_chrome</string>
+    <string name="key_text_scanner_no_camera">key_text_scanner_no_camera</string>
     <string name="key_debug_hidden_api_no_exemptions">key_debug_hidden_api_no_exemptions</string>
     <string name="key_debug_app_crash_info">key_debug_app_crash_info</string>
     <string name="key_debug_debuggable">key_debug_debuggable</string>

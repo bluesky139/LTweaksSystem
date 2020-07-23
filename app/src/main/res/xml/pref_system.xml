@@ -315,6 +315,14 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_text_scanner">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_text_scanner_no_camera"
+            android:title="@string/pref_text_scanner_no_camera" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_debug">
         <SwitchPreference
             android:defaultValue="false"
