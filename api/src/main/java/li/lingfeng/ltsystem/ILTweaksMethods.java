@@ -211,6 +211,9 @@ public abstract class ILTweaksMethods {
     public void com_android_systemui_statusbar_policy_SecurityControllerImpl__updateState__(MethodParam param) {
     }
 
+    public void com_android_systemui_statusbar_policy_NetworkControllerImpl$Config__readConfig__Context(MethodParam param) {
+    }
+
     public void com_android_systemui_qs_external_TileLifecycleManager__setBindService__boolean(MethodParam param) {
     }
 

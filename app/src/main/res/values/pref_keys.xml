@@ -154,7 +154,7 @@
     <string name="key_display_light_amber_in_daylight">key_display_light_amber_in_daylight</string>
     <!-- key_display_min_brightness -->
     <!-- key_display_dark_wallpaper_color -->
-    <!-- key_display_hspap_signal -->
+    <string name="key_display_hspap_signal">key_display_hspap_signal</string>
     <string name="key_display_force_gpu_rendering">key_display_force_gpu_rendering</string>
     <string name="key_web_search_to_browser">key_web_search_to_browser</string>
     <string name="key_web_chrome_webview_provider">key_web_chrome_webview_provider</string>

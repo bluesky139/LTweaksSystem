@@ -382,6 +382,8 @@ Open source on github: \n
     <string name="pref_category_display">Display</string>
     <string name="pref_display_light_amber_in_daylight">Light amber in daylight</string>
     <string name="pref_display_light_amber_in_daylight_summary">Color temperature is about 5500K\nFor Android 7.1+</string>
+    <string name="pref_display_hspap_signal">H/H+ signal</string>
+    <string name="pref_display_hspap_signal_summary">Distinguish H/H+ data icon from 3G</string>
     <string name="pref_display_force_gpu_rendering">Force GPU rendering</string>
     <string name="pref_display_force_gpu_rendering_summary">Same as development settings on Android 9.0</string>
     <string name="pref_category_web">Web</string>
