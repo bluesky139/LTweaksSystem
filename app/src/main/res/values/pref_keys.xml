@@ -156,6 +156,7 @@
     <!-- key_display_dark_wallpaper_color -->
     <string name="key_display_hspap_signal">key_display_hspap_signal</string>
     <string name="key_display_force_gpu_rendering">key_display_force_gpu_rendering</string>
+    <string name="key_display_toast_block_list">key_display_toast_block_list</string>
     <string name="key_web_search_to_browser">key_web_search_to_browser</string>
     <string name="key_web_chrome_webview_provider">key_web_chrome_webview_provider</string>
     <string name="key_mixplorer_ignore_cpu_usage_kill">key_mixplorer_ignore_cpu_usage_kill</string>

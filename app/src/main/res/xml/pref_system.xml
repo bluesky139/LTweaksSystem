@@ -249,6 +249,11 @@
             android:key="@string/key_display_force_gpu_rendering"
             android:title="@string/pref_display_force_gpu_rendering"
             android:summary="@string/pref_display_force_gpu_rendering_summary" />
+        <EditTextPreference
+            android:persistent="false"
+            android:key="@string/key_display_toast_block_list"
+            android:title="@string/pref_display_toast_block_list"
+            android:summary="@string/pref_display_toast_block_list_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -386,6 +386,8 @@ Open source on github: \n
     <string name="pref_display_hspap_signal_summary">Distinguish H/H+ data icon from 3G</string>
     <string name="pref_display_force_gpu_rendering">Force GPU rendering</string>
     <string name="pref_display_force_gpu_rendering_summary">Same as development settings on Android 9.0</string>
+    <string name="pref_display_toast_block_list">Toast block list</string>
+    <string name="pref_display_toast_block_list_summary">Seperated by new line</string>
     <string name="pref_category_web">Web</string>
     <string name="pref_web_search_to_browser">Go to browser on web search</string>
     <string name="pref_web_search_to_browser_summary">Instead of Google Search App</string>

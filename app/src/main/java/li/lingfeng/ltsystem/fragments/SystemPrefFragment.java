@@ -14,6 +14,9 @@ import android.preference.SwitchPreference;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ImageSearchActivity;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
@@ -29,6 +32,7 @@ import li.lingfeng.ltsystem.lib.PreferenceClick;
 import li.lingfeng.ltsystem.lib.PreferenceLoad;
 import li.lingfeng.ltsystem.prefs.ClassNames;
 import li.lingfeng.ltsystem.prefs.PackageNames;
+import li.lingfeng.ltsystem.prefs.Prefs;
 import li.lingfeng.ltsystem.services.CellLocationService;
 import li.lingfeng.ltsystem.services.CopyToShareService;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
@@ -241,6 +245,17 @@ public class SystemPrefFragment extends BasePrefFragment {
             intent.putExtra("stop", true);
         }
         getActivity().startService(intent);
+    }
+
+    @PreferenceClick(prefs = R.string.key_display_toast_block_list)
+    private void displayToastBlockList(EditTextPreference preference) {
+        List<String> words = Prefs.large().getStringList(R.string.key_display_toast_block_list, new ArrayList<>(), false);
+        preference.getEditText().setText(String.join("\n", words));
+        preference.setOnPreferenceChangeListener((_preference, newValue) -> {
+            Prefs.large().putStringList(R.string.key_display_toast_block_list,
+                    StringUtils.split(newValue.toString(), '\n'));
+            return false;
+        });
     }
 
   /*  @PreferenceClick(prefs = R.string.key_trust_agent_wifi_aps)
