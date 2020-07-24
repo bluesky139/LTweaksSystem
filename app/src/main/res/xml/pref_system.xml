@@ -230,6 +230,19 @@
             android:key="@string/key_phone_broadcast_cell_location_change"
             android:title="@string/pref_phone_broadcast_cell_location_change"
             android:summary="@string/pref_phone_broadcast_cell_location_change_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_phone_record_cells"
+            android:title="@string/pref_phone_record_cells"
+            android:summary="@string/pref_phone_record_cells_summary" />
+        <Preference
+            android:key="@string/key_phone_list_cells"
+            android:title="@string/pref_phone_list_cells" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_phone_broadcast_home_cells"
+            android:title="@string/pref_phone_broadcast_home_cells"
+            android:summary="@string/pref_phone_broadcast_home_cells_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory

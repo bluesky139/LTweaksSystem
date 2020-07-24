@@ -151,6 +151,11 @@
     <string name="key_phone_doze">key_phone_doze</string>
     <string name="key_phone_doze_on_the_go">key_phone_doze_on_the_go</string>
     <string name="key_phone_broadcast_cell_location_change">key_phone_broadcast_cell_location_change</string>
+    <string name="key_phone_record_cells">key_phone_record_cells</string>
+    <string name="key_phone_cells">key_phone_cells</string>
+    <string name="key_phone_list_cells">key_phone_list_cells</string>
+    <string name="key_phone_home_cells">key_phone_home_cells</string>
+    <string name="key_phone_broadcast_home_cells">key_phone_broadcast_home_cells</string>
     <string name="key_display_light_amber_in_daylight">key_display_light_amber_in_daylight</string>
     <!-- key_display_min_brightness -->
     <!-- key_display_dark_wallpaper_color -->

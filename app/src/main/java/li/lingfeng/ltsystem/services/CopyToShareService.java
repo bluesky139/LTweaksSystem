@@ -34,7 +34,6 @@ public class CopyToShareService extends ForegroundService implements ClipboardMa
     @Override
     public void onCreate() {
         super.onCreate();
-        Logger.i("CopyToShareService onCreate.");
         mHandler = new Handler();
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         mLayoutParams = new WindowManager.LayoutParams();
@@ -121,7 +120,6 @@ public class CopyToShareService extends ForegroundService implements ClipboardMa
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Logger.i("CopyToShareService onDestroy.");
         mClipboardManager.removePrimaryClipChangedListener(this);
     }
 }

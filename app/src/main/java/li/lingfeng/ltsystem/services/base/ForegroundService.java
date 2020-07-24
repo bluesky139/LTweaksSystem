@@ -20,6 +20,7 @@ public abstract class ForegroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Logger.v(getClass().getSimpleName() + " onCreate.");
         setupNotification();
     }
 
@@ -60,6 +61,12 @@ public abstract class ForegroundService extends Service {
             stopSelf();
         }
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Logger.v(getClass().getSimpleName() + " onDestroy.");
     }
 
     @Nullable

@@ -78,6 +78,14 @@ public class Prefs {
             LTPref.instance().putStringList(key, value);
         }
 
+        public void appendStringToList(int key, String value, int limit) {
+            appendStringToList(getKeyById(key), value, limit);
+        }
+
+        public void appendStringToList(String key, String value, int limit) {
+            LTPref.instance().appendStringToList(key, value, limit);
+        }
+
         public void addListener(int key, ILTPrefListener listener) {
             addListener(getKeyById(key), listener);
         }

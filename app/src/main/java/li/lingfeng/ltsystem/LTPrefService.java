@@ -73,6 +73,21 @@ public class LTPrefService extends ILTPref.Stub {
     }
 
     @Override
+    public void appendStringToList(String key, String value, int limit) throws RemoteException {
+        JSONArray jArray = mData.getJSONArray(key);
+        if (jArray == null) {
+            jArray = new JSONArray();
+            mData.put(key, jArray);
+        }
+        jArray.add(value);
+        if (jArray.size() > limit) {
+            jArray.remove(0);
+        }
+        saveToDisk(mData);
+        notifyPrefChanged(key);
+    }
+
+    @Override
     public void addListener(String key, ILTPrefListener listener) throws RemoteException {
         RemoteCallbackList<ILTPrefListener> listeners = mListeners.get(key);
         if (listeners == null) {

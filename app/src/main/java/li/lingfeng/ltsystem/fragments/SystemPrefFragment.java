@@ -1,6 +1,7 @@
 package li.lingfeng.ltsystem.fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
@@ -14,8 +15,14 @@ import android.preference.SwitchPreference;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ImageSearchActivity;
@@ -240,6 +247,75 @@ public class SystemPrefFragment extends BasePrefFragment {
 
     @PreferenceClick(prefs = R.string.key_phone_broadcast_cell_location_change)
     private void phoneBroadcastCellLocationChange(SwitchPreference preference) {
+        Intent intent = new Intent(getActivity(), CellLocationService.class);
+        if (!preference.isChecked()) {
+            intent.putExtra("stop", true);
+        }
+        getActivity().startService(intent);
+    }
+
+    @PreferenceClick(prefs = R.string.key_phone_record_cells)
+    private void phoneRecordCells(SwitchPreference preference) {
+        Intent intent = new Intent(getActivity(), CellLocationService.class);
+        if (!preference.isChecked()) {
+            intent.putExtra("stop", true);
+        }
+        getActivity().startService(intent);
+    }
+
+    @PreferenceClick(prefs = R.string.key_phone_list_cells)
+    private void phoneListCells(Preference preference) {
+        // e.g. 1595584530-4G:11:22
+        List<String> cells = Prefs.large().getStringList(R.string.key_phone_cells, new ArrayList<>());
+        cells = new ArrayList<>(cells);
+        Collections.reverse(cells);
+        // e.g. 4G:11:22
+        List<String> homeCells = Prefs.large().getStringList(R.string.key_phone_home_cells, new ArrayList<>());
+        List<String> allCells = new ArrayList<>(cells);
+        List<String> allCellData = cells.stream().map(c -> StringUtils.split(c, '-')[1]).collect(Collectors.toList());
+        for (String homeCell : homeCells) {
+            if (!allCellData.contains(homeCell)) {
+                allCells.add("0-" + homeCell);
+                allCellData.add(homeCell);
+            }
+        }
+
+        String[] cellArray = new String[allCells.size()];
+        boolean[] selected = new boolean[allCells.size()];
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        for (int i = 0; i < allCells.size(); ++i) {
+            String[] strings = StringUtils.split(allCells.get(i), '-');
+            selected[i] = homeCells.contains(strings[1]);
+            cellArray[i] = (strings[0].equals("0") ? " " : dateFormat.format(new Date(Long.parseLong(strings[0]) * 1000)))
+                    + " - " + strings[1];
+        }
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Cells - Select as home cells")
+                .setMultiChoiceItems(cellArray, selected, (dialog, which, isChecked) -> {
+                    selected[which] = isChecked;
+                    for (int i = 0; i < allCellData.size(); ++i) {
+                        if (allCellData.get(i).equals(allCellData.get(which))) {
+                            selected[i] = isChecked;
+                            ((AlertDialog) dialog).getListView().setItemChecked(i, isChecked);
+                            Logger.d("selected " + i);
+                        }
+                    }
+                })
+                .setPositiveButton("OK", (dialog, which) -> {
+                    Set<String> newHomeCells = new HashSet<>();
+                    for (int i = 0; i < allCells.size(); ++i) {
+                        if (selected[i]) {
+                            newHomeCells.add(allCellData.get(i));
+                        }
+                    }
+                    Prefs.large().putStringList(R.string.key_phone_home_cells, new ArrayList<>(newHomeCells));
+                })
+                .show();
+    }
+
+    @PreferenceClick(prefs = R.string.key_phone_broadcast_home_cells)
+    private void phoneBroadcastHomeCells(SwitchPreference preference) {
         Intent intent = new Intent(getActivity(), CellLocationService.class);
         if (!preference.isChecked()) {
             intent.putExtra("stop", true);

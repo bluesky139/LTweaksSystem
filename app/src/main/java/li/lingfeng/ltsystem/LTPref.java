@@ -47,6 +47,14 @@ public class LTPref {
         }
     }
 
+    public void appendStringToList(String key, String value, int limit) {
+        try {
+            mService.appendStringToList(key, value, limit);
+        } catch (RemoteException e) {
+            Logger.stackTrace(e);
+        }
+    }
+
     public void addListener(String key, ILTPrefListener listener) {
         try {
             mService.addListener(key, listener);
