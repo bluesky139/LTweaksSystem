@@ -298,7 +298,6 @@ public class SystemPrefFragment extends BasePrefFragment {
                         if (allCellData.get(i).equals(allCellData.get(which))) {
                             selected[i] = isChecked;
                             ((AlertDialog) dialog).getListView().setItemChecked(i, isChecked);
-                            Logger.d("selected " + i);
                         }
                     }
                 })

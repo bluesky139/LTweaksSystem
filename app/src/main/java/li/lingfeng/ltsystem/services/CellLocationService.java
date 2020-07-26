@@ -3,6 +3,7 @@ package li.lingfeng.ltsystem.services;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -21,12 +22,14 @@ public class CellLocationService extends ForegroundService {
 
     private static final String LISTEN_CELL_LOCATION = "li.lingfeng.ltsystem.LISTEN_CELL_LOCATION";
     private static final String LISTEN_HOME_CELLS = "li.lingfeng.ltsystem.LISTEN_HOME_CELLS";
+    private Handler mHandler;
     private TelephonyManager mTelephonyManager;
-    private boolean mAtHome = false;
+    private Boolean mAtHome;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        mHandler = new Handler();
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mTelephonyManager.listen(mListener, PhoneStateListener.LISTEN_CELL_LOCATION);
     }
@@ -102,15 +105,31 @@ public class CellLocationService extends ForegroundService {
         List<String> homeCells = Prefs.large().getStringList(R.string.key_phone_home_cells, null);
         String cell = getNetworkClass() + ":" + gsmCellLocation.getLac() + ":" + gsmCellLocation.getCid();
         boolean atHome = homeCells.contains(cell);
-        if (atHome != mAtHome) {
+        if (mAtHome == null) {
+            mAtHome = atHome;
+            Logger.i("mAtHome null -> " + mAtHome);
+            mAtHomeRunnable.run();
+        } else if (atHome != mAtHome.booleanValue()) {
             Logger.i("mAtHome " + mAtHome + " -> " + atHome);
             mAtHome = atHome;
-            Intent intent = new Intent(LISTEN_HOME_CELLS);
-            intent.putExtra("at_home", atHome);
-            intent.setPackage(PackageNames.AUTOMATE);
-            sendBroadcast(intent);
+            if (atHome) {
+                if (mHandler.hasCallbacks(mAtHomeRunnable)) {
+                    mHandler.removeCallbacks(mAtHomeRunnable);
+                } else {
+                    mAtHomeRunnable.run();
+                }
+            } else {
+                mHandler.postDelayed(mAtHomeRunnable, 30000);
+            }
         }
     }
+
+    private Runnable mAtHomeRunnable = () -> {
+        Intent intent = new Intent(LISTEN_HOME_CELLS);
+        intent.putExtra("at_home", mAtHome);
+        intent.setPackage(PackageNames.AUTOMATE);
+        sendStickyBroadcast(intent);
+    };
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
