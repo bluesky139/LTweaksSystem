@@ -248,6 +248,7 @@ public class SystemPrefFragment extends BasePrefFragment {
     @PreferenceClick(prefs = R.string.key_phone_broadcast_cell_location_change)
     private void phoneBroadcastCellLocationChange(SwitchPreference preference) {
         Intent intent = new Intent(getActivity(), CellLocationService.class);
+        intent.putExtra("key", R.string.key_phone_broadcast_cell_location_change);
         if (!preference.isChecked()) {
             intent.putExtra("stop", true);
         }
@@ -257,6 +258,7 @@ public class SystemPrefFragment extends BasePrefFragment {
     @PreferenceClick(prefs = R.string.key_phone_record_cells)
     private void phoneRecordCells(SwitchPreference preference) {
         Intent intent = new Intent(getActivity(), CellLocationService.class);
+        intent.putExtra("key", R.string.key_phone_record_cells);
         if (!preference.isChecked()) {
             intent.putExtra("stop", true);
         }
@@ -316,6 +318,7 @@ public class SystemPrefFragment extends BasePrefFragment {
     @PreferenceClick(prefs = R.string.key_phone_broadcast_home_cells)
     private void phoneBroadcastHomeCells(SwitchPreference preference) {
         Intent intent = new Intent(getActivity(), CellLocationService.class);
+        intent.putExtra("key", R.string.key_phone_broadcast_home_cells);
         if (!preference.isChecked()) {
             intent.putExtra("stop", true);
         }

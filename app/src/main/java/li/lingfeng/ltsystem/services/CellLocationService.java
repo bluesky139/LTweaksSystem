@@ -24,6 +24,7 @@ public class CellLocationService extends ForegroundService {
     private static final String LISTEN_HOME_CELLS = "li.lingfeng.ltsystem.LISTEN_HOME_CELLS";
     private Handler mHandler;
     private TelephonyManager mTelephonyManager;
+    private GsmCellLocation mLastLocation;
     private Boolean mAtHome;
 
     @Override
@@ -49,6 +50,7 @@ public class CellLocationService extends ForegroundService {
                 if (Prefs.instance().getBoolean(R.string.key_phone_broadcast_home_cells, false)) {
                     broadcastHomeCells(gsmCellLocation);
                 }
+                mLastLocation = gsmCellLocation;
             } else {
                 Logger.w("Cell location change, but " + location.getClass().getSimpleName());
             }
@@ -133,10 +135,28 @@ public class CellLocationService extends ForegroundService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (Prefs.instance().getBoolean(R.string.key_phone_broadcast_cell_location_change, false)
-                || Prefs.instance().getBoolean(R.string.key_phone_record_cells, false)
-                || Prefs.instance().getBoolean(R.string.key_phone_broadcast_home_cells, false)) {
-            intent.removeExtra("stop");
+        if (intent != null) {
+            if (!intent.getBooleanExtra("stop", false)) {
+                if (mLastLocation != null) {
+                    int key = intent.getIntExtra("key", 0);
+                    switch (key) {
+                        case R.string.key_phone_broadcast_cell_location_change:
+                            broadcastToAutomate(mLastLocation);
+                            break;
+                        case R.string.key_phone_record_cells:
+                            recordCells(mLastLocation);
+                            break;
+                        case R.string.key_phone_broadcast_home_cells:
+                            broadcastHomeCells(mLastLocation);
+                            break;
+                    }
+                }
+            }
+            if (Prefs.instance().getBoolean(R.string.key_phone_broadcast_cell_location_change, false)
+                    || Prefs.instance().getBoolean(R.string.key_phone_record_cells, false)
+                    || Prefs.instance().getBoolean(R.string.key_phone_broadcast_home_cells, false)) {
+                intent.removeExtra("stop");
+            }
         }
         return super.onStartCommand(intent, flags, startId);
     }
