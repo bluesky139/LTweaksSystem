@@ -133,6 +133,9 @@ public abstract class ILTweaksMethods {
     public void android_animation_ValueAnimator__start__(MethodParam param) {
     }
 
+    public void android_graphics_drawable_ColorDrawable__draw__Canvas(MethodParam param) {
+    }
+
     public void android_content_ContextWrapper__attachBaseContext__Context(MethodParam param) {
     }
 

@@ -38,6 +38,9 @@ public class TelegramSwipeSeekVideo extends TweakBase {
     private float mScrollDistance = 0f;
     private TextView mSeekTextView;
     private ImageButton mPlayButton;
+    private Drawable mTransparentPlayDrawable;
+    private Drawable mTransparentPauseDrawable;
+    private boolean mIsPlaying;
     private boolean mInVideoViewer = false;
 
     @Override
@@ -137,8 +140,8 @@ public class TelegramSwipeSeekVideo extends TweakBase {
             Drawable[] progressDrawables = (Drawable[]) ReflectUtils.getObjectField(photoViewer, "progressDrawables");
             Drawable playDrawable = progressDrawables[3];
             Drawable pauseDrawable = progressDrawables[4];
-            progressDrawables[3] = new ColorDrawable(Color.TRANSPARENT);
-            progressDrawables[4] = progressDrawables[3];
+            progressDrawables[3] = mTransparentPlayDrawable = new ColorDrawable(Color.TRANSPARENT);
+            progressDrawables[4] = mTransparentPauseDrawable = new ColorDrawable(Color.TRANSPARENT);
 
             LevelListDrawable levelDrawable = new LevelListDrawable();
             levelDrawable.addLevel(3, 3, playDrawable);
@@ -159,6 +162,7 @@ public class TelegramSwipeSeekVideo extends TweakBase {
         mPlayButton.setOnClickListener(v -> {
             playPause(videoPlayer);
         });
+        mIsPlaying = true;
         mInVideoViewer = true;
 
         view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
@@ -203,15 +207,30 @@ public class TelegramSwipeSeekVideo extends TweakBase {
             if ((boolean) ReflectUtils.callMethod(videoPlayer, "isPlaying")) {
                 Logger.v("Pause.");
                 ReflectUtils.callMethod(videoPlayer, "pause");
-                mPlayButton.setImageLevel(3);
             } else {
                 Logger.v("Play.");
                 ReflectUtils.callMethod(videoPlayer, "play");
-                mPlayButton.setImageLevel(4);
             }
         } catch (Throwable e) {
             Logger.e("Play/Pause exception.", e);
         }
+    }
+
+    @Override
+    public void android_graphics_drawable_ColorDrawable__draw__Canvas(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            if (mTransparentPlayDrawable == param.thisObject) {
+                if (!mIsPlaying) {
+                    mPlayButton.setImageLevel(3);
+                    mIsPlaying = true;
+                }
+            } else if (mTransparentPauseDrawable == param.thisObject) {
+                if (mIsPlaying) {
+                    mPlayButton.setImageLevel(4);
+                    mIsPlaying = false;
+                }
+            }
+        });
     }
 
     @Override
@@ -234,6 +253,8 @@ public class TelegramSwipeSeekVideo extends TweakBase {
             if (mPlayButton != null && mPlayButton.getContext() == param.thisObject) {
                 Logger.d("Destroy mPlayButton");
                 mPlayButton = null;
+                mTransparentPlayDrawable = null;
+                mTransparentPauseDrawable = null;
                 mInVideoViewer = false;
                 ReflectUtils.setStaticObjectField(findClass(PHOTO_VIEWER), "progressDrawables", null);
             }

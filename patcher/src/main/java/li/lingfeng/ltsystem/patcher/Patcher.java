@@ -47,6 +47,7 @@ public class Patcher {
         put("java.lang", "/libcore/ojluni/src/main/java/");
         put("java.util", "/libcore/ojluni/src/main/java/");
         put("dalvik.system", "/libcore/libart/src/main/java/");
+        put("android.graphics", "/frameworks/base/graphics/java/");
         put("android.telephony", "/frameworks/base/telephony/java/");
         put("android.media", "/frameworks/base/media/java/");
         put("com.android.server", "/frameworks/base/services/core/java/");
