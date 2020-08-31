@@ -45,6 +45,7 @@ public class Patcher {
 
     private static final Map<String, String> PACKAGE_PATH_MAP = new HashMap<String, String>() {{
         put("java.lang", "/libcore/ojluni/src/main/java/");
+        put("java.io", "/libcore/ojluni/src/main/java/");
         put("java.util", "/libcore/ojluni/src/main/java/");
         put("dalvik.system", "/libcore/libart/src/main/java/");
         put("android.graphics", "/frameworks/base/graphics/java/");

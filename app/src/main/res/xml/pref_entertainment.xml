@@ -146,4 +146,11 @@
             android:key="@string/key_pica_comic_ads"
             android:title="@string/pref_pica_comic_ads" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_category_comic_screen">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_comic_screen_no_zip_cache"
+            android:title="@string/pref_comic_screen_no_zip_cache" />
+    </PreferenceCategory>
 </PreferenceScreen>
