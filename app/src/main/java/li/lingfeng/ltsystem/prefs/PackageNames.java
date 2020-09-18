@@ -43,6 +43,7 @@ public class PackageNames {
     public static final String PUSH_BULLET = "com.pushbullet.android";
     public static final String TT_RSS = "org.fox.ttrss";
     public static final String TELEGRAM = "org.telegram.messenger";
+    public static final String WEIBO_SHARE = "com.hengye.share";
 
     // Entertainment
     public static final String DOUBAN = "com.douban.frodo";
