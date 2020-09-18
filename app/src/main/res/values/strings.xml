@@ -186,8 +186,8 @@ Open source on github: \n
     <string name="pref_wechat_expand_subscribed_list">Expand subscribed article list</string>
     <string name="pref_wechat_share_image">Share image/video</string>
     <string name="pref_wechat_share_image_summary">Tap top right corner on image/video.\nVideo must be playing while sharing</string>
-    <string name="pref_category_qq">QQ Lite</string>
-    <string name="pref_qq_outer_browser">Use outer browser</string>
+    <string name="pref_category_qq">QQ</string>
+    <string name="pref_qq_outer_browser">Use external browser</string>
     <string name="pref_qq_clear_background">Set a clear and undistorted chat background</string>
     <string name="pref_qq_clear_background_summary">May not work on very high definition device, no problem on 1080x1920 (Nexus 5)\nSet path below</string>
     <string name="pref_qq_clear_background_path">Set chat background path</string>
