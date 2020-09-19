@@ -128,4 +128,12 @@
             android:title="@string/pref_telegram_swipe_seek_video"
             android:summary="@string/pref_telegram_swipe_seek_video_summary" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_category_weibo">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_weibo_share_move_task_to_back"
+            android:title="@string/pref_weibo_share_move_task_to_back"
+            android:summary="@string/pref_weibo_share_move_task_to_back_summary" />
+    </PreferenceCategory>
 </PreferenceScreen>
