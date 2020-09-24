@@ -20,6 +20,7 @@
     <!-- key_chrome_darken -->
     <string name="key_youtube_remove_bottom_bar">key_youtube_remove_bottom_bar</string>
     <string name="key_youtube_set_quality">key_youtube_set_quality</string>
+    <string name="key_youtube_darken">key_youtube_darken</string>
 
     <!--Shopping-->
     <string name="key_alipay_fingerprint">key_alipay_fingerprint</string>

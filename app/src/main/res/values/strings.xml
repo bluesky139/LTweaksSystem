@@ -83,6 +83,8 @@ Open source on github: \n
     <string name="pref_youtube_remove_bottom_bar">Remove bottom bar</string>
     <string name="pref_youtube_remove_bottom_bar_summary">Put them into drawer menu</string>
     <string name="pref_youtube_set_quality">Automatically set quality</string>
+    <string name="pref_youtube_darken">Better dark mode</string>
+    <string name="pref_youtube_darken_summary">UrlActivity will handle Youtube url, redirect to WatchWhileActivity, this main activity cost time in onCreate() with white background</string>
 
     <!-- Youtube -->
     <string-array name="youtube_quality_string">

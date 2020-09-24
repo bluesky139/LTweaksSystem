@@ -105,5 +105,10 @@
             android:title="@string/pref_youtube_set_quality"
             android:entries="@array/youtube_quality_string"
             android:entryValues="@array/youtube_quality_int" />-->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_youtube_darken"
+            android:title="@string/pref_youtube_darken"
+            android:summary="@string/pref_youtube_darken_summary" />
     </PreferenceCategory>
 </PreferenceScreen>
