@@ -29,9 +29,9 @@ public class TTRssRefreshMenu extends TweakBase {
             ViewGroup rootView = (ViewGroup) activity.findViewById(android.R.id.content);
             rootView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
                 try {
-                    View fab = ViewUtils.findViewByName(activity, "headlines_fab");
+                    View fab = ViewUtils.findViewByName(activity, "master_fab");
                     if (fab != null) {
-                        Logger.v("Remove headlines_fab.");
+                        Logger.v("Remove master_fab.");
                         ViewUtils.removeView(fab);
                     }
                 } catch (Throwable e) {
