@@ -307,6 +307,10 @@ public class ContextUtils {
         return context.getResources().getColor(getColorId(name, context));
     }
 
+    public static int getLColor(int resId) {
+        return getLResources().getColor(resId);
+    }
+
     public static int getColorId(String name) {
         return getColorId(name, LTHelper.currentApplication());
     }

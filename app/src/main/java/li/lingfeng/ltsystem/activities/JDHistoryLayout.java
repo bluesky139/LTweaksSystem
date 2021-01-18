@@ -2,15 +2,10 @@ package li.lingfeng.ltsystem.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.util.Pair;
-import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,83 +35,69 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
-import com.github.mikephil.charting.utils.Utils;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.regex.Matcher;
 
 import li.lingfeng.ltsystem.R;
+import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
 import li.lingfeng.ltsystem.utils.ShoppingUtils;
 import li.lingfeng.ltsystem.utils.ViewUtils;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+
+import static li.lingfeng.ltsystem.utils.ContextUtils.dp2px;
 
 // This name should be PriceHistoryActivity, due to compatible with old version, keep it for now.
-public class JDHistoryActivity extends Activity implements
+public class JDHistoryLayout extends RelativeLayout implements
         OnChartGestureListener, OnChartValueSelectedListener {
 
-    private OkHttpClient mHttpClient;
+    private Activity mActivity;
     private ProgressBar mProgressBar;
     private LineChart mChart;
     private PriceHistoryGrabber mGrabber;
     private PriceHistoryGrabber.Result mData;
     private DecimalFormat mDec = new DecimalFormat("#,###.00");
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (!getIntent().getAction().equals(Intent.ACTION_SEND) || !getIntent().getType().equals("text/plain")) {
-            Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+    public JDHistoryLayout(Activity activity) {
+        super(activity);
+        mActivity = activity;
 
-        try {
-            ViewUtils.createWebViewProvider();
-        } catch (Throwable e) {
-            Logger.e("Can't create webview provider.", e);
-            Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        mProgressBar = new ProgressBar(activity);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        addView(mProgressBar, layoutParams);
 
-        setContentView(R.layout.activity_jd_history);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mChart = (LineChart) findViewById(R.id.chart1);
+        mChart = new LineChart(activity);
+        mChart.setVisibility(View.INVISIBLE);
+        layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        layoutParams.setMargins(dp2px(16), dp2px(40), dp2px(16), dp2px(40));
+        addView(mChart, layoutParams);
 
-        String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-        Logger.i("Got share text: " + text);
-        boolean ok = findItemIdAndGrabHistory(text);
+        boolean ok = findItemIdAndGrabHistory();
         if (!ok) {
-            tryRedirect(text);
+            exit("findItemIdAndGrabHistory return false.");
         }
     }
 
-    private boolean findItemIdAndGrabHistory(String text) {
-        Pair<String, Integer> item = ShoppingUtils.findItemId(text);
-        if (item == null) {
+    private boolean findItemIdAndGrabHistory() {
+        long itemId = mActivity.getIntent().getLongExtra("id", 0);
+        Logger.d("itemId " + itemId);
+        if (itemId <= 0) {
             return false;
         }
-        String itemId = item.first;
-        @ShoppingUtils.Store int store = item.second;
+        @ShoppingUtils.Store int store = ShoppingUtils.STORE_JD;
 
-        mGrabber = new PriceHistoryGrabber(store, itemId,
+        mGrabber = new PriceHistoryGrabber(store, String.valueOf(itemId),
                 new PriceHistoryGrabber.GrabCallback() {
             @Override
             public void onResult(final PriceHistoryGrabber.Result result) {
                 Logger.i("Prices result " + result);
-                runOnUiThread(() -> {
+                mActivity.runOnUiThread(() -> {
                     if (result == null) {
-                        Toast.makeText(JDHistoryActivity.this, R.string.jd_history_can_not_get_prices, Toast.LENGTH_SHORT).show();
-                        JDHistoryActivity.this.finish();
+                        exit(mActivity.getString(R.string.jd_history_can_not_get_prices));
                         return;
                     }
                     mData = result;
@@ -129,13 +110,12 @@ public class JDHistoryActivity extends Activity implements
             @Override
             public void onRedirect(String url) {
                 Logger.i("Redirect url " + url + ", should be recaptcha.");
-                runOnUiThread(() -> {
+                mActivity.runOnUiThread(() -> {
                     if (url == null) {
-                        Toast.makeText(JDHistoryActivity.this, R.string.jd_history_can_not_get_prices, Toast.LENGTH_SHORT).show();
-                        JDHistoryActivity.this.finish();
+                        exit(mActivity.getString(R.string.jd_history_can_not_get_prices));
                         return;
                     }
-                    WebView webView = new WebView(JDHistoryActivity.this);
+                    WebView webView = new WebView(mActivity);
                     webView.getSettings().setJavaScriptEnabled(true);
                     webView.setWebViewClient(new WebViewClient() {
                         @Override
@@ -153,7 +133,7 @@ public class JDHistoryActivity extends Activity implements
                             return false;
                         }
                     });
-                    addContentView(webView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    addView(webView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     webView.loadUrl(url);
                 });
             }
@@ -168,58 +148,8 @@ public class JDHistoryActivity extends Activity implements
         return true;
     };
 
-    private void tryRedirect(String text) {
-        Matcher matcher = Patterns.WEB_URL.matcher(text);
-        if (!matcher.find()) {
-            exit();
-            return;
-        }
-
-        String url = matcher.group();
-        Logger.i("Try redirect " + url);
-        try {
-            if (mHttpClient == null) {
-                mHttpClient = new OkHttpClient.Builder()
-                        .followRedirects(false)
-                        .followSslRedirects(false)
-                        .build();
-            }
-
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-            mHttpClient.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    exit();
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String location = response.header("Location");
-                    if (location != null && !location.isEmpty() && findItemIdAndGrabHistory(location)) {
-                        return;
-                    }
-                    String body = response.body().string();
-                    if (findItemIdAndGrabHistory(body)) {
-                        return;
-                    }
-                    exit();
-                }
-            });
-        } catch (Exception e) {
-            exit();
-        }
-    }
-
-    private void exit() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(JDHistoryActivity.this, R.string.jd_history_can_not_find_item_id, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
+    private void exit(String msg) {
+        mActivity.runOnUiThread(() -> Toast.makeText(mActivity, msg, Toast.LENGTH_SHORT).show());
     }
 
     private void createChart(final PriceHistoryGrabber.Result data) {
@@ -247,7 +177,7 @@ public class JDHistoryActivity extends Activity implements
 
         // create a custom MarkerView (extend MarkerView) and specify the layout
         // to use for it
-        MyMarkerView mv = new MyMarkerView(this, R.layout.jd_history_marker_view);
+        MyMarkerView mv = new MyMarkerView(mActivity, R.layout.jd_history_marker_view);
         mv.setChartView(mChart); // For bounds control
         mChart.setMarker(mv); // Set the marker to the chart
 
@@ -282,14 +212,14 @@ public class JDHistoryActivity extends Activity implements
         //xAxis.addLimitLine(llXAxis); // add x-axis limit line
 
 
-        LimitLine ll1 = new LimitLine(data.maxPrice, getString(R.string.jd_history_highest) + ": " + mDec.format(data.maxPrice));
+        LimitLine ll1 = new LimitLine(data.maxPrice, ContextUtils.getLString(R.string.jd_history_highest) + ": " + mDec.format(data.maxPrice));
         ll1.setLineWidth(2f);
         ll1.enableDashedLine(10f, 10f, 0f);
         ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
         ll1.setTextSize(14f);
         ll1.setTextColor(Color.RED);
 
-        LimitLine ll2 = new LimitLine(data.minPrice, getString(R.string.jd_history_lowest) + ": " + mDec.format(data.minPrice));
+        LimitLine ll2 = new LimitLine(data.minPrice, ContextUtils.getLString(R.string.jd_history_lowest) + ": " + mDec.format(data.minPrice));
         ll2.setLineWidth(2f);
         ll2.enableDashedLine(10f, 10f, 0f);
         ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
@@ -352,12 +282,12 @@ public class JDHistoryActivity extends Activity implements
 
         LineDataSet set1;
         // create a dataset and give it a type
-        set1 = new LineDataSet(values, getString(R.string.app_name));
+        set1 = new LineDataSet(values, ContextUtils.getLString(R.string.app_name));
 
         // set the line to be drawn like this "- - - - - -"
         //set1.enableDashedLine(10f, 5f, 0f);
         //set1.enableDashedHighlightLine(10f, 5f, 0f);
-        set1.setColor(getResources().getColor(R.color.jd_history_main_line));
+        set1.setColor(ContextUtils.getLColor(R.color.jd_history_main_line));
         set1.setCircleColor(Color.BLACK);
         set1.setLineWidth(2f);
         set1.setCircleRadius(3f);
@@ -371,14 +301,8 @@ public class JDHistoryActivity extends Activity implements
         //set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
         set1.setFormSize(15.f);
 
-        if (Utils.getSDKInt() >= 18) {
-            // fill drawable only supported on api level 18 and above
-            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.jd_history_fade_red);
-            set1.setFillDrawable(drawable);
-        }
-        else {
-            set1.setFillColor(Color.BLACK);
-        }
+        Drawable drawable = ContextUtils.getLDrawable(R.drawable.jd_history_fade_red);
+        set1.setFillDrawable(drawable);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         dataSets.add(set1); // add the datasets

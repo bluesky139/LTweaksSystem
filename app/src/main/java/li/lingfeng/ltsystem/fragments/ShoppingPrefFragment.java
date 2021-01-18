@@ -5,7 +5,6 @@ import android.preference.Preference;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.JDActivity;
-import li.lingfeng.ltsystem.activities.JDHistoryActivity;
 import li.lingfeng.ltsystem.fragments.base.Extra;
 import li.lingfeng.ltsystem.lib.PreferenceChange;
 import li.lingfeng.ltsystem.utils.ComponentUtils;
@@ -28,15 +27,6 @@ public class ShoppingPrefFragment extends BasePrefFragment {
             uncheckPreferenceByDisabledComponent(R.string.key_jd_open_link_in_app, JDActivity.class);
         } else {
             ComponentUtils.enableComponent(JDActivity.class, enabled);
-        }
-    }
-
-    @PreferenceChange(prefs = R.string.key_jd_history, refreshAtStart = true)
-    private void enableJdHistory(Preference preference, boolean enabled, Extra extra) {
-        if (extra.refreshAtStart) {
-            uncheckPreferenceByDisabledComponent(R.string.key_jd_history, JDHistoryActivity.class);
-        } else {
-            ComponentUtils.enableComponent(JDHistoryActivity.class, enabled);
         }
     }
 }

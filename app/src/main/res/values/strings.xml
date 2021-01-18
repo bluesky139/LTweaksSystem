@@ -144,8 +144,8 @@ Open source on github: \n
     <string name="pref_category_jd">JD</string>
     <string name="pref_jd_open_link_in_app">Open link in app</string>
     <string name="pref_jd_open_link_in_app_summary">eg. http://item.jd.com/123.html</string>
-    <string name="pref_jd_history">Price history in share menu</string>
-    <string name="pref_jd_history_summary">Use with above share function</string>
+    <string name="pref_jd_history">Price history</string>
+    <string name="pref_jd_history_summary">Long press share button</string>
     <string name="pref_jd_basic_share_activity">Original share activity</string>
     <string name="pref_jd_basic_share_activity_summary">Not something like \"Share Reward\", in case no \"Copy Link\" button</string>
     <string name="pref_jd_mini_program_price_history">Price history in WeChat mini program</string>
