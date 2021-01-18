@@ -48,6 +48,7 @@ public class ImageSearchActivity extends Activity {
         put("WAIT", "https://trace.moe/?url=%s");
     }};
     private String mEngine;
+    private boolean mIsIncognito = false;
     private boolean mChooserStarted = false;
     private static OkHttpClient sHttpClient;
 
@@ -70,16 +71,21 @@ public class ImageSearchActivity extends Activity {
             return;
         }
 
-        if (!ComponentUtils.isAlias(this)) {
-            Logger.i("Choose image engine.");
+        String alias = ComponentUtils.getAlias(this);
+        boolean isIncognitoAlias = "Incognito".equals(alias);
+        if (!ComponentUtils.isAlias(this) || isIncognitoAlias) {
+            Logger.i("Choose image engine, incognito " + isIncognitoAlias);
             grantUriPermission(getPackageName(), uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Intent intent = new Intent(ACTION_IMAGE_SEARCH);
             intent.setType(getIntent().getType());
             intent.putExtra(Intent.EXTRA_STREAM, uri);
+            intent.putExtra("incognito", isIncognitoAlias);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(Intent.createChooser(intent, "Choose image engine..."));
+            startActivity(Intent.createChooser(intent, "Choose image engine..."
+                    + (isIncognitoAlias ? " (Incognito)" : "")));
         } else {
-            mEngine = ComponentUtils.getAlias(this);
+            mEngine = alias;
+            mIsIncognito = getIntent().getBooleanExtra("incognito", false);
             Logger.i("Use image engine " + mEngine);
             if (!sEngines.containsKey(mEngine)) {
                 Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show();
@@ -205,7 +211,11 @@ public class ImageSearchActivity extends Activity {
             public void run() {
                 try {
                     String finalUrl = String.format(sEngines.get(mEngine), URLEncoder.encode(location, "utf-8"));
-                    ContextUtils.startBrowser(ImageSearchActivity.this, finalUrl);
+                    if (mIsIncognito) {
+                        ContextUtils.startIncognitoChrome(ImageSearchActivity.this, finalUrl);
+                    } else {
+                        ContextUtils.startBrowser(ImageSearchActivity.this, finalUrl);
+                    }
                 } catch (Exception e) {
                     Logger.e("Error to search image, " + e.getMessage());
                     Toast.makeText(ImageSearchActivity.this, R.string.error, Toast.LENGTH_SHORT).show();

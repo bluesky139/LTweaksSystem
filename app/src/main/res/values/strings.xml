@@ -460,7 +460,8 @@ Open source on github: \n
     <string name="share_qrcode_scan">Scan QR Code in image</string>
     <string name="share_qrcode_cant_decode">Can\'t decode image.</string>
     <string name="share_qrcode_wechat_scan">Scan with WeChat</string>
-    <string name="share_image_search">Search by image</string>
+    <string name="share_image_search">Image Search</string>
+    <string name="share_image_search_incognito">Image Incognito Search</string>
     <string name="share_image_google_search">Google</string>
     <string name="share_image_tineye_search">TinEye</string>
     <string name="share_image_iqdb_search">IQDB</string>

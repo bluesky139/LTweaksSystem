@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import li.lingfeng.ltsystem.LTHelper;
+import li.lingfeng.ltsystem.activities.ChromeIncognitoActivity;
 import li.lingfeng.ltsystem.activities.LoadingDialog;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import okhttp3.Call;
@@ -449,6 +450,15 @@ public class ContextUtils {
             intent.putExtra("com.android.browser.application_id", PackageNames.CHROME);
             intent.putExtra("create_new_tab", true);
         }
+        context.startActivity(intent);
+    }
+
+    public static void startIncognitoChrome(Context context, String url) {
+        Logger.v("startIncognitoChrome " + url);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setClassName(PackageNames.L_TWEAKS, ChromeIncognitoActivity.class.getName());
+        intent.setData(Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

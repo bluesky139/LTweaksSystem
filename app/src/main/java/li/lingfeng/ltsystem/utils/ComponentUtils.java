@@ -40,6 +40,9 @@ public class ComponentUtils {
     }
 
     public static String getAlias(Activity activity) {
+        if (!isAlias(activity)) {
+            return null;
+        }
         String name = activity.getIntent().getComponent().getClassName();
         return name.substring(activity.getClass().getPackage().getName().length() + 1,
                 name.length() - activity.getClass().getSimpleName().length());

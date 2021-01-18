@@ -218,6 +218,20 @@
             </intent-filter>
         </activity>
         <activity-alias
+            android:name=".activities.IncognitoImageSearchActivity"
+            android:targetActivity=".activities.ImageSearchActivity"
+            android:label="@string/share_image_search_incognito"
+            android:icon="@drawable/ic_incognito"
+            android:theme="@style/Theme.Dialog"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.ImageSearchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
             android:name=".activities.GoogleImageSearchActivity"
             android:label="@string/share_image_google_search"
             android:targetActivity=".activities.ImageSearchActivity">
