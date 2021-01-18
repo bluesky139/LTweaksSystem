@@ -39,6 +39,8 @@ public class BilibiliActivity extends Activity {
         String[] regs = new String[] {
                 "https?://m\\.bilibili\\.com/video/(av\\d+)(\\.html)?(\\?p=(\\d+))?",
                 "https?://m\\.bilibili\\.com/video/(BV\\w+)(\\.html)?(\\?p=(\\d+))?",
+                "https?://www\\.bilibili\\.com/video/(av\\d+)(\\?p=(\\d+))?",
+                "https?://www\\.bilibili\\.com/video/(BV\\w+)(\\?p=(\\d+))?",
                 "https?://b23\\.tv/(av\\d+)(/p(\\d+))?",
                 "https?://b23\\.tv/(BV\\w+)(/p(\\d+))?"
         };

@@ -20,6 +20,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 public class WeChatExternalBrowser extends TweakBase {
 
     private static final String WEBVIEW_UI = "com.tencent.mm.plugin.webview.ui.tools.WebViewUI";
+    private static final String WEBVIEW_MP_UI = "com.tencent.mm.plugin.webview.ui.tools.WebviewMpUI";
     private static final String APP_BRAND_UI = "com.tencent.mm.plugin.appbrand.ui.AppBrandUI";
 
     @Override
@@ -31,7 +32,8 @@ public class WeChatExternalBrowser extends TweakBase {
             }
             Activity activity = (Activity) param.thisObject;
             if (intent.getComponent() != null) {
-                if (intent.getComponent().getClassName().equals(WEBVIEW_UI)) {
+                String className = intent.getComponent().getClassName();
+                if (className.equals(WEBVIEW_UI) || className.equals(WEBVIEW_MP_UI)) {
                     String url = intent.getStringExtra("rawUrl");
                     if (url != null) {
                         if (BilibiliActivity.start(activity, url)) {
