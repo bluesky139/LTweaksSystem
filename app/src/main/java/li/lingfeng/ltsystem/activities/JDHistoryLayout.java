@@ -36,6 +36,8 @@ import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +51,6 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 
 import static li.lingfeng.ltsystem.utils.ContextUtils.dp2px;
 
-// This name should be PriceHistoryActivity, due to compatible with old version, keep it for now.
 public class JDHistoryLayout extends RelativeLayout implements
         OnChartGestureListener, OnChartValueSelectedListener {
 
@@ -83,14 +84,16 @@ public class JDHistoryLayout extends RelativeLayout implements
     }
 
     private boolean findItemIdAndGrabHistory() {
-        long itemId = mActivity.getIntent().getLongExtra("id", 0);
+        Object _itemId = mActivity.getIntent().getExtras().get("id");
+        String itemId = _itemId != null ? _itemId.toString() : null;
         Logger.d("itemId " + itemId);
-        if (itemId <= 0) {
+        if (StringUtils.isEmpty(itemId)) {
+            Logger.intent(mActivity.getIntent());
             return false;
         }
         @ShoppingUtils.Store int store = ShoppingUtils.STORE_JD;
 
-        mGrabber = new PriceHistoryGrabber(store, String.valueOf(itemId),
+        mGrabber = new PriceHistoryGrabber(store, itemId,
                 new PriceHistoryGrabber.GrabCallback() {
             @Override
             public void onResult(final PriceHistoryGrabber.Result result) {
@@ -100,10 +103,14 @@ public class JDHistoryLayout extends RelativeLayout implements
                         exit(mActivity.getString(R.string.jd_history_can_not_get_prices));
                         return;
                     }
-                    mData = result;
-                    createChart(result);
-                    mProgressBar.setVisibility(View.INVISIBLE);
-                    mChart.setVisibility(View.VISIBLE);
+                    try {
+                        mData = result;
+                        createChart(result);
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                        mChart.setVisibility(View.VISIBLE);
+                    } catch (Throwable e) {
+                        Logger.e("Create chart exception.", e);
+                    }
                 });
             }
 
@@ -149,6 +156,7 @@ public class JDHistoryLayout extends RelativeLayout implements
     };
 
     private void exit(String msg) {
+        Logger.i("Exit msg, " + msg);
         mActivity.runOnUiThread(() -> Toast.makeText(mActivity, msg, Toast.LENGTH_SHORT).show());
     }
 

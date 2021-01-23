@@ -20,11 +20,18 @@ public class JDHistory extends TweakBase {
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
+        param.before(() -> {
+            Logger.useRemote("JD");
+        });
         afterOnClass(DETAIL_ACTIVITY, param, () -> {
             Activity activity = (Activity) param.thisObject;
             View shareView = ViewUtils.findViewByName(activity, "pd_nav_share");
             shareView.setOnLongClickListener(view -> {
-                showHistoryDialog(activity);
+                try {
+                    showHistoryDialog(activity);
+                } catch (Throwable e) {
+                    Logger.e("showHistoryDialog exception.", e);
+                }
                 return true;
             });
         });

@@ -26,6 +26,9 @@ public class Logger {
     private static Remote remote;
 
     public static void useRemote(String tag) {
+        if (remote != null) {
+            return;
+        }
         Logger.d("Use remote log for " + tag);
         TAG += "-" + tag;
         remote = new Remote();
