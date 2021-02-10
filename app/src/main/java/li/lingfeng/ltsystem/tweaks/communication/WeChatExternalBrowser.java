@@ -83,22 +83,43 @@ public class WeChatExternalBrowser extends TweakBase {
                         activity.startActivity(intent);
                         param.setResult(null);
                     } else {
-                        pattern = Pattern.compile("appId='wx2f9b06c1de1ccfca'.+enterPath='pages\\/subject\\/subject\\.html\\?type=(\\w+)&id=(\\d+)");
+                        pattern = Pattern.compile("appId='wx7564fd5313d24844'.+enterPath='pages\\/video\\/video\\.html\\?bvid=(\\w+)&(page=(\\d+))?");
                         matcher = pattern.matcher(config);
                         if (matcher.find()) {
-                            String type = matcher.group(1);
-                            String id = matcher.group(2);
-                            Logger.v("Got douban " + type + " id " + id + " from app brand.");
-                            if (type.equals("tv")) {
-                                type = "movie";
-                            }
+                            String bv = matcher.group(1);
+                            Logger.v("Got bilibili bv " + bv + " from app brand.");
                             intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setPackage(PackageNames.DOUBAN);
-                            intent.setData(Uri.parse("https://" + type + ".douban.com/subject/" + id + "/"));
+                            intent.setPackage(PackageNames.BILIBILI);
+                            String url = "https://www.bilibili.com/video/" + bv;
+                            String page = matcher.group(3);
+                            if (page != null) {
+                                page = String.valueOf(Integer.parseInt(page) + 1);
+                                Logger.v("Got page " + page);
+                                url += "?p=" + page;
+                            }
+                            intent.setData(Uri.parse(url));
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("from_ltweaks", true);
                             activity.startActivity(intent);
                             param.setResult(null);
+                        } else {
+                            pattern = Pattern.compile("appId='wx2f9b06c1de1ccfca'.+enterPath='pages\\/subject\\/subject\\.html\\?type=(\\w+)&id=(\\d+)");
+                            matcher = pattern.matcher(config);
+                            if (matcher.find()) {
+                                String type = matcher.group(1);
+                                String id = matcher.group(2);
+                                Logger.v("Got douban " + type + " id " + id + " from app brand.");
+                                if (type.equals("tv")) {
+                                    type = "movie";
+                                }
+                                intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setPackage(PackageNames.DOUBAN);
+                                intent.setData(Uri.parse("https://" + type + ".douban.com/subject/" + id + "/"));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("from_ltweaks", true);
+                                activity.startActivity(intent);
+                                param.setResult(null);
+                            }
                         }
                     }
                 }
