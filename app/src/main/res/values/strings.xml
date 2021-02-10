@@ -217,6 +217,8 @@ Open source on github: \n
     <string name="pref_telegram_edittext_no_focus_first_summary">To stop cursor blink</string>
     <string name="pref_telegram_swipe_seek_video">Swipe left/right to seek video</string>
     <string name="pref_telegram_swipe_seek_video_summary">Double tap to play/pause.\nStop loop.\nTap top right corner on video to share image.\nMove play/pause button to bottom left</string>
+    <string name="pref_telegram_seekbar_hide_delay">Customize delay seconds to hide video seekbar</string>
+    <string name="pref_telegram_seekbar_hide_delay_summary">In seconds</string>
     <string name="pref_category_weibo">Weibo (Share)</string>
     <string name="pref_weibo_share_move_task_to_back">Back to previous app</string>
     <string name="pref_weibo_share_move_task_to_back_summary">If open Weibo from other app</string>
@@ -227,6 +229,9 @@ Open source on github: \n
     <string name="ttrss_copy_title">Copy Title</string>
     <string name="ttrss_go_top">Go Top</string>
     <string name="ttrss_go_bottom">Go Bottom</string>
+
+    <!-- Telegram -->
+    <string name="telegram_seekbar_hide_delay_seconds">In %d seconds</string>
 
     <!--Entertainment-->
     <string name="pref_header_entertainment">Entertainment</string>

@@ -148,4 +148,18 @@ public class CommunicationPrefFragment extends BasePrefFragment {
             return false;
         });
     }
+
+    @PreferenceChange(prefs = R.string.key_telegram_seekbar_hide_delay, refreshAtStart = true)
+    private void telegramSeekbarHideDelay(EditTextPreference preference, String value, Extra extra) {
+        int seconds = 0;
+        try {
+            seconds = Integer.valueOf(value);
+        } catch (NumberFormatException e) {}
+        if (seconds > 0) {
+            preference.setSummary(getString(R.string.telegram_seekbar_hide_delay_seconds, seconds));
+        } else {
+            preference.setText("");
+            preference.setSummary(R.string.pref_telegram_seekbar_hide_delay_summary);
+        }
+    }
 }

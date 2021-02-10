@@ -127,6 +127,11 @@
             android:key="@string/key_telegram_swipe_seek_video"
             android:title="@string/pref_telegram_swipe_seek_video"
             android:summary="@string/pref_telegram_swipe_seek_video_summary" />
+        <EditTextPreference
+            android:inputType="number"
+            android:key="@string/key_telegram_seekbar_hide_delay"
+            android:title="@string/pref_telegram_seekbar_hide_delay"
+            android:summary="@string/pref_telegram_seekbar_hide_delay_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_weibo">

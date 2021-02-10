@@ -19,6 +19,9 @@ public abstract class ILTweaksMethods {
     public void dalvik_system_VMRuntime__setHiddenApiExemptions__String$array(MethodParam param) {
     }
 
+    public void android_app_Instrumentation__callApplicationOnCreate__Application(MethodParam param) {
+    }
+
     public void android_app_ContextImpl__startActivity__Intent_Bundle(MethodParam param) {
     }
 

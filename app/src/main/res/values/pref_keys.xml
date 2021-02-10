@@ -67,6 +67,7 @@
     <string name="key_telegram_message_filter">key_telegram_message_filter</string>
     <string name="key_telegram_edittext_no_focus_first">key_telegram_edittext_no_focus_first</string>
     <string name="key_telegram_swipe_seek_video">key_telegram_swipe_seek_video</string>
+    <string name="key_telegram_seekbar_hide_delay">key_telegram_seekbar_hide_delay</string>
     <string name="key_weibo_share_move_task_to_back">key_weibo_share_move_task_to_back</string>
 
     <!--Entertainment-->
