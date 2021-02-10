@@ -77,7 +77,7 @@ public class BilibiliRemoveBottomBar extends TweakBase {
         SimpleDrawer.NavItem navItem = new SimpleDrawer.NavItem(new ColorDrawable(), "History", (View.OnClickListener) v -> {
             Intent intent = new Intent();
             intent.setClassName(PackageNames.BILIBILI, GENERAL_ACTIVITY);
-            intent.putExtra("fragment", "com.bilibili.app.history.ui.HistoryFragmentV2");
+            intent.putExtra("fragment", "com.bilibili.app.history.HistoryFragmentV3");
             activity.startActivity(intent);
         });
         navItems[layouts.size()] = navItem;
