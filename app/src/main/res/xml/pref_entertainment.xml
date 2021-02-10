@@ -152,5 +152,10 @@
             android:defaultValue="false"
             android:key="@string/key_comic_screen_no_zip_cache"
             android:title="@string/pref_comic_screen_no_zip_cache" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_comic_screen_external_storage"
+            android:title="@string/pref_comic_screen_external_storage"
+            android:summary="@string/pref_comic_screen_external_storage_summary" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -25,6 +25,18 @@ public class Shell extends AsyncTask<Void, Void, Boolean> {
     private StreamGobbler mStderrGobbler;
     private StreamGobbler mStdoutGobbler;
 
+    public static void sh(String cmd) {
+        new Shell("sh", new String[] {cmd}, 0, null).execute();
+    }
+
+    public static void su(String cmd) {
+        new Shell("su", new String[] {cmd}, 0, null).execute();
+    }
+
+    public static void su(String... cmds) {
+        new Shell("su", cmds, 0, null).execute();
+    }
+
     public Shell(String interpreter, String[] cmds, long timeout, Callback.C3<Boolean, List<String>, List<String>> callback) {
         mInterpreter = interpreter;
         mCmds = cmds;
@@ -46,10 +58,12 @@ public class Shell extends AsyncTask<Void, Void, Boolean> {
             Logger.d("Run cmd in " + mInterpreter + ":\n  " + StringUtils.join(mCmds, "\n  "));
             mProcess = Runtime.getRuntime().exec(mInterpreter);
             DataOutputStream outputStream = new DataOutputStream(mProcess.getOutputStream());
-            mStderrGobbler = new StreamGobbler("STDERR", mProcess.getErrorStream());
-            mStderrGobbler.start();
-            mStdoutGobbler = new StreamGobbler("STDOUT", mProcess.getInputStream());
-            mStdoutGobbler.start();
+            if (mCallback != null) {
+                mStderrGobbler = new StreamGobbler("STDERR", mProcess.getErrorStream());
+                mStderrGobbler.start();
+                mStdoutGobbler = new StreamGobbler("STDOUT", mProcess.getInputStream());
+                mStdoutGobbler.start();
+            }
             for (String cmd : mCmds) {
                 outputStream.writeBytes(cmd + "\n");
                 outputStream.flush();
@@ -59,13 +73,15 @@ public class Shell extends AsyncTask<Void, Void, Boolean> {
             mProcess.waitFor();
             Logger.d("Run cmd end.");
 
-            synchronized (this) {
-                if (mProcess == null) {
-                    return false;
-                } else {
-                    mProcess = null;
-                    while (!mStderrGobbler.isEnded() || !mStdoutGobbler.isEnded()) {
-                        wait();
+            if (mCallback != null) {
+                synchronized (this) {
+                    if (mProcess == null) {
+                        return false;
+                    } else {
+                        mProcess = null;
+                        while (!mStderrGobbler.isEnded() || !mStdoutGobbler.isEnded()) {
+                            wait();
+                        }
                     }
                 }
             }
@@ -88,7 +104,9 @@ public class Shell extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean isOk) {
-        mCallback.onResult(isOk, mStderrGobbler.getOutputs(), mStdoutGobbler.getOutputs());
+        if (mCallback != null) {
+            mCallback.onResult(isOk, mStderrGobbler.getOutputs(), mStdoutGobbler.getOutputs());
+        }
     }
 
     private class StreamGobbler extends Thread {

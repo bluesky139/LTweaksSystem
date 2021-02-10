@@ -291,6 +291,8 @@ Open source on github: \n
     <string name="pref_pica_comic_ads">Remove ads</string>
     <string name="pref_category_comic_screen">Comic Screen</string>
     <string name="pref_comic_screen_no_zip_cache">No zip cache</string>
+    <string name="pref_comic_screen_external_storage">Change external storage to app data directory</string>
+    <string name="pref_comic_screen_external_storage_summary">Then execute rclone mount.\nInstall \"rclone-mount\" magisk module by yourself.\nPut rclone conf file in /sdcard/rclone_comic_screen.conf with one configured name \"cloud0\".\nNote: remember to press back to finish activity, umount will be executed at this time</string>
 
     <!-- Bilibili -->
     <string name="bilibili_get_cover">Get Cover</string>
