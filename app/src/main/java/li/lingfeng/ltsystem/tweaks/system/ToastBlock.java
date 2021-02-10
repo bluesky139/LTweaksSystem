@@ -23,7 +23,12 @@ public class ToastBlock extends TweakBase {
     public void android_widget_Toast__show__(ILTweaks.MethodParam param) {
         param.before(() -> {
             View nextView = ((Toast) param.thisObject).getView();
-            TextView textView = ViewUtils.findViewByType((ViewGroup) nextView, TextView.class);
+            TextView textView;
+            if (nextView instanceof TextView) {
+                textView = (TextView) nextView;
+            } else {
+                textView = ViewUtils.findViewByType((ViewGroup) nextView, TextView.class);
+            }
             String text = textView.getText().toString();
 
             boolean block = false;
