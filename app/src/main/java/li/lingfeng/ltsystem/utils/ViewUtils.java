@@ -23,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
@@ -150,6 +151,17 @@ public class ViewUtils {
             return (T) views.get(0);
         }
         return null;
+    }
+
+    public static TextView findTextViewByText(ViewGroup rootView, String... texts) {
+        List<View> views = traverseViews(rootView, true, (view, deep) -> {
+            if (view instanceof TextView) {
+                TextView textView = (TextView) view;
+                return ArrayUtils.contains(texts, textView.getText().toString());
+            }
+            return false;
+        });
+        return views.size() > 0 ? (TextView) views.get(0) : null;
     }
 
     public static <T extends View> List<T> findAllViewById(final ViewGroup rootView, final int id) {
