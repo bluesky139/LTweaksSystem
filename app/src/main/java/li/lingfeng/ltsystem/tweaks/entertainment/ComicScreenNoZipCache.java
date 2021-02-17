@@ -33,7 +33,7 @@ public class ComicScreenNoZipCache extends TweakBase {
     private static final String COMIC_LIST_ACTIVITY = "com.viewer.comicscreen.ListActivity";
 
     private String mUnzipPath;
-    private LruCache<String, SharedBytesOutputStream> mMemoryStreams = new LruCache<String, SharedBytesOutputStream>(20) {
+    private LruCache<String, SharedBytesOutputStream> mMemoryStreams = new LruCache<String, SharedBytesOutputStream>(60) {
         @Override
         protected void entryRemoved(boolean evicted, String key, SharedBytesOutputStream oldValue, SharedBytesOutputStream newValue) {
             //Logger.d("entryRemoved " + key);
