@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 
+import java.lang.ref.WeakReference;
+
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
@@ -32,6 +34,7 @@ public class TelegramSeekbarHideDelay extends TweakBase {
     static class MyHandler extends Handler {
 
         private Handler mOriginal;
+        private WeakReference<Runnable> mLastCallback;
 
         public MyHandler(Handler original) {
             super();
@@ -46,6 +49,13 @@ public class TelegramSeekbarHideDelay extends TweakBase {
                 if (ms > 0) {
                     uptimeMillis = SystemClock.uptimeMillis() + ms;
                     Logger.v("Delay " + ms + "ms for video seekbar hide.");
+                    if (mLastCallback != null) {
+                        Runnable runnable = mLastCallback.get();
+                        if (runnable != null) {
+                            mOriginal.removeCallbacks(runnable);
+                        }
+                    }
+                    mLastCallback = new WeakReference<>(msg.getCallback());
                 }
             }
             return mOriginal.sendMessageAtTime(msg, uptimeMillis);
