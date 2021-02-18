@@ -30,6 +30,10 @@
             android:name=".services.RemoteLog"
             android:authorities="li.lingfeng.ltsystem.remoteLog"
             android:exported="true" />
+        <provider
+            android:name=".services.RemoteShell"
+            android:authorities="li.lingfeng.ltsystem.remoteShell"
+            android:exported="true" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
