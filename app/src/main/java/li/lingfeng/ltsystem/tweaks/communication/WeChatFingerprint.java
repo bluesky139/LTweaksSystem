@@ -34,10 +34,10 @@ public class WeChatFingerprint extends TweakBase {
 
     private static final String WALLLET_PAY_UI = "com.tencent.mm.plugin.wallet.pay.ui.WalletPayUI";
     private static final String UI_PAGE_FRAGMENT_ACTIVITY = "com.tencent.kinda.framework.app.UIPageFragmentActivity";
-    private static final String WE_PAY_CASHIER_DIALOG = "com.tencent.mm.plugin.wallet_core.ui.cashier.WcPayCashierDialog";
     private static final String EDIT_PASSWORD_VIEW = "com.tencent.mm.wallet_core.ui.formview.EditHintPasswdView";
     private static final String TENPAY_SECURE_EDITTEXT = "com.tenpay.android.wechat.TenpaySecureEditText";
     private static final String MY_KEYBOARD_WINDOW = "com.tenpay.android.wechat.MyKeyboardWindow";
+    private boolean mAtPayment = false;
     private CancellationSignal mCancellationSignal;
 
     // https://github.com/eritpchy/Xposed-Fingerprint-pay/blob/master/app/src/main/java/com/yyxx/wechatfp/xposed/plugin/XposedWeChatPlugin.java
@@ -55,8 +55,10 @@ public class WeChatFingerprint extends TweakBase {
     @Override
     public void android_app_Dialog__show__(ILTweaks.MethodParam param) {
         Logger.d("Dialog__show " + param.thisObject);
-        afterOnClass(WE_PAY_CASHIER_DIALOG, param, () -> {
-            handleDialog(param);
+        param.after(() -> {
+            if (mAtPayment) {
+                handleDialog(param);
+            }
         });
     }
 
@@ -71,10 +73,22 @@ public class WeChatFingerprint extends TweakBase {
         });
     }
 
+    @Override
+    public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
+        Logger.d("Activity__onDestroy " + param.thisObject);
+        beforeOnClass(WALLLET_PAY_UI, param, () -> {
+            mAtPayment = false;
+        });
+        beforeOnClass(UI_PAGE_FRAGMENT_ACTIVITY, param, () -> {
+            mAtPayment = false;
+        });
+    }
+
     private void handleActivity(ILTweaks.MethodParam param) {
         Activity activity = (Activity) param.thisObject;
         ViewGroup rootView = (ViewGroup) activity.getWindow().getDecorView();
         handleRootView(rootView);
+        mAtPayment = true;
     }
 
     private void handleDialog(ILTweaks.MethodParam param) {
@@ -86,27 +100,36 @@ public class WeChatFingerprint extends TweakBase {
     private void handleRootView(ViewGroup rootView) {
         Logger.d("handleRootView");
         ViewUtils.printChilds(rootView);
+        if (tryOnce(rootView)) {
+            return;
+        }
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                boolean end = false;
-                try {
-                    if (ViewUtils.findViewByType(rootView, findClass(EDIT_PASSWORD_VIEW)) != null) {
-                        onPayDialogShown(rootView);
-                        end = true;
-                    }
-                } catch (Throwable e) {
-                    Logger.e("onGlobalLayout exception.", e);
-                    end = true;
-                    ViewUtils.printChilds(rootView);
-                }
-                if (end) {
+                if (tryOnce(rootView)) {
                     rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                } else {
-                    ViewUtils.printChilds(rootView);
                 }
             }
         });
+    }
+
+    private boolean tryOnce(ViewGroup rootView) {
+        boolean end = false;
+        try {
+            if (ViewUtils.findViewByType(rootView, findClass(EDIT_PASSWORD_VIEW)) != null) {
+                onPayDialogShown(rootView);
+                end = true;
+            }
+        } catch (Throwable e) {
+            Logger.e("onGlobalLayout exception.", e);
+            end = true;
+            ViewUtils.printChilds(rootView);
+        }
+        if (!end) {
+            Logger.d("onGlobalLayout");
+            ViewUtils.printChilds(rootView);
+        }
+        return end;
     }
 
     private void onPayDialogShown(ViewGroup rootView) throws Throwable {
@@ -169,6 +192,9 @@ public class WeChatFingerprint extends TweakBase {
         Logger.i(msg);
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 
+        if (mCancellationSignal != null) {
+            Logger.e("Last mCancellationSignal exist.");
+        }
         FingerprintManager fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
         mCancellationSignal = new CancellationSignal();
         fingerprintManager.authenticate(null, mCancellationSignal, 0, new FingerprintManager.AuthenticationCallback() {
