@@ -141,12 +141,19 @@ public class ViewUtils {
     }
 
     public static <T extends View> T findViewByType(ViewGroup rootView, final Class<? extends View> type, int maxDeep) {
-        List<View> views = traverseViews(rootView, true, new ViewTraverseCallback() {
-            @Override
-            public boolean onAddResult(View view, int deep) {
-                return type.isAssignableFrom(view.getClass());
-            }
-        }, maxDeep);
+        List<View> views = traverseViews(rootView, true, (view, deep) -> type.isAssignableFrom(view.getClass()), maxDeep);
+        if (views.size() > 0) {
+            return (T) views.get(0);
+        }
+        return null;
+    }
+
+    public static <T extends View> T findViewByTypeEnd(ViewGroup rootView, final String typeSuffix) {
+        return findViewByTypeEnd(rootView, typeSuffix, -1);
+    }
+
+    public static <T extends View> T findViewByTypeEnd(ViewGroup rootView, final String typeSuffix, int maxDeep) {
+        List<View> views = traverseViews(rootView, true, (view, deep) -> view.getClass().getName().endsWith(typeSuffix), maxDeep);
         if (views.size() > 0) {
             return (T) views.get(0);
         }

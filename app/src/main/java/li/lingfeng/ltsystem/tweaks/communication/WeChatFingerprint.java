@@ -32,11 +32,11 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 @MethodsLoad(packages = PackageNames.WE_CHAT, prefs = R.string.key_wechat_fingerprint)
 public class WeChatFingerprint extends TweakBase {
 
-    private static final String WALLLET_PAY_UI = "com.tencent.mm.plugin.wallet.pay.ui.WalletPayUI";
-    private static final String UI_PAGE_FRAGMENT_ACTIVITY = "com.tencent.kinda.framework.app.UIPageFragmentActivity";
-    private static final String EDIT_PASSWORD_VIEW = "com.tencent.mm.wallet_core.ui.formview.EditHintPasswdView";
-    private static final String TENPAY_SECURE_EDITTEXT = "com.tenpay.android.wechat.TenpaySecureEditText";
-    private static final String MY_KEYBOARD_WINDOW = "com.tenpay.android.wechat.MyKeyboardWindow";
+    private static final String WALLLET_PAY_UI = ".WalletPayUI";
+    private static final String UI_PAGE_FRAGMENT_ACTIVITY = ".UIPageFragmentActivity";
+    private static final String EDIT_PASSWORD_VIEW = ".EditHintPasswdView";
+    private static final String TENPAY_SECURE_EDITTEXT = ".TenpaySecureEditText";
+    private static final String MY_KEYBOARD_WINDOW = ".MyKeyboardWindow";
     private boolean mAtPayment = false;
     private CancellationSignal mCancellationSignal;
 
@@ -44,10 +44,10 @@ public class WeChatFingerprint extends TweakBase {
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         Logger.d("Activity__performCreate " + param.thisObject);
-        afterOnClass(WALLLET_PAY_UI, param, () -> {
+        afterOnClassEnd(WALLLET_PAY_UI, param, () -> {
             handleActivity(param);
         });
-        afterOnClass(UI_PAGE_FRAGMENT_ACTIVITY, param, () -> {
+        afterOnClassEnd(UI_PAGE_FRAGMENT_ACTIVITY, param, () -> {
             handleActivity(param);
         });
     }
@@ -76,10 +76,10 @@ public class WeChatFingerprint extends TweakBase {
     @Override
     public void android_app_Activity__onDestroy__(ILTweaks.MethodParam param) {
         Logger.d("Activity__onDestroy " + param.thisObject);
-        beforeOnClass(WALLLET_PAY_UI, param, () -> {
+        beforeOnClassEnd(WALLLET_PAY_UI, param, () -> {
             mAtPayment = false;
         });
-        beforeOnClass(UI_PAGE_FRAGMENT_ACTIVITY, param, () -> {
+        beforeOnClassEnd(UI_PAGE_FRAGMENT_ACTIVITY, param, () -> {
             mAtPayment = false;
         });
     }
@@ -116,7 +116,7 @@ public class WeChatFingerprint extends TweakBase {
     private boolean tryOnce(ViewGroup rootView) {
         boolean end = false;
         try {
-            if (ViewUtils.findViewByType(rootView, findClass(EDIT_PASSWORD_VIEW)) != null) {
+            if (ViewUtils.findViewByTypeEnd(rootView, EDIT_PASSWORD_VIEW) != null) {
                 onPayDialogShown(rootView);
                 end = true;
             }
@@ -134,29 +134,18 @@ public class WeChatFingerprint extends TweakBase {
 
     private void onPayDialogShown(ViewGroup rootView) throws Throwable {
         Logger.d("onPayDialogShown");
-        View passwordLayout = ViewUtils.findViewByType(rootView, findClass(EDIT_PASSWORD_VIEW));
-        EditText inputEditText = ViewUtils.findViewByType(rootView, (Class<? extends View>) findClass(TENPAY_SECURE_EDITTEXT));
-        ViewGroup keyboardView = (ViewGroup) ViewUtils.findViewByType(rootView, findClass(MY_KEYBOARD_WINDOW));
+        View passwordLayout = ViewUtils.findViewByTypeEnd(rootView, EDIT_PASSWORD_VIEW);
+        EditText inputEditText = ViewUtils.findViewByTypeEnd(rootView, TENPAY_SECURE_EDITTEXT);
+        ViewGroup keyboardView = ViewUtils.findViewByTypeEnd(rootView, MY_KEYBOARD_WINDOW);
         Validate.notNull(passwordLayout, "passwordLayout null");
         Validate.notNull(inputEditText, "inputEditText null");
         Validate.notNull(keyboardView, "keyboardView null");
-
-        TextView usePasswordText = ViewUtils.findTextViewByText(rootView, "Password", "使用密码");
-        if (usePasswordText == null) {
-            Logger.w("usePasswordText null.");
-            ViewUtils.printChilds(rootView);
-        }
-        TextView titleTextView = ViewUtils.findTextViewByText(rootView, "Enter payment password", "请输入支付密码");
-        if (titleTextView == null) {
-            Logger.w("titleTextView null.");
-            ViewUtils.printChilds(rootView);
-        }
 
         String password = getPassword(rootView.getContext());
         if (password == null) { // Save password at first time.
             savePassword(keyboardView);
         } else {
-            authWithFingerprint(keyboardView, password);
+            authWithFingerprint(inputEditText, password);
         }
     }
 
@@ -186,8 +175,8 @@ public class WeChatFingerprint extends TweakBase {
     }
 
     @SuppressLint("MissingPermission")
-    private void authWithFingerprint(ViewGroup keyboardView, String password) {
-        Context context = keyboardView.getContext();
+    private void authWithFingerprint(EditText inputEditText, String password) {
+        Context context = inputEditText.getContext();
         String msg = "Fingerprint scan ready.";
         Logger.i(msg);
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
@@ -218,7 +207,7 @@ public class WeChatFingerprint extends TweakBase {
                 Logger.i(msg);
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 try {
-                    inputDigitalPassword(keyboardView, password);
+                    inputDigitalPassword(inputEditText, password);
                 } catch (Throwable e) {
                     Logger.e("inputDigitalPassword error.", e);
                     Toast.makeText(context, "Input digital password error.", Toast.LENGTH_SHORT).show();
@@ -234,13 +223,10 @@ public class WeChatFingerprint extends TweakBase {
         }, null);
     }
 
-    private void inputDigitalPassword(ViewGroup keyboardView, String password) throws Throwable {
-        Logger.d("keyboardView " + keyboardView);
+    private void inputDigitalPassword(EditText inputEditText, String password) throws Throwable {
+        Logger.d("inputEditText " + inputEditText);
         Logger.i("Input digital password, length " + password.length());
-        for (int i = 0; i < password.length(); ++i) {
-            View button = ViewUtils.findViewByName(keyboardView, "tenpay_keyboard_" + password.charAt(i));
-            button.performClick();
-        }
+        inputEditText.setText(password);
     }
 
     private String getPassword(Context context) throws Throwable {

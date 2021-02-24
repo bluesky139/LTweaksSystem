@@ -34,6 +34,18 @@ public class TweakBase extends ILTweaksMethods {
         }
     }
 
+    protected void beforeOnClassEnd(String classNameSuffix, ILTweaks.MethodParam param, ILTweaks.Before before) {
+        if (param.thisObject.getClass().getName().endsWith(classNameSuffix)) {
+            param.before(before);
+        }
+    }
+
+    protected void afterOnClassEnd(String classNameSuffix, ILTweaks.MethodParam param, ILTweaks.After after) {
+        if (param.thisObject.getClass().getName().endsWith(classNameSuffix)) {
+            param.after(after);
+        }
+    }
+
     protected void beforeOnBackPressed(ILTweaks.MethodParam param, ILTweaks.Before before) {
         int keyCode = (int) param.args[0];
         KeyEvent event = (KeyEvent) param.args[1];
