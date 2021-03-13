@@ -47,10 +47,6 @@ public class ComicScreenExternalStorage extends TweakBase {
             if (!cacheDir.exists()) {
                 cacheDir.mkdir();
             }
-            File chunkDir = new File(getSdcardDir(), "rclone_cache-backend");
-            if (!chunkDir.exists()) {
-                chunkDir.mkdir();
-            }
             File logFile = new File(getSdcardDir(), "rclone.log");
             if (logFile.exists()) {
                 logFile.delete();
@@ -60,18 +56,16 @@ public class ComicScreenExternalStorage extends TweakBase {
                     " --config /sdcard/rclone_comic_screen.conf" +
                     " --max-read-ahead 128k" +
                     " --buffer-size 8M" +
-                    " --dir-cache-time 24h" +
+                    " --dir-cache-time 1h" +
                     " --poll-interval 5m" +
-                    " --attr-timeout 24h" +
-                    " --vfs-cache-mode writes" +
-                    " --vfs-read-chunk-size 2M" +
-                    " --vfs-read-chunk-size-limit 10M" +
-                    " --vfs-cache-max-age 10h0m0s" +
-                    " --vfs-cache-max-size 256M" +
+                    " --attr-timeout 1h" +
+                    " --vfs-cache-mode full" +
+                    " --vfs-read-ahead 32M" +
+                    " --vfs-cache-max-age 72h0m0s" +
+                    " --vfs-cache-max-size 512M" +
+                    " --vfs-cache-poll-interval 10m0s" +
                     " --cache-dir=" + cacheDir.getPath() +
-                    " --cache-chunk-path " + chunkDir.getPath() +
-                    " --cache-chunk-clean-interval 10m0s " +
-                    "--log-file " + logFile.getPath() +
+                    " --log-file " + logFile.getPath() +
                     " --allow-other --gid 1015" +
                     " --daemon";
             Shell.su(cmd);
