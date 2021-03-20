@@ -8,8 +8,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 
 public abstract class TweakMoveTaskToBack extends TweakBase {
 
-    private int mCount = 0;
-
+    protected int mCount = 0;
     protected abstract String getLaunchActivity();
 
     @Override

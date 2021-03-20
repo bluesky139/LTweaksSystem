@@ -151,6 +151,8 @@ Open source on github: \n
     <string name="pref_jd_mini_program_price_history">Price history in WeChat mini program</string>
     <string name="pref_jd_mini_program_price_history_summary">Use \"Share To Friend\" button to copy item link, do same thing like copy link from native app.\n\"Share To Friend\" will not open friend list anymore</string>
     <string name="pref_jd_ads">Remove fullscreen ads</string>
+    <string name="pref_jd_move_task_to_back">Back to previous app</string>
+    <string name="pref_jd_move_task_to_back_summary">If open JD from other app</string>
     <string name="pref_category_smzdm">SMZDM</string>
     <string name="pref_smzdm_open_link_in_app">Open link in app</string>
     <string name="pref_smzdm_open_link_in_app_summary">JD app, instead of web</string>
