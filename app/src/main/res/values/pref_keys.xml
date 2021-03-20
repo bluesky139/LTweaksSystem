@@ -31,7 +31,7 @@
     <string name="key_jd_mini_program_price_history">key_jd_mini_program_price_history</string>
     <string name="key_jd_ads">key_jd_ads</string>
     <string name="key_jd_move_task_to_back">key_jd_move_task_to_back</string>
-    <string name="key_smzdm_open_link_in_app">key_smzdm_open_link_in_app</string>
+    <!-- key_smzdm_open_link_in_app -->
     <string name="key_smzdm_skip_splash">key_smzdm_skip_splash</string>
     <string name="key_ele_route_share_link">key_ele_route_share_link</string>
     <string name="key_ele_address_map">key_ele_address_map</string>

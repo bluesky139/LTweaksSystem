@@ -154,8 +154,6 @@ Open source on github: \n
     <string name="pref_jd_move_task_to_back">Back to previous app</string>
     <string name="pref_jd_move_task_to_back_summary">If open JD from other app</string>
     <string name="pref_category_smzdm">SMZDM</string>
-    <string name="pref_smzdm_open_link_in_app">Open link in app</string>
-    <string name="pref_smzdm_open_link_in_app_summary">JD app, instead of web</string>
     <string name="pref_smzdm_skip_splash">Skip splash ads</string>
     <string name="pref_category_ele">ELE</string>
     <string name="pref_ele_route_share_link">Route share link</string>

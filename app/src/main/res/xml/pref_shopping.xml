@@ -53,11 +53,6 @@
         android:title="@string/pref_category_smzdm">
         <SwitchPreference
             android:defaultValue="false"
-            android:key="@string/key_smzdm_open_link_in_app"
-            android:title="@string/pref_smzdm_open_link_in_app"
-            android:summary="@string/pref_smzdm_open_link_in_app_summary" />
-        <SwitchPreference
-            android:defaultValue="false"
             android:key="@string/key_smzdm_skip_splash"
             android:title="@string/pref_smzdm_skip_splash" />
     </PreferenceCategory>
