@@ -176,6 +176,12 @@ public class TelegramSwipeSeekVideo extends TweakBase {
                     }
                 }
             });
+
+            Object fullscreenButtons = ReflectUtils.getObjectField(photoViewer, "fullscreenButton");
+            for (int i = 0; i < Array.getLength(fullscreenButtons); ++i) {
+                View fullscreenButton = (View) Array.get(fullscreenButtons, i);
+                ViewUtils.removeView(fullscreenButton);
+            }
         } else {
             mPlayButton.setVisibility(View.VISIBLE);
         }
