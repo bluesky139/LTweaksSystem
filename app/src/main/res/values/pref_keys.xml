@@ -25,6 +25,7 @@
     <!--Shopping-->
     <string name="key_alipay_fingerprint">key_alipay_fingerprint</string>
     <string name="key_taobao_ads">key_taobao_ads</string>
+    <string name="key_taobao_move_task_to_back">key_taobao_move_task_to_back</string>
     <string name="key_jd_open_link_in_app">key_jd_open_link_in_app</string>
     <string name="key_jd_history">key_jd_history</string>
     <string name="key_jd_basic_share_activity">key_jd_basic_share_activity</string>
