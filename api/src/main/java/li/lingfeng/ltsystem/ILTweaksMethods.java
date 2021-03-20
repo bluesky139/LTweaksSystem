@@ -103,6 +103,7 @@ public abstract class ILTweaksMethods {
     public void android_widget_Toast__show__(MethodParam param) {
     }
 
+    // TODO: can be removed
     public void android_webkit_WebView__setWebViewClient__WebViewClient(MethodParam param) {
     }
 
@@ -145,6 +146,7 @@ public abstract class ILTweaksMethods {
     public void android_animation_ValueAnimator__start__(MethodParam param) {
     }
 
+    // TODO: can be removed.
     public void android_graphics_drawable_ColorDrawable__draw__Canvas(MethodParam param) {
     }
 
