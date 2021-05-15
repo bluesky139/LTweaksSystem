@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.activities.ImageSearchActivity;
+import li.lingfeng.ltsystem.activities.ImageShareRedirectActivity;
 import li.lingfeng.ltsystem.activities.ListCheckActivity;
 import li.lingfeng.ltsystem.activities.ProcessTextActivity;
 import li.lingfeng.ltsystem.activities.QrCodeActivity;
@@ -136,6 +137,25 @@ public class SystemPrefFragment extends BasePrefFragment {
                 }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             } else {
                 ComponentUtils.enableComponent(ImageSearchActivity.class, false);
+            }
+        }
+    }
+
+    @PreferenceChange(prefs = R.string.key_system_share_image_redirect, refreshAtStart = true)
+    private void systemShareImageRedirect(final SwitchPreference preference, boolean enabled, Extra extra) {
+        if (extra.refreshAtStart) {
+            uncheckPreferenceByDisabledComponent(R.string.key_system_share_image_redirect, ImageShareRedirectActivity.class);
+        } else {
+            if (enabled) {
+                PermissionUtils.requestPermissions(getActivity(), (ok) -> {
+                    if (ok) {
+                        ComponentUtils.enableComponent(ImageShareRedirectActivity.class, true);
+                    } else {
+                        preference.setChecked(false);
+                    }
+                }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            } else {
+                ComponentUtils.enableComponent(ImageShareRedirectActivity.class, false);
             }
         }
     }

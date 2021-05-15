@@ -286,6 +286,19 @@
             </intent-filter>
         </activity-alias>
 
+        <activity android:name=".activities.ImageShareRedirectActivity" android:excludeFromRecents="true"
+            android:label="@string/share_image_redirect"
+            android:icon="@mipmap/ic_image_search"
+            android:theme="@style/Theme.Dialog"
+            android:taskAffinity="li.lingfeng.ltsystem.activities.ImageShareRedirectActivity"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activities.GoMarketActivity" android:excludeFromRecents="true"
             android:label="@string/share_go_market"
             android:icon="@mipmap/ic_go_market"

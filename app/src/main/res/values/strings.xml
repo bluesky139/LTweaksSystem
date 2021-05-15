@@ -322,6 +322,8 @@ Open source on github: \n
     <string name="pref_system_share_qrcode_scan_summary">You can share QR image from browser, local file or screenshot</string>
     <string name="pref_system_share_image_search">Add menu \"Search by image\"</string>
     <string name="pref_system_share_image_search_summary">You can share image from other app or local file, search engines include: Google, TinEye, IQDB</string>
+    <string name="pref_system_share_image_redirect">Add menu \"Redirect image share\"</string>
+    <string name="pref_system_share_image_redirect_summary">For WeChat/QQ those who can\'t receive image share in some cases</string>
     <string name="pref_system_share_filter">Hide share menu items</string>
     <string name="pref_system_share_copy_to_share">Copy to share</string>
     <string name="pref_system_share_copy_to_share_summary">When you copy text, a button will appear for you to trigger share action.\nMay not work in some app</string>
@@ -478,6 +480,7 @@ Open source on github: \n
     <string name="share_image_iqdb_search">IQDB</string>
     <string name="share_image_saucenao_search">SauceNAO</string>
     <string name="share_image_wait_search">WAIT</string>
+    <string name="share_image_redirect">Image Share Redirect</string>
     <string name="share_go_market">Go Market</string>
     <string name="share_go_market_coolapk">CoolApk</string>
     <string name="share_go_market_apkpure">ApkPure</string>

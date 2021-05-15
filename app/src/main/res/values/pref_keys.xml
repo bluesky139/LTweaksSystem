@@ -113,6 +113,7 @@
     <string name="key_youdao_quick_query_shortcut">key_youdao_quick_query_shortcut</string>
     <string name="key_system_share_qrcode_scan">key_system_share_qrcode_scan</string>
     <string name="key_system_share_image_search">key_system_share_image_search</string>
+    <string name="key_system_share_image_redirect">key_system_share_image_redirect</string>
     <string name="key_system_share_filter">key_system_share_filter</string>
     <string name="key_system_share_filter_activities">key_system_share_filter_activities</string>
     <string name="key_system_share_copy_to_share">key_system_share_copy_to_share</string>
