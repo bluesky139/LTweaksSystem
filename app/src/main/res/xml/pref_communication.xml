@@ -51,6 +51,11 @@
             android:key="@string/key_wechat_fingerprint"
             android:title="@string/pref_wechat_fingerprint"
             android:summary="@string/pref_wechat_fingerprint_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_wechat_map_daytime_mode"
+            android:title="@string/pref_wechat_map_daytime_mode"
+            android:summary="@string/pref_wechat_map_daytime_mode_summary" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_qq">
