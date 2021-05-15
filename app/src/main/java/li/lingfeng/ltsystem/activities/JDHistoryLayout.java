@@ -132,6 +132,7 @@ public class JDHistoryLayout extends RelativeLayout implements
                             if (uri.getHost().endsWith("jd.com")) {
                                 String cookie = CookieManager.getInstance().getCookie("https://browser.gwdang.com");
                                 Logger.d("Got cookie " + cookie);
+                                mActivity.getSharedPreferences("ltweaks", 0).edit().putString("history_cookie", cookie).apply();
                                 ViewUtils.removeView(webView);
                                 mGrabber.setCookie(cookie);
                                 mGrabber.startRequest();
@@ -146,7 +147,7 @@ public class JDHistoryLayout extends RelativeLayout implements
             }
         });
 
-        String cookie = CookieManager.getInstance().getCookie("https://browser.gwdang.com");
+        String cookie = mActivity.getSharedPreferences("ltweaks", 0).getString("history_cookie", null);
         if (cookie != null) {
             Logger.d("Has cookie " + cookie);
             mGrabber.setCookie(cookie);
