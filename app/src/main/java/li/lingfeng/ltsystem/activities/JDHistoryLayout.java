@@ -100,7 +100,7 @@ public class JDHistoryLayout extends RelativeLayout implements
                 Logger.i("Prices result " + result);
                 mActivity.runOnUiThread(() -> {
                     if (result == null) {
-                        exit(mActivity.getString(R.string.jd_history_can_not_get_prices));
+                        exit(ContextUtils.getLString(R.string.jd_history_can_not_get_prices));
                         return;
                     }
                     try {
@@ -119,7 +119,7 @@ public class JDHistoryLayout extends RelativeLayout implements
                 Logger.i("Redirect url " + url + ", should be recaptcha.");
                 mActivity.runOnUiThread(() -> {
                     if (url == null) {
-                        exit(mActivity.getString(R.string.jd_history_can_not_get_prices));
+                        exit(ContextUtils.getLString(R.string.jd_history_can_not_get_prices));
                         return;
                     }
                     WebView webView = new WebView(mActivity);
