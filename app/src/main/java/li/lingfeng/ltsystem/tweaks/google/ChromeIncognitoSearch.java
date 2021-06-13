@@ -60,7 +60,8 @@ public class ChromeIncognitoSearch extends ChromeBase {
                 Logger.d("Return fake trusted_application_code_extra.");
                 Intent intent2 = new Intent();
                 intent2.setComponent(new ComponentName(LTHelper.currentApplication(), "FakeClass"));
-                PendingIntent pendingIntent = PendingIntent.getActivity(LTHelper.currentApplication(), 0, intent2, 0);
+                PendingIntent pendingIntent = PendingIntent.getActivity(LTHelper.currentApplication(),
+                        0, intent2, PendingIntent.FLAG_IMMUTABLE);
                 param.setResult(pendingIntent);
             }
         });
