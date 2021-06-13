@@ -45,7 +45,7 @@ public class ComicScreenExternalStorage extends TweakBase {
             }
             File cacheDir = new File(getSdcardDir(), "rclone_cache");
             if (!cacheDir.exists()) {
-                cacheDir.mkdir();
+                cacheDir.createNewFile();
             }
             File logFile = new File(getSdcardDir(), "rclone.log");
             if (logFile.exists()) {
@@ -55,12 +55,12 @@ public class ComicScreenExternalStorage extends TweakBase {
             String cmd = "/sbin/rclone mount cloud0: " + dir.getPath() +
                     " --config /sdcard/rclone_comic_screen.conf" +
                     " --max-read-ahead 128k" +
-                    " --buffer-size 8M" +
+                    " --buffer-size 32M" +
                     " --dir-cache-time 1h" +
                     " --poll-interval 5m" +
                     " --attr-timeout 1h" +
                     " --vfs-cache-mode full" +
-                    " --vfs-read-ahead 32M" +
+                    " --vfs-read-ahead 8M" +
                     " --vfs-cache-max-age 72h0m0s" +
                     " --vfs-cache-max-size 512M" +
                     " --vfs-cache-poll-interval 10m0s" +
