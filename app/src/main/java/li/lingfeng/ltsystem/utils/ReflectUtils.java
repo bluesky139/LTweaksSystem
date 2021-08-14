@@ -167,6 +167,29 @@ public class ReflectUtils {
         } while (true);
     }
 
+    public static Method findFirstMethodByTypes(Class cls, Class[] parameterTypes, Class returnType) {
+        Method[] methods = cls.getDeclaredMethods();
+        for (Method method : methods) {
+            if (method.getParameterCount() != parameterTypes.length || !returnType.isAssignableFrom(method.getReturnType())) {
+                continue;
+            }
+            Class[] types = method.getParameterTypes();
+            boolean match = true;
+            for (int i = 0; i < types.length; ++i) {
+                if (!parameterTypes[i].isAssignableFrom(types[i])) {
+                    match = false;
+                    continue;
+                }
+            }
+            if (!match) {
+                continue;
+            }
+            method.setAccessible(true);
+            return method;
+        }
+        return null;
+    }
+
     public static void printFields(Object obj) throws Throwable {
         Field[] fields = obj.getClass().getFields();
         for (Field field : fields) {
