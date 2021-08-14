@@ -131,6 +131,7 @@ public abstract class ILTweaksMethods {
     public void android_view_View__requestFocus__(MethodParam param) {
     }
 
+    // TODO: can be removed.
     public void android_view_View__startAnimation__Animation(MethodParam param) {
     }
 
@@ -143,6 +144,7 @@ public abstract class ILTweaksMethods {
     public void android_view_inputmethod_InputMethodManager__showSoftInput__View_int_ResultReceiver(MethodParam param) {
     }
 
+    // TODO: can be removed.
     public void android_animation_ValueAnimator__start__(MethodParam param) {
     }
 
