@@ -1,21 +1,24 @@
 package li.lingfeng.ltsystem.tweaks.entertainment;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageParser;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 
 import li.lingfeng.ltsystem.ILTweaks;
 import li.lingfeng.ltsystem.R;
 import li.lingfeng.ltsystem.lib.MethodsLoad;
 import li.lingfeng.ltsystem.prefs.PackageNames;
 import li.lingfeng.ltsystem.tweaks.TweakBase;
+import li.lingfeng.ltsystem.utils.ContextUtils;
 import li.lingfeng.ltsystem.utils.Logger;
+import li.lingfeng.ltsystem.utils.ViewUtils;
 
 public class BilibiliDisableSplash extends TweakBase {
 
-    private static final String SPLASH_ACTIVITY = "tv.danmaku.bili.ui.splash.SplashActivity";
-    private static final String HOT_SPLASH_ACTIVITY = "tv.danmaku.bili.ui.splash.HotSplashActivity";
     private static final String MAIN_ACTIVITY = "tv.danmaku.bili.MainActivityV2";
 
     @MethodsLoad(packages = PackageNames.BILIBILI, prefs = R.string.key_bilibili_disable_splash)
@@ -23,26 +26,27 @@ public class BilibiliDisableSplash extends TweakBase {
 
         @Override
         public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
-            beforeOnClass(SPLASH_ACTIVITY, param, () -> {
+            beforeOnClass(MAIN_ACTIVITY, param, () -> {
                 Activity activity = (Activity) param.thisObject;
-                if (!activity.isFinishing()) {
-                    Logger.v("Skip SplashActivity.");
-                    Intent intent = new Intent();
-                    intent.setClassName(PackageNames.BILIBILI, MAIN_ACTIVITY);
-                    activity.startActivity(intent);
-                    activity.finish();
-                }
-            });
-        }
-
-        @Override
-        public void android_app_Activity__startActivityForResult__Intent_int_Bundle(ILTweaks.MethodParam param) {
-            param.before(() -> {
-                Intent intent = (Intent) param.args[0];
-                if (intent.getComponent() != null && HOT_SPLASH_ACTIVITY.equals(intent.getComponent().getClassName())) {
-                    Logger.v("Disallow HotSplashActivity.");
-                    param.setResult(null);
-                }
+                ViewGroup rootView = (ViewGroup) activity.getWindow().getDecorView();
+                rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        for (String name : new String[] {
+                                "splash_layout",
+                                "splash_container",
+                                "full_brand_splash",
+                                "brand_splash"
+                        }) {
+                            View v = ViewUtils.findViewByName(rootView, name);
+                            if (v != null) {
+                                Logger.d("hide " + name);
+                                v.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                });
             });
         }
     }
@@ -51,29 +55,19 @@ public class BilibiliDisableSplash extends TweakBase {
     public static class Android extends TweakBase {
 
         @Override
-        public void android_content_pm_PackageParser__parsePackage__File_int_boolean(ILTweaks.MethodParam param) {
-            param.after(() -> {
-                PackageParser.Package pkg = (PackageParser.Package) param.getResult();
-                if (pkg == null || pkg.packageName != PackageNames.BILIBILI) {
-                    return;
+        public void com_android_internal_policy_PhoneWindow__generateLayout__DecorView(ILTweaks.MethodParam param) {
+            param.before(() -> {
+                Window window = (Window) param.thisObject;
+                Context context = window.getContext();
+                if (context.getPackageName().equals(PackageNames.BILIBILI)) {
+                    Drawable drawable = ContextUtils.getColorDrawable("night", context);
+                    if (drawable != null) {
+                        Logger.i("Set night background for bilibili phone window.");
+                        window.setBackgroundDrawable(drawable);
+                    } else {
+                        Logger.e("Can't set night backgorund for bilibili phone window.");
+                    }
                 }
-                PackageParser.Activity splashActivity = pkg.activities.stream().filter(activity -> activity.info.name.equals(SPLASH_ACTIVITY)).findFirst().get();
-                if (splashActivity.intents.size() != 1) {
-                    Logger.e("Bilibili SplashActivity has multi intents.");
-                    return;
-                }
-                PackageParser.Activity mainActivity = pkg.activities.stream().filter(activity -> activity.info.name.equals(MAIN_ACTIVITY)).findFirst().get();
-                if (mainActivity.intents.size() != 0) {
-                    Logger.e("Bilibili MainActivity has intents.");
-                    return;
-                }
-                Logger.i("Set " + MAIN_ACTIVITY + " as launcher and exported.");
-                PackageParser.ActivityIntentInfo intent = splashActivity.intents.get(0);
-                intent.activity = mainActivity;
-                mainActivity.intents.add(intent);
-                mainActivity.info.exported = true;
-                mainActivity.info.launchMode = ActivityInfo.LAUNCH_SINGLE_TOP;
-                splashActivity.intents.remove(0);
             });
         }
     }

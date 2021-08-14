@@ -260,8 +260,6 @@ Open source on github: \n
     <string name="pref_bilibili_get_cover">Get cover</string>
     <string name="pref_bilibili_get_cover_summary">Add a menu item to get cover</string>
     <string name="pref_bilibili_expand_desc">Expand description by default</string>
-    <string name="pref_bilibili_darken">A more better night mode</string>
-    <string name="pref_bilibili_darken_summary">1.When entering reading page in night mode, it will switch to daytime mode first, then suddenly back to night mode. Try fix this\n2.When entering this app, the whole screen will become white before app loading finish, change it to dark</string>
     <string name="pref_bilibili_remove_upper_ad">Remove upper ad</string>
     <string name="pref_bilibili_best_quality">Best quality</string>
     <string name="pref_bilibili_best_quality_summary">For half screen play, and live room</string>
