@@ -33,17 +33,27 @@ public class BilibiliDisableSplash extends TweakBase {
                     @Override
                     public void onGlobalLayout() {
                         rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        for (String name : new String[] {
-                                "splash_layout",
-                                "splash_container",
-                                "full_brand_splash",
-                                "brand_splash"
-                        }) {
-                            View v = ViewUtils.findViewByName(rootView, name);
-                            if (v != null) {
-                                Logger.d("hide " + name);
-                                v.setVisibility(View.GONE);
-                            }
+                        ViewGroup adView = ViewUtils.findViewByName(rootView, "splash_layout");
+                        if (adView != null) {
+                            Logger.d("hide splash_layout.");
+                            adView.setVisibility(View.GONE);
+                            adView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                                @Override
+                                public void onChildViewAdded(View parent, View child) {
+                                    Logger.d("remove " + child);
+                                    ViewUtils.removeView(child);
+                                }
+
+                                @Override
+                                public void onChildViewRemoved(View parent, View child) {
+                                }
+                            });
+                        }
+
+                        View splashView = ViewUtils.findViewByName(rootView, "splash_container");
+                        if (splashView != null) {
+                            Logger.d("hide splash_container.");
+                            splashView.setVisibility(View.GONE);
                         }
                     }
                 });
