@@ -74,7 +74,7 @@ public class Processor extends AbstractProcessor {
         String genFilePath = genFile.toUri().toString();
         mMessager.printMessage(Diagnostic.Kind.NOTE, "Processor is generating " + genFilePath);
         Writer writer = genFile.openWriter();
-        mAppPath = genFilePath.substring(0, genFilePath.lastIndexOf("/build/generated/source/apt/"));
+        mAppPath = genFilePath.substring(0, genFilePath.lastIndexOf("/build/generated/ap_generated_sources/"));
         mMessager.printMessage(Diagnostic.Kind.NOTE, "Processor mAppPath = " + mAppPath);
 
         writer.write("package li.lingfeng.ltsystem;\n\n");

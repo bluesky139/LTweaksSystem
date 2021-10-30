@@ -2,7 +2,8 @@ apply plugin: 'java'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.auto.service:auto-service:1.0-rc4'
+    implementation 'com.google.auto.service:auto-service:1.0'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0'
     implementation project(':lib')
     implementation project(':api')
 }

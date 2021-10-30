@@ -33,7 +33,7 @@ public class VolumeButtonOnBrightness extends TweakBase {
         param.after(() -> {
             try {
                 mBrightnessMirrorController = ReflectUtils.getObjectField(param.thisObject, "mBrightnessMirrorController");
-            } catch (Throwable _) {}
+            } catch (Throwable e) {}
             mHandler = (Handler) ReflectUtils.getObjectField(param.thisObject, "mHandler");
 
             PowerManager powerManager = (PowerManager) LTHelper.currentApplication().getSystemService(Context.POWER_SERVICE);

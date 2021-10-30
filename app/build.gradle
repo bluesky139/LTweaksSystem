@@ -34,11 +34,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    aaptOptions {
-        noCompress "overture/overture", "overture/overture.conf", "overture/china_ip_list.txt",
-                "overture/domain_primary", "overture/domain_alternative", "overture/version.txt"
-    }
     productFlavors {
+    }
+    androidResources {
+        noCompress 'overture/overture', 'overture/overture.conf', 'overture/china_ip_list.txt',
+                'overture/domain_primary', 'overture/domain_alternative', 'overture/version.txt'
     }
 }
 
@@ -49,9 +49,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compileOnly project(':api')
     implementation project(':lib')
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.40'
     annotationProcessor project(':compiler')
-    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0'
     api 'commons-io:commons-io:2.6'
     api 'org.apache.commons:commons-lang3:3.9'
     api 'org.apache.commons:commons-collections4:4.4'

@@ -24,17 +24,11 @@ public class MainActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (BuildConfig.FLAVOR.equals("selfUse")) {
-            setTitle(getTitle() + " - Self Use");
-        }
     }
 
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.pref_headers, target);
-        if (BuildConfig.FLAVOR.equals("selfUse")) {
-            loadHeadersFromResource(ContextUtils.getXmlId("pref_headers_self_use"), target);
-        }
     }
 
     @Override
