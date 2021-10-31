@@ -42,6 +42,11 @@ public class BilibiliDisableSplash extends TweakBase {
                                 public void onChildViewAdded(View parent, View child) {
                                     Logger.d("remove " + child);
                                     ViewUtils.removeView(child);
+                                    View skipButton = ViewUtils.findViewByName((ViewGroup) child, "count_down");
+                                    if (skipButton != null) {
+                                        Logger.d("click skip " + skipButton);
+                                        skipButton.performClick();
+                                    }
                                 }
 
                                 @Override
