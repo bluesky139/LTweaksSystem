@@ -26,20 +26,30 @@ public class WeChatExpandSubscribedList extends TweakBase {
         afterOnClass(BIZ_TIMELINE_UI, param, () -> {
             mHandler = new Handler();
             Activity activity = (Activity) param.thisObject;
-            ViewGroup listView = (ViewGroup) ViewUtils.findViewByType(activity, findClass(STORY_LIST_VIEW));
-            for (int i = 0; i < listView.getChildCount(); ++i) {
-                checkListItem(listView.getChildAt(i));
-            }
-            listView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
-                @Override
-                public void onChildViewAdded(View parent, View child) {
-                    checkListItem(child);
-                }
-
-                @Override
-                public void onChildViewRemoved(View parent, View child) {
+            new Handler().post(() -> {
+                try {
+                    handleList(activity);
+                } catch (Throwable e) {
+                    Logger.e("Handle StoryListView exception.", e);
                 }
             });
+        });
+    }
+
+    private void handleList(Activity activity) throws Throwable {
+        ViewGroup listView = (ViewGroup) ViewUtils.findViewByType(activity, findClass(STORY_LIST_VIEW));
+        for (int i = 0; i < listView.getChildCount(); ++i) {
+            checkListItem(listView.getChildAt(i));
+        }
+        listView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+            @Override
+            public void onChildViewAdded(View parent, View child) {
+                checkListItem(child);
+            }
+
+            @Override
+            public void onChildViewRemoved(View parent, View child) {
+            }
         });
     }
 
