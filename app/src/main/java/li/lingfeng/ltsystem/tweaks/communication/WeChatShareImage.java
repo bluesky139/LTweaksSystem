@@ -3,6 +3,7 @@ package li.lingfeng.ltsystem.tweaks.communication;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,13 @@ public class WeChatShareImage extends TweakBase {
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
         afterOnClass(IMAGE_GALLERY_UI, param, () -> {
             Activity activity = (Activity) param.thisObject;
-            handleViewPager(activity);
+            new Handler().post(() -> {
+                try {
+                    handleViewPager(activity);
+                } catch (Throwable e) {
+                    Logger.e("Handle view pager exception.", e);
+                }
+            });
         });
     }
 
