@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageParser;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import li.lingfeng.ltsystem.ILTweaks;
@@ -27,8 +28,10 @@ public class NovaLauncherSearchGoChrome {
         public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
             afterOnClass(NOVA_LAUNCHER, param, () -> {
                 Activity activity = (Activity) param.thisObject;
-                View searchSpace = ViewUtils.findViewByName(activity, "qsb_base_search_space");
-                if (searchSpace != null) {
+                ViewUtils.printChilds(activity);
+                View searchSpace = ViewUtils.findViewByName(activity, "qsb_base_background");
+                if (searchSpace != null && searchSpace instanceof ViewGroup && ((ViewGroup) searchSpace).getChildCount() > 0) {
+                    searchSpace = ((ViewGroup) searchSpace).getChildAt(0);
                     Logger.d("searchSpace " + searchSpace);
                     searchSpace.setOnClickListener((v) -> {
                         try {
@@ -43,7 +46,7 @@ public class NovaLauncherSearchGoChrome {
                         }
                     });
                 } else {
-                    Logger.e("Can't find qsb_base_search_space.");
+                    Logger.e("Can't find qsb_base_background or it's child.");
                 }
             });
         }
