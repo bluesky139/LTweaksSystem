@@ -13,7 +13,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 @MethodsLoad(packages = PackageNames.BILIBILI, prefs = R.string.key_bilibili_remove_upper_ad)
 public class BilibiliRemoveUpperAd extends TweakBase {
 
-    private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
+    private static final String VIDEO_DETAILS_ACTIVITY = "com.bilibili.video.videodetail.VideoDetailsActivity";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {

@@ -28,7 +28,6 @@ public class NovaLauncherSearchGoChrome {
         public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {
             afterOnClass(NOVA_LAUNCHER, param, () -> {
                 Activity activity = (Activity) param.thisObject;
-                ViewUtils.printChilds(activity);
                 View searchSpace = ViewUtils.findViewByName(activity, "qsb_base_background");
                 if (searchSpace != null && searchSpace instanceof ViewGroup && ((ViewGroup) searchSpace).getChildCount() > 0) {
                     searchSpace = ((ViewGroup) searchSpace).getChildAt(0);

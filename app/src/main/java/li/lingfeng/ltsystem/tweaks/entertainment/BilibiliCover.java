@@ -26,8 +26,8 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 @MethodsLoad(packages = PackageNames.BILIBILI, prefs = R.string.key_bilibili_get_cover)
 public class BilibiliCover extends TweakBase {
 
-    private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
-    private static final String VIDEO_DETAIL = "tv.danmaku.bili.ui.video.api.BiliVideoDetail";
+    private static final String VIDEO_DETAILS_ACTIVITY = "com.bilibili.video.videodetail.VideoDetailsActivity";
+    private static final String VIDEO_DETAIL = "tv.danmaku.bili.videopage.data.view.model.BiliVideoDetail";
 
     @Override
     public void android_app_Activity__performCreate__Bundle_PersistableBundle(ILTweaks.MethodParam param) {

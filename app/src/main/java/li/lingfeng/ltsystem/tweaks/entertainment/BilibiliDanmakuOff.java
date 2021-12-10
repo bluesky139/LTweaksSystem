@@ -22,7 +22,7 @@ import li.lingfeng.ltsystem.utils.ViewUtils;
 @MethodsLoad(packages = PackageNames.BILIBILI, prefs = R.string.key_bilibili_danmaku_off)
 public class BilibiliDanmakuOff extends TweakBase {
 
-    private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
+    private static final String VIDEO_DETAILS_ACTIVITY = "com.bilibili.video.videodetail.VideoDetailsActivity";
     private static final String BANGUMI_DETAIL_ACTIVITY = "com.bilibili.bangumi.ui.page.detail.BangumiDetailActivityV3";
     private SharedPreferences mSharedPreferences;
 

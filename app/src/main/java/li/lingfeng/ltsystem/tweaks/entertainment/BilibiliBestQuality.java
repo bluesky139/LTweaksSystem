@@ -17,7 +17,7 @@ import li.lingfeng.ltsystem.utils.Logger;
 @MethodsLoad(packages = PackageNames.BILIBILI, prefs = R.string.key_bilibili_best_quality)
 public class BilibiliBestQuality extends TweakBase {
 
-    private static final String VIDEO_DETAILS_ACTIVITY = "tv.danmaku.bili.ui.video.VideoDetailsActivity";
+    private static final String VIDEO_DETAILS_ACTIVITY = "com.bilibili.video.videodetail.VideoDetailsActivity";
     private static final String BANGUMI_DETAIL_ACTIVITY = "com.bilibili.bangumi.ui.page.detail.BangumiDetailActivityV3";
     private static final String LIVE_ROOM_ACTIVITY = "com.bilibili.bililive.videoliveplayer.ui.roomv3.LiveRoomActivityV3";
 
