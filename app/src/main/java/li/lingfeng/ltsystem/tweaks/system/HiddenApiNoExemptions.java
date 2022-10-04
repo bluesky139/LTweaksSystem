@@ -16,6 +16,9 @@ public class HiddenApiNoExemptions extends TweakBase {
     @Override
     public void dalvik_system_VMRuntime__setHiddenApiExemptions__String$array(ILTweaks.MethodParam param) {
         param.before(() -> {
+            if (getPackageName() == null) {
+                return;
+            }
             if (PackageUtils.isUserInstalledPackage(getPackageName())) {
                 Logger.d("Hidden API no exemptions for " + getPackageName() + ", " + StringUtils.join(param.args, ", "));
                 param.setResult(null);
