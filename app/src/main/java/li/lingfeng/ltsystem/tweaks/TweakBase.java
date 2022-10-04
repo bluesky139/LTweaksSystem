@@ -11,7 +11,7 @@ import li.lingfeng.ltsystem.LTHelper;
 public class TweakBase extends ILTweaksMethods {
 
     protected String getPackageName() {
-        return LTHelper.currentApplication().getPackageName();
+        return LTHelper.currentApplication() == null ? null : LTHelper.currentApplication().getPackageName();
     }
 
     protected ClassLoader getClassLoader() {
